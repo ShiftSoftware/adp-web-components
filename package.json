@@ -1,0 +1,61 @@
+{
+  "name": "adp-web-components",
+  "version": "0.0.11",
+  "description": "ADP Platform Web Components",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
+  "es2015": "dist/esm/index.mjs",
+  "es2017": "dist/esm/index.mjs",
+  "types": "dist/types/index.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "unpkg": "dist/shift-components/shift-components.esm.js",
+  "exports": {
+    ".": {
+      "import": "./dist/shift-components/shift-components.esm.js",
+      "require": "./dist/shift-components/shift-components.cjs.js"
+    },
+    "./my-component": {
+      "import": "./dist/components/my-component.js",
+      "types": "./dist/components/my-component.d.ts"
+    },
+    "./loader": {
+      "import": "./loader/index.js",
+      "require": "./loader/index.cjs",
+      "types": "./loader/index.d.ts"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ShiftSoftware/adp-web-components"
+  },
+  "files": [
+    "dist/",
+    "loader/"
+  ],
+  "scripts": {
+    "build": "stencil build -- --prod",
+    "start": "stencil build --dev --watch --serve",
+    "test": "stencil test --spec --e2e",
+    "test.watch": "stencil test --spec --e2e --watchAll",
+    "generate": "stencil generate"
+  },
+  "devDependencies": {
+    "@rollup/plugin-alias": "^5.1.1",
+    "@stencil/core": "^4.7.0",
+    "@stencil/postcss": "^2.1.0",
+    "@stencil/sass": "^2.0.0",
+    "@types/node": "^22.10.0",
+    "autoprefixer": "^10.4.13",
+    "cssnano": "^5.1.14",
+    "stencil-tailwind-plugin": "^1.8.0",
+    "tailwindcss": "^3.2.4",
+    "typescript": "^5.7.2"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.5.5",
+    "yup": "^1.5.0"
+  }
+}

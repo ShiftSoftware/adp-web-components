@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Vehicle Lookup</title>
+    <!-- Latest compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+      crossorigin="anonymous"
+    />
+
+    <!-- Optional theme -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap-theme.min.css"
+      integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ"
+      crossorigin="anonymous"
+    />
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"
+      integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+      crossorigin="anonymous"
+    ></script>
+
+    <script nomodule src="/build/shift-components.js"></script>
+    <script type="module" src="/build/shift-components.esm.js"></script>
+
+    <style>
+      body {
+        background: #f7f7f7;
+        padding: 25px;
+      }
+
+      #vehicle-info-tab a {
+        color: black;
+        font-size: 18px;
+        transition: 0.3s;
+        user-select: none;
+      }
+
+      #vehicle-info-tab li.active a {
+        font-weight: bold;
+        background: #425368;
+        color: white;
+      }
+
+      input.disabled {
+        background: #e0e0e0;
+      }
+
+      .nav-tabs li.disabled {
+        background: #e0e0e0;
+        opacity: 0.5;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="section_inner" style="width: 90%; margin: auto">
+      <div>
+        <div class="container-fluid">
+          <div class="row" runat="server" id="rowSubmitForm">
+            <div class="col-sm-12">
+              <div class="row">
+                <div class="col-lg-offset-3 col-lg-6" runat="server" id="colCustomerName">
+                  <div>
+                    <p class="font_f_o_b f16 mb10 error_bg text-center">VIN <span class="required">*Required</span></p>
+                  </div>
+                  <input value="MR0AX8CDXP4446478" class="shift-form-field" style="width: 100%" autocomplete="off" id="vinInput" />
+                  <div class="ltc-ferrari-red error-message error text-center"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-12 text-center btn_list clearfix" style="margin-top: 20px">
+              <button id="search-button" type="button" class="btn_type_5 f14 font_f_o_b">
+                <i id="search-icon" class="fa fa-search"></i>
+                <i id="spinner-icon" class="fa fa-spin fa-spinner" style="display: none"></i>
+                <span id="search-text">Search</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="well" style="background: white; margin-top: 30px; border-radius: 10px">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist" id="vehicle-info-tab" style="display: flex; justify-content: center; border-bottom: none">
+              <li role="presentation" class="active">
+                <a class="disable-auto-scroll" href="#specification" aria-controls="specification" role="tab" data-toggle="tab"><span>Specification</span></a>
+              </li>
+              <li role="presentation">
+                <a class="disable-auto-scroll" href="#accessories" aria-controls="accessories" role="tab" data-toggle="tab"><span>Accessories</span></a>
+              </li>
+              <li role="presentation">
+                <a class="disable-auto-scroll" href="#warranty-and-ssc" aria-controls="warranty-and-ssc" role="tab" data-toggle="tab"><span>Warranty & SSC</span></a>
+              </li>
+              <li role="presentation">
+                <a class="disable-auto-scroll" href="#history" aria-controls="history" role="tab" data-toggle="tab"><span>Service History</span></a>
+              </li>
+              <li role="presentation">
+                <a class="disable-auto-scroll" href="#thickness" aria-controls="thickness" role="tab" data-toggle="tab"><span>Paint Thickness</span></a>
+              </li>
+              <li role="presentation">
+                <a class="disable-auto-scroll" href="#swift-claim" aria-controls="swift-claim" role="tab" data-toggle="tab"><span>Swift Claim</span></a>
+              </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content" style="background: white; border: 1px solid #dddddd; padding: 25px; border-radius: 10px">
+              <div role="tabpanel" class="tab-pane active" id="specification">
+                <vehicle-specification
+                  id="vehicle-specification"
+                  query-string=""
+                  base-url="https://tiq-vehicles-functions.azurewebsites.net/api/secure-vehicle-lookup/"
+                ></vehicle-specification>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="accessories">
+                <vehicle-accessories
+                  id="vehicle-accessories"
+                  query-string=""
+                  base-url="https://tiq-vehicles-functions.azurewebsites.net/api/secure-vehicle-lookup/"
+                ></vehicle-accessories>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="warranty-and-ssc">
+                <warranty-details
+                  id="warranty"
+                  show-ssc="true"
+                  show-warranty="true"
+                  query-string=""
+                  base-url="https://tiq-vehicles-functions.azurewebsites.net/api/secure-vehicle-lookup/"
+                >
+                </warranty-details>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="history">
+                <service-history id="service-history" query-string="" base-url="https://tiq-vehicles-functions.azurewebsites.net/api/secure-vehicle-lookup/"> </service-history>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="thickness">
+                <paint-thickness id="paint-thickness" query-string="" base-url="https://tiq-vehicles-functions.azurewebsites.net/api/secure-vehicle-lookup/"> </paint-thickness>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="swift-claim">
+                <dynamic-claim id="dynamic-claim" query-string="" base-url="https://tiq-vehicles-functions.azurewebsites.net/api/secure-vehicle-lookup/"> </dynamic-claim>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="vehicle-lookup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manufacturer Lookup</title>
+  <script nomodule src="/build/shift-components.js"></script>
+  <script type="module" src="/build/shift-components.esm.js"></script>
+  <script src="./mock-data.js"></script>
+</head>
+<body>
+  <a href="/index.html">back</a>
+  <h1>Manufacturer Lookup</h1>
+  <manufacturer-lookup is-dev="true" query-string="" id="manufacturer-lookup" base-url="http://localhost:7174/api/secure-part-lookup/"> </manufacturer-lookup>
+
+  <div class="button-container">
+    <button class="dynamic-claim-button sample-button" onclick="fetchData()">reload</button>
+    <button class="dynamic-claim-button sample-button" onclick="fetchData('')">Empty (close)</button>
+    <button class="dynamic-claim-button sample-button" onclick="fetchData('error')">Error</button>
+    <button class="dynamic-claim-button sample-button" onclick="fetchData('T5245160030')">T5245160030</button>
+  </div>
+
+  <h3>offline Loads</h3>
+  <div class="button-container">
+    <button class="dynamic-claim-button sample-button" onclick="setData('')">Empty</button>
+    <button class="dynamic-claim-button sample-button" onclick="setData('error')">Error</button>
+    <button class="dynamic-claim-button sample-button" onclick="setData('T5245160030')">T5245160030</button>
+  </div>
+
+  <label>
+    render
+    <input onchange="toggleCheckbox(this)" type="checkbox" />
+  </label>
+  <div id="container"></div>
+
+  <script>
+    let manufacturerLookup;
+
+    document.addEventListener('DOMContentLoaded', function () {
+      manufacturerLookup = document.getElementById('manufacturer-lookup');
+
+      manufacturerLookup.setMockData(mockData);
+
+      manufacturerLookup.loadedResponse = newResponse => console.log(newResponse);
+      manufacturerLookup.loadingStateChange = isLoading => {
+        console.log('isLoading: ' + isLoading);
+      };
+    });
+
+    function fetchData(newVin) {
+      manufacturerLookup.fetchData(newVin);
+    }
+
+    function setData(key) {
+      manufacturerLookup.setData(mockData[key]);
+    }
+
+    function toggleCheckbox(e) {
+      const container = document.getElementById('container');
+      if (e.checked) {
+        const newElement = document.createElement('manufacturer-lookup');
+
+        newElement.id = 'toggle-item';
+        newElement.setAttribute('is-dev', 'true');
+        newElement.setAttribute('base-url', 'http://localhost:7174/api/secure-vehicle-lookup-test/');
+
+        newElement.setData(mockData['T5245160030']);
+        container.appendChild(newElement);
+      } else {
+        const element = document.getElementById('toggle-item');
+        element.parentNode.removeChild(element);
+      }
+    }
+  </script>
+
+  <style>
+    .button-container {
+      margin-top: 50px;
+      border: 1px solid #e1e1e1;
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .sample-button {
+      background-color: #428bca;
+      padding: 10px 15px;
+    }
+
+      .sample-button:hover {
+        background-color: #3071a9;
+      }
+  </style>
+</body>
+</html>

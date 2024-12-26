@@ -1,0 +1,21 @@
+:host {
+  all: initial !important;
+  display: block;
+}
+
+* {
+  font-family: Arial;
+}
+
+
+.success {
+  color: green;
+}
+
+.warning {
+  color: orange;
+}
+
+.reject {
+  color: red;
+}
