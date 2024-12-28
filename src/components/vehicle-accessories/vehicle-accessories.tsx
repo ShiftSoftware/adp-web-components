@@ -46,7 +46,7 @@ export class VehicleAccessories implements ImageViewerInterface {
   }
 
   @Method()
-  async setData(newData: VehicleInformation | string) {
+  async setData(newData: VehicleInformation | string, headers: any = {}) {
     clearTimeout(this.networkTimeoutRef);
     if (this.abortController) this.abortController.abort();
     this.abortController = new AbortController();
@@ -73,7 +73,7 @@ export class VehicleAccessories implements ImageViewerInterface {
         this.networkTimeoutRef = scopedTimeoutRef;
       });
 
-      const vehicleResponse = isVinRequest ? await getVehicleInformation(this, { scopedTimeoutRef, vin, mockData }) : newData;
+      const vehicleResponse = isVinRequest ? await getVehicleInformation(this, { scopedTimeoutRef, vin, mockData }, headers) : newData;
 
       if (this.networkTimeoutRef === scopedTimeoutRef) {
         if (!vehicleResponse) throw new Error('Wrong response format');
@@ -93,8 +93,8 @@ export class VehicleAccessories implements ImageViewerInterface {
   }
 
   @Method()
-  async fetchData(requestedVin: string = this.externalVin) {
-    await this.setData(requestedVin);
+  async fetchData(requestedVin: string = this.externalVin, headers: any = {}) {
+    await this.setData(requestedVin, headers);
   }
   //calculateHeight(componentState: string) {
   //  if (componentState.includes('loading') && this.componentHeight === '0px') {

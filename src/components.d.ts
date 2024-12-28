@@ -35,12 +35,12 @@ export namespace Components {
     interface DynamicClaim {
         "baseUrl": string;
         "completeClaim": () => Promise<void>;
-        "fetchData": (requestedVin?: string) => Promise<void>;
+        "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString": string;
-        "setData": (newData: VehicleInformation | string) => Promise<void>;
+        "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
     }
     interface DynamicRedeem {
@@ -80,42 +80,42 @@ export namespace Components {
     }
     interface PaintThickness {
         "baseUrl": string;
-        "fetchData": (requestedVin?: string) => Promise<void>;
+        "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString": string;
-        "setData": (newData: VehicleInformation | string) => Promise<void>;
+        "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
     }
     interface ServiceHistory {
         "baseUrl": string;
-        "fetchData": (requestedVin?: string) => Promise<void>;
+        "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString": string;
-        "setData": (newData: VehicleInformation | string) => Promise<void>;
+        "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
     }
     interface VehicleAccessories {
         "baseUrl": string;
-        "fetchData": (requestedVin?: string) => Promise<void>;
+        "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString": string;
-        "setData": (newData: VehicleInformation | string) => Promise<void>;
+        "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
     }
     interface VehicleSpecification {
         "baseUrl": string;
-        "fetchData": (requestedVin?: string) => Promise<void>;
+        "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString": string;
-        "setData": (newData: VehicleInformation | string) => Promise<void>;
+        "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
     }
     interface WarrantyDetails {
@@ -130,13 +130,13 @@ export namespace Components {
         "customerEmail"?: string;
         "customerName"?: string;
         "customerPhone"?: string;
-        "fetchData": (requestedVin?: string) => Promise<void>;
+        "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString": string;
         "recaptchaKey": string;
-        "setData": (newData: VehicleInformation | string) => Promise<void>;
+        "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
         "showSsc": boolean;
         "showWarranty": boolean;

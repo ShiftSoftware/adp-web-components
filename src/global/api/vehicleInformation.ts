@@ -34,7 +34,7 @@ type GetVehicleInformationProps = {
   middlewareCallback?: (VehicleInformation) => void;
 };
 
-export const getVehicleInformation = async (component: VehicleInformationInterface, generalProps: GetVehicleInformationProps): Promise<VehicleInformation> => {
+export const getVehicleInformation = async (component: VehicleInformationInterface, generalProps: GetVehicleInformationProps, headers: any = {}): Promise<VehicleInformation> => {
   const { notAvailableMessage, mockData, vin, scopedTimeoutRef, middlewareCallback } = generalProps;
 
   const { isDev, baseUrl, queryString, abortController, networkTimeoutRef, loadedResponse } = component;
@@ -56,13 +56,13 @@ export const getVehicleInformation = async (component: VehicleInformationInterfa
   } else {
     if (!baseUrl) throw new Error('Please provide base-url');
 
-    const headers = {};
+    const componentHeaders = { ...headers };
 
     Object.entries(vehicleRequestHeaders).forEach(([componentHeaderKey, headerField]) => {
-      if (component[componentHeaderKey]) headers[headerField] = component[componentHeaderKey];
+      if (component[componentHeaderKey]) componentHeaders[headerField] = component[componentHeaderKey];
     });
 
-    const response = await fetch(`${baseUrl}${vin}?${queryString}`, { signal: abortController.signal, headers: headers });
+    const response = await fetch(`${baseUrl}${vin}?${queryString}`, { signal: abortController.signal, headers: componentHeaders });
 
     const newData = (await response.json()) as VehicleInformation;
 
