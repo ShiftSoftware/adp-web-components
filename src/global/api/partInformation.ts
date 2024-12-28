@@ -18,7 +18,7 @@ type GetPartInformationProps = {
   middlewareCallback?: (PartInformation) => void;
 };
 
-export const getPartInformation = async (component: PartInformationInterface, generalProps: GetPartInformationProps): Promise<PartInformation> => {
+export const getPartInformation = async (component: PartInformationInterface, generalProps: GetPartInformationProps, headers: any = {}): Promise<PartInformation> => {
   const { notAvailableMessage, mockData, partNumber, scopedTimeoutRef, middlewareCallback } = generalProps;
 
   const { isDev, baseUrl, queryString, abortController, networkTimeoutRef, loadedResponse } = component;
@@ -40,7 +40,7 @@ export const getPartInformation = async (component: PartInformationInterface, ge
   } else {
     if (!baseUrl) throw new Error('Please provide base-url');
 
-    const response = await fetch(`${baseUrl}${partNumber}?${queryString}`, { signal: abortController.signal });
+    const response = await fetch(`${baseUrl}${partNumber}?${queryString}`, { signal: abortController.signal, headers: headers });
 
     const newData = (await response.json()) as PartInformation;
 

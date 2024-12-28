@@ -12,7 +12,7 @@ const vehicleRequestHeaders = {
   cityIntegrationId: 'City-Integration-Id',
   brandIntegrationId: 'Brand-Integration-Id',
   companyIntegrationId: 'Company-Integration-Id',
-  companyBranchIntegrationId: 'Company-Branch-Integration-Id',
+  companyBranchIntegrationId: 'Company-Branch-Integration-Id'
 } as const;
 
 type VehicleRequestHeaders = Partial<Record<keyof typeof vehicleRequestHeaders, string>>;

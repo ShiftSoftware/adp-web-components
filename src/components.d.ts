@@ -14,22 +14,22 @@ export { ServiceItem, VehicleInformation } from "./global/types/vehicle-informat
 export namespace Components {
     interface DeadStockLookup {
         "baseUrl": string;
-        "fetchData": (requestedVin?: string) => Promise<void>;
+        "fetchData": (partNumber?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
         "loadedResponse"?: (response: PartInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString": string;
-        "setData": (newData: PartInformation | string) => Promise<void>;
+        "setData": (newData: PartInformation | string, headers?: any) => Promise<void>;
         "setMockData": (newMockData: MockJson<PartInformation>) => Promise<void>;
     }
     interface DistributorLookup {
         "baseUrl": string;
-        "fetchData": (requestedVin?: string) => Promise<void>;
+        "fetchData": (partNumber?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
         "loadedResponse"?: (response: PartInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString": string;
-        "setData": (newData: PartInformation | string) => Promise<void>;
+        "setData": (newData: PartInformation | string, headers?: any) => Promise<void>;
         "setMockData": (newMockData: MockJson<PartInformation>) => Promise<void>;
     }
     interface DynamicClaim {
@@ -69,13 +69,13 @@ export namespace Components {
     }
     interface ManufacturerLookup {
         "baseUrl": string;
-        "fetchData": (requestedVin?: string) => Promise<void>;
+        "fetchData": (partNumber?: string, headers?: any) => Promise<void>;
         "headerTitle": string;
         "isDev": boolean;
         "loadedResponse"?: (response: PartInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString": string;
-        "setData": (newData: PartInformation | string) => Promise<void>;
+        "setData": (newData: PartInformation | string, headers?: any) => Promise<void>;
         "setMockData": (newMockData: MockJson<PartInformation>) => Promise<void>;
     }
     interface PaintThickness {

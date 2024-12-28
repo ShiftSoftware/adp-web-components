@@ -37,7 +37,7 @@ export class ManufacturerLookup implements PartInformationInterface {
   }
 
   @Method()
-  async setData(newData: PartInformation | string) {
+  async setData(newData: PartInformation | string, headers: any = {}) {
     clearTimeout(this.networkTimeoutRef);
     if (this.abortController) this.abortController.abort();
     this.abortController = new AbortController();
@@ -64,7 +64,7 @@ export class ManufacturerLookup implements PartInformationInterface {
         this.networkTimeoutRef = scopedTimeoutRef;
       });
 
-      const partResponse = isPartNumberRequest ? await getPartInformation(this, { scopedTimeoutRef, partNumber, mockData }) : newData;
+      const partResponse = isPartNumberRequest ? await getPartInformation(this, { scopedTimeoutRef, partNumber, mockData }, headers) : newData;
 
       if (this.networkTimeoutRef === scopedTimeoutRef) {
         if (!partResponse) throw new Error('Wrong response format');
@@ -84,8 +84,8 @@ export class ManufacturerLookup implements PartInformationInterface {
   }
 
   @Method()
-  async fetchData(requestedVin: string = this.externalPartNumber) {
-    await this.setData(requestedVin);
+  async fetchData(partNumber: string = this.externalPartNumber, headers: any = {}) {
+    await this.setData(partNumber, headers);
   }
   //calculateHeight(componentState: string) {
   //  if (componentState.includes('loading') && this.componentHeight === '0px') {
