@@ -4,39 +4,23 @@ const warranty = document.getElementById('warranty');
 const serviceHistory = document.getElementById('service-history');
 const paintThickness = document.getElementById('paint-thickness');
 const dynamicClaim = document.getElementById('dynamic-claim');
+const distributorLookup = document.getElementById('distributor-lookup');
+const deadStockLookup = document.getElementById('dead-stock-lookup');
+const manufacturerLookup = document.getElementById('manufacturer-lookup');
 
-const componentsList = [vehicleSpecification, warranty, serviceHistory, dynamicClaim, paintThickness, vehicleAccessories];
+const componentsList = [vehicleSpecification, warranty, serviceHistory, dynamicClaim, paintThickness, vehicleAccessories, distributorLookup, deadStockLookup, manufacturerLookup];
 
-const input = document.getElementById('vinInput');
-const error = document.getElementsByClassName('error-message')[0];
-const searchIcon = document.getElementById('search-icon');
-const spinnerIcon = document.getElementById('spinner-icon');
-const searchText = document.getElementById('search-text');
-const searchButton = document.getElementById('search-button');
-
+const searchutton = document.getElementById('searchButton');
+const partNumberInput = document.getElementById('partNumberInput');
+const partQtyInput = document.getElementById('partQtyInput');
+const vinInput = document.getElementById('vinInput');
 const franchiseSelector = document.getElementById('franchise-selector');
-const franchiseSelectorError = document.getElementById('franchise-selector-error-message');
-
-var lastLookupResult = null;
 
 function handleLoadingState(isLoading) {
-  if (isLoading) {
-    $("li:not('.active')").addClass('disabled');
+  lookupPage.invokeMethodAsync('onLoadingStateChanged', isLoading);
 
-    searchIcon.style.display = 'none';
-    spinnerIcon.style.display = 'inline-block';
-    searchText.innerHTML = 'Searching...';
-    input.readOnly = true;
-    input.classList.add('disabled');
-  } else {
-    $("li:not('.active')").removeClass('disabled');
-    searchIcon.style.display = 'inline-block';
-    spinnerIcon.style.display = 'none';
-    searchText.innerHTML = 'Search';
-    input.readOnly = false;
-    input.classList.remove('disabled');
+  if (!isLoading)
     searching = false;
-  }
 }
 
 function handleLoadData(newResponse, activeElement) {
@@ -45,101 +29,167 @@ function handleLoadData(newResponse, activeElement) {
   });
 }
 
-document.onreadystatechange = function (e) {
-  $('#vehicle-info-tab a').click(function (e) {
-    e.preventDefault();
-    $(this).tab('show');
+let lookupPage;
+
+function registerLookupPage(instance) {
+  lookupPage = instance;
+
+  if (lookupPage.invokeMethodAsync) {
+    
+  }
+  else {
+    lookupPage.invokeMethodAsync = async function (methodName, payload) {
+      if (methodName === 'onErrorStateChanged') {
+        await lookupPage.onErrorStateChanged(payload);
+      }
+      else if (methodName === 'onLoadingStateChanged') {
+        await lookupPage.onLoadingStateChanged(payload);
+      }
+      else if (methodName === 'getHeaders') {
+        return await lookupPage.getHeaders();
+      }
+    }
+  }
+}
+
+componentsList.forEach(element => {
+  if (element === null) return;
+
+  element.loadingStateChange = handleLoadingState;
+  element.loadedResponse = newResponse => handleLoadData(newResponse, element);
+});
+
+if (searchutton) {
+  searchutton.addEventListener("click", async function (e) {
+    await search();
   });
+}
 
-  $('#search-button').click(function () {
-    search();
-  });
-
-  componentsList.forEach(element => {
-    if (element === null) return;
-
-    element.loadingStateChange = handleLoadingState;
-    element.loadedResponse = newResponse => handleLoadData(newResponse, element);
-  });
-
-  $(input).keydown(function (e) {
-    if (e.keyCode == 13) {
+if (vinInput) {
+  vinInput.addEventListener("keydown", async function (e) {
+    if (e.key === 'Enter') {
       e.preventDefault();
-      search();
+      await search();
     }
   });
-};
+}
+
+if (partNumberInput) {
+  partNumberInput.addEventListener("keydown", async function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      await search();
+    }
+  });
+}
+
+if (partQtyInput) {
+  partQtyInput.addEventListener("keydown", async function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      await search();
+    }
+  });
+}
+
 
 var searching = false;
-function search() {
+async function search() {
+  
   if (searching) return;
 
   searching = true;
 
-  input.classList.remove('error_bg');
-  error.innerHTML = '';
+  lookupPage.invokeMethodAsync('onErrorStateChanged', { vinError: null, franchiseError: null, partError: null });
 
-  if (franchiseSelector) {
-    franchiseSelector.classList.remove('error_bg');
+  if (vinInput) {
+    var vin = vinInput.value;
 
-    franchiseSelectorError.innerHTML = '';
-  }
-
-  var vin = input.value;
-
-  if (vin == '') {
-    input.classList.add('error_bg');
-
-    error.innerHTML = 'VIN is required';
-
-    searching = false;
-
-    return;
-  }
-
-  if (!validateVin(vin)) {
-    input.classList.add('error_bg');
-
-    error.innerHTML = 'Invalid VIN';
-
-    searching = false;
-
-    return;
-  }
-
-  if (franchiseSelector) {
-    var franchise = franchiseSelector.value;
-
-    warranty.setAttribute('brand-integration-id', franchise);
-
-    if (franchise == '') {
-      franchiseSelector.classList.add('error_bg');
-
-      franchiseSelectorError.innerHTML = 'Please Select';
+    if (vin == '') {
+      lookupPage.invokeMethodAsync('onErrorStateChanged', { vinError: 'VIN is required', franchiseError: null, partError: null });
 
       searching = false;
 
       return;
     }
+
+    if (!validateVin(vin)) {
+      lookupPage.invokeMethodAsync('onErrorStateChanged', { vinError: 'Invalid VIN', franchiseError: null, partError: null });
+
+      searching = false;
+
+      return;
+    }
+
+    if (franchiseSelector) {
+
+      var franchise = franchiseSelector.value;
+
+      warranty.setAttribute('brand-integration-id', franchise);
+
+      if (franchise == '') {
+
+        lookupPage.invokeMethodAsync('onErrorStateChanged', { vinError: null, franchiseError: 'Please Select a Franchise', partError: null });
+
+        searching = false;
+
+        return;
+      }
+    }
+
+    var headers = await lookupPage.invokeMethodAsync('getHeaders');
+
+    if (vehicleSpecification && vehicleSpecification.checkVisibility()) {
+      vehicleSpecification.fetchData(vin, headers);
+    }
+    if (warranty && warranty.checkVisibility()) {
+      warranty.fetchData(vin, headers);
+    }
+    if (serviceHistory && serviceHistory.checkVisibility()) {
+      serviceHistory.fetchData(vin, headers);
+    }
+    if (dynamicClaim && dynamicClaim.checkVisibility()) {
+      dynamicClaim.fetchData(vin, headers);
+    }
+    if (paintThickness && paintThickness.checkVisibility()) {
+      paintThickness.fetchData(vin, headers);
+    }
+    if (vehicleAccessories && vehicleAccessories.checkVisibility()) {
+      vehicleAccessories.fetchData(vin, headers);
+    }
   }
 
-  if ($(vehicleSpecification).is(':visible')) {
-    vehicleSpecification.fetchData(vin);
-  }
-  if ($(warranty).is(':visible')) {
-    warranty.fetchData(vin);
-  }
-  if ($(serviceHistory).is(':visible')) {
-    serviceHistory.fetchData(vin);
-  }
-  if ($(dynamicClaim).is(':visible')) {
-    dynamicClaim.fetchData(vin);
-  }
-  if ($(paintThickness).is(':visible')) {
-    paintThickness.fetchData(vin);
-  }
-  if ($(vehicleAccessories).is(':visible')) {
-    vehicleAccessories.fetchData(vin);
+  if (partNumberInput) {
+    var partNumber = partNumberInput.value;
+
+    if (partNumber == '') {
+      lookupPage.invokeMethodAsync('onErrorStateChanged', { partError: 'Part Number is Required' });
+
+      searching = false;
+
+      return;
+    }
+
+
+    var searchText = partNumber;
+
+    var partQty = partQtyInput.value;
+
+    if (partQty.trim() !== '' && partQty !== '0') {
+      searchText = `${partNumber}/${partQty}`;
+    }
+
+    var headers = await lookupPage.invokeMethodAsync('getHeaders');
+
+    if (distributorLookup && distributorLookup.checkVisibility()) {
+      distributorLookup.fetchData(searchText, headers);
+    }
+    if (deadStockLookup && deadStockLookup.checkVisibility()) {
+      deadStockLookup.fetchData(searchText, headers);
+    }
+    if (manufacturerLookup && manufacturerLookup.checkVisibility()) {
+      manufacturerLookup.fetchData(searchText, headers);
+    }
   }
 }
 
@@ -216,3 +266,6 @@ function validateVin(vin) {
 
   return valid;
 }
+
+
+export { registerLookupPage };
