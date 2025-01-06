@@ -115,7 +115,7 @@
               <vehicle-lookup
                 id="vehicle-lookup"
                 active-lookup-index="0"
-                query-string=""
+                query-string="code=2t8WF7bwBsKTRWqVz0evcKIa55H3jPu-SClz3UwuoaIXAzFuW_zsKg=="
                 base-url="https://tiq-vehicles-functions.azurewebsites.net/api/secure-vehicle-lookup/"
               ></vehicle-lookup>
             </div>
@@ -127,6 +127,12 @@
     <script>
       let vehicleLookup;
       let searching = false;
+
+      const lookupPage = document.getElementById('lookup-page');
+
+      const searchIcon = document.getElementById('search-icon');
+      const searchText = document.getElementById('search-text');
+      const spinnerIcon = document.getElementById('spinner-icon');
 
       const input = document.getElementById('vinInput');
 
@@ -141,19 +147,20 @@
       document.addEventListener('DOMContentLoaded', async function () {
         vehicleLookup = document.getElementById('vehicle-lookup');
 
-        const context = await vehicleLookup.getPageContext();
-
-        console.log(vehicleLookup);
-        console.log(context);
-
         vehicleLookup.onLoadingStateChanged = function onLoadingStateChanged(isLoading) {
           if (isLoading) {
             $("li:not('.active')").addClass('disabled');
-
+            searching = true;
+            searchIcon.style.display = 'none';
+            spinnerIcon.style.display = 'inline-block';
+            searchText.innerHTML = 'Searching...';
             input.readOnly = true;
             input.classList.add('disabled');
           } else {
             $("li:not('.active')").removeClass('disabled');
+            searchIcon.style.display = 'inline-block';
+            spinnerIcon.style.display = 'none';
+            searchText.innerHTML = 'Search';
             input.readOnly = false;
             input.classList.remove('disabled');
             searching = false;
