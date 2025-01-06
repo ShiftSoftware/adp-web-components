@@ -149,7 +149,7 @@ export class DistributorLookup implements PartInformationInterface {
                   <div class="flex mt-[12px] max-h-[70dvh] overflow-hidden rounded-[4px] flex-col border border-[#d6d8dc]">
                     <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">Info</div>
 
-                    <div class="px-[30px] py-[10px] flex flex-col gap-[15px]">
+                    <div class="py-[10px] flex flex-col gap-[15px]">
                       <div class="flex gap-[50px]">
                         {infoRow1.map(({ label, value }) => (
                           <div key={label} class="flex flex-col flex-1">
@@ -175,7 +175,7 @@ export class DistributorLookup implements PartInformationInterface {
                     <div class="flex mt-[12px] max-h-[70dvh] overflow-hidden rounded-[4px] flex-col border border-[#d6d8dc]">
                       <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">Distributor Stock</div>
 
-                      <div class="px-[30px] py-[10px] flex flex-col gap-[15px]">
+                      <div class="flex flex-col gap-[15px]">
                         <table class="w-full overflow-auto relative border-collapse">
                           <thead class="top-0 font-bold sticky bg-white">
                             <tr>
@@ -189,10 +189,10 @@ export class DistributorLookup implements PartInformationInterface {
 
                           <tbody>
                             {this.partInformation?.stockParts.map(stock => (
-                              <tr class="transition-colors duration-100 hover:bg-slate-100" key={stock.locationID}>
-                                <td class={cn('px-[10px] py-[20px] text-center whitespace-nowrap border-b border-[#d6d8dc]')}>{stock.locationName}</td>
+                              <tr class="transition-colors duration-100 border-b border-[#d6d8dc] last:border-none hover:bg-slate-100" key={stock.locationID}>
+                                <td class={cn('px-[10px] py-[20px] text-center whitespace-nowrap')}>{stock.locationName}</td>
 
-                                <td class={cn('px-[10px] py-[20px] text-center whitespace-nowrap border-b border-[#d6d8dc]')}>
+                                <td class={cn('px-[10px] py-[20px] text-center whitespace-nowrap')}>
                                   <div
                                     class={cn('text-[red]', {
                                       'text-[green]': stock.quantityLookUpResult === 'Available',
