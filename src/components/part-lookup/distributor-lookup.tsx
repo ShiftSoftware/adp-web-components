@@ -111,8 +111,6 @@ export class DistributorLookup implements PartInformationInterface {
   }
 
   render() {
-    console.log(this.partInformation);
-
     const infoRow1 = this.partInformation
       ? [
           { label: 'Description', value: this.partInformation.stockParts[0].partDescription },
