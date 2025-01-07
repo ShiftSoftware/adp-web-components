@@ -19,13 +19,11 @@ export class DistributorLookup implements PartInformationInterface {
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
   @Prop() loadedResponse?: (response: PartInformation) => void;
 
-  //@State() componentHeight = '0px';
   @State() state: AppStates = 'idle';
   @State() externalPartNumber?: string = null;
   @State() errorMessage?: string = null;
   @State() partInformation?: PartInformation;
 
-  //private wrapperRef?: HTMLDivElement;
   abortController: AbortController;
   networkTimeoutRef: ReturnType<typeof setTimeout>;
 
@@ -49,7 +47,6 @@ export class DistributorLookup implements PartInformationInterface {
 
     try {
       if (!partNumber || partNumber.trim().length === 0) {
-        //this.componentHeight = '0px';
         this.state = 'idle';
         return;
       }
@@ -86,22 +83,9 @@ export class DistributorLookup implements PartInformationInterface {
   async fetchData(partNumber: string = this.externalPartNumber, headers: any = {}) {
     await this.setData(partNumber, headers);
   }
-  //calculateHeight(componentState: string) {
-  //  if (componentState.includes('loading') && this.componentHeight === '0px') {
-  //    this.componentHeight = '100px';
-  //  } else if (componentState !== 'idle') {
-  //    setTimeout(() => {
-  //      this.componentHeight = `${this.wrapperRef.clientHeight}px`;
-  //    }, 50);
-  //  } else {
-  //    this.componentHeight = '0px';
-  //  }
-  //}
 
   @Watch('state')
   async loadingListener() {
-    //this.calculateHeight(newState);
-
     if (this.loadingStateChange) this.loadingStateChange(this.state.includes('loading'));
   }
 

@@ -26,14 +26,12 @@ export class VehicleAccessories implements ImageViewerInterface {
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
   @Prop() loadedResponse?: (response: VehicleInformation) => void;
 
-  //@State() componentHeight = '0px';
   @State() state: AppStates = 'idle';
   @State() externalVin?: string = null;
   @State() errorMessage?: string = null;
   @State() expandedImage?: string = null;
   @State() vehicleInformation?: VehicleInformation;
 
-  //private wrapperRef?: HTMLDivElement;
   originalImage: HTMLImageElement;
   abortController: AbortController;
   networkTimeoutRef: ReturnType<typeof setTimeout>;
@@ -59,7 +57,6 @@ export class VehicleAccessories implements ImageViewerInterface {
 
     try {
       if (!vin || vin.trim().length === 0) {
-        //this.componentHeight = '0px';
         this.state = 'idle';
         return;
       }
@@ -96,22 +93,9 @@ export class VehicleAccessories implements ImageViewerInterface {
   async fetchData(requestedVin: string = this.externalVin, headers: any = {}) {
     await this.setData(requestedVin, headers);
   }
-  //calculateHeight(componentState: string) {
-  //  if (componentState.includes('loading') && this.componentHeight === '0px') {
-  //    this.componentHeight = '100px';
-  //  } else if (componentState !== 'idle') {
-  //    setTimeout(() => {
-  //      this.componentHeight = `${this.wrapperRef.clientHeight}px`;
-  //    }, 50);
-  //  } else {
-  //    this.componentHeight = '0px';
-  //  }
-  //}
 
   @Watch('state')
   async loadingListener() {
-    //this.calculateHeight(newState);
-
     if (this.loadingStateChange) this.loadingStateChange(this.state.includes('loading'));
   }
 

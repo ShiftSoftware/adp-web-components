@@ -55,7 +55,6 @@ export class WarrantyDetails implements VehicleInformationInterface {
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
   @Prop() loadedResponse?: (response: VehicleInformation) => void;
 
-  //@State() componentHeight = '0px';
   @State() state: AppStates = 'idle';
   @State() externalVin?: string = null;
   @State() errorMessage?: string = null;
@@ -65,7 +64,6 @@ export class WarrantyDetails implements VehicleInformationInterface {
   @State() checkingUnauthorizedSSC: boolean = false;
   @State() recaptchaRes: { hasSSC: boolean; message: string } | null = null;
 
-  //private wrapperRef?: HTMLDivElement;
   abortController: AbortController;
   networkTimeoutRef: ReturnType<typeof setTimeout>;
   private recaptchaIntervalRef: ReturnType<typeof setInterval>;
@@ -106,8 +104,6 @@ export class WarrantyDetails implements VehicleInformationInterface {
 
             this.showRecaptcha = false;
 
-            //this.calculateHeight(this.state);
-
             await new Promise(r => setTimeout(r, 3000));
 
             this.checkingUnauthorizedSSC = false;
@@ -118,14 +114,10 @@ export class WarrantyDetails implements VehicleInformationInterface {
               hasSSC: hasPendingSSC,
               message: hasPendingSSC ? 'This Vehicle has a Pending SSC' : 'No Pending SSC',
             };
-
-            //this.calculateHeight(this.state);
           } else {
             this.checkingUnauthorizedSSC = true;
 
             this.showRecaptcha = false;
-
-            //this.calculateHeight(this.state);
 
             const response = await fetch(`${this.unauthorizedSscLookupBaseUrl}${vin}/${this.vehicleInformation?.sscLogId}?${this.unauthorizedSscLookupQueryString}`, {
               signal: this.abortController.signal,
@@ -145,8 +137,6 @@ export class WarrantyDetails implements VehicleInformationInterface {
                 hasSSC: hasPendingSSC,
                 message: hasPendingSSC ? 'This Vehicle has a Pending SSC' : 'No Pending SSC',
               };
-
-              //this.calculateHeight(this.state);
             } else throw new Error('Wrong response format');
           }
         }
@@ -173,7 +163,6 @@ export class WarrantyDetails implements VehicleInformationInterface {
 
     try {
       if (!vin || vin.trim().length === 0) {
-        //this.componentHeight = '0px';
         this.state = 'idle';
         return;
       }
@@ -225,37 +214,16 @@ export class WarrantyDetails implements VehicleInformationInterface {
     }
   }
 
-  //calculateHeight(componentState: string) {
-  //  if (componentState.includes('loading') && this.componentHeight === '0px') {
-  //    this.componentHeight = '100px';
-  //  } else if (componentState !== 'idle') {
-  //    setTimeout(() => {
-  //      this.componentHeight = `${this.wrapperRef.clientHeight}px`;
-  //    }, 50);
-  //  } else {
-  //    this.componentHeight = '0px';
-  //  }
-  //}
-
   @Method()
   async setMockData(newMockData: MockJson<VehicleInformation>) {
     mockData = newMockData;
   }
 
   @Watch('showSsc')
-  onShowSscChange() {
-    //this.calculateHeight(this.state);
-  }
-
-  @Watch('showWarranty')
-  onShowWarrantyChange() {
-    //this.calculateHeight(this.state);
-  }
+  onShowSscChange() {}
 
   @Watch('state')
   async loadingListener() {
-    //this.calculateHeight(newState);
-
     if (this.loadingStateChange) this.loadingStateChange(this.state.includes('loading'));
   }
 

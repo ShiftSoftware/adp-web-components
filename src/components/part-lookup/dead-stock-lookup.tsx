@@ -50,7 +50,6 @@ export class DeadStockLookup implements PartInformationInterface {
 
     try {
       if (!partNumber || partNumber.trim().length === 0) {
-        //this.componentHeight = '0px';
         this.state = 'idle';
         return;
       }
@@ -89,8 +88,6 @@ export class DeadStockLookup implements PartInformationInterface {
 
   @Watch('state')
   async loadingListener() {
-    //this.calculateHeight(newState);
-
     if (this.loadingStateChange) this.loadingStateChange(this.state.includes('loading'));
   }
 
