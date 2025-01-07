@@ -1,4 +1,4 @@
-import { Component, Element, Host, Method, Prop, State, Watch, h, Event } from '@stencil/core';
+import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import { PartInformation } from '~types/part-information';
 import { getPartInformation, PartInformationInterface } from '~api/partInformation';
 import Loading from '../parts/Loading';
