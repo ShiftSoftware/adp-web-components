@@ -6,33 +6,3 @@
 * {
   font-family: Arial;
 }
-
-.accordion-item {
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.accordion-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  cursor: pointer;
-}
-
-.accordion-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-in-out;
-}
-
-.accordion-content.max-h-screen {
-  max-height: 1000px; /* Adjust as needed */
-}
-
-.icon {
-  transition: transform 0.3s ease-in-out;
-}
-
-.icon.rotate-180 {
-  transform: rotate(180deg);
-}
