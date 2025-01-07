@@ -26,7 +26,6 @@ export class VehicleSpecification implements VehicleInformationInterface {
   @State() errorMessage?: string = null;
   @State() vehicleInformation?: VehicleInformation;
 
-  //private wrapperRef?: HTMLDivElement;
   abortController: AbortController;
   networkTimeoutRef: ReturnType<typeof setTimeout>;
 
@@ -46,7 +45,6 @@ export class VehicleSpecification implements VehicleInformationInterface {
 
     try {
       if (!vin || vin.trim().length === 0) {
-        //this.componentHeight = '0px';
         this.state = 'idle';
         return;
       }
@@ -83,22 +81,8 @@ export class VehicleSpecification implements VehicleInformationInterface {
     await this.setData(requestedVin, headers);
   }
 
-  //calculateHeight(componentState: string) {
-  //  if (componentState.includes('loading') && this.componentHeight === '0px') {
-  //    this.componentHeight = '100px';
-  //  } else if (componentState !== 'idle') {
-  //    setTimeout(() => {
-  //      this.componentHeight = `${this.wrapperRef.clientHeight}px`;
-  //    }, 50);
-  //  } else {
-  //    this.componentHeight = '0px';
-  //  }
-  //}
-
   @Watch('state')
   async loadingListener() {
-    //this.calculateHeight(newState);
-
     if (this.loadingStateChange) this.loadingStateChange(this.state.includes('loading'));
   }
 
