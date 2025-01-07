@@ -63,6 +63,7 @@ export class WarrantyDetails implements VehicleInformationInterface {
   @State() vehicleInformation?: VehicleInformation;
   @State() checkingUnauthorizedSSC: boolean = false;
   @State() recaptchaRes: { hasSSC: boolean; message: string } | null = null;
+  @State() headers: any = {};
 
   abortController: AbortController;
   networkTimeoutRef: ReturnType<typeof setTimeout>;
@@ -119,10 +120,12 @@ export class WarrantyDetails implements VehicleInformationInterface {
 
             this.showRecaptcha = false;
 
+            ///
             const response = await fetch(`${this.unauthorizedSscLookupBaseUrl}${vin}/${this.vehicleInformation?.sscLogId}?${this.unauthorizedSscLookupQueryString}`, {
               signal: this.abortController.signal,
               headers: {
-                'Ssc-Recaptcha-Token': recaptchaResponse,
+                ...this.headers,
+                'Ssc-Recaptcha-Token': recaptchaResponse
               },
             });
 
@@ -150,6 +153,7 @@ export class WarrantyDetails implements VehicleInformationInterface {
   @Method()
   async setData(newData: VehicleInformation | string, headers: any = {}) {
     this.recaptchaRes = null;
+    this.headers = headers;
     clearTimeout(this.networkTimeoutRef);
     clearInterval(this.recaptchaIntervalRef);
     if (this.abortController) this.abortController.abort();
