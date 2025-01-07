@@ -219,9 +219,6 @@ export class WarrantyDetails implements VehicleInformationInterface {
     mockData = newMockData;
   }
 
-  @Watch('showSsc')
-  onShowSscChange() {}
-
   @Watch('state')
   async loadingListener() {
     if (this.loadingStateChange) this.loadingStateChange(this.state.includes('loading'));
