@@ -19,13 +19,11 @@ export class DistributorLookup implements PartInformationInterface {
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
   @Prop() loadedResponse?: (response: PartInformation) => void;
 
-  //@State() componentHeight = '0px';
   @State() state: AppStates = 'idle';
   @State() externalPartNumber?: string = null;
   @State() errorMessage?: string = null;
   @State() partInformation?: PartInformation;
 
-  //private wrapperRef?: HTMLDivElement;
   abortController: AbortController;
   networkTimeoutRef: ReturnType<typeof setTimeout>;
 
@@ -49,7 +47,6 @@ export class DistributorLookup implements PartInformationInterface {
 
     try {
       if (!partNumber || partNumber.trim().length === 0) {
-        //this.componentHeight = '0px';
         this.state = 'idle';
         return;
       }
@@ -86,22 +83,9 @@ export class DistributorLookup implements PartInformationInterface {
   async fetchData(partNumber: string = this.externalPartNumber, headers: any = {}) {
     await this.setData(partNumber, headers);
   }
-  //calculateHeight(componentState: string) {
-  //  if (componentState.includes('loading') && this.componentHeight === '0px') {
-  //    this.componentHeight = '100px';
-  //  } else if (componentState !== 'idle') {
-  //    setTimeout(() => {
-  //      this.componentHeight = `${this.wrapperRef.clientHeight}px`;
-  //    }, 50);
-  //  } else {
-  //    this.componentHeight = '0px';
-  //  }
-  //}
 
   @Watch('state')
   async loadingListener() {
-    //this.calculateHeight(newState);
-
     if (this.loadingStateChange) this.loadingStateChange(this.state.includes('loading'));
   }
 
@@ -111,13 +95,33 @@ export class DistributorLookup implements PartInformationInterface {
   }
 
   render() {
+    const infoRow1 = this.partInformation
+      ? [
+          { label: 'Description', value: this.partInformation.stockParts[0].partDescription },
+          { label: 'Product Group', value: this.partInformation.stockParts[0].group },
+          { label: 'Price', value: this.partInformation.stockParts[0].price },
+        ]
+      : [];
+
+    const infoRow2 = this.partInformation
+      ? [
+          { label: 'Superseded To', value: this.partInformation.stockParts[0].supersededTo },
+          { label: 'Superseded From', value: this.partInformation.stockParts[0].supersededFrom },
+        ]
+      : [];
+
+    const displayDistributer = this.partInformation
+      ? !this.partInformation.stockParts.some(
+          ({ quantityLookUpResult }) => quantityLookUpResult === 'LookupIsSkipped' || quantityLookUpResult === 'QuantityNotWithinLookupThreshold',
+        )
+      : false;
+
     return (
       <Host>
         <div class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
           <div>
             <Loading isLoading={this.state.includes('loading')} />
             <div class={cn('transition-all duration-700', { 'scale-0': this.state.includes('loading') || this.state === 'idle', 'opacity-0': this.state.includes('loading') })}>
-
               {['error', 'error-loading'].includes(this.state) && (
                 <div class="py-[16px]">
                   <div class=" px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">{this.errorMessage}</div>
@@ -126,51 +130,36 @@ export class DistributorLookup implements PartInformationInterface {
 
               {['data', 'data-loading'].includes(this.state) && (
                 <div>
-
                   <div class="flex mt-[12px] max-h-[70dvh] overflow-hidden rounded-[4px] flex-col border border-[#d6d8dc]">
                     <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">Info</div>
 
-                    <div style={{ padding: '10px 30px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                      <div style={{ display: 'flex', gap: '50px' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', 'flex': '1' }}>
-                          <strong style={{ padding: '10px 0', borderBottom: '1px solid grey', }}>Description</strong>
-                          <div style={{ padding: '10px 0px' }}>{this.partInformation.stockParts[0].partDescription}</div>
-                        </div>
-
-                        <div style={{ display: 'flex', flexDirection: 'column', 'flex': '1' }}>
-                          <strong style={{ padding: '10px 0', borderBottom: '1px solid grey', }}>Product Group</strong>
-                          <div style={{ padding: '10px 0px' }}>{this.partInformation.stockParts[0].group}</div>
-                        </div>
-
-                        <div style={{ display: 'flex', flexDirection: 'column', 'flex': '1' }}>
-                          <strong style={{ padding: '10px 0', borderBottom: '1px solid grey', }}>Price</strong>
-                          <div style={{ padding: '10px 0px' }}>{this.partInformation.stockParts[0].price}</div>
-                        </div>
+                    <div class="py-[10px] flex flex-col gap-[15px]">
+                      <div class="flex gap-[50px]">
+                        {infoRow1.map(({ label, value }) => (
+                          <div key={label} class="flex flex-col flex-1">
+                            <strong class="py-[10px] px-0 border-b-[gray] border-b">{label}</strong>
+                            <div class="py-[10px] px-0">{value}</div>
+                          </div>
+                        ))}
                       </div>
 
-                      <div style={{ display: 'flex', gap: '50px' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', 'flex': '1' }}>
-                          <strong style={{ padding: '10px 0', borderBottom: '1px solid grey', }}>Superseded To</strong>
-                          <div style={{ padding: '10px 0px' }}>{this.partInformation.stockParts[0].supersededTo}</div>
-                        </div>
-
-                        <div style={{ display: 'flex', flexDirection: 'column', 'flex': '1' }}>
-                          <strong style={{ padding: '10px 0', borderBottom: '1px solid grey', }}>Superseded From</strong>
-                          <div style={{ padding: '10px 0px' }}>{this.partInformation.stockParts[0].supersededFrom}</div>
-                        </div>
-
-                        <div style={{ display: 'flex', flexDirection: 'column', 'flex': '1' }}>
-                        </div>
+                      <div class="flex gap-[50px]">
+                        {infoRow2.map(({ label, value }) => (
+                          <div key={label} class="flex flex-col flex-1">
+                            <strong class="py-[10px] px-0 border-b border-b-[grey]">{label}</strong>
+                            <div class="py-[10px] px-0">{value}</div>
+                          </div>
+                        ))}
+                        <div class="flex-1" />
                       </div>
                     </div>
                   </div>
 
-                  {this.partInformation.stockParts.filter(y => { return y.quantityLookUpResult === 'LookupIsSkipped' || y.quantityLookUpResult === 'QuantityNotWithinLookupThreshold'; }).length === 0 && (
+                  {displayDistributer && (
                     <div class="flex mt-[12px] max-h-[70dvh] overflow-hidden rounded-[4px] flex-col border border-[#d6d8dc]">
                       <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">Distributor Stock</div>
 
-                      <div style={{ padding: '10px 30px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
-
+                      <div class="flex flex-col gap-[15px]">
                         <table class="w-full overflow-auto relative border-collapse">
                           <thead class="top-0 font-bold sticky bg-white">
                             <tr>
@@ -183,27 +172,33 @@ export class DistributorLookup implements PartInformationInterface {
                           </thead>
 
                           <tbody>
-                            {this.partInformation?.stockParts.map((stock) => (
-                              <tr class="transition-colors duration-100 hover:bg-slate-100" key={stock.locationID}>
-                                <td class={cn('px-[10px] py-[20px] text-center whitespace-nowrap border-b border-[#d6d8dc]')}>
-                                  {stock.locationName}
-                                </td>
+                            {this.partInformation?.stockParts.map(stock => (
+                              <tr class="transition-colors duration-100 border-b border-[#d6d8dc] last:border-none hover:bg-slate-100" key={stock.locationID}>
+                                <td class={cn('px-[10px] py-[20px] text-center whitespace-nowrap')}>{stock.locationName}</td>
 
-                                <td class={cn('px-[10px] py-[20px] text-center whitespace-nowrap border-b border-[#d6d8dc]')}>
-                                  <div class={stock.quantityLookUpResult === 'Available' ? 'success' : stock.quantityLookUpResult === 'PartiallyAvailable' ? 'warning' : 'reject'}>
-                                    <strong>{stock.quantityLookUpResult === 'Available' ? 'Available' : stock.quantityLookUpResult === 'PartiallyAvailable' ? 'Partially Available' : 'Not Available'}</strong>
+                                <td class={cn('px-[10px] py-[20px] text-center whitespace-nowrap')}>
+                                  <div
+                                    class={cn('text-[red]', {
+                                      'text-[green]': stock.quantityLookUpResult === 'Available',
+                                      'text-[orange]': stock.quantityLookUpResult === 'PartiallyAvailable',
+                                    })}
+                                  >
+                                    <strong>
+                                      {stock.quantityLookUpResult === 'Available'
+                                        ? 'Available'
+                                        : stock.quantityLookUpResult === 'PartiallyAvailable'
+                                        ? 'Partially Available'
+                                        : 'Not Available'}
+                                    </strong>
                                   </div>
                                 </td>
                               </tr>
                             ))}
                           </tbody>
                         </table>
-
-
                       </div>
                     </div>
                   )}
-
                 </div>
               )}
             </div>

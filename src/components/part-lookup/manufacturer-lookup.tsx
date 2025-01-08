@@ -20,13 +20,11 @@ export class ManufacturerLookup implements PartInformationInterface {
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
   @Prop() loadedResponse?: (response: PartInformation) => void;
 
-  //@State() componentHeight = '0px';
   @State() state: AppStates = 'idle';
   @State() externalPartNumber?: string = null;
   @State() errorMessage?: string = null;
   @State() partInformation?: PartInformation;
 
-  //private wrapperRef?: HTMLDivElement;
   abortController: AbortController;
   networkTimeoutRef: ReturnType<typeof setTimeout>;
 
@@ -50,7 +48,6 @@ export class ManufacturerLookup implements PartInformationInterface {
 
     try {
       if (!partNumber || partNumber.trim().length === 0) {
-        //this.componentHeight = '0px';
         this.state = 'idle';
         return;
       }
@@ -87,22 +84,9 @@ export class ManufacturerLookup implements PartInformationInterface {
   async fetchData(partNumber: string = this.externalPartNumber, headers: any = {}) {
     await this.setData(partNumber, headers);
   }
-  //calculateHeight(componentState: string) {
-  //  if (componentState.includes('loading') && this.componentHeight === '0px') {
-  //    this.componentHeight = '100px';
-  //  } else if (componentState !== 'idle') {
-  //    setTimeout(() => {
-  //      this.componentHeight = `${this.wrapperRef.clientHeight}px`;
-  //    }, 50);
-  //  } else {
-  //    this.componentHeight = '0px';
-  //  }
-  //}
 
   @Watch('state')
   async loadingListener() {
-    //this.calculateHeight(newState);
-
     if (this.loadingStateChange) this.loadingStateChange(this.state.includes('loading'));
   }
 
@@ -118,7 +102,6 @@ export class ManufacturerLookup implements PartInformationInterface {
           <div>
             <Loading isLoading={this.state.includes('loading')} />
             <div class={cn('transition-all duration-700', { 'scale-0': this.state.includes('loading') || this.state === 'idle', 'opacity-0': this.state.includes('loading') })}>
-
               {['error', 'error-loading'].includes(this.state) && (
                 <div class="py-[16px]">
                   <div class=" px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">{this.errorMessage}</div>
@@ -130,20 +113,19 @@ export class ManufacturerLookup implements PartInformationInterface {
                   <div class="flex mt-[12px] max-h-[70dvh] overflow-hidden rounded-[4px] flex-col border border-[#d6d8dc]">
                     <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">{this.headerTitle}</div>
 
-                    <div style={{ padding: '10px 30px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                      <div style={{ display: 'flex', gap: '50px' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', 'flex': '1' }}>
-                          <strong style={{ padding: '10px 0', borderBottom: '1px solid grey', }}>Description</strong>
-                          <div style={{ padding: '10px 0px' }}>{this.partInformation.tmcPart.partDescription}</div>
+                    <div class="px-[30px] py-[10px] flex flex-col gap-[15px]">
+                      <div class="flex gap-[50px]">
+                        <div class="flex flex-col flex-1">
+                          <strong class="py-[10px] border-b border-b-[grey]">Description</strong>
+                          <div class="py-[10px]">{this.partInformation.tmcPart.partDescription}</div>
                         </div>
 
-                        <div style={{ display: 'flex', flexDirection: 'column', 'flex': '1' }}>
-                          <strong style={{ padding: '10px 0', borderBottom: '1px solid grey', }}>Product Group</strong>
-                          <div style={{ padding: '10px 0px' }}>{this.partInformation.tmcPart.group}</div>
+                        <div class="flex flex-col flex-1">
+                          <strong class="py-[10px] border-b border-b-[grey]">Product Group</strong>
+                          <div class="py-[10px]">{this.partInformation.tmcPart.group}</div>
                         </div>
 
-                        <div style={{ display: 'flex', flexDirection: 'column', 'flex': '1' }}>
-                        </div>
+                        <div class="flex-1"></div>
                       </div>
                     </div>
                   </div>

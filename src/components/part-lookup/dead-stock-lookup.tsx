@@ -7,15 +7,18 @@ import cn from '~lib/cn';
 
 let mockData: MockJson<PartInformation> = {};
 
+const closedAccordionHeight = '46px' as const;
+
 @Component({
   tag: 'dead-stock-lookup',
   styleUrl: 'dead-stock-lookup.css',
   shadow: true,
 })
 export class DeadStockLookup implements PartInformationInterface {
-  @Prop() isDev: boolean = false;
   @Prop() baseUrl: string = '';
+  @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
+
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
   @Prop() loadedResponse?: (response: PartInformation) => void;
 
@@ -23,8 +26,7 @@ export class DeadStockLookup implements PartInformationInterface {
   @State() externalPartNumber?: string = null;
   @State() errorMessage?: string = null;
   @State() partInformation?: PartInformation;
-  @State() activeIndex: number | null = null;
-  
+
   abortController: AbortController;
   networkTimeoutRef: ReturnType<typeof setTimeout>;
 
@@ -32,10 +34,6 @@ export class DeadStockLookup implements PartInformationInterface {
 
   private handleSettingData(response: PartInformation) {
     this.partInformation = response;
-  }
-
-  toggleAccordion(index: number) {
-    this.activeIndex = this.activeIndex === index ? null : index;
   }
 
   @Method()
@@ -52,7 +50,6 @@ export class DeadStockLookup implements PartInformationInterface {
 
     try {
       if (!partNumber || partNumber.trim().length === 0) {
-        //this.componentHeight = '0px';
         this.state = 'idle';
         return;
       }
@@ -88,17 +85,35 @@ export class DeadStockLookup implements PartInformationInterface {
   async fetchData(partNumber: string = this.externalPartNumber, headers: any = {}) {
     await this.setData(partNumber, headers);
   }
-  
+
   @Watch('state')
   async loadingListener() {
-    //this.calculateHeight(newState);
-
     if (this.loadingStateChange) this.loadingStateChange(this.state.includes('loading'));
   }
 
   @Method()
   async setMockData(newMockData: MockJson<PartInformation>) {
     mockData = newMockData;
+  }
+
+  private toggleAccordion(event: MouseEvent) {
+    const container = (event.target as HTMLButtonElement).parentElement as HTMLDivElement;
+    const icon = container.getElementsByClassName('icon')[0] as HTMLSpanElement;
+
+    const isExpanded = container.getAttribute('aria-expanded') === 'true';
+
+    if (isExpanded) {
+      container.style.height = closedAccordionHeight;
+      icon.style.transform = 'rotate(0deg)';
+      container.setAttribute('aria-expanded', 'false');
+    } else {
+      const content = container.getElementsByClassName('content')[0] as HTMLDivElement;
+      const totalHeight = +closedAccordionHeight.replace('px', '') + content.getClientRects()[0].height;
+
+      container.style.height = `${totalHeight}px`;
+      icon.style.transform = 'rotate(180deg)';
+      container.setAttribute('aria-expanded', 'true');
+    }
   }
 
   render() {
@@ -108,7 +123,6 @@ export class DeadStockLookup implements PartInformationInterface {
           <div>
             <Loading isLoading={this.state.includes('loading')} />
             <div class={cn('transition-all duration-700', { 'scale-0': this.state.includes('loading') || this.state === 'idle', 'opacity-0': this.state.includes('loading') })}>
-
               {['error', 'error-loading'].includes(this.state) && (
                 <div class="py-[16px]">
                   <div class=" px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">{this.errorMessage}</div>
@@ -118,39 +132,50 @@ export class DeadStockLookup implements PartInformationInterface {
               {['data', 'data-loading'].includes(this.state) && (
                 <div>
                   <div class="flex mt-[12px] max-h-[70dvh] overflow-hidden rounded-[4px] flex-col border border-[#d6d8dc]">
-                    <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">Deadstock</div>
+                    <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">Dead stock</div>
 
-                    {this.partInformation?.deadStock?.map((deadStock, i) => (
-                      <div style={{ padding: '10px 20px' }}>
-                        <div class="accordion-item border-b border-slate-200" style={{ boxShadow: 'rgb(225 225 225) 0px 0px 4px 1px', borderRadius: '5px', padding: '0 10px', marginBottom: '10px' }} key={deadStock.companyIntegrationID}>
-                          <button class="accordion-header w-full flex justify-between items-center py-5 text-slate-800" onClick={() => this.toggleAccordion(i)}>
+                    {this.partInformation?.deadStock?.map(deadStock => (
+                      <div key={deadStock.companyIntegrationID} class="py-[10px] px-[20px]">
+                        <div
+                          aria-expanded="false"
+                          style={{ height: closedAccordionHeight }}
+                          class="border shadow transition-all duration-500 overflow-hidden rounded-md mb-[10px] border-[#d6d8dc]"
+                        >
+                          <button
+                            onClick={this.toggleAccordion}
+                            style={{ height: closedAccordionHeight }}
+                            class="w-full flex px-[10px] justify-between items-center text-slate-800"
+                          >
                             <strong>{deadStock.companyName}</strong>
-                            <span class={`icon text-slate-800 transition-transform duration-300 ${this.activeIndex === i ? 'rotate-180' : ''}`}>
-                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
+                            <span class="icon text-slate-800 transition-transform duration-500">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-[22px]">
                                 <path
                                   fill-rule="evenodd"
-                                  d="M11.78 9.78a.75.75 0 0 1-1.06 0L8 7.06 5.28 9.78a.75.75 0 0 1-1.06-1.06l3.25-3.25a.75.75 0 0 1 1.06 0l3.25 3.25a.75.75 0 0 1 0 1.06Z"
                                   clip-rule="evenodd"
+                                  d="M11.78 9.78a.75.75 0 0 1-1.06 0L8 7.06 5.28 9.78a.75.75 0 0 1-1.06-1.06l3.25-3.25a.75.75 0 0 1 1.06 0l3.25 3.25a.75.75 0 0 1 0 1.06Z"
                                 />
                               </svg>
                             </span>
                           </button>
 
-                          <div class={`accordion-content overflow-hidden transition-all duration-300 ease-in-out ${this.activeIndex === i ? 'max-h-screen' : 'max-h-0'}`}>
+                          <div class="content">
                             <table class="w-full overflow-auto relative border-collapse">
                               <thead>
                                 <tr>
-                                  <th class="px-[10px] py-[20px] text-left whitespace-nowrap border-b border-[#d6d8dc]">Branch</th>
-                                  <th class="px-[10px] py-[20px] text-left whitespace-nowrap border-b border-[#d6d8dc]">Available Qty</th>
+                                  <th class="py-[20px] px-[10px] text-left whitespace-nowrap border-b border-[#d6d8dc]">Branch</th>
+                                  <th class="py-[20px] px-[10px] text-left whitespace-nowrap border-b border-[#d6d8dc]">Available Qty</th>
                                 </tr>
                               </thead>
 
                               <tbody>
                                 {deadStock?.branchDeadStock.map(branchDeadStock => (
-                                  <tr class="transition-colors duration-100 hover:bg-slate-100" key={branchDeadStock.companyBranchIntegrationID}>
-                                    <td class={cn('px-[10px] py-[20px] text-left whitespace-nowrap border-b border-[#d6d8dc]')}>{branchDeadStock.companyBranchName}</td>
+                                  <tr
+                                    class="transition-colors border-b border-[#d6d8dc] last:border-none duration-100 hover:bg-slate-100"
+                                    key={branchDeadStock.companyBranchIntegrationID}
+                                  >
+                                    <td class={cn('py-[20px] px-[10px] text-left whitespace-nowrap')}>{branchDeadStock.companyBranchName}</td>
 
-                                    <td class={cn('px-[10px] py-[20px] text-left whitespace-nowrap border-b border-[#d6d8dc]')}>
+                                    <td class={cn('py-[20px] px-[10px] text-left whitespace-nowrap')}>
                                       <strong>{branchDeadStock.quantity}</strong>
                                     </td>
                                   </tr>
