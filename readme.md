@@ -1,4 +1,4 @@
-<img src="./docs/shift-software.png" alt="By Shift software" style="max-width: 333px;">
+<img src="./documentation/shift-software.png" alt="By Shift software" style="max-width: 333px;">
 
 <br>
 <br>
