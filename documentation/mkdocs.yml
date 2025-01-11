@@ -1,0 +1,43 @@
+site_name: ADP - Components
+
+use_directory_urls: false
+
+theme:
+  name: material
+  custom_dir: overrides
+  logo: assets/logo.png
+  features:
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - content.code.copy
+    - navigation.collapse
+    - header.autohide
+
+extra_css:
+  - extra/css/extra.css
+
+extra_javascript:
+  - extra/js/script.js
+  - https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js
+
+nav:
+  - Introduction: introduction.md
+  - Installation: installation.md
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - admonition
+  - tables
+  - pymdownx.mark
+  - pymdownx.details
+  - toc:
+      permalink: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
