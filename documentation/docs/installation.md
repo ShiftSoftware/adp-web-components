@@ -1,124 +1,121 @@
 # Installation
 
-ADP Web Components offers two installation methods: **Bundle Installation** and **Standalone Installation** , depending on your project requirements.
-
-ADP Web Components offers both **Latest version CDN links** and **Versioned CDN links**.
+ADP Web Components offers two installation methods: **Bundle Installation** and **Standalone Installation**, depending on your project requirements. Both methods support **Latest Version CDN links** and **Versioned CDN links** for flexibility.
 
 ---
 
-## Versioned VS Latest CDN types
+## Versioned vs. Latest CDN Links
 
-- **Versioned CDN (Recommended)**:
-  Versioned CDN offers the bundle or standalone component by specifying specific version of the ADP components library. by specifying version after @ symbol in the CDN and example **@0.0.13**.
+ADP Web Components supports two CDN types:
 
-- **Latest CDN**: Latest CDN offers newest updates on the components when ever new component releases your component will be updated also. by adding latest keyword after @ symbol in the CDN and example **@latest**.
+- **Versioned CDN (Recommended):**
+  Use a specific version of the ADP components library by specifying the version number after the `@` symbol in the CDN link (e.g., `@0.0.13`). This ensures stability as updates won’t affect your implementation.
 
-!!! danger "Cons"
+- **Latest CDN:**
+  Automatically uses the most recent updates when components are released. Specify `@latest` in the CDN link.
 
-    - **Versioned CDN**: if any bugs that are in your version are fixed in the new version you will not get update and you will have to update your version and code manually.
-    - **Latest CDN**: if new components are optimized and their methods are callbacks are changed then your code will break and you will have to update it.
-
-!!! success "Cons"
-
-    - **Versioned CDN**: Benefits from stability when new version comes out as you will still use the older version
-    - **Latest CDN**: if any bugs are fixed in any components you will get live update
-
-=== "Versioned CDN (Recommended)"
-
-    - Bundle (e.g., 0.0.13)
-
-        ```html
-        <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@0.0.13/dist/shift-components/shift-components.esm.js"></script>
-        ```
-
-    - Stand alone (e.g., 0.0.13)
-
-        ```html
-        <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@0.0.13/dist/components/dynamic-claim.js"></script>
-        ```
-
-=== "Latest CDN"
-
-    - Bundle (Latest)
-
-        ```html
-        <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@latest/dist/shift-components/shift-components.esm.js"></script>
-        ```
-
-    - Stand alone (Latest)
-
-        ```html
-        <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@latest/dist/components/dynamic-claim.js"></script>
-        ```
-
----
-
-## Bundled vs Standalone CDN types
-
-ADP Web Components offers two installation methods: **Standalone Installation** (recommended with lighter weight) and **Bundle Installation**, depending on your project requirements.
-
-- **Bundled CDN**:
-  Bundled CDN offers all components that are listed at [component list](components/index.md) with single CDN link. bundled CDN link is listed at [component list](components/index.md).
-
-- **Standalone CDN (Recommended & light weight)**: Standalone CDN offers a single component importing with its own CDN link, all component CDN links are documented in each component dedicated documentation file.
+### Pros and Cons
 
 !!! danger "Cons"
 
-    - **Bundled CDN**: Bundled CDN possibly have more size compared to standalone components.
-    - **Standalone CDN**: Standalone CDN components can't be accessed directly when HTML mounts and instead can be accessed within `document.addEventListener('DOMContentLoaded', () => {})` which runs after Document content is fully loaded. this happens because Standalone components are `lazy-loaded` and HTML will not wait for them to be imported fully from network.
+    - **Versioned CDN:** If bugs in your version are fixed in newer releases, you must manually update your version and code.
+    - **Latest CDN:** Updates to components (e.g., changes in methods or callbacks) might break your code, requiring adjustments.
 
 !!! success "Pros"
 
-    - **Bundled CDN**: Great when using multiple ADP-components at the same time where it imports all of them together in optimized way. `Lazy loading` doesn't happens as much as Standalone components but its still **Recommended** to use `document.addEventListener('DOMContentLoaded', () => {})`.
-    - **Standalone CDN**: Standalone components have lighter weight compared to Bundled importing.
+    - **Versioned CDN:** Ensures stability by locking in the version, avoiding breaking changes in newer releases.
+    - **Latest CDN:** Automatically applies bug fixes and new features as they are released.
 
-=== "Bundled CDN Example"
+### Example CDN Links
 
-    - Latest
+=== "Versioned CDN (Recommended)"
 
-        ```html
-        <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@latest/dist/shift-components/shift-components.esm.js"></script>
-        ```
+    Bundle (e.g., 0.0.13):
 
-    - Versioned (e.g., 0.0.13)
+    ```html
+    <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@0.0.13/dist/shift-components/shift-components.esm.js"></script>
+    ```
 
-        ```html
-        <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@0.0.13/dist/shift-components/shift-components.esm.js"></script>
-        ```
+    Standalone (e.g., 0.0.13):
 
-=== "Standalone CDN Example"
+    ```html
+    <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@0.0.13/dist/components/dynamic-claim.js"></script>
+    ```
 
-    - Latest
+=== "Latest CDN"
 
-        ```html
-        <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@latest/dist/components/dynamic-claim.js"></script>
-        ```
-
-    - Versioned (e.g., 0.0.13)
-
-        ```html
-        <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@0.0.13/dist/components/dynamic-claim.js"></script>
-        ```
-
----
-
-## Usage
-
-Components usage are not changed if you use any combination of (Versioned VS latest) and (Bundled VS Standalone). however you can skip using `document.addEventListener('DOMContentLoaded', () => {})` in Bundled mode but it is **highly Recommended** to be used.
-
-=== "Bundle Usage"
-
-    Bundle usage includes all components in one package, making it easier to manage if you're using multiple components.
-
-    First import the components using the script:
+    Bundle (Latest):
 
     ```html
     <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@latest/dist/shift-components/shift-components.esm.js"></script>
     ```
 
-    HTML Code with DOMContentLoaded **Recommended**:
+    Standalone (Latest):
 
     ```html
+    <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@latest/dist/components/dynamic-claim.js"></script>
+    ```
+
+---
+
+## Bundled vs. Standalone
+
+Installation ADP Web Components offers two installation methods:
+
+- **Bundled CDN:** Includes all components in one CDN. Useful for projects requiring multiple components. All components listed in [Component List](components/index.md) for more details.
+- **Standalone CDN (Recommended):** Loads individual components, offering a lightweight and efficient solution for targeted use cases.
+
+### Pros and Cons
+
+!!! danger "Cons"
+
+    - **Bundled CDN:** Larger file size compared to standalone components. Bundle are not lazy-loaded in most of the times but still its highly **recommended** to use `document.addEventListener('DOMContentLoaded', () => {})`.
+    - **Standalone CDN:** Requires `document.addEventListener('DOMContentLoaded', () => {})` due to lazy-loaded components.
+
+!!! success "Pros"
+
+    - **Bundled CDN:** Convenient for projects using multiple components, as all components are imported together.
+    - **Standalone CDN:** Lightweight, as only the required component is imported.
+
+### Example Installation Links
+
+=== "Bundled CDN"
+
+    Latest:
+    ```html
+    <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@latest/dist/shift-components/shift-components.esm.js"></script>
+    ```
+    Versioned (e.g., 0.0.13):
+    ```html
+    <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@0.0.13/dist/shift-components/shift-components.esm.js"></script>
+    ```
+
+=== "Standalone CDN"
+
+    Latest:
+    ```html
+    <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@latest/dist/components/dynamic-claim.js"></script>
+    ```
+
+    Versioned (e.g., 0.0.13):
+    ```html
+    <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@0.0.13/dist/components/dynamic-claim.js"></script>
+    ```
+
+---
+
+## Usage
+
+The usage of components remains consistent regardless of CDN type (Versioned vs. Latest) or installation method (Bundled vs. Standalone). However, using`document.addEventListener('DOMContentLoaded', () => {})` is **highly recommended** for reliable initialization.
+
+=== "Bundle Usage"
+
+    HTML code with DOMContentLoaded **Recommended**
+
+    ```html
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@latest/dist/shift-components/shift-components.esm.js"></script>
+
     <dynamic-redeem id="dynamic-redeem"></dynamic-redeem>
     <dynamic-claim is-dev="true" base-url="http://localhost:7174/api/secure-vehicle-lookup-test/" id="dynamic-claim"></dynamic-claim>
 
@@ -127,45 +124,37 @@ Components usage are not changed if you use any combination of (Versioned VS lat
       let dynamicRedeem
 
       document.addEventListener('DOMContentLoaded', () => {
-
         dynamicClaim = document.getElementById('dynamic-claim');
         dynamicRedeem = document.getElementById('dynamic-redeem');
-
         // Add your JavaScript logic here
-
       });
     </script>
     ```
 
-    HTML Code without DOMContentLoaded:
+    HTML code without DOMContentLoaded
 
     ```html
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@latest/dist/shift-components/shift-components.esm.js"></script>
+
     <dynamic-redeem id="dynamic-redeem"></dynamic-redeem>
     <dynamic-claim is-dev="true" base-url="http://localhost:7174/api/secure-vehicle-lookup-test/" id="dynamic-claim"></dynamic-claim>
 
     <script>
-
-      const dynamicClaim = document.getElementById('dynamic-claim');
-      const dynamicRedeem = document.getElementById('dynamic-redeem');
-
-      // Add your JavaScript logic here
+        const dynamicClaim = document.getElementById('dynamic-claim');
+        const dynamicRedeem = document.getElementById('dynamic-redeem');
     </script>
     ```
 
 === "Standalone Usage"
 
-    Standalone usage allows you to load individual components on demand, ensuring better performance and reduced load times.
-
-    **Important Note:** Use the `document.addEventListener('DOMContentLoaded', () => {})` event listener when loading standalone components, as they are lazy-loaded.
+    Becarefull in Standing mode you have to import each component separately and its **mandatory** to use `DOMContentLoaded`
 
     ```html
     <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@latest/dist/components/dynamic-claim.js"></script>
+
     <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@latest/dist/components/dynamic-redeem.js"></script>
-    ```
 
-    HTML Code:
-
-    ```html
     <dynamic-redeem id="dynamic-redeem"></dynamic-redeem>
     <dynamic-claim is-dev="true" base-url="http://localhost:7174/api/secure-vehicle-lookup-test/" id="dynamic-claim"></dynamic-claim>
 
@@ -174,12 +163,9 @@ Components usage are not changed if you use any combination of (Versioned VS lat
       let dynamicRedeem
 
       document.addEventListener('DOMContentLoaded', () => {
-
         dynamicClaim = document.getElementById('dynamic-claim');
         dynamicRedeem = document.getElementById('dynamic-redeem');
-
         // Add your JavaScript logic here
-
       });
     </script>
     ```
@@ -188,5 +174,5 @@ Components usage are not changed if you use any combination of (Versioned VS lat
 
 ## Next Steps
 
-- Explore the [Theming](theming.md) to customize the components.
-- Explore the [Components List](components.md) for demo and detailed documentation on each component.
+- Explore the [Theming Guide](theming.md) for customization.
+- Refer to the [Component List](components.md) for detailed documentation.
