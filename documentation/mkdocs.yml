@@ -24,6 +24,10 @@ extra_javascript:
 nav:
   - Introduction: index.md
   - Installation: installation.md
+  - Theming: theming.md
+  - Components:
+      - components/index.md
+      - Dynamic Claim: components/dynamic-claim.md
 
 markdown_extensions:
   - attr_list
