@@ -62,7 +62,7 @@ ADP Web Components supports two CDN types:
 
 Installation ADP Web Components offers two installation methods:
 
-- **Bundled CDN:** Includes all components in one CDN. Useful for projects requiring multiple components. All components listed in [Component List](components/index.md) for more details.
+- **Bundled CDN:** Includes all components in one CDN. Useful for projects requiring multiple components. All components listed in [Component List](components/components-list.md) for more details.
 - **Standalone CDN (Recommended):** Loads individual components, offering a lightweight and efficient solution for targeted use cases.
 
 ### Pros and Cons
@@ -175,4 +175,4 @@ The usage of components remains consistent regardless of CDN type (Versioned vs.
 ## Next Steps
 
 - Explore the [Theming Guide](theming.md) for customization.
-- Refer to the [Component List](components.md) for detailed documentation.
+- Refer to the [Component List](components/components-list.md) for detailed documentation.

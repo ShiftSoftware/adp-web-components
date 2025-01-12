@@ -26,8 +26,17 @@ nav:
   - Installation: installation.md
   - Theming: theming.md
   - Components:
-      - components/index.md
-      - Dynamic Claim: components/dynamic-claim.md
+      - components/components-list.md
+      - Vehicle Lookup Wrapper: components/vehicle-lookup.md
+      - Vehicle Specification: components/vehicle-specification.md
+      - Vehicle Accessories: components/vehicle-accessories.md
+      - Warranty Details: components/warranty-details.md
+      - Service History: components/service-history.md
+      - Paint Thickness: components/paint-thickness.md
+      - Swift Claim: components/swift-claim.md
+      - Dead Stock Lookup: components/dead-stock-lookup.md
+      - Distributor Lookup: components/distributor-lookup.md
+      - Manufacturer Lookup: components/manufacturer-lookup.md
 
 markdown_extensions:
   - attr_list

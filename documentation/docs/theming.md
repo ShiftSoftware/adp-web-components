@@ -68,4 +68,4 @@ Developers can find parts in 2 ways
 
 ## Next Steps
 
-- Read to the [Component List](components.md) for detailed documentation.
+- Read to the [Component List](components/components-list.md) for detailed documentation.
