@@ -100,3 +100,16 @@ table code {
 .section-accordion-content-card .endpoint-content {
   grid-template-columns: 1fr !important;
 }
+
+.md-content {
+  text-align: justify;
+}
+
+.image-with-border {
+  padding: 4px;
+  max-width: 100%;
+  margin: 0px auto;
+  border-radius: 8px;
+  border: 2px solid #df0a1c;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

@@ -4,7 +4,7 @@ use_directory_urls: false
 
 theme:
   name: material
-  custom_dir: overrides
+  custom_dir: docs/overrides
   logo: assets/logo.png
   features:
     - navigation.tracking
