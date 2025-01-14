@@ -6,7 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { PartInformation } from "./global/types/part-information";
-import { MockJson } from "./global/types/components";
+import { DotNetObjectReference, MockJson } from "./global/types/components";
 import { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
 import { VehicleSpecification } from "./components/vehicle-specification/vehicle-specification";
 import { VehicleAccessories } from "./components/vehicle-accessories/vehicle-accessories";
@@ -15,7 +15,7 @@ import { ServiceHistory } from "./components/service-history/service-history";
 import { PaintThickness } from "./components/paint-thickness/paint-thickness";
 import { DynamicClaim } from "./components/dynamic-claim/dynamic-claim";
 export { PartInformation } from "./global/types/part-information";
-export { MockJson } from "./global/types/components";
+export { DotNetObjectReference, MockJson } from "./global/types/components";
 export { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
 export { VehicleSpecification } from "./components/vehicle-specification/vehicle-specification";
 export { VehicleAccessories } from "./components/vehicle-accessories/vehicle-accessories";
@@ -123,11 +123,15 @@ export namespace Components {
     interface VehicleLookup {
         "activeLookupIndex"?: string;
         "baseUrl": string;
-        "fetchVin": (vin: string, headers?: any) => Promise<void>;
+        "blazorErrorStateListener": string;
+        "blazorOnLoadingStateChange": string;
+        "errorStateListener"?: (newError: string) => void;
+        "fetchVin": (vin: string, headers?: any) => Promise<"VIN is required" | "Invalid VIN">;
         "getPageContext": () => Promise<{ componentsList: [VehicleSpecification, VehicleAccessories, WarrantyDetails, ServiceHistory, PaintThickness, DynamicClaim]; }>;
         "isDev": boolean;
-        "onLoadingStateChanged"?: (isLoading: boolean) => void;
+        "loadingStateChanged"?: (isLoading: boolean) => void;
         "queryString": string;
+        "setBlazorRef": (newBlazorRef: DotNetObjectReference) => Promise<void>;
     }
     interface VehicleSpecification {
         "baseUrl": string;
@@ -353,8 +357,11 @@ declare namespace LocalJSX {
     interface VehicleLookup {
         "activeLookupIndex"?: string;
         "baseUrl"?: string;
+        "blazorErrorStateListener"?: string;
+        "blazorOnLoadingStateChange"?: string;
+        "errorStateListener"?: (newError: string) => void;
         "isDev"?: boolean;
-        "onLoadingStateChanged"?: (isLoading: boolean) => void;
+        "loadingStateChanged"?: (isLoading: boolean) => void;
         "queryString"?: string;
     }
     interface VehicleSpecification {

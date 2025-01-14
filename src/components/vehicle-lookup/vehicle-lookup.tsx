@@ -1,4 +1,4 @@
-import { Component, Element, Host, Method, Prop, Watch, h } from '@stencil/core';
+import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { WarrantyDetails } from 'components/warranty-details/warranty-details';
 import { VehicleAccessories } from 'components/vehicle-accessories/vehicle-accessories';
@@ -9,6 +9,7 @@ import { ServiceHistory } from 'components/service-history/service-history';
 import { PaintThickness } from 'components/paint-thickness/paint-thickness';
 import { DynamicClaim } from 'components/dynamic-claim/dynamic-claim';
 import validateVin from '~lib/validate-vin';
+import { DotNetObjectReference } from '~types/components';
 
 @Component({
   shadow: false,
@@ -22,7 +23,14 @@ export class VehicleLookup {
   @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
 
-  @Prop() onLoadingStateChanged?: (isLoading: boolean) => void;
+  @Prop() loadingStateChanged?: (isLoading: boolean) => void;
+  @Prop() blazorOnLoadingStateChange = '';
+
+  @State() wrapperErrorState = '';
+  @Prop() errorStateListener?: (newError: string) => void;
+  @Prop() blazorErrorStateListener = '';
+
+  @State() blazorRef?: DotNetObjectReference;
 
   @Element() el: HTMLElement;
 
@@ -41,10 +49,16 @@ export class VehicleLookup {
     this.componentsList.forEach(element => {
       if (!element) return;
 
-      if (this.onLoadingStateChanged) element.loadingStateChange = this.onLoadingStateChanged;
+      if (this.loadingStateChanged) element.loadingStateChange = this.loadingStateChanged;
 
       element.loadedResponse = newResponse => this.handleLoadData(newResponse, element);
     });
+  }
+
+  @Watch('wrapperErrorState')
+  async errorListener(newState) {
+    if (this.errorStateListener) this.errorStateListener(newState);
+    if (this.blazorRef && this.blazorErrorStateListener) this.blazorRef.invokeMethodAsync(this.blazorErrorStateListener, newState);
   }
 
   @Watch('onLoadingStateChanged')
@@ -56,13 +70,40 @@ export class VehicleLookup {
     });
   }
 
+  @Watch('blazorOnLoadingStateChange')
+  async handleBlazorLoadingRefChange(loadingInvokeRef) {
+    if (this.blazorRef) {
+      this.componentsList.forEach(element => {
+        if (!element) return;
+
+        element.loadingStateChange = newState => this.blazorRef.invokeMethodAsync(loadingInvokeRef, newState);
+      });
+    }
+  }
+
+  @Method()
+  async setBlazorRef(newBlazorRef: DotNetObjectReference) {
+    this.blazorRef = newBlazorRef;
+    if (this.blazorOnLoadingStateChange) {
+      this.componentsList.forEach(element => {
+        if (!element) return;
+
+        element.loadingStateChange = newState => this.blazorRef.invokeMethodAsync(this.blazorOnLoadingStateChange, newState);
+      });
+    }
+  }
+
   @Method()
   async fetchVin(vin: string, headers: any = {}) {
     const activeElement: (typeof this.componentsList)[number] = this.componentsList[this.activeLookupIndex] || null;
 
+    this.wrapperErrorState = '';
+
     if (!activeElement) return;
 
-    if (!validateVin(vin)) return;
+    if (vin == '') return (this.wrapperErrorState = 'VIN is required');
+
+    if (!validateVin(vin)) return (this.wrapperErrorState = 'Invalid VIN');
 
     activeElement.fetchData(vin, headers);
   }

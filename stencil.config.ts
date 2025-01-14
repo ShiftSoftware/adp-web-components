@@ -19,6 +19,7 @@ export const config: Config = {
   minifyJs: true,
   minifyCss: true,
   sourceMap: false,
+  globalScript: 'src/global/lib/middleware.ts',
   namespace: 'shift-components',
   plugins: [
     sass(),
