@@ -96,6 +96,26 @@ export class ManufacturerLookup implements PartInformationInterface {
   }
 
   render() {
+    const manufacturerData = this.partInformation
+      ? [
+          { label: 'Warranty Price', value: this.partInformation.tmcPart.warrantyPrice },
+          { label: 'Special Price', value: this.partInformation.tmcPart.specialPrice },
+          { label: 'Wholesales Price', value: this.partInformation.tmcPart.salesPrice },
+          { label: 'PNC', value: this.partInformation.tmcPart.pnc },
+          { label: 'PNC Russian Name', value: this.partInformation.tmcPart.pncLocalName },
+          { label: 'Bin Code', value: this.partInformation.tmcPart.binCode },
+          { label: 'Dimension 1', value: this.partInformation.tmcPart.dimension1 },
+          { label: 'Dimension 2', value: this.partInformation.tmcPart.dimension2 },
+          { label: 'Dimension 3', value: this.partInformation.tmcPart.dimension3 },
+          { label: 'Net Weight', value: this.partInformation.tmcPart.netWeight },
+          { label: 'Gross Height', value: this.partInformation.tmcPart.grossWeight },
+          { label: 'Cubic Measure', value: this.partInformation.tmcPart.cubicMeasure },
+          { label: 'HS Code', value: this.partInformation.tmcPart.hsCode },
+          { label: 'UZ HS Code', value: this.partInformation.tmcPart.uzHsCode },
+          { label: 'Origin', value: this.partInformation.tmcPart.origin },
+        ]
+      : [];
+
     return (
       <Host>
         <div class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
@@ -114,7 +134,7 @@ export class ManufacturerLookup implements PartInformationInterface {
                     <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">{this.headerTitle}</div>
 
                     <div class="px-[30px] py-[10px] flex flex-col gap-[15px]">
-                      <div class="flex gap-[50px]">
+                      <div class="grid grid-cols-3 gap-[50px]">
                         <div class="flex flex-col flex-1">
                           <strong class="py-[10px] border-b border-b-[grey]">Description</strong>
                           <div class="py-[10px]">{this.partInformation.tmcPart.partDescription}</div>
@@ -125,7 +145,12 @@ export class ManufacturerLookup implements PartInformationInterface {
                           <div class="py-[10px]">{this.partInformation.tmcPart.group}</div>
                         </div>
 
-                        <div class="flex-1"></div>
+                        {manufacturerData.map(({ label, value }) => (
+                          <div key={label} class="flex flex-col flex-1">
+                            <strong class="py-[10px] px-0 border-b-[gray] border-b">{label}</strong>
+                            <div class="py-[10px] px-0">{value}</div>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>

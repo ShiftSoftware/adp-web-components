@@ -99,14 +99,11 @@ export class DistributorLookup implements PartInformationInterface {
       ? [
           { label: 'Description', value: this.partInformation.stockParts[0].partDescription },
           { label: 'Product Group', value: this.partInformation.stockParts[0].group },
-          { label: 'Price', value: this.partInformation.stockParts[0].price },
-        ]
-      : [];
-
-    const infoRow2 = this.partInformation
-      ? [
-          { label: 'Superseded To', value: this.partInformation.stockParts[0].supersededTo },
+          { label: 'Russian Description', value: this.partInformation.stockParts[0].localDescription },
+          { label: 'Dealer Purchase price', value: this.partInformation.stockParts[0].price },
+          { label: 'Recommended Retail  price', value: this.partInformation.stockParts[0].retailPrice },
           { label: 'Superseded From', value: this.partInformation.stockParts[0].supersededFrom },
+          { label: 'Superseded To', value: this.partInformation.stockParts[0].supersededTo },
         ]
       : [];
 
@@ -133,24 +130,14 @@ export class DistributorLookup implements PartInformationInterface {
                   <div class="flex mt-[12px] max-h-[70dvh] overflow-hidden rounded-[4px] flex-col border border-[#d6d8dc]">
                     <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">Info</div>
 
-                    <div class="py-[10px] flex flex-col gap-[15px]">
-                      <div class="flex gap-[50px]">
+                    <div class="py-[10px] px-[30px] flex flex-col gap-[15px]">
+                      <div class="grid grid-cols-3 gap-[50px]">
                         {infoRow1.map(({ label, value }) => (
                           <div key={label} class="flex flex-col flex-1">
                             <strong class="py-[10px] px-0 border-b-[gray] border-b">{label}</strong>
                             <div class="py-[10px] px-0">{value}</div>
                           </div>
                         ))}
-                      </div>
-
-                      <div class="flex gap-[50px]">
-                        {infoRow2.map(({ label, value }) => (
-                          <div key={label} class="flex flex-col flex-1">
-                            <strong class="py-[10px] px-0 border-b border-b-[grey]">{label}</strong>
-                            <div class="py-[10px] px-0">{value}</div>
-                          </div>
-                        ))}
-                        <div class="flex-1" />
                       </div>
                     </div>
                   </div>
