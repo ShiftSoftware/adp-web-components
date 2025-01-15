@@ -118,7 +118,7 @@ export class ManufacturerLookup implements PartInformationInterface {
         ]
       : [];
 
-    const validManufacturerFields = manufacturerData.filter(({ value }) => !!value);
+    const validManufacturerFields = manufacturerData;//.filter(({ value }) => !!value);
 
     return (
       <Host>
