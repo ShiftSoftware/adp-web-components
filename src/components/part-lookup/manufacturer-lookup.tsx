@@ -141,7 +141,7 @@ export class ManufacturerLookup implements PartInformationInterface {
                       <div class="grid grid-cols-3 gap-[50px]">
                         {validManufacturerFields.map(({ label, value }) => (
                           <div key={label} class="flex flex-col flex-1">
-                            <strong class="py-[10px] px-0 border-b-[#010000] border-b">{label}</strong>
+                            <strong class="py-[10px] px-0 border-b-[gray] border-b">{label}</strong>
                             <div class="py-[10px] px-0">{value}</div>
                           </div>
                         ))}
