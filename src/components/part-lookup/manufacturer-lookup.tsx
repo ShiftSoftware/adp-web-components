@@ -98,6 +98,9 @@ export class ManufacturerLookup implements PartInformationInterface {
   render() {
     const manufacturerData = this.partInformation
       ? [
+          { label: 'Description', value: this.partInformation.tmcPart.partDescription },
+          { label: 'Product Group', value: this.partInformation.tmcPart.group },
+          { label: 'Origin', value: this.partInformation.tmcPart.origin },
           { label: 'Warranty Price', value: this.partInformation.tmcPart.warrantyPrice },
           { label: 'Special Price', value: this.partInformation.tmcPart.specialPrice },
           { label: 'Wholesales Price', value: this.partInformation.tmcPart.salesPrice },
@@ -112,9 +115,10 @@ export class ManufacturerLookup implements PartInformationInterface {
           { label: 'Cubic Measure', value: this.partInformation.tmcPart.cubicMeasure },
           { label: 'HS Code', value: this.partInformation.tmcPart.hsCode },
           { label: 'UZ HS Code', value: this.partInformation.tmcPart.uzHsCode },
-          { label: 'Origin', value: this.partInformation.tmcPart.origin },
         ]
       : [];
+
+    const validManufacturerFields = manufacturerData.filter(({ value }) => !!value);
 
     return (
       <Host>
@@ -130,24 +134,14 @@ export class ManufacturerLookup implements PartInformationInterface {
 
               {['data', 'data-loading'].includes(this.state) && (
                 <div>
-                  <div class="flex mt-[12px] max-h-[70dvh] overflow-hidden rounded-[4px] flex-col border border-[#d6d8dc]">
+                  <div class="flex mt-[12px] overflow-hidden rounded-[4px] flex-col border border-[#d6d8dc]">
                     <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">{this.headerTitle}</div>
 
                     <div class="px-[30px] py-[10px] flex flex-col gap-[15px]">
                       <div class="grid grid-cols-3 gap-[50px]">
-                        <div class="flex flex-col flex-1">
-                          <strong class="py-[10px] border-b border-b-[grey]">Description</strong>
-                          <div class="py-[10px]">{this.partInformation.tmcPart.partDescription}</div>
-                        </div>
-
-                        <div class="flex flex-col flex-1">
-                          <strong class="py-[10px] border-b border-b-[grey]">Product Group</strong>
-                          <div class="py-[10px]">{this.partInformation.tmcPart.group}</div>
-                        </div>
-
-                        {manufacturerData.map(({ label, value }) => (
+                        {validManufacturerFields.map(({ label, value }) => (
                           <div key={label} class="flex flex-col flex-1">
-                            <strong class="py-[10px] px-0 border-b-[gray] border-b">{label}</strong>
+                            <strong class="py-[10px] px-0 border-b-[#010000] border-b">{label}</strong>
                             <div class="py-[10px] px-0">{value}</div>
                           </div>
                         ))}

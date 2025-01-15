@@ -9,7 +9,7 @@ ADP Web Components offers two installation methods: **Bundle Installation** and 
 ADP Web Components supports two CDN types:
 
 - **Versioned CDN (Recommended):**
-  Use a specific version of the ADP components library by specifying the version number after the `@` symbol in the CDN link (e.g., `@0.0.18`). This ensures stability as updates won’t affect your implementation.
+  Use a specific version of the ADP components library by specifying the version number after the `@` symbol in the CDN link (e.g., `@0.0.19`). This ensures stability as updates won’t affect your implementation.
 
 - **Latest CDN:**
   Automatically uses the most recent updates when components are released. Specify `@latest` in the CDN link.
@@ -30,16 +30,16 @@ ADP Web Components supports two CDN types:
 
 === "Versioned CDN (Recommended)"
 
-    Bundle (e.g., 0.0.18):
+    Bundle (e.g., 0.0.19):
 
     ```html
-    <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@0.0.18/dist/shift-components/shift-components.esm.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@0.0.19/dist/shift-components/shift-components.esm.js"></script>
     ```
 
-    Standalone (e.g., 0.0.18):
+    Standalone (e.g., 0.0.19):
 
     ```html
-    <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@0.0.18/dist/components/dynamic-claim.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@0.0.19/dist/components/dynamic-claim.js"></script>
     ```
 
 === "Latest CDN"
@@ -85,9 +85,9 @@ Installation ADP Web Components offers two installation methods:
     ```html
     <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@latest/dist/shift-components/shift-components.esm.js"></script>
     ```
-    Versioned (e.g., 0.0.18):
+    Versioned (e.g., 0.0.19):
     ```html
-    <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@0.0.18/dist/shift-components/shift-components.esm.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@0.0.19/dist/shift-components/shift-components.esm.js"></script>
     ```
 
 === "Standalone CDN"
@@ -97,9 +97,9 @@ Installation ADP Web Components offers two installation methods:
     <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@latest/dist/components/dynamic-claim.js"></script>
     ```
 
-    Versioned (e.g., 0.0.18):
+    Versioned (e.g., 0.0.19):
     ```html
-    <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@0.0.18/dist/components/dynamic-claim.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/adp-web-components@0.0.19/dist/components/dynamic-claim.js"></script>
     ```
 
 ---
