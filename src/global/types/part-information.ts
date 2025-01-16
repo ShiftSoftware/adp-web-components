@@ -39,7 +39,7 @@ export type BranchDeadStock = {
 
 export type StockPart = {
   localDescription: string;
-  retailPrice: string;
+  fob: string;
   partDescription: string;
   supersededTo: string;
   supersededFrom: string;

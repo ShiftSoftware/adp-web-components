@@ -8,10 +8,12 @@ const mockData = {
     "stockParts": [
       {
         "partDescription": "GUARD, RR BUMPER",
+        "localDescription": "Localized Name of GUARD, RR BUMPER",
         "supersededTo": " ",
         "supersededFrom": " ",
         "quantityLookUpResult": "LookupIsSkipped",
         "price": 122.27,
+        "fob": 100,
         "group": "C",
         "locationID": "1-1",
         "locationName": "Location #1"
