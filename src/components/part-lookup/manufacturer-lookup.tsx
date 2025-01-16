@@ -98,8 +98,8 @@ export class ManufacturerLookup implements PartInformationInterface {
   render() {
     const manufacturerData = this.partInformation
       ? [
-          { label: 'Description', value: this.partInformation.tmcPart.partDescription },
-          { label: 'Product Group', value: this.partInformation.tmcPart.group },
+          //{ label: 'Description', value: this.partInformation.tmcPart.partDescription },
+          //{ label: 'Product Group', value: this.partInformation.tmcPart.group },
           { label: 'Origin', value: this.partInformation.tmcPart.origin },
           { label: 'Warranty Price', value: this.partInformation.tmcPart.warrantyPrice },
           { label: 'Special Price', value: this.partInformation.tmcPart.specialPrice },
@@ -111,7 +111,7 @@ export class ManufacturerLookup implements PartInformationInterface {
           { label: 'Dimension 2', value: this.partInformation.tmcPart.dimension2 },
           { label: 'Dimension 3', value: this.partInformation.tmcPart.dimension3 },
           { label: 'Net Weight', value: this.partInformation.tmcPart.netWeight },
-          { label: 'Gross Height', value: this.partInformation.tmcPart.grossWeight },
+          { label: 'Gross Weight', value: this.partInformation.tmcPart.grossWeight },
           { label: 'Cubic Measure', value: this.partInformation.tmcPart.cubicMeasure },
           { label: 'HS Code', value: this.partInformation.tmcPart.hsCode },
           { label: 'UZ HS Code', value: this.partInformation.tmcPart.uzHsCode },
