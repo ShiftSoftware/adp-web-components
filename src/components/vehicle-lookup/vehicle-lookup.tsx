@@ -11,13 +11,23 @@ import { DynamicClaim } from 'components/dynamic-claim/dynamic-claim';
 import validateVin from '~lib/validate-vin';
 import { DotNetObjectReference } from '~types/components';
 
+export type ComponentMap = {
+  'dynamic-claim': DynamicClaim;
+  'paint-thickness': PaintThickness;
+  'service-history': ServiceHistory;
+  'warranty-details': WarrantyDetails;
+  'vehicle-accessories': VehicleAccessories;
+  'vehicle-specification': VehicleSpecification;
+};
+
+export type ActiveElement = keyof ComponentMap | '';
 @Component({
   shadow: false,
   tag: 'vehicle-lookup',
   styleUrl: 'vehicle-lookup.css',
 })
 export class VehicleLookup {
-  @Prop() activeLookupIndex?: string = '0';
+  @Prop() activeElement?: ActiveElement = '';
 
   @Prop() baseUrl: string = '';
   @Prop() isDev: boolean = false;
@@ -34,7 +44,7 @@ export class VehicleLookup {
 
   @Element() el: HTMLElement;
 
-  private componentsList: [VehicleSpecification, VehicleAccessories, WarrantyDetails, ServiceHistory, PaintThickness, DynamicClaim];
+  private componentsList: ComponentMap;
 
   async componentDidLoad() {
     const vehicleSpecification = this.el.getElementsByTagName('vehicle-specification')[0] as unknown as VehicleSpecification;
@@ -44,9 +54,16 @@ export class VehicleLookup {
     const vehicleThickness = this.el.getElementsByTagName('paint-thickness')[0] as unknown as PaintThickness;
     const vehicleClaim = this.el.getElementsByTagName('dynamic-claim')[0] as unknown as DynamicClaim;
 
-    this.componentsList = [vehicleSpecification, vehicleAccessories, vehicleDetails, vehicleHistory, vehicleThickness, vehicleClaim] as const;
+    this.componentsList = {
+      'vehicle-specification': vehicleSpecification,
+      'vehicle-accessories': vehicleAccessories,
+      'warranty-details': vehicleDetails,
+      'service-history': vehicleHistory,
+      'paint-thickness': vehicleThickness,
+      'dynamic-claim': vehicleClaim,
+    } as const;
 
-    this.componentsList.forEach(element => {
+    Object.values(this.componentsList).forEach(element => {
       if (!element) return;
 
       if (this.loadingStateChanged) element.loadingStateChange = this.loadingStateChanged;
@@ -63,7 +80,7 @@ export class VehicleLookup {
 
   @Watch('onLoadingStateChanged')
   async handleLoadingListenerPropChange(newProp) {
-    this.componentsList.forEach(element => {
+    Object.values(this.componentsList).forEach(element => {
       if (!element) return;
 
       element.loadingStateChange = newProp;
@@ -73,7 +90,7 @@ export class VehicleLookup {
   @Watch('blazorOnLoadingStateChange')
   async handleBlazorLoadingRefChange(loadingInvokeRef) {
     if (this.blazorRef) {
-      this.componentsList.forEach(element => {
+      Object.values(this.componentsList).forEach(element => {
         if (!element) return;
 
         element.loadingStateChange = newState => this.blazorRef.invokeMethodAsync(loadingInvokeRef, newState);
@@ -85,7 +102,7 @@ export class VehicleLookup {
   async setBlazorRef(newBlazorRef: DotNetObjectReference) {
     this.blazorRef = newBlazorRef;
     if (this.blazorOnLoadingStateChange) {
-      this.componentsList.forEach(element => {
+      Object.values(this.componentsList).forEach(element => {
         if (!element) return;
 
         element.loadingStateChange = newState => this.blazorRef.invokeMethodAsync(this.blazorOnLoadingStateChange, newState);
@@ -95,7 +112,7 @@ export class VehicleLookup {
 
   @Method()
   async fetchVin(vin: string, headers: any = {}) {
-    const activeElement: (typeof this.componentsList)[number] = this.componentsList[this.activeLookupIndex] || null;
+    const activeElement = this.componentsList[this.activeElement] || null;
 
     this.wrapperErrorState = '';
 
@@ -114,7 +131,7 @@ export class VehicleLookup {
   }
 
   private handleLoadData(newResponse, activeElement) {
-    this.componentsList.forEach(element => {
+    Object.values(this.componentsList).forEach(element => {
       if (element !== null && element !== activeElement && newResponse) element.setData(newResponse);
     });
   }
@@ -122,29 +139,29 @@ export class VehicleLookup {
   render() {
     return (
       <Host>
-        <div class={cn('w-full', { hidden: this.activeLookupIndex !== '0' })}>
+        <div class={cn('w-full', { hidden: this.activeElement !== 'vehicle-specification' })}>
           <vehicle-specification isDev={this.isDev} base-url={this.baseUrl} query-string={this.queryString}></vehicle-specification>
         </div>
 
-        <div class={cn('w-full', { hidden: this.activeLookupIndex !== '1' })}>
+        <div class={cn('w-full', { hidden: this.activeElement !== 'vehicle-accessories' })}>
           <vehicle-accessories isDev={this.isDev} base-url={this.baseUrl} query-string={this.queryString}></vehicle-accessories>
         </div>
 
-        <div class={cn('w-full', { hidden: this.activeLookupIndex !== '2' })}>
+        <div class={cn('w-full', { hidden: this.activeElement !== 'warranty-details' })}>
           <warranty-details show-ssc="true" show-warranty="true" isDev={this.isDev} base-url={this.baseUrl} query-string={this.queryString}>
             <slot></slot>
           </warranty-details>
         </div>
 
-        <div class={cn('w-full', { hidden: this.activeLookupIndex !== '3' })}>
+        <div class={cn('w-full', { hidden: this.activeElement !== 'service-history' })}>
           <service-history isDev={this.isDev} base-url={this.baseUrl} query-string={this.queryString}></service-history>
         </div>
 
-        <div class={cn('w-full', { hidden: this.activeLookupIndex !== '4' })}>
+        <div class={cn('w-full', { hidden: this.activeElement !== 'paint-thickness' })}>
           <paint-thickness isDev={this.isDev} base-url={this.baseUrl} query-string={this.queryString}></paint-thickness>
         </div>
 
-        <div class={cn('w-full', { hidden: this.activeLookupIndex !== '5' })}>
+        <div class={cn('w-full', { hidden: this.activeElement !== 'dynamic-claim' })}>
           <dynamic-claim isDev={this.isDev} base-url={this.baseUrl} query-string={this.queryString}></dynamic-claim>
         </div>
       </Host>

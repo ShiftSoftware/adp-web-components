@@ -8,21 +8,11 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { PartInformation } from "./global/types/part-information";
 import { DotNetObjectReference, MockJson } from "./global/types/components";
 import { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
-import { VehicleSpecification } from "./components/vehicle-specification/vehicle-specification";
-import { VehicleAccessories } from "./components/vehicle-accessories/vehicle-accessories";
-import { WarrantyDetails } from "./components/warranty-details/warranty-details";
-import { ServiceHistory } from "./components/service-history/service-history";
-import { PaintThickness } from "./components/paint-thickness/paint-thickness";
-import { DynamicClaim } from "./components/dynamic-claim/dynamic-claim";
+import { ActiveElement, ComponentMap } from "./components/vehicle-lookup/vehicle-lookup";
 export { PartInformation } from "./global/types/part-information";
 export { DotNetObjectReference, MockJson } from "./global/types/components";
 export { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
-export { VehicleSpecification } from "./components/vehicle-specification/vehicle-specification";
-export { VehicleAccessories } from "./components/vehicle-accessories/vehicle-accessories";
-export { WarrantyDetails } from "./components/warranty-details/warranty-details";
-export { ServiceHistory } from "./components/service-history/service-history";
-export { PaintThickness } from "./components/paint-thickness/paint-thickness";
-export { DynamicClaim } from "./components/dynamic-claim/dynamic-claim";
+export { ActiveElement, ComponentMap } from "./components/vehicle-lookup/vehicle-lookup";
 export namespace Components {
     interface DeadStockLookup {
         "baseUrl": string;
@@ -121,13 +111,13 @@ export namespace Components {
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
     }
     interface VehicleLookup {
-        "activeLookupIndex"?: string;
+        "activeElement"?: ActiveElement;
         "baseUrl": string;
         "blazorErrorStateListener": string;
         "blazorOnLoadingStateChange": string;
         "errorStateListener"?: (newError: string) => void;
         "fetchVin": (vin: string, headers?: any) => Promise<"VIN is required" | "Invalid VIN">;
-        "getPageContext": () => Promise<{ componentsList: [VehicleSpecification, VehicleAccessories, WarrantyDetails, ServiceHistory, PaintThickness, DynamicClaim]; }>;
+        "getPageContext": () => Promise<{ componentsList: ComponentMap; }>;
         "isDev": boolean;
         "loadingStateChanged"?: (isLoading: boolean) => void;
         "queryString": string;
@@ -355,7 +345,7 @@ declare namespace LocalJSX {
         "queryString"?: string;
     }
     interface VehicleLookup {
-        "activeLookupIndex"?: string;
+        "activeElement"?: ActiveElement;
         "baseUrl"?: string;
         "blazorErrorStateListener"?: string;
         "blazorOnLoadingStateChange"?: string;

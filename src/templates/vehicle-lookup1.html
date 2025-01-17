@@ -90,22 +90,22 @@
           <div class="well" style="background: white; margin-top: 30px; border-radius: 10px">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist" id="vehicle-info-tab" style="display: flex; justify-content: center; border-bottom: none">
-              <li role="presentation" onclick="changeLookup('0')" class="active">
+              <li role="presentation" onclick="changeLookup('vehicle-specification')" class="active">
                 <a class="disable-auto-scroll" href="#specification" aria-controls="specification" role="tab" data-toggle="tab"><span>Specification</span></a>
               </li>
-              <li role="presentation" onclick="changeLookup('1')">
+              <li role="presentation" onclick="changeLookup('vehicle-accessories')">
                 <a class="disable-auto-scroll" href="#accessories" aria-controls="accessories" role="tab" data-toggle="tab"><span>Accessories</span></a>
               </li>
-              <li role="presentation" onclick="changeLookup('2')">
+              <li role="presentation" onclick="changeLookup('warranty-details')">
                 <a class="disable-auto-scroll" href="#warranty-and-ssc" aria-controls="warranty-and-ssc" role="tab" data-toggle="tab"><span>Warranty & SSC</span></a>
               </li>
-              <li role="presentation" onclick="changeLookup('3')">
+              <li role="presentation" onclick="changeLookup('service-history')">
                 <a class="disable-auto-scroll" href="#history" aria-controls="history" role="tab" data-toggle="tab"><span>Service History</span></a>
               </li>
-              <li role="presentation" onclick="changeLookup('4')">
+              <li role="presentation" onclick="changeLookup('paint-thickness')">
                 <a class="disable-auto-scroll" href="#thickness" aria-controls="thickness" role="tab" data-toggle="tab"><span>Paint Thickness</span></a>
               </li>
-              <li role="presentation" onclick="changeLookup('5')">
+              <li role="presentation" onclick="changeLookup('dynamic-claim')">
                 <a class="disable-auto-scroll" href="#swift-claim" aria-controls="swift-claim" role="tab" data-toggle="tab"><span>Swift Claim</span></a>
               </li>
             </ul>
@@ -114,7 +114,7 @@
             <div class="tab-content" style="background: white; border: 1px solid #dddddd; padding: 25px; border-radius: 10px">
               <vehicle-lookup
                 id="vehicle-lookup"
-                active-lookup-index="0"
+                active-element="vehicle-specification"
                 query-string="code=2t8WF7bwBsKTRWqVz0evcKIa55H3jPu-SClz3UwuoaIXAzFuW_zsKg=="
                 base-url="https://tiq-vehicles-functions.azurewebsites.net/api/secure-vehicle-lookup/"
               ></vehicle-lookup>
@@ -137,7 +137,7 @@
       const input = document.getElementById('vinInput');
 
       function changeLookup(newIndex) {
-        vehicleLookup.activeLookupIndex = newIndex;
+        vehicleLookup.activeElement = newIndex;
       }
 
       function fetchVin() {
