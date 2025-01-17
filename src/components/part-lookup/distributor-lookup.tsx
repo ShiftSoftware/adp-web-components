@@ -100,8 +100,8 @@ export class DistributorLookup implements PartInformationInterface {
           { label: 'Description', value: this.partInformation.stockParts[0].partDescription },
           { label: 'Product Group', value: this.partInformation.stockParts[0].group },
           { label: 'Russian Description', value: this.partInformation.stockParts[0].localDescription },
-          { label: 'Dealer Purchase price', value: this.partInformation.stockParts[0].fob },
-          { label: 'Recommended Retail  price', value: this.partInformation.stockParts[0].price },
+          { label: 'Dealer Purchase price', value: this.partInformation.stockParts[0].fob?.toFixed(2) },
+          { label: 'Recommended Retail price', value: this.partInformation.stockParts[0].price?.toFixed(2) },
           { label: 'Superseded From', value: this.partInformation.stockParts[0].supersededFrom },
           { label: 'Superseded To', value: this.partInformation.stockParts[0].supersededTo },
         ]

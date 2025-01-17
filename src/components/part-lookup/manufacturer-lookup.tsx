@@ -101,9 +101,9 @@ export class ManufacturerLookup implements PartInformationInterface {
           //{ label: 'Description', value: this.partInformation.tmcPart.partDescription },
           //{ label: 'Product Group', value: this.partInformation.tmcPart.group },
           { label: 'Origin', value: this.partInformation.tmcPart.origin },
-          { label: 'Warranty Price', value: this.partInformation.tmcPart.warrantyPrice },
-          { label: 'Special Price', value: this.partInformation.tmcPart.specialPrice },
-          { label: 'Wholesales Price', value: this.partInformation.tmcPart.salesPrice },
+          { label: 'Warranty Price', value: this.partInformation.tmcPart.warrantyPrice?.toFixed(2) },
+          { label: 'Special Price', value: this.partInformation.tmcPart.specialPrice?.toFixed(2) },
+          { label: 'Wholesales Price', value: this.partInformation.tmcPart.salesPrice?.toFixed(2) },
           { label: 'PNC', value: this.partInformation.tmcPart.pnc },
           { label: 'PNC Russian Name', value: this.partInformation.tmcPart.pncLocalName },
           { label: 'Bin Code', value: this.partInformation.tmcPart.binCode },
@@ -118,7 +118,7 @@ export class ManufacturerLookup implements PartInformationInterface {
         ]
       : [];
 
-    const validManufacturerFields = manufacturerData;//.filter(({ value }) => !!value);
+    const validManufacturerFields = manufacturerData; //.filter(({ value }) => !!value);
 
     return (
       <Host>

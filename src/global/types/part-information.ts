@@ -12,12 +12,12 @@ export type TMCPart = {
   pnc: string;
   pncLocalName: string;
   binCode: string;
-  dimension1: string;
-  dimension2: string;
-  dimension3: string;
-  netWeight: string;
-  grossWeight: string;
-  cubicMeasure: string;
+  dimension1: number;
+  dimension2: number;
+  dimension3: number;
+  netWeight: number;
+  grossWeight: number;
+  cubicMeasure: number;
   hsCode: string;
   uzHsCode: string;
   origin: string;
@@ -39,7 +39,7 @@ export type BranchDeadStock = {
 
 export type StockPart = {
   localDescription: string;
-  fob: string;
+  fob: number;
   partDescription: string;
   supersededTo: string;
   supersededFrom: string;
