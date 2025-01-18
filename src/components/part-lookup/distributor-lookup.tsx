@@ -6,7 +6,7 @@ import { AppStates, MockJson } from '~types/components';
 import { PartInformation } from '~types/part-information';
 import { getPartInformation, PartInformationInterface } from '~api/partInformation';
 
-import Loading from '../parts/Loading';
+import Loading from '../components/Loading';
 
 let mockData: MockJson<PartInformation> = {};
 

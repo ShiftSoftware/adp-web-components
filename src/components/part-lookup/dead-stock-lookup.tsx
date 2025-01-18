@@ -1,7 +1,7 @@
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import { PartInformation } from '~types/part-information';
 import { getPartInformation, PartInformationInterface } from '~api/partInformation';
-import Loading from '../parts/Loading';
+import Loading from '../components/Loading';
 import { AppStates, MockJson } from '~types/components';
 import cn from '~lib/cn';
 

@@ -2,16 +2,16 @@ import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stenci
 
 import cn from '~lib/cn';
 
-import expiredIcon from './icons/expired.svg';
-import pendingIcon from './icons/pending.svg';
-import cancelledIcon from './icons/cancelled.svg';
-import processedIcon from './icons/processed.svg';
+import expiredIcon from './assets/expired.svg';
+import pendingIcon from './assets/pending.svg';
+import cancelledIcon from './assets/cancelled.svg';
+import processedIcon from './assets/processed.svg';
 
 import { MockJson } from '~types/components';
 import { ServiceItem, VehicleInformation } from '~types/vehicle-information';
 
 import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicleInformation';
-import { DynamicRedeem } from '../dynamic-redeem/dynamic-redeem';
+import { DynamicRedeem } from './dynamic-redeem';
 
 let mockData: MockJson<VehicleInformation> = {};
 
@@ -335,11 +335,11 @@ export class DynamicClaim implements VehicleInformationInterface {
     this.dynamicRedeem.vin = vehicleInformation?.vin;
     this.dynamicRedeem.item = item;
     this.dynamicRedeem.canceledItems = oldItems;
-    
+
     if (vehicleInformation?.saleInformation?.broker !== null && vehicleInformation?.saleInformation?.broker?.invoiceDate === null)
       this.dynamicRedeem.unInvoicedByBrokerName = vehicleInformation?.saleInformation?.broker?.brokerName;
     else this.dynamicRedeem.unInvoicedByBrokerName = null;
-    
+
     this.handleRedeemScanner();
   }
 

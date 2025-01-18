@@ -1,15 +1,16 @@
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { WarrantyDetails } from 'components/warranty-details/warranty-details';
-import { VehicleAccessories } from 'components/vehicle-accessories/vehicle-accessories';
-import { VehicleSpecification } from 'components/vehicle-specification/vehicle-specification';
-
 import cn from '~lib/cn';
-import { ServiceHistory } from 'components/service-history/service-history';
-import { PaintThickness } from 'components/paint-thickness/paint-thickness';
-import { DynamicClaim } from 'components/dynamic-claim/dynamic-claim';
 import validateVin from '~lib/validate-vin';
+
 import { DotNetObjectReference } from '~types/components';
+
+import { DynamicClaim } from './dynamic-claim';
+import { PaintThickness } from './paint-thickness';
+import { ServiceHistory } from './service-history';
+import { WarrantyDetails } from './warranty-details';
+import { VehicleAccessories } from './vehicle-accessories';
+import { VehicleSpecification } from './vehicle-specification';
 
 export type ComponentMap = {
   'dynamic-claim': DynamicClaim;
