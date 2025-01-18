@@ -29,6 +29,7 @@ export const config: Config = {
       entries: [
         { find: '~api', replacement: path.resolve('src/global/api') },
         { find: '~lib', replacement: path.resolve('src/global/lib') },
+        { find: '~locales', replacement: path.resolve('src/locales') },
         { find: '~types', replacement: path.resolve('src/global/types') },
         { find: '~assets', replacement: path.resolve('src/global/assets') },
       ],
