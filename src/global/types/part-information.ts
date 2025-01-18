@@ -1,4 +1,5 @@
 export type PartInformation = {
+  localName: string;
   partNumber: string;
   tmcPart: TMCPart;
   stockParts: StockPart[];
@@ -6,6 +7,7 @@ export type PartInformation = {
 };
 
 export type TMCPart = {
+  hiddenFields: string[];
   warrantyPrice: number;
   specialPrice: number;
   salesPrice: number;
@@ -38,6 +40,7 @@ export type BranchDeadStock = {
 };
 
 export type StockPart = {
+  hiddenFields: string[];
   localDescription: string;
   fob: number;
   partDescription: string;

@@ -1,9 +1,12 @@
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-import Loading from '../parts/Loading';
-import { AppStates, MockJson } from '~types/components';
+
 import cn from '~lib/cn';
+import { capitalize } from '~lib/general';
+import { AppStates, MockJson } from '~types/components';
 import { PartInformation } from '~types/part-information';
 import { getPartInformation, PartInformationInterface } from '~api/partInformation';
+
+import Loading from '../parts/Loading';
 
 let mockData: MockJson<PartInformation> = {};
 
@@ -95,17 +98,23 @@ export class DistributorLookup implements PartInformationInterface {
   }
 
   render() {
-    const infoRow1 = this.partInformation
+    const localName = this.partInformation ? this.partInformation?.localName || 'russian' : 'russian';
+
+    const hiddenFields = this.partInformation ? this.partInformation.stockParts[0]?.hiddenFields || [] : [];
+
+    const partsInformation = this.partInformation
       ? [
-          { label: 'Description', value: this.partInformation.stockParts[0].partDescription },
-          { label: 'Product Group', value: this.partInformation.stockParts[0].group },
-          { label: 'Russian Description', value: this.partInformation.stockParts[0].localDescription },
-          { label: 'Dealer Purchase price', value: this.partInformation.stockParts[0].fob?.toFixed(2) },
-          { label: 'Recommended Retail price', value: this.partInformation.stockParts[0].price?.toFixed(2) },
-          { label: 'Superseded From', value: this.partInformation.stockParts[0].supersededFrom },
-          { label: 'Superseded To', value: this.partInformation.stockParts[0].supersededTo },
+          { label: 'Description', key: 'partDescription', value: this.partInformation.stockParts[0].partDescription },
+          { label: 'Product Group', key: 'group', value: this.partInformation.stockParts[0].group },
+          { label: `${capitalize(localName)} Description`, key: 'localDescription', value: this.partInformation.stockParts[0].localDescription },
+          { label: 'Dealer Purchase price', key: 'fob', value: this.partInformation.stockParts[0].fob?.toFixed(2) },
+          { label: 'Recommended Retail price', key: 'price', value: this.partInformation.stockParts[0].price?.toFixed(2) },
+          { label: 'Superseded From', key: 'supersededFrom', value: this.partInformation.stockParts[0].supersededFrom },
+          { label: 'Superseded To', key: 'supersededTo', value: this.partInformation.stockParts[0].supersededTo },
         ]
       : [];
+
+    const displayedFields = partsInformation.filter(part => !hiddenFields.includes(part.key));
 
     const displayDistributer = this.partInformation
       ? !this.partInformation.stockParts.some(
@@ -132,8 +141,8 @@ export class DistributorLookup implements PartInformationInterface {
 
                     <div class="py-[10px] px-[30px] flex flex-col gap-[15px]">
                       <div class="grid grid-cols-3 gap-[50px]">
-                        {infoRow1.map(({ label, value }) => (
-                          <div key={label} class="flex flex-col flex-1">
+                        {displayedFields.map(({ label, value, key }) => (
+                          <div key={key} class="flex flex-col flex-1">
                             <strong class="py-[10px] px-0 border-b-[gray] border-b">{label}</strong>
                             <div class="py-[10px] px-0">{value}</div>
                           </div>

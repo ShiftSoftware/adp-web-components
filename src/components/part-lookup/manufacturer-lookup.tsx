@@ -4,6 +4,7 @@ import { AppStates, MockJson } from '~types/components';
 import cn from '~lib/cn';
 import { PartInformation } from '~types/part-information';
 import { getPartInformation, PartInformationInterface } from '~api/partInformation';
+import { capitalize } from '~lib/general';
 
 let mockData: MockJson<PartInformation> = {};
 
@@ -96,29 +97,31 @@ export class ManufacturerLookup implements PartInformationInterface {
   }
 
   render() {
+    const localName = this.partInformation ? this.partInformation?.localName || 'russian' : 'russian';
+
+    const hiddenFields = this.partInformation ? this.partInformation.tmcPart?.hiddenFields || [] : [];
+
     const manufacturerData = this.partInformation
       ? [
-          //{ label: 'Description', value: this.partInformation.tmcPart.partDescription },
-          //{ label: 'Product Group', value: this.partInformation.tmcPart.group },
-          { label: 'Origin', value: this.partInformation.tmcPart.origin },
-          { label: 'Warranty Price', value: this.partInformation.tmcPart.warrantyPrice?.toFixed(2) },
-          { label: 'Special Price', value: this.partInformation.tmcPart.specialPrice?.toFixed(2) },
-          { label: 'Wholesales Price', value: this.partInformation.tmcPart.salesPrice?.toFixed(2) },
-          { label: 'PNC', value: this.partInformation.tmcPart.pnc },
-          { label: 'PNC Russian Name', value: this.partInformation.tmcPart.pncLocalName },
-          { label: 'Bin Code', value: this.partInformation.tmcPart.binCode },
-          { label: 'Dimension 1', value: this.partInformation.tmcPart.dimension1 },
-          { label: 'Dimension 2', value: this.partInformation.tmcPart.dimension2 },
-          { label: 'Dimension 3', value: this.partInformation.tmcPart.dimension3 },
-          { label: 'Net Weight', value: this.partInformation.tmcPart.netWeight },
-          { label: 'Gross Weight', value: this.partInformation.tmcPart.grossWeight },
-          { label: 'Cubic Measure', value: this.partInformation.tmcPart.cubicMeasure },
-          { label: 'HS Code', value: this.partInformation.tmcPart.hsCode },
-          { label: 'UZ HS Code', value: this.partInformation.tmcPart.uzHsCode },
+          { label: 'Origin', key: 'origin', value: this.partInformation.tmcPart.origin },
+          { label: 'Warranty Price', key: 'warrantyPrice', value: this.partInformation.tmcPart.warrantyPrice?.toFixed(2) },
+          { label: 'Special Price', key: 'specialPrice', value: this.partInformation.tmcPart.specialPrice?.toFixed(2) },
+          { label: 'Wholesales Price', key: 'salesPrice', value: this.partInformation.tmcPart.salesPrice?.toFixed(2) },
+          { label: 'PNC', key: 'pnc', value: this.partInformation.tmcPart.pnc },
+          { label: `PNC ${capitalize(localName)} Name`, key: 'pncLocalName', value: this.partInformation.tmcPart.pncLocalName },
+          { label: 'Bin Code', key: 'binCode', value: this.partInformation.tmcPart.binCode },
+          { label: 'Dimension 1', key: 'dimension1', value: this.partInformation.tmcPart.dimension1 },
+          { label: 'Dimension 2', key: 'dimension2', value: this.partInformation.tmcPart.dimension2 },
+          { label: 'Dimension 3', key: 'dimension3', value: this.partInformation.tmcPart.dimension3 },
+          { label: 'Net Weight', key: 'netWeight', value: this.partInformation.tmcPart.netWeight },
+          { label: 'Gross Weight', key: 'grossWeight', value: this.partInformation.tmcPart.grossWeight },
+          { label: 'Cubic Measure', key: 'cubicMeasure', value: this.partInformation.tmcPart.cubicMeasure },
+          { label: 'HS Code', key: 'hsCode', value: this.partInformation.tmcPart.hsCode },
+          { label: 'UZ HS Code', key: 'uzHsCode', value: this.partInformation.tmcPart.uzHsCode },
         ]
       : [];
 
-    const validManufacturerFields = manufacturerData; //.filter(({ value }) => !!value);
+    const displayedManufacturerData = manufacturerData.filter(part => !hiddenFields.includes(part.key));
 
     return (
       <Host>
@@ -139,8 +142,8 @@ export class ManufacturerLookup implements PartInformationInterface {
 
                     <div class="px-[30px] py-[10px] flex flex-col gap-[15px]">
                       <div class="grid grid-cols-3 gap-[50px]">
-                        {validManufacturerFields.map(({ label, value }) => (
-                          <div key={label} class="flex flex-col flex-1">
+                        {displayedManufacturerData.map(({ label, value, key }) => (
+                          <div key={key} class="flex flex-col flex-1">
                             <strong class="py-[10px] px-0 border-b-[gray] border-b">{label}</strong>
                             <div class="py-[10px] px-0">{value}</div>
                           </div>
