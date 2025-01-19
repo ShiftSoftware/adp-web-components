@@ -46,12 +46,13 @@ export const config: Config = {
       minify: true,
       externalRuntime: false,
       type: 'dist-custom-elements',
+      copy: [{ src: 'assets/locales', dest: 'dist/locales' }],
       customElementsExportBehavior: 'auto-define-custom-elements',
     },
     {
       type: 'www',
       serviceWorker: null,
-      copy: [{ src: 'index.html' }, { src: 'templates' }],
+      copy: [{ src: 'index.html' }, { src: 'templates' }, { src: 'assets/locales', dest: 'locales' }],
     },
   ],
   devServer: {

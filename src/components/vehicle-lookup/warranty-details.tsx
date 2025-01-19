@@ -10,6 +10,7 @@ import cn from '~lib/cn';
 import { VehicleInformation, Warranty } from '~types/vehicle-information';
 import { AppStates, MockJson } from '~types/components';
 import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicleInformation';
+import { getLocaleLanguage, LanguageKeys, Locale, localeSchema } from '~types/locale-schema';
 
 let mockData: MockJson<VehicleInformation> = {};
 
@@ -31,13 +32,14 @@ declare const grecaptcha: {
 })
 export class WarrantyDetails implements VehicleInformationInterface {
   @Prop() baseUrl: string = '';
-  @Prop() unauthorizedSscLookupBaseUrl: string = '';
   @Prop() isDev: boolean = false;
   @Prop() showSsc: boolean = false;
   @Prop() queryString: string = '';
-  @Prop() unauthorizedSscLookupQueryString: string = '';
   @Prop() recaptchaKey: string = '';
+  @Prop() language: LanguageKeys = 'en';
   @Prop() showWarranty: boolean = false;
+  @Prop() unauthorizedSscLookupBaseUrl: string = '';
+  @Prop() unauthorizedSscLookupQueryString: string = '';
 
   @Prop() cityId?: string = null;
   @Prop() cityIntegrationId?: string = null;
@@ -65,11 +67,22 @@ export class WarrantyDetails implements VehicleInformationInterface {
   @State() recaptchaRes: { hasSSC: boolean; message: string } | null = null;
   @State() headers: any = {};
 
+  @State() locale: Locale = localeSchema.getDefault();
+
   abortController: AbortController;
   networkTimeoutRef: ReturnType<typeof setTimeout>;
   private recaptchaIntervalRef: ReturnType<typeof setInterval>;
 
   @Element() el: HTMLElement;
+
+  async componentWillLoad() {
+    await this.changeLanguage(this.language);
+  }
+
+  @Watch('language')
+  async changeLanguage(newLanguage: LanguageKeys) {
+    this.locale = await getLocaleLanguage(newLanguage);
+  }
 
   private handleSettingData(response: VehicleInformation) {
     if (response.warranty === null)
@@ -125,7 +138,7 @@ export class WarrantyDetails implements VehicleInformationInterface {
               signal: this.abortController.signal,
               headers: {
                 ...this.headers,
-                'Ssc-Recaptcha-Token': recaptchaResponse
+                'Ssc-Recaptcha-Token': recaptchaResponse,
               },
             });
 
@@ -229,6 +242,8 @@ export class WarrantyDetails implements VehicleInformationInterface {
   }
 
   render() {
+    console.log(this.locale);
+
     return (
       <Host>
         <div class="min-h-[100px] warranty">
