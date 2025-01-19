@@ -27,9 +27,11 @@ export namespace Components {
     interface DistributorLookup {
         "baseUrl": string;
         "fetchData": (partNumber?: string, headers?: any) => Promise<void>;
+        "hiddenFields"?: string;
         "isDev": boolean;
         "loadedResponse"?: (response: PartInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        "localizationName"?: string;
         "queryString": string;
         "setData": (newData: PartInformation | string, headers?: any) => Promise<void>;
         "setMockData": (newMockData: MockJson<PartInformation>) => Promise<void>;
@@ -73,9 +75,11 @@ export namespace Components {
         "baseUrl": string;
         "fetchData": (partNumber?: string, headers?: any) => Promise<void>;
         "headerTitle": string;
+        "hiddenFields": string;
         "isDev": boolean;
         "loadedResponse"?: (response: PartInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        "localizationName"?: string;
         "queryString": string;
         "setData": (newData: PartInformation | string, headers?: any) => Promise<void>;
         "setMockData": (newMockData: MockJson<PartInformation>) => Promise<void>;
@@ -280,9 +284,11 @@ declare namespace LocalJSX {
     }
     interface DistributorLookup {
         "baseUrl"?: string;
+        "hiddenFields"?: string;
         "isDev"?: boolean;
         "loadedResponse"?: (response: PartInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        "localizationName"?: string;
         "queryString"?: string;
     }
     interface DynamicClaim {
@@ -318,9 +324,11 @@ declare namespace LocalJSX {
     interface ManufacturerLookup {
         "baseUrl"?: string;
         "headerTitle"?: string;
+        "hiddenFields"?: string;
         "isDev"?: boolean;
         "loadedResponse"?: (response: PartInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        "localizationName"?: string;
         "queryString"?: string;
     }
     interface PaintThickness {

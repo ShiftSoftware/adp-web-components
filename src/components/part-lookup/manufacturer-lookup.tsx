@@ -17,6 +17,8 @@ export class ManufacturerLookup implements PartInformationInterface {
   @Prop() baseUrl: string = '';
   @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
+  @Prop() hiddenFields: string = '';
+  @Prop() localizationName?: string = '';
   @Prop() headerTitle: string = 'Manufacturer';
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
   @Prop() loadedResponse?: (response: PartInformation) => void;
@@ -97,9 +99,9 @@ export class ManufacturerLookup implements PartInformationInterface {
   }
 
   render() {
-    const localName = this.partInformation ? this.partInformation?.localName || 'russian' : 'russian';
+    const localName = this.partInformation ? this.localizationName || 'russian' : 'russian';
 
-    const hiddenFields = this.partInformation ? this.partInformation.tmcPart?.hiddenFields || [] : [];
+    const hiddenFields = this.partInformation ? this.hiddenFields.split(',').map(field => field.trim()) || [] : [];
 
     const manufacturerData = this.partInformation
       ? [

@@ -1,98 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dead Stock Lookup</title>
-  <script nomodule src="/build/shift-components.js"></script>
-  <script type="module" src="/build/shift-components.esm.js"></script>
-  <script src="./mock-data.js"></script>
-</head>
-<body>
-  <a href="/index.html">back</a>
-  <h1>Dead Stock Lookup</h1>
-  <dead-stock-lookup is-dev="true" query-string="" id="dead-stock-lookup" base-url="http://localhost:7174/api/secure-part-lookup/"> </dead-stock-lookup>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dead Stock Lookup</title>
+    <script nomodule src="/build/shift-components.js"></script>
+    <script type="module" src="/build/shift-components.esm.js"></script>
+    <script src="./mock-data.js"></script>
+  </head>
+  <body>
+    <a href="/index.html">back</a>
+    <h1>Dead Stock Lookup</h1>
+    <dead-stock-lookup is-dev="true" query-string="" id="dead-stock-lookup" base-url="http://localhost:7174/api/secure-part-lookup/"> </dead-stock-lookup>
 
-  <div class="button-container">
-    <button class="dynamic-claim-button sample-button" onclick="fetchData()">reload</button>
-    <button class="dynamic-claim-button sample-button" onclick="fetchData('')">Empty (close)</button>
-    <button class="dynamic-claim-button sample-button" onclick="fetchData('error')">Error</button>
-    <button class="dynamic-claim-button sample-button" onclick="fetchData('T5245160030')">T5245160030</button>
-  </div>
+    <div class="button-container">
+      <button class="dynamic-claim-button sample-button" onclick="fetchData()">reload</button>
+      <button class="dynamic-claim-button sample-button" onclick="fetchData('')">Empty (close)</button>
+      <button class="dynamic-claim-button sample-button" onclick="fetchData('error')">Error</button>
+      <button class="dynamic-claim-button sample-button" onclick="fetchData('T5245160030')">T5245160030</button>
+    </div>
 
-  <h3>offline Loads</h3>
-  <div class="button-container">
-    <button class="dynamic-claim-button sample-button" onclick="setData('')">Empty</button>
-    <button class="dynamic-claim-button sample-button" onclick="setData('error')">Error</button>
-    <button class="dynamic-claim-button sample-button" onclick="setData('T5245160030')">T5245160030</button>
-  </div>
+    <h3>offline Loads</h3>
+    <div class="button-container">
+      <button class="dynamic-claim-button sample-button" onclick="setData('')">Empty</button>
+      <button class="dynamic-claim-button sample-button" onclick="setData('error')">Error</button>
+      <button class="dynamic-claim-button sample-button" onclick="setData('T5245160030')">T5245160030</button>
+    </div>
 
-  <label>
-    render
-    <input onchange="toggleCheckbox(this)" type="checkbox" />
-  </label>
-  <div id="container"></div>
+    <label>
+      render
+      <input onchange="toggleCheckbox(this)" type="checkbox" />
+    </label>
+    <div id="container"></div>
 
-  <script>
-    let deadStockLookup;
+    <script>
+      let deadStockLookup;
 
-    document.addEventListener('DOMContentLoaded', function () {
-      deadStockLookup = document.getElementById('dead-stock-lookup');
+      document.addEventListener('DOMContentLoaded', function () {
+        deadStockLookup = document.getElementById('dead-stock-lookup');
 
-      deadStockLookup.setMockData(mockData);
+        deadStockLookup.setMockData(mockData);
 
-      deadStockLookup.loadedResponse = newResponse => console.log(newResponse);
-      deadStockLookup.loadingStateChange = isLoading => {
-        console.log('isLoading: ' + isLoading);
-      };
-    });
+        deadStockLookup.loadedResponse = newResponse => console.log(newResponse);
+        deadStockLookup.loadingStateChange = isLoading => {
+          console.log('isLoading: ' + isLoading);
+        };
+      });
 
-    function fetchData(newVin) {
-      deadStockLookup.fetchData(newVin);
-    }
-
-    function setData(key) {
-      deadStockLookup.setData(mockData[key]);
-    }
-
-    function toggleCheckbox(e) {
-      const container = document.getElementById('container');
-      if (e.checked) {
-        const newElement = document.createElement('dead-stock-lookup');
-
-        newElement.id = 'toggle-item';
-        newElement.setAttribute('is-dev', 'true');
-        newElement.setAttribute('base-url', 'http://localhost:7174/api/secure-vehicle-lookup-test/');
-
-      newElement.setData(mockData['T5245160030']);
-        container.appendChild(newElement);
-      } else {
-        const element = document.getElementById('toggle-item');
-        element.parentNode.removeChild(element);
+      function fetchData(newVin) {
+        deadStockLookup.fetchData(newVin);
       }
-    }
-  </script>
 
-  <style>
-    .button-container {
-      margin-top: 50px;
-      border: 1px solid #e1e1e1;
-      padding: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      align-content: center;
-      justify-content: center;
-      gap: 10px;
-    }
+      function setData(key) {
+        deadStockLookup.setData(mockData[key]);
+      }
 
-    .sample-button {
-      background-color: #428bca;
-      padding: 10px 15px;
-    }
+      function toggleCheckbox(e) {
+        const container = document.getElementById('container');
+        if (e.checked) {
+          const newElement = document.createElement('dead-stock-lookup');
+
+          newElement.id = 'toggle-item';
+          newElement.setAttribute('is-dev', 'true');
+          newElement.setAttribute('base-url', 'http://localhost:7174/api/secure-vehicle-lookup-test/');
+
+          newElement.setData(mockData['T5245160030']);
+          container.appendChild(newElement);
+        } else {
+          const element = document.getElementById('toggle-item');
+          element.parentNode.removeChild(element);
+        }
+      }
+    </script>
+
+    <style>
+      .button-container {
+        margin-top: 50px;
+        border: 1px solid #e1e1e1;
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        align-content: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .sample-button {
+        background-color: #428bca;
+        padding: 10px 15px;
+      }
 
       .sample-button:hover {
         background-color: #3071a9;
       }
-  </style>
-</body>
+    </style>
+  </body>
 </html>
