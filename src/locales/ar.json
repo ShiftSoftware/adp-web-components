@@ -23,6 +23,15 @@
       "sscTableRepairStatus": "حالة الإصلاح",
       "sscTableOPCode": "أكواد OP",
       "sscTablePartNumber": "رقم القطعة"
+    },
+    "specification": {
+      "vehicleSpecification": "مواصفات السيارة",
+      "noData": "لا توجد بيانات متاحة.",
+      "model": "الموديل",
+      "variant": "أنواع",
+      "katashiki": "Katashiki",
+      "modelYear": "سنة الموديل",
+      "sfx": "SFX"
     }
   }
 }

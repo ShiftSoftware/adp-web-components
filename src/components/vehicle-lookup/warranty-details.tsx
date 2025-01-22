@@ -207,8 +207,6 @@ export class WarrantyDetails implements VehicleInformationInterface {
     } catch (error) {
       if (error && error?.name === 'AbortError') return;
 
-      console.log({ a: error });
-
       this.state = 'error';
       this.vehicleInformation = null;
       this.errorMessage = error.message;
