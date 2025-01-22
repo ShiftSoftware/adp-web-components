@@ -4,7 +4,7 @@ import { ARABIC_JSON_FILE, ENGLISH_JSON_FILE, KURDISH_JSON_FILE, Locale, localeS
 import { ValidationError } from 'yup';
 
 function getFilePath(fileName: string): string {
-  const filePath = path.join(__dirname, `../assets/locales/${fileName}`);
+  const filePath = path.join(__dirname, `../locales/${fileName}`);
 
   return filePath;
 }
