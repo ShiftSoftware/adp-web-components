@@ -50,6 +50,15 @@
       "date": "تاريخ",
       "serviceType": "نوع الخدمة",
       "odometer": "عداد المسافات"
+    },
+    "paintThickness": {
+      "paintThickness": "سمك الطلاء",
+      "noData": "لا توجد بيانات متاحة.",
+      "part": "جزء",
+      "left": "يسار",
+      "right": "يمين",
+      "noImageGroups": "لا تتوفر مجموعات صور.",
+      "expand": "تکبیر"
     }
   }
 }

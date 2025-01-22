@@ -12,7 +12,14 @@
     <a href="#" onclick="history.back()" style="color: blue; display: block; margin-bottom: 16px">Back</a>
 
     <h1>Paint Thickness</h1>
-    <paint-thickness is-dev="true" query-string="" id="paint-thickness" base-url="http://localhost:7174/api/secure-vehicle-lookup-test/"> </paint-thickness>
+
+    <paint-thickness language="ku" is-dev="true" query-string="" id="paint-thickness" base-url="http://localhost:7174/api/secure-vehicle-lookup-test/"> </paint-thickness>
+
+    <div class="button-container">
+      <button class="dynamic-claim-button sample-button" onclick="updateLang('en')">En</button>
+      <button class="dynamic-claim-button sample-button" onclick="updateLang('ku')">Ku</button>
+      <button class="dynamic-claim-button sample-button" onclick="updateLang('ar')">Ar</button>
+    </div>
 
     <div class="button-container">
       <button class="dynamic-claim-button sample-button" onclick="fetchData()">reload</button>
@@ -59,6 +66,10 @@
           console.log('isLoading: ' + isLoading);
         };
       });
+
+      function updateLang(newLang) {
+        paintThickness.language = newLang;
+      }
 
       function fetchData(newVin) {
         paintThickness.fetchData(newVin);

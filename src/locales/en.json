@@ -50,6 +50,15 @@
       "date": "Date",
       "serviceType": "Service Type",
       "odometer": "Odometer"
+    },
+    "paintThickness": {
+      "paintThickness": "Paint Thickness",
+      "noData": "No data is available.",
+      "part": "Part",
+      "left": "Left",
+      "right": "Right",
+      "noImageGroups": "No image groups are available.",
+      "expand": "Expand"
     }
   }
 }
