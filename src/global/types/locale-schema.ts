@@ -23,11 +23,10 @@ export type Locale = InferType<typeof localeSchema>;
 
 export const getLocaleLanguage = async (fileKey: string): Promise<Locale> => {
   const languageFile = languageMapper[fileKey] || languageMapper.ar;
-  console.log(Build.isDev);
 
   let localeResponse;
 
-  if (Build.isDev) localeResponse = await fetch('../../assets/locales/' + languageFile);
+  if (Build.isDev) localeResponse = await fetch('../../locales/' + languageFile);
   else localeResponse = await fetch('https://cdn.jsdelivr.net/npm/adp-web-components@latest/dist/locales/' + languageFile);
 
   const localeJson = (await localeResponse.json()) as Locale;
