@@ -2,21 +2,28 @@ import { h } from '@stencil/core';
 
 import StatusCard from './StatusCard';
 import { Warranty } from '~types/vehicle-information';
+import { Locale } from '~types/locale-schema';
 
 type Props = {
+  locale: Locale;
   warranty: Warranty;
   isAuthorized: boolean;
-  unInvoicedByBrokerName?: string 
+  unInvoicedByBrokerName?: string;
 };
 
-export default function CardsContainer({ warranty, isAuthorized, unInvoicedByBrokerName }: Props) {
+export default function CardsContainer({ warranty, isAuthorized, unInvoicedByBrokerName, locale }: Props) {
+  const warrantyLocale = locale.vehicleLookup.warranty;
   return (
     <div class="warranty-tags mx-auto pt-3">
-      <StatusCard state={isAuthorized ? 'success' : 'reject'} desc={isAuthorized ? 'Authorized' : 'Unauthorized'} />
-      <StatusCard state={warranty.hasActiveWarranty ? 'success' : 'reject'} desc={warranty.hasActiveWarranty ? 'Has Active Warranty' : "Doesn't Have Active Warranty" } />
-      {unInvoicedByBrokerName && <StatusCard className='span-entire-2nd-row' state='warning' icon={true} desc={ `Warranty is not Active because this Vehicle is not Invoiced by the following Trusted Business Partner: ${unInvoicedByBrokerName}`} />}
-      {warranty.warrantyStartDate && <StatusCard state={warranty?.hasActiveWarranty ? 'success' : 'reject'} icon={false} from desc={warranty.warrantyStartDate} />}
-      {warranty.warrantyEndDate && <StatusCard state={warranty?.hasActiveWarranty ? 'success' : 'reject'} icon={false} to desc={warranty.warrantyEndDate} />}
+      <StatusCard state={isAuthorized ? 'success' : 'reject'} desc={isAuthorized ? warrantyLocale.authorized : warrantyLocale.unauthorized} />
+      <StatusCard state={warranty.hasActiveWarranty ? 'success' : 'reject'} desc={warranty.hasActiveWarranty ? warrantyLocale.activeWarranty : warrantyLocale.notActiveWarranty} />
+      {unInvoicedByBrokerName && <StatusCard className="span-entire-2nd-row" state="warning" icon={true} desc={warrantyLocale.notInvoiced + unInvoicedByBrokerName} />}
+      {warranty.warrantyStartDate && (
+        <StatusCard state={warranty?.hasActiveWarranty ? 'success' : 'reject'} icon={false} from fromDesc={warrantyLocale.from} desc={warranty.warrantyStartDate} />
+      )}
+      {warranty.warrantyEndDate && (
+        <StatusCard state={warranty?.hasActiveWarranty ? 'success' : 'reject'} icon={false} to toDesc={warrantyLocale.to} desc={warranty.warrantyEndDate} />
+      )}
     </div>
   );
 }

@@ -14,6 +14,7 @@
     <h1>Warranty Details</h1>
     <warranty-details
       user-id="1"
+      language="ku"
       is-dev="true"
       id="warranty"
       show-ssc="true"
@@ -26,6 +27,12 @@
     >
       <div class="g-recaptcha" id="warranty-recaptcha" data-sitekey="6LetFoYqAAAAAE0fg-070Qtm3z-DG24sMJ8wzY1f"></div>
     </warranty-details>
+
+    <div class="button-container">
+      <button class="dynamic-claim-button sample-button" onclick="updateLang('en')">En</button>
+      <button class="dynamic-claim-button sample-button" onclick="updateLang('ku')">Ku</button>
+      <button class="dynamic-claim-button sample-button" onclick="updateLang('ar')">Ar</button>
+    </div>
 
     <div class="button-container">
       <button class="dynamic-claim-button sample-button" onclick="fetchData('')">Empty</button>
@@ -81,6 +88,10 @@
 
       function setData(key) {
         warranty.setData(mockData[key]);
+      }
+
+      function updateLang(newLang) {
+        warranty.language = newLang;
       }
 
       function toggleCheckbox(e) {

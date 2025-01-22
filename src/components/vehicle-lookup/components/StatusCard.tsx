@@ -8,25 +8,27 @@ type Props = {
   desc: string;
   to?: boolean;
   from?: boolean;
+  toDesc?: string;
+  fromDesc?: string;
   className?: string;
   icon?: boolean;
   state?: 'idle' | 'warning' | 'success' | 'reject';
 };
 
-export default function StatusCard({ desc, className, from, to, state = 'idle', icon = true }: Props) {
+export default function StatusCard({ desc, className, fromDesc, toDesc, from, to, state = 'idle', icon = true }: Props) {
   return (
     <div class={cn('card', className, `${state}-card`)}>
       {icon && state === 'reject' && <img src={RejectIcon} />}
       {icon && state === 'warning' && <img src={RejectIcon} />}
       {icon && state === 'success' && <img src={SuccessIcon} />}
       {from && (
-        <p class="no-padding">
-          <span class="font-semibold pr-1">From:</span> {desc}
+        <p class="no-padding flex gap-2">
+          <span class="font-semibold">{fromDesc}:</span> {desc}
         </p>
       )}
       {to && (
-        <p class="no-padding">
-          <span class="font-semibold pr-1">To:</span> {desc}
+        <p class="no-padding flex gap-2">
+          <span class="font-semibold">{toDesc}:</span> {desc}
         </p>
       )}
       {!from && !to && <p class={state === 'idle' ? 'no-padding' : ''}>{desc}</p>}

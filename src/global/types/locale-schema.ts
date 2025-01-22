@@ -13,16 +13,40 @@ export const languageMapper = {
   ku: KURDISH_JSON_FILE,
 };
 
+const warrantySchema = object({
+  authorized: string().required(),
+  unauthorized: string().required(),
+  activeWarranty: string().required(),
+  notActiveWarranty: string().required(),
+  notInvoiced: string().required(),
+  from: string().required(),
+  to: string().required(),
+  pendingSSC: string().required(),
+  noPendingSSC: string().required(),
+  checkingTMC: string().required(),
+  sscCampings: string().required(),
+  sscTableCode: string().required(),
+  sscTableDescription: string().required(),
+  sscTableRepairStatus: string().required(),
+  sscTableOPCode: string().required(),
+  sscTablePartNumber: string().required(),
+});
+
+const vehicleLookupSchema = object({
+  warranty: warrantySchema,
+});
+
 export const localeSchema = object({
   lang: string().required(),
   language: string().required(),
   direction: string().required(),
+  vehicleLookup: vehicleLookupSchema,
 });
 
 export type Locale = InferType<typeof localeSchema>;
 
 export const getLocaleLanguage = async (fileKey: string): Promise<Locale> => {
-  const languageFile = languageMapper[fileKey] || languageMapper.ar;
+  const languageFile = languageMapper[fileKey] || languageMapper.en;
 
   let localeResponse;
 

@@ -2,23 +2,27 @@ import { h } from '@stencil/core';
 import XIcon from '../assets/x-mark.svg';
 import CheckIcon from '../assets/check.svg';
 import { SSC } from '~types/vehicle-information';
+import { Locale } from '~types/locale-schema';
 
 type Props = {
   ssc: SSC[];
+  locale: Locale;
 };
-export default function SSCTable({ ssc }: Props) {
+export default function SSCTable({ ssc, locale }: Props) {
+  const warrantyLocale = locale.vehicleLookup.warranty;
+
   return (
     <div class="wrapper-table">
-      <div class="header">SSC Campings</div>
+      <div class="header">{warrantyLocale.sscCampings}</div>
       <div class="ssc-table-container">
         <table class="ssc-table">
           <thead>
             <tr>
-              <th>Code</th>
-              <th>Description</th>
-              <th>Repair Status</th>
-              <th>OP-Codes</th>
-              <th>Part Number</th>
+              <th>{warrantyLocale.sscTableCode}</th>
+              <th>{warrantyLocale.sscTableDescription}</th>
+              <th>{warrantyLocale.sscTableRepairStatus}</th>
+              <th>{warrantyLocale.sscTableOPCode}</th>
+              <th>{warrantyLocale.sscTablePartNumber}</th>
             </tr>
           </thead>
           <tbody>
