@@ -2,6 +2,9 @@
   "lang": "ku",
   "direction": "rtl",
   "language": "kurdish",
+  "errors": {
+    "wrongResponseFormat": "فۆرماتی وەڵامدانەوە هەڵەیە"
+  },
   "vehicleLookup": {
     "warranty": {
       "authorized": "ڕێگەپێدراو",

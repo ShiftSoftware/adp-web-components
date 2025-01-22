@@ -2,6 +2,9 @@
   "lang": "ar",
   "direction": "rtl",
   "language": "arabic",
+  "errors": {
+    "wrongResponseFormat": "تنسيق الرد خاطئ"
+  },
   "vehicleLookup": {
     "warranty": {
       "authorized": "مُصرح به",

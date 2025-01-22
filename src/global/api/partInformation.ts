@@ -25,7 +25,7 @@ export const getPartInformation = async (component: PartInformationInterface, ge
 
   const handleResult = (newPartInformation: PartInformation): PartInformation => {
     if (networkTimeoutRef === scopedTimeoutRef) {
-      if (!newPartInformation && partNumber) throw new Error(notAvailableMessage || 'Wrong response format');
+      if (!newPartInformation && partNumber) throw new Error(notAvailableMessage || 'wrongResponseFormat');
 
       if (loadedResponse) loadedResponse(newPartInformation);
       if (middlewareCallback) middlewareCallback(newPartInformation);

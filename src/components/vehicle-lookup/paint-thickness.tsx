@@ -74,7 +74,7 @@ export class PaintThickness implements ImageViewerInterface {
       const vehicleResponse = isVinRequest ? await getVehicleInformation(this, { scopedTimeoutRef, vin, mockData }, headers) : newData;
 
       if (this.networkTimeoutRef === scopedTimeoutRef) {
-        if (!vehicleResponse) throw new Error('Wrong response format');
+        if (!vehicleResponse) throw new Error('wrongResponseFormat');
 
         this.handleSettingData(vehicleResponse);
       }

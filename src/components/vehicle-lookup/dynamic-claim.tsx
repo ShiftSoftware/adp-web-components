@@ -102,7 +102,7 @@ export class DynamicClaim implements VehicleInformationInterface {
       const vehicleResponse = isVinRequest ? await getVehicleInformation(this, { scopedTimeoutRef, vin, mockData }, headers) : newData;
 
       if (this.networkTimeoutRef === scopedTimeoutRef) {
-        if (!vehicleResponse) throw new Error('Wrong response format');
+        if (!vehicleResponse) throw new Error('wrongResponseFormat');
         if (!Array.isArray(vehicleResponse.serviceItems)) throw new Error('No Service Available');
         this.vehicleInformation = vehicleResponse;
       }

@@ -12,7 +12,7 @@ const vehicleRequestHeaders = {
   cityIntegrationId: 'City-Integration-Id',
   brandIntegrationId: 'Brand-Integration-Id',
   companyIntegrationId: 'Company-Integration-Id',
-  companyBranchIntegrationId: 'Company-Branch-Integration-Id'
+  companyBranchIntegrationId: 'Company-Branch-Integration-Id',
 } as const;
 
 type VehicleRequestHeaders = Partial<Record<keyof typeof vehicleRequestHeaders, string>>;
@@ -41,7 +41,7 @@ export const getVehicleInformation = async (component: VehicleInformationInterfa
 
   const handleResult = (newVehicleInformation: VehicleInformation): VehicleInformation => {
     if (networkTimeoutRef === scopedTimeoutRef) {
-      if (!newVehicleInformation && vin) throw new Error(notAvailableMessage || 'Wrong response format');
+      if (!newVehicleInformation && vin) throw new Error(notAvailableMessage || 'wrongResponseFormat');
 
       if (loadedResponse) loadedResponse(newVehicleInformation);
       if (middlewareCallback) middlewareCallback(newVehicleInformation);

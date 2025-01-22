@@ -2,6 +2,9 @@
   "lang": "en",
   "direction": "ltr",
   "language": "english",
+  "errors": {
+    "wrongResponseFormat": "Wrong response format"
+  },
   "vehicleLookup": {
     "warranty": {
       "authorized": "Authorized",

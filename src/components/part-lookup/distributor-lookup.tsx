@@ -68,7 +68,7 @@ export class DistributorLookup implements PartInformationInterface {
       const partResponse = isPartNumberRequest ? await getPartInformation(this, { scopedTimeoutRef, partNumber, mockData }, headers) : newData;
 
       if (this.networkTimeoutRef === scopedTimeoutRef) {
-        if (!partResponse) throw new Error('Wrong response format');
+        if (!partResponse) throw new Error('wrongResponseFormat');
 
         this.handleSettingData(partResponse);
       }

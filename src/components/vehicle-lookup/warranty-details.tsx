@@ -10,7 +10,7 @@ import cn from '~lib/cn';
 import { VehicleInformation, Warranty } from '~types/vehicle-information';
 import { AppStates, MockJson } from '~types/components';
 import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicleInformation';
-import { getLocaleLanguage, LanguageKeys, Locale, localeSchema } from '~types/locale-schema';
+import { ErrorKeys, getLocaleLanguage, LanguageKeys, Locale, localeSchema } from '~types/locale-schema';
 
 let mockData: MockJson<VehicleInformation> = {};
 
@@ -59,8 +59,8 @@ export class WarrantyDetails implements VehicleInformationInterface {
 
   @State() state: AppStates = 'idle';
   @State() externalVin?: string = null;
-  @State() errorMessage?: string = null;
   @State() showRecaptcha: boolean = false;
+  @State() errorMessage?: ErrorKeys = null;
   @State() unInvoicedByBrokerName?: string = null;
   @State() vehicleInformation?: VehicleInformation;
   @State() checkingUnauthorizedSSC: boolean = false;
@@ -153,7 +153,7 @@ export class WarrantyDetails implements VehicleInformationInterface {
                 hasSSC: hasPendingSSC,
                 message: hasPendingSSC ? 'pendingSSC' : 'noPendingSSC',
               };
-            } else throw new Error('Wrong response format');
+            } else throw new Error('wrongResponseFormat');
           }
         }
       }, 500);
@@ -196,7 +196,7 @@ export class WarrantyDetails implements VehicleInformationInterface {
       const vehicleResponse = isVinRequest ? await getVehicleInformation(this, { scopedTimeoutRef, vin, mockData }, headers) : newData;
 
       if (this.networkTimeoutRef === scopedTimeoutRef) {
-        if (!vehicleResponse) throw new Error('Wrong response format');
+        if (!vehicleResponse) throw new Error('wrongResponseFormat');
 
         this.handleSettingData(vehicleResponse);
         this.handleInitializingRecaptcha(vin, scopedTimeoutRef);
@@ -206,6 +206,8 @@ export class WarrantyDetails implements VehicleInformationInterface {
       this.state = 'data';
     } catch (error) {
       if (error && error?.name === 'AbortError') return;
+
+      console.log({ a: error });
 
       this.state = 'error';
       this.vehicleInformation = null;
@@ -259,7 +261,7 @@ export class WarrantyDetails implements VehicleInformationInterface {
 
               {['error', 'error-loading'].includes(this.state) && (
                 <div class="py-4">
-                  <StatusCard desc={this.errorMessage} className="mx-auto reject-card max-w-500" />{' '}
+                  <StatusCard desc={this.locale.errors[this.errorMessage]} className="mx-auto reject-card max-w-500" />{' '}
                 </div>
               )}
 
