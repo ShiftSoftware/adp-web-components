@@ -35,7 +35,13 @@
     <a href="#" onclick="history.back()" style="color: blue; display: block; margin-bottom: 16px">Back</a>
 
     <h1>Swift Claim</h1>
-    <dynamic-claim is-dev="true" base-url="http://localhost:7174/api/secure-vehicle-lookup-test/" query-string="" id="dynamic-claim"></dynamic-claim>
+    <dynamic-claim language="ku" is-dev="true" base-url="http://localhost:7174/api/secure-vehicle-lookup-test/" query-string="" id="dynamic-claim"></dynamic-claim>
+
+    <div class="button-container">
+      <button class="dynamic-claim-button sample-button" onclick="updateLang('en')">En</button>
+      <button class="dynamic-claim-button sample-button" onclick="updateLang('ku')">Ku</button>
+      <button class="dynamic-claim-button sample-button" onclick="updateLang('ar')">Ar</button>
+    </div>
 
     <div style="margin-top: 50px; border: 1px solid #e1e1e1; padding: 20px; display: flex; align-content: center; justify-content: center; gap: 10px">
       <button class="dynamic-claim-button sample-button" onclick="vinLookup('')">empty (Reset)</button>
@@ -83,6 +89,10 @@
 
         dynamicClaim.loadedResponse = newResponse => console.log(newResponse);
       });
+
+      function updateLang(newLang) {
+        dynamicClaim.language = newLang;
+      }
 
       function vinLookup(vin) {
         dynamicClaim.fetchData(vin);

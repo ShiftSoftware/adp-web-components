@@ -54,29 +54,29 @@
     <div id="container"></div>
 
     <script>
-      let serviceHistory;
+      let vehicleAccessories;
 
       document.addEventListener('DOMContentLoaded', function () {
-        serviceHistory = document.getElementById('vehicle-accessories');
+        vehicleAccessories = document.getElementById('vehicle-accessories');
 
-        serviceHistory.setMockData(mockData);
+        vehicleAccessories.setMockData(mockData);
 
-        serviceHistory.loadedResponse = newResponse => console.log(newResponse);
-        serviceHistory.loadingStateChange = isLoading => {
+        vehicleAccessories.loadedResponse = newResponse => console.log(newResponse);
+        vehicleAccessories.loadingStateChange = isLoading => {
           console.log('isLoading: ' + isLoading);
         };
       });
 
       function updateLang(newLang) {
-        serviceHistory.language = newLang;
+        vehicleAccessories.language = newLang;
       }
 
       function fetchData(newVin) {
-        serviceHistory.fetchData(newVin);
+        vehicleAccessories.fetchData(newVin);
       }
 
       function setData(key) {
-        serviceHistory.setData(mockData[key]);
+        vehicleAccessories.setData(mockData[key]);
       }
 
       function toggleCheckbox(e) {

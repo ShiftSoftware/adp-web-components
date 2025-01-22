@@ -59,6 +59,22 @@
       "right": "يمين",
       "noImageGroups": "لا تتوفر مجموعات صور.",
       "expand": "تکبیر"
+    },
+    "dynamicClaim": {
+      "serviceType": "نوع الخدمة",
+      "activationDate": "تاريخ التفعيل",
+      "expireDate": "تاريخ انتهاء الصلاحية",
+      "claimAt": "المطالبة في",
+      "redeemingDealer": "استرداد التاجر",
+      "invoiceNumber": "رقم الفاتورة",
+      "wip": "WIP",
+      "menuCode": "كود القائمة",
+      "claim": "مطالبة",
+      "processed": "تمت معالجته",
+      "expired": "منتهي الصلاحية",
+      "cancelled": "تم الغاء",
+      "pending": "قيد الانتظار",
+      "warning": "تحذير"
     }
   }
 }

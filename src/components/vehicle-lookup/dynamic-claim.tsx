@@ -1,4 +1,5 @@
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { ErrorKeys, getLocaleLanguage, LanguageKeys, Locale, localeSchema } from '~types/locale-schema';
 
 import cn from '~lib/cn';
 
@@ -31,16 +32,23 @@ export class DynamicClaim implements VehicleInformationInterface {
   @Prop() baseUrl: string;
   @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
+  @Prop() language: LanguageKeys = 'en';
+  @Prop() loadingStateChange?: (isLoading: boolean) => void;
+  @Prop() loadedResponse?: (response: VehicleInformation) => void;
 
-  @Element() el: HTMLElement;
+  @State() locale: Locale = localeSchema.getDefault();
 
   @State() isIdle: boolean = true;
   @State() popupClasses: string = '';
+  @State() isLoading: boolean = false;
   @State() externalVin?: string = null;
+  @State() errorMessage?: ErrorKeys = null;
   @State() activePopupIndex: null | number = null;
   @State() vehicleInformation?: VehicleInformation;
 
   pendingItemHighlighted = false;
+
+  @Element() el: HTMLElement;
 
   scrollListenerRef: () => void;
   abortController: AbortController;
@@ -49,18 +57,19 @@ export class DynamicClaim implements VehicleInformationInterface {
 
   cachedClaimItem: ServiceItem;
 
-  @State() errorMessage?: string = null;
-
   dynamicRedeem: DynamicRedeem;
   dynamicClaimBody: HTMLElement;
   popupPositionRef: HTMLElement;
   dynamicClaimProgressBar: HTMLElement;
 
-  @State() isLoading: boolean = false;
+  async componentWillLoad() {
+    await this.changeLanguage(this.language);
+  }
 
-  @Prop() loadingStateChange?: (isLoading: boolean) => void;
-
-  @Prop() loadedResponse?: (response: VehicleInformation) => void;
+  @Watch('language')
+  async changeLanguage(newLanguage: LanguageKeys) {
+    this.locale = await getLocaleLanguage(newLanguage);
+  }
 
   async componentDidLoad() {
     this.dynamicClaimBody = this.el.shadowRoot.querySelector('.dynamic-claim-body');
@@ -344,8 +353,10 @@ export class DynamicClaim implements VehicleInformationInterface {
   }
 
   createPopup(item: ServiceItem) {
+    const texts = this.locale.vehicleLookup.dynamicClaim;
+
     return (
-      <div class="popup-position-ref">
+      <div dir={this.locale.direction} class="popup-position-ref">
         <div class="popup-container">
           <div class={cn('dynamic-claim-item-popup-info-triangle', this.popupClasses)}>
             <div class="dynamic-claim-item-popup-info-triangle-up"></div>
@@ -355,42 +366,42 @@ export class DynamicClaim implements VehicleInformationInterface {
             <table>
               <tbody>
                 <tr>
-                  <th>Service Type:</th>
+                  <th>{texts.serviceType}</th>
                   <td>{item.type.charAt(0).toUpperCase() + item.type.slice(1)}</td>
                 </tr>
 
                 <tr>
-                  <th>Activation Date</th>
+                  <th>{texts.activationDate}</th>
                   <td>{item.activatedAt}</td>
                 </tr>
 
                 <tr>
-                  <th>Expiry Date</th>
+                  <th>{texts.expireDate}</th>
                   <td>{item.expiresAt}</td>
                 </tr>
 
                 <tr>
-                  <th>Claimed At</th>
+                  <th>{texts.claimAt}</th>
                   <td>{item.redeemDate}</td>
                 </tr>
 
                 <tr>
-                  <th>Redeeming Dealer</th>
+                  <th>{texts.redeemingDealer}</th>
                   <td>{item.dealerName}</td>
                 </tr>
 
                 <tr>
-                  <th>Invoice Number</th>
+                  <th>{texts.invoiceNumber}</th>
                   <td>{item.invoiceNumber}</td>
                 </tr>
 
                 <tr>
-                  <th>WIP</th>
+                  <th>{texts.wip}</th>
                   <td>{item.wip}</td>
                 </tr>
 
                 <tr>
-                  <th>Menu Code</th>
+                  <th>{texts.claim}</th>
                   <td>{item.menuCode}</td>
                 </tr>
               </tbody>
@@ -406,7 +417,7 @@ export class DynamicClaim implements VehicleInformationInterface {
                     <path d="M8.5 11L11.3939 13.8939C11.4525 13.9525 11.5475 13.9525 11.6061 13.8939L19.5 6" stroke-width="1.2"></path>
                   </g>
                 </svg>
-                <span>Claim</span>
+                <span>{texts.claim}</span>
               </button>
             )}
           </div>
@@ -417,6 +428,7 @@ export class DynamicClaim implements VehicleInformationInterface {
 
   render() {
     const serviceItems = this.vehicleInformation?.serviceItems || [];
+    const texts = this.locale.vehicleLookup.dynamicClaim;
 
     return (
       <Host>
@@ -454,7 +466,7 @@ export class DynamicClaim implements VehicleInformationInterface {
                       onMouseEnter={event => this.onMouseEnter(event.target as HTMLElement, idx)}
                     >
                       <img src={icons[item.status]} alt="status icon" />
-                      <span>{item.status.charAt(0).toUpperCase() + item.status.slice(1)}</span>
+                      <span>{texts[item.status]}</span>
                       {this.activePopupIndex === idx && this.createPopup(item)}
                     </div>
                     <div onAnimationEnd={this.removeLoadAnimationClass} class="dynamic-claim-item-circle load-animation"></div>

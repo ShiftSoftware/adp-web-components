@@ -59,6 +59,22 @@
       "right": "Right",
       "noImageGroups": "No image groups are available.",
       "expand": "Expand"
+    },
+    "dynamicClaim": {
+      "serviceType": "Service Type",
+      "activationDate": "Activation Date",
+      "expireDate": "Expiry Date",
+      "claimAt": "Claimed At",
+      "redeemingDealer": "Redeeming Dealer",
+      "invoiceNumber": "Invoice Number",
+      "wip": "WIP",
+      "menuCode": "Menu Code",
+      "claim": "Claim",
+      "processed": "Processed",
+      "expired": "Expired",
+      "cancelled": "Cancelled",
+      "pending": "Pending",
+      "warning": "Warning"
     }
   }
 }

@@ -185,16 +185,16 @@
 .dynamic-claim-item-popup-info table th {
   border-bottom: 1px solid #ddd;
   padding: 10px;
-  padding-right: 50px;
-  text-align: left;
+  padding-inline-end: 50px;
+  text-align: start;
   white-space: nowrap;
 }
 
 .dynamic-claim-item-popup-info table td {
   border-bottom: 1px solid #ddd;
   padding: 10px;
-  padding-right: 50px;
-  text-align: left;
+  padding-inline-end: 50px;
+  text-align: start;
   white-space: nowrap;
   font-weight: normal;
 }

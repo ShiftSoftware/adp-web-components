@@ -59,6 +59,22 @@
       "right": "ڕاست",
       "noImageGroups": "هیچ گروپێکی وێنە لەبەردەستدا نییە.",
       "expand": "فراوانکردن"
+    },
+    "dynamicClaim": {
+      "serviceType": "جۆری خزمەتگوزاری",
+      "activationDate": "بەرواری چالاککردن",
+      "expireDate": "بەرواری بەسەرچوون",
+      "claimAt": "چالاککراوە لە",
+      "redeemingDealer": "بازرگانی چالاککار",
+      "invoiceNumber": "ژمارەی فاتورە",
+      "wip": "WIP",
+      "menuCode": "کۆدی مینیو",
+      "claim": "چالاککردن",
+      "processed": "پرۆسێس کراوە",
+      "expired": "بەسەرچووە",
+      "cancelled": "هەڵوەشایەوە",
+      "pending": "لە چاوەڕوانیدایە",
+      "warning": "ئاگاداربە"
     }
   }
 }
