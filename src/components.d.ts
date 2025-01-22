@@ -100,6 +100,7 @@ export namespace Components {
         "baseUrl": string;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
+        "language": LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString": string;
@@ -346,6 +347,7 @@ declare namespace LocalJSX {
     interface ServiceHistory {
         "baseUrl"?: string;
         "isDev"?: boolean;
+        "language"?: LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString"?: string;

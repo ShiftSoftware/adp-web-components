@@ -40,6 +40,16 @@
       "description": "وەسف",
       "image": "وێنە",
       "expand": "فراوانکردن"
+    },
+    "serviceHistory": {
+      "serviceHistory": "مێژووی خزمەتگوزاری",
+      "noData": "هیچ داتایەک لەبەردەستدا نییە.",
+      "branch": "لق",
+      "dealer": "بریکار",
+      "invoiceNumber": "ژمارەی فاتورە",
+      "date": "ڕێکەوت",
+      "serviceType": "جۆری خزمەتگوزاری",
+      "odometer": "ئۆدۆمێتەر"
     }
   }
 }

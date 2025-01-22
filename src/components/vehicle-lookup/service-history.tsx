@@ -1,4 +1,5 @@
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { ErrorKeys, getLocaleLanguage, LanguageKeys, Locale, localeSchema } from '~types/locale-schema';
 import Loading from '../components/Loading';
 import { AppStates, MockJson } from '~types/components';
 import cn from '~lib/cn';
@@ -16,18 +17,30 @@ export class ServiceHistory implements VehicleInformationInterface {
   @Prop() baseUrl: string = '';
   @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
+  @Prop() language: LanguageKeys = 'en';
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
   @Prop() loadedResponse?: (response: VehicleInformation) => void;
 
+  @State() locale: Locale = localeSchema.getDefault();
+
   @State() state: AppStates = 'idle';
   @State() externalVin?: string = null;
-  @State() errorMessage?: string = null;
+  @State() errorMessage?: ErrorKeys = null;
   @State() vehicleInformation?: VehicleInformation;
 
   abortController: AbortController;
   networkTimeoutRef: ReturnType<typeof setTimeout>;
 
   @Element() el: HTMLElement;
+
+  async componentWillLoad() {
+    await this.changeLanguage(this.language);
+  }
+
+  @Watch('language')
+  async changeLanguage(newLanguage: LanguageKeys) {
+    this.locale = await getLocaleLanguage(newLanguage);
+  }
 
   private handleSettingData(response: VehicleInformation) {
     if (response.serviceHistory === null) response.serviceHistory = [];
@@ -96,6 +109,8 @@ export class ServiceHistory implements VehicleInformationInterface {
   }
 
   render() {
+    const texts = this.locale.vehicleLookup.serviceHistory;
+
     return (
       <Host>
         <div class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
@@ -106,22 +121,22 @@ export class ServiceHistory implements VehicleInformationInterface {
 
               {['error', 'error-loading'].includes(this.state) && (
                 <div class="py-[16px]">
-                  <div class=" px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">{this.errorMessage}</div>
+                  <div class=" px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">{this.locale.errors[this.errorMessage]}</div>
                 </div>
               )}
 
               {['data', 'data-loading'].includes(this.state) && (
                 <div class="flex mt-[12px] max-h-[70dvh] overflow-hidden rounded-[4px] flex-col border border-[#d6d8dc]">
-                  <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">Service History</div>
+                  <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">{texts.serviceHistory}</div>
                   <div class="h-0 overflow-auto flex-1">
-                    {!this.vehicleInformation?.serviceHistory.length && <div class="h-[80px] flex items-center justify-center text-[18px]">No data is available.</div>}
+                    {!this.vehicleInformation?.serviceHistory.length && <div class="h-[80px] flex items-center justify-center text-[18px]">{texts.noData}</div>}
                     {!!this.vehicleInformation?.serviceHistory.length && (
                       <table class="w-full overflow-auto relative border-collapse">
                         <thead class="top-0 font-bold sticky bg-white">
                           <tr>
-                            {['Branch', 'Dealer', 'Invoice No.', 'Date', 'Service Type', 'Odometer'].map(title => (
+                            {['branch', 'dealer', 'invoiceNumber', 'date', 'serviceType', 'odometer'].map(title => (
                               <th key={title} class="px-[10px] py-[20px] text-center whitespace-nowrap border-b border-[#d6d8dc]">
-                                {title}
+                                {texts[title]}
                               </th>
                             ))}
                           </tr>
