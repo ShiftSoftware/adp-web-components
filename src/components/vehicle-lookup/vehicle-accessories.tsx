@@ -1,4 +1,5 @@
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { ErrorKeys, getLocaleLanguage, LanguageKeys, Locale, localeSchema } from '~types/locale-schema';
 
 import { AppStates, MockJson } from '~types/components';
 import { VehicleInformation } from '~types/vehicle-information';
@@ -23,13 +24,16 @@ export class VehicleAccessories implements ImageViewerInterface {
   @Prop() baseUrl: string = '';
   @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
+  @Prop() language: LanguageKeys = 'en';
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
   @Prop() loadedResponse?: (response: VehicleInformation) => void;
 
+  @State() locale: Locale = localeSchema.getDefault();
+
   @State() state: AppStates = 'idle';
   @State() externalVin?: string = null;
-  @State() errorMessage?: string = null;
   @State() expandedImage?: string = null;
+  @State() errorMessage?: ErrorKeys = null;
   @State() vehicleInformation?: VehicleInformation;
 
   originalImage: HTMLImageElement;
@@ -37,6 +41,15 @@ export class VehicleAccessories implements ImageViewerInterface {
   networkTimeoutRef: ReturnType<typeof setTimeout>;
 
   @Element() el: HTMLElement;
+
+  async componentWillLoad() {
+    await this.changeLanguage(this.language);
+  }
+
+  @Watch('language')
+  async changeLanguage(newLanguage: LanguageKeys) {
+    this.locale = await getLocaleLanguage(newLanguage);
+  }
 
   private handleSettingData(response: VehicleInformation) {
     if (!response.accessories || !Array.isArray(response.accessories)) response.accessories = [];
@@ -117,11 +130,12 @@ export class VehicleAccessories implements ImageViewerInterface {
   };
 
   render() {
+    const texts = this.locale.vehicleLookup.accessories;
     const accessories = this?.vehicleInformation ? this.vehicleInformation?.accessories : [];
 
     return (
       <Host>
-        <div class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
+        <div dir={this.locale.direction} class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
           <div>
             <Loading isLoading={this.state.includes('loading')} />
             <div class={cn('transition-all duration-700', { 'scale-0': this.state.includes('loading') || this.state === 'idle', 'opacity-0': this.state.includes('loading') })}>
@@ -129,22 +143,22 @@ export class VehicleAccessories implements ImageViewerInterface {
 
               {['error', 'error-loading'].includes(this.state) && (
                 <div class="py-[16px]">
-                  <div class=" px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">{this.errorMessage}</div>
+                  <div class=" px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">{this.locale.errors[this.errorMessage]}</div>
                 </div>
               )}
 
               {['data', 'data-loading'].includes(this.state) && (
                 <div class="flex mt-[12px] max-h-[70dvh] overflow-hidden rounded-[4px] flex-col border border-[#d6d8dc]">
-                  <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">Vehicle Accessories</div>
+                  <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">{texts.vehicleAccessories}</div>
                   <div class="h-0 overflow-auto flex-1">
-                    {!accessories.length && <div class="h-[80px] flex items-center justify-center text-[18px]">No data is available.</div>}
+                    {!accessories.length && <div class="h-[80px] flex items-center justify-center text-[18px]">{texts.noData}</div>}
                     {!!accessories.length && (
                       <table class="w-full overflow-auto relative border-collapse">
                         <thead class="top-0 font-bold z-40 sticky bg-white">
                           <tr>
-                            {['Part Number', 'Description', 'Image'].map(title => (
+                            {['partNumber', 'description', 'image'].map(title => (
                               <th key={title} class="px-[10px] py-[20px] text-center whitespace-nowrap border-b border-[#d6d8dc]">
-                                {title}
+                                {texts[title]}
                               </th>
                             ))}
                           </tr>
@@ -173,7 +187,7 @@ export class VehicleAccessories implements ImageViewerInterface {
                                 >
                                   <div class="absolute flex-col justify-center gap-[4px] size-full flex items-center pointer-events-none hover:opacity-100 rounded-lg opacity-0 bg-black/40 transition-all duration-300">
                                     <img src={Eye} />
-                                    <span class="text-white">Expand</span>
+                                    <span class="text-white">{texts.expand}</span>
                                   </div>
                                   <img class="w-auto h-auto max-w-[133px] max-h-[133px] cursor-pointer shadow-sm rounded-lg transition-all duration-300" src={accessory.image} />
                                 </button>

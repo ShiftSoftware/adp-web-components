@@ -8,13 +8,13 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { PartInformation } from "./global/types/part-information";
 import { DotNetObjectReference, MockJson } from "./global/types/components";
 import { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
-import { ActiveElement, ComponentMap } from "./components/vehicle-lookup/vehicle-lookup";
 import { LanguageKeys } from "./global/types/locale-schema";
+import { ActiveElement, ComponentMap } from "./components/vehicle-lookup/vehicle-lookup";
 export { PartInformation } from "./global/types/part-information";
 export { DotNetObjectReference, MockJson } from "./global/types/components";
 export { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
-export { ActiveElement, ComponentMap } from "./components/vehicle-lookup/vehicle-lookup";
 export { LanguageKeys } from "./global/types/locale-schema";
+export { ActiveElement, ComponentMap } from "./components/vehicle-lookup/vehicle-lookup";
 export namespace Components {
     interface DeadStockLookup {
         "baseUrl": string;
@@ -110,6 +110,7 @@ export namespace Components {
         "baseUrl": string;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
+        "language": LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString": string;
@@ -352,6 +353,7 @@ declare namespace LocalJSX {
     interface VehicleAccessories {
         "baseUrl"?: string;
         "isDev"?: boolean;
+        "language"?: LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString"?: string;

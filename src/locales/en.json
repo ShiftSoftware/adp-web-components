@@ -32,6 +32,14 @@
       "katashiki": "Katashiki",
       "modelYear": "Model Year",
       "sfx": "SFX"
+    },
+    "accessories": {
+      "vehicleAccessories": "Vehicle Accessories",
+      "noData": "No data is available.",
+      "partNumber": "Part Number",
+      "description": "Description",
+      "image": "Image",
+      "expand": "Expand"
     }
   }
 }

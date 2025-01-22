@@ -32,6 +32,14 @@
       "katashiki": "Katashiki",
       "modelYear": "سنة الموديل",
       "sfx": "SFX"
+    },
+    "accessories": {
+      "vehicleAccessories": "إكسسوارات المركبات",
+      "noData": "لا توجد بيانات متاحة.",
+      "partNumber": "رقم القطعة",
+      "description": "وصف",
+      "image": "صورة",
+      "expand": "تکبیر"
     }
   }
 }
