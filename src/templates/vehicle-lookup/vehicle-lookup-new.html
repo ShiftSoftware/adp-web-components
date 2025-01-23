@@ -142,9 +142,10 @@
             <!-- Tab panes -->
             <div class="tab-content" style="background: white; border: 1px solid #dddddd; padding: 25px; border-radius: 10px">
               <vehicle-lookup
+                language="ku"
+                query-string=""
                 id="vehicle-lookup"
                 active-element="vehicle-specification"
-                query-string=""
                 base-url="https://tiq-vehicles-functions.azurewebsites.net/api/secure-vehicle-lookup/"
               ></vehicle-lookup>
             </div>
@@ -164,6 +165,10 @@
       const spinnerIcon = document.getElementById('spinner-icon');
 
       const input = document.getElementById('vinInput');
+
+      function updateLang(newLang) {
+        vehicleLookup.language = newLang;
+      }
 
       function changeLookup(newIndex) {
         vehicleLookup.activeElement = newIndex;
