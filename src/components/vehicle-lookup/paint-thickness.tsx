@@ -1,12 +1,13 @@
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-import { ErrorKeys, getLocaleLanguage, LanguageKeys, Locale, localeSchema } from '~types/locale-schema';
-
-import Loading from '../components/Loading';
-import { getVehicleInformation } from '~api/vehicleInformation';
-
-import Eye from '~assets/eye.svg';
 
 import cn from '~lib/cn';
+import { getLocaleLanguage } from '~lib/get-local-language';
+
+import { getVehicleInformation } from '~api/vehicleInformation';
+import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/locales';
+
+import Eye from '~assets/eye.svg';
+import Loading from '../components/Loading';
 
 import { AppStates, MockJson } from '~types/components';
 import { VehicleInformation } from '~types/vehicle-information';

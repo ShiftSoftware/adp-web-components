@@ -1,6 +1,6 @@
 import path from 'path';
 import * as fs from 'fs';
-import { ARABIC_JSON_FILE, ENGLISH_JSON_FILE, KURDISH_JSON_FILE, Locale, localeSchema } from '~types/locale-schema';
+import { ARABIC_JSON_FILE, ENGLISH_JSON_FILE, KURDISH_JSON_FILE, Locale, localeSchema } from '~types/locales';
 import { ValidationError } from 'yup';
 
 function getFilePath(fileName: string): string {

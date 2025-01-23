@@ -1,7 +1,6 @@
-import { Build } from '@stencil/core';
 import { InferType, object, string } from 'yup';
-import { errorsSchema } from './locales/error-schema';
-import { vehicleLookupSchema } from './locales/vehicle-lookup';
+import { errorsSchema } from './error-schema';
+import { vehicleLookupSchema } from './vehicle-lookup';
 
 export const ARABIC_JSON_FILE = 'ar.json';
 export const ENGLISH_JSON_FILE = 'en.json';
@@ -26,16 +25,3 @@ export const localeSchema = object({
 export type Locale = InferType<typeof localeSchema>;
 
 export type ErrorKeys = keyof InferType<typeof errorsSchema> | null;
-
-export const getLocaleLanguage = async (fileKey: string): Promise<Locale> => {
-  const languageFile = languageMapper[fileKey] || languageMapper.en;
-
-  let localeResponse;
-
-  if (Build.isDev) localeResponse = await fetch('../../locales/' + languageFile);
-  else localeResponse = await fetch('https://cdn.jsdelivr.net/npm/adp-web-components@latest/dist/locales/' + languageFile);
-
-  const localeJson = (await localeResponse.json()) as Locale;
-
-  return localeJson;
-};

@@ -1,16 +1,19 @@
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import Loading from './components/Loading';
-import StatusCard from './components/StatusCard';
 import Loader from '~assets/loader.svg';
-
-import CardsContainer from './components/CardsContainer';
+import Loading from './components/Loading';
 import SSCTable from './components/SSCTable';
+import StatusCard from './components/StatusCard';
+import CardsContainer from './components/CardsContainer';
+
 import cn from '~lib/cn';
-import { VehicleInformation, Warranty } from '~types/vehicle-information';
+import { getLocaleLanguage } from '~lib/get-local-language';
+
 import { AppStates, MockJson } from '~types/components';
+import { VehicleInformation, Warranty } from '~types/vehicle-information';
+import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/locales';
+
 import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicleInformation';
-import { ErrorKeys, getLocaleLanguage, LanguageKeys, Locale, localeSchema } from '~types/locale-schema';
 
 let mockData: MockJson<VehicleInformation> = {};
 

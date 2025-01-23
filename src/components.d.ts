@@ -7,12 +7,12 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { PartInformation } from "./global/types/part-information";
 import { DotNetObjectReference, MockJson } from "./global/types/components";
-import { LanguageKeys } from "./global/types/locale-schema";
+import { LanguageKeys } from "./global/types/locales/index";
 import { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
 import { ActiveElement, ComponentMap } from "./components/vehicle-lookup/vehicle-lookup";
 export { PartInformation } from "./global/types/part-information";
 export { DotNetObjectReference, MockJson } from "./global/types/components";
-export { LanguageKeys } from "./global/types/locale-schema";
+export { LanguageKeys } from "./global/types/locales/index";
 export { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
 export { ActiveElement, ComponentMap } from "./components/vehicle-lookup/vehicle-lookup";
 export namespace Components {

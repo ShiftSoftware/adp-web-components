@@ -1,9 +1,10 @@
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-import { getLocaleLanguage, LanguageKeys, Locale, localeSchema } from '~types/locale-schema';
+
+import cn from '~lib/cn';
+import { getLocaleLanguage } from '~lib/get-local-language';
 
 import { ServiceItem } from '~types/vehicle-information';
-import cn from '~lib/cn';
-
+import { LanguageKeys, Locale, localeSchema } from '~types/locales';
 @Component({
   shadow: true,
   tag: 'dynamic-redeem',

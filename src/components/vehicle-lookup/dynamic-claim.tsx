@@ -1,7 +1,7 @@
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-import { ErrorKeys, getLocaleLanguage, LanguageKeys, Locale, localeSchema } from '~types/locale-schema';
 
 import cn from '~lib/cn';
+import { getLocaleLanguage } from '~lib/get-local-language';
 
 import expiredIcon from './assets/expired.svg';
 import pendingIcon from './assets/pending.svg';
@@ -10,8 +10,10 @@ import processedIcon from './assets/processed.svg';
 
 import { MockJson } from '~types/components';
 import { ServiceItem, VehicleInformation } from '~types/vehicle-information';
+import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/locales';
 
 import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicleInformation';
+
 import { DynamicRedeem } from './dynamic-redeem';
 
 let mockData: MockJson<VehicleInformation> = {};
