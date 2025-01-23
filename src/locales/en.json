@@ -93,5 +93,25 @@
       "notInvoiced": "This Vehicle is not yet invoiced by the following Trusted Business Partner:",
       "confirmNotInvoiced": "Confirm Claiming without Trusted Business Partner Invoice"
     }
+  },
+  "partLookup": {
+    "deadStock": {},
+    "distributor": {
+      "info": "Info",
+      "distributorStock": "Distributor Stock",
+      "availability": "Availability",
+      "notAvailable": "Not Available",
+      "partiallyAvailable": "Partially Available",
+      "available": "Available",
+      "location": "Location",
+      "description": "Description",
+      "productGroup": "Product Group",
+      "postLocalDescription": "Description",
+      "dealerPurchasePrice": "Dealer Purchase price",
+      "recommendedRetailPrice": "Recommended Retail price",
+      "supersededFrom": "Superseded From",
+      "supersededTo": "Superseded To"
+    },
+    "manufacturer": {}
   }
 }

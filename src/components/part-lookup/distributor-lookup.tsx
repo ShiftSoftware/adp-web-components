@@ -116,19 +116,25 @@ export class DistributorLookup implements PartInformationInterface {
   }
 
   render() {
+    const texts = this.locale.partLookup.distributor;
+
     const localName = this.partInformation ? this.localizationName || 'russian' : 'russian';
 
     const hiddenFields = this.partInformation ? this.hiddenFields.split(',').map(field => field.trim()) || [] : [];
 
     const partsInformation = this.partInformation
       ? [
-          { label: 'Description', key: 'partDescription', value: this.partInformation.stockParts[0].partDescription },
-          { label: 'Product Group', key: 'group', value: this.partInformation.stockParts[0].group },
-          { label: `${capitalize(localName)} Description`, key: 'localDescription', value: this.partInformation.stockParts[0].localDescription },
-          { label: 'Dealer Purchase price', key: 'fob', value: this.partInformation.stockParts[0].fob?.toFixed(2) },
-          { label: 'Recommended Retail price', key: 'price', value: this.partInformation.stockParts[0].price?.toFixed(2) },
-          { label: 'Superseded From', key: 'supersededFrom', value: this.partInformation.stockParts[0].supersededFrom },
-          { label: 'Superseded To', key: 'supersededTo', value: this.partInformation.stockParts[0].supersededTo },
+          { label: texts.description, key: 'partDescription', value: this.partInformation.stockParts[0].partDescription },
+          { label: texts.productGroup, key: 'group', value: this.partInformation.stockParts[0].group },
+          {
+            label: this.locale.direction === 'ltr' ? `${capitalize(localName)} ${texts.postLocalDescription}` : `${texts.postLocalDescription} ${capitalize(localName)}`,
+            key: 'localDescription',
+            value: this.partInformation.stockParts[0].localDescription,
+          },
+          { label: texts.dealerPurchasePrice, key: 'fob', value: this.partInformation.stockParts[0].fob?.toFixed(2) },
+          { label: texts.recommendedRetailPrice, key: 'price', value: this.partInformation.stockParts[0].price?.toFixed(2) },
+          { label: texts.supersededFrom, key: 'supersededFrom', value: this.partInformation.stockParts[0].supersededFrom },
+          { label: texts.supersededTo, key: 'supersededTo', value: this.partInformation.stockParts[0].supersededTo },
         ]
       : [];
 
@@ -157,7 +163,7 @@ export class DistributorLookup implements PartInformationInterface {
               {['data', 'data-loading'].includes(this.state) && (
                 <div>
                   <div class="flex mt-[12px] max-h-[70dvh] overflow-hidden rounded-[4px] flex-col border border-[#d6d8dc]">
-                    <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">Info</div>
+                    <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">{texts.info}</div>
 
                     <div class="py-[10px] px-[30px] flex flex-col gap-[15px]">
                       <div class="grid grid-cols-3 gap-[50px]">
@@ -173,13 +179,13 @@ export class DistributorLookup implements PartInformationInterface {
 
                   {displayDistributer && (
                     <div class="flex mt-[12px] max-h-[70dvh] overflow-hidden rounded-[4px] flex-col border border-[#d6d8dc]">
-                      <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">Distributor Stock</div>
+                      <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">{texts.distributorStock}</div>
 
                       <div class="flex flex-col gap-[15px]">
                         <table class="w-full overflow-auto relative border-collapse">
                           <thead class="top-0 font-bold sticky bg-white">
                             <tr>
-                              {['Location', 'Availability'].map(title => (
+                              {[texts.location, texts.availability].map(title => (
                                 <th key={title} class="px-[10px] py-[20px] text-center whitespace-nowrap border-b border-[#d6d8dc]">
                                   {title}
                                 </th>
@@ -201,10 +207,10 @@ export class DistributorLookup implements PartInformationInterface {
                                   >
                                     <strong>
                                       {stock.quantityLookUpResult === 'Available'
-                                        ? 'Available'
+                                        ? texts.available
                                         : stock.quantityLookUpResult === 'PartiallyAvailable'
-                                        ? 'Partially Available'
-                                        : 'Not Available'}
+                                        ? texts.partiallyAvailable
+                                        : texts.notAvailable}
                                     </strong>
                                   </div>
                                 </td>

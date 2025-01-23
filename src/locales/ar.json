@@ -93,5 +93,25 @@
       "notInvoiced": "لم يتم إصدار فاتورة لهذه المركبة بعد من قبل شريك الأعمال الموثوق به التالي:",
       "confirmNotInvoiced": "تأكيد المطالبة دون فاتورة شريك الأعمال الموثوق به"
     }
+  },
+  "partLookup": {
+    "deadStock": {},
+    "distributor": {
+      "info": "معلومات",
+      "distributorStock": "موزع الأسهم",
+      "availability": "التوفر",
+      "notAvailable": "غير متوفر",
+      "partiallyAvailable": "متاح جزئيا",
+      "available": "متوفر",
+      "location": "موقع",
+      "description": "وصف",
+      "productGroup": "مجموعة المنتجات",
+      "postLocalDescription": "وصف",
+      "dealerPurchasePrice": "سعر شراء التاجر",
+      "recommendedRetailPrice": "سعر التجزئة الموصى به",
+      "supersededFrom": "تم استبداله من",
+      "supersededTo": "تم استبداله الی"
+    },
+    "manufacturer": {}
   }
 }

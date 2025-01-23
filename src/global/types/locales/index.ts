@@ -1,5 +1,7 @@
 import { InferType, object, string } from 'yup';
+
 import { errorsSchema } from './error-schema';
+import { partLookupSchema } from './part-lookup';
 import { vehicleLookupSchema } from './vehicle-lookup';
 
 export const ARABIC_JSON_FILE = 'ar.json';
@@ -17,6 +19,7 @@ export const languageMapper = {
 export const localeSchema = object({
   errors: errorsSchema,
   lang: string().required(),
+  partLookup: partLookupSchema,
   language: string().required(),
   direction: string().required(),
   vehicleLookup: vehicleLookupSchema,
