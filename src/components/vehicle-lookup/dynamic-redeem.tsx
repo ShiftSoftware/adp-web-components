@@ -1,4 +1,6 @@
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { getLocaleLanguage, LanguageKeys, Locale, localeSchema } from '~types/locale-schema';
+
 import { ServiceItem } from '~types/vehicle-information';
 import cn from '~lib/cn';
 
@@ -10,29 +12,38 @@ import cn from '~lib/cn';
 export class DynamicRedeem {
   @Prop() vin?: string = '';
   @Prop() item?: ServiceItem = null;
+  @Prop() language: LanguageKeys = 'en';
   @Prop() canceledItems?: ServiceItem[] = null;
   @Prop() unInvoicedByBrokerName?: string = null;
   @Prop() handleScanner?: (code: string) => void;
   @Prop() handleQrChanges?: (code: string) => void;
+  @Prop() loadingStateChange?: (isLoading: boolean) => void;
 
-  @Element() el: HTMLElement;
+  @State() locale: Locale = localeSchema.getDefault();
 
-  @State() confirmServiceCancellation: boolean = false;
-  @State() confirmUnInvoicedTBPVehicles: boolean = false;
-
+  @State() isLoading: boolean = false;
   @State() internalVin?: string = '';
   @State() isOpened?: boolean = false;
   @State() internalItem?: ServiceItem = null;
+  @State() confirmServiceCancellation: boolean = false;
   @State() internalCanceledItem?: ServiceItem[] = null;
+  @State() confirmUnInvoicedTBPVehicles: boolean = false;
+
+  @Element() el: HTMLElement;
 
   input: HTMLInputElement;
   dynamicClaimProcessor: HTMLElement;
 
   closeModalListenerRef: (event: KeyboardEvent) => void;
 
-  @State() isLoading: boolean = false;
+  async componentWillLoad() {
+    await this.changeLanguage(this.language);
+  }
 
-  @Prop() loadingStateChange?: (isLoading: boolean) => void;
+  @Watch('language')
+  async changeLanguage(newLanguage: LanguageKeys) {
+    this.locale = await getLocaleLanguage(newLanguage);
+  }
 
   @Watch('isLoading')
   onIsLoadingChange(newValue: boolean) {
@@ -144,12 +155,13 @@ export class DynamicRedeem {
   };
 
   render() {
+    const texts = this.locale.vehicleLookup.dynamicRedeem;
     const disableInput = !this.confirmServiceCancellation || !this.confirmUnInvoicedTBPVehicles;
 
     if (!disableInput) this.focusInput();
     return (
       <Host>
-        <div class={cn('dynamic-claim-processor', this?.isOpened && 'active')}>
+        <div dir={this.locale.direction} class={cn('dynamic-claim-processor', this?.isOpened && 'active')}>
           <svg id="dynamic-claim-processor-close-icon" onClick={this.closeModal} viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -167,23 +179,23 @@ export class DynamicRedeem {
               <div class="dynamic-claim-processor-info-box-body">
                 <table class="border-separate">
                   <tr>
-                    <th>Service Type</th>
+                    <th>{texts.serviceType}</th>
                     <td>{this?.internalItem?.type}</td>
 
-                    <th>Name</th>
+                    <th>{texts.name}</th>
                     <td>{this?.internalItem?.name}</td>
                   </tr>
 
                   <tr>
-                    <th>Activation Date</th>
+                    <th>{texts.activationDate}</th>
                     <td>{this?.internalItem?.activatedAt}</td>
 
-                    <th>Expiry Date</th>
+                    <th>{texts.expireDate}</th>
                     <td>{this?.internalItem?.expiresAt}</td>
                   </tr>
 
                   <tr>
-                    <th>Menu Code</th>
+                    <th>{texts.menuCode}</th>
                     <td>{this?.internalItem?.menuCode}</td>
                   </tr>
                 </table>
@@ -193,10 +205,10 @@ export class DynamicRedeem {
             <div style={{ flex: '1', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
               {this?.internalCanceledItem && Array.isArray(this.internalCanceledItem) && !!this.internalCanceledItem.length && (
                 <div class="admonition warning">
-                  <p class="admonition-title">Warning</p>
+                  <p class="admonition-title">{texts.warning}</p>
                   <div style={{ padding: '0 30px' }}>
-                    <p class="my-4">the following Services Are still 'Pending' and they will be marked as 'Cancelled'</p>
-                    <ul class="dynamic-claim-processor-to-be-cancelled-list my-4 pl-10 list-disc">
+                    <p class="my-4">{texts.skipServicesWarning}</p>
+                    <ul class="dynamic-claim-processor-to-be-cancelled-list warning-ul my-4 list-disc">
                       {this.internalCanceledItem.map(({ name }) => (
                         <li id={name}>{name}</li>
                       ))}
@@ -210,8 +222,8 @@ export class DynamicRedeem {
                           onChange={() => {
                             this.confirmServiceCancellation = !this.confirmServiceCancellation;
                           }}
-                        />{' '}
-                        Confirm Marking the above services as 'Cancelled'
+                        />
+                        {texts.confirmSkipServices}
                       </label>
                     </div>
                   </div>
@@ -220,9 +232,9 @@ export class DynamicRedeem {
 
               {true && this.unInvoicedByBrokerName && (
                 <div class="admonition warning">
-                  <p class="admonition-title">Warning</p>
+                  <p class="admonition-title">{texts.warning}</p>
                   <div style={{ padding: '0 30px' }}>
-                    <p class="my-4">This Vehicle is not yet invoiced by the following Trusted Business Partner:</p>
+                    <p class="my-4">{texts.notInvoiced}</p>
                     <div>
                       <strong>{this.unInvoicedByBrokerName}</strong>
                     </div>
@@ -235,8 +247,8 @@ export class DynamicRedeem {
                           onChange={() => {
                             this.confirmUnInvoicedTBPVehicles = !this.confirmUnInvoicedTBPVehicles;
                           }}
-                        />{' '}
-                        Confirm Claiming without Trusted Business Partner Invoice
+                        />
+                        {texts.confirmNotInvoiced}
                       </label>
                     </div>
                   </div>
@@ -333,18 +345,19 @@ export class DynamicRedeem {
                           </g>
                         </g>
                       </svg>
-                      <div>Scan the Invoice</div>
+                      <div>{texts.scanTheInvoice}</div>
                     </div>
                     <div style={{ position: 'absolute' }} class="loading-wrapper">
                       <div class={cn('lds-ripple', this.isLoading && 'active')}>
                         <div></div>
                         <div></div>
                       </div>
-                      <div class={cn('lds-ripple-loading', this.isLoading && 'active')}>Processing ...</div>
+                      <div class={cn('lds-ripple-loading', this.isLoading && 'active')}>{texts.processing}</div>
                     </div>
                   </div>
 
                   <input
+                    dir="ltr"
                     class="qr-input"
                     spellcheck="false"
                     onInput={this.onValueChanges}

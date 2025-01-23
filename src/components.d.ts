@@ -56,6 +56,7 @@ export namespace Components {
         "handleQrChanges"?: (code: string) => void;
         "handleScanner"?: (code: string) => void;
         "item"?: ServiceItem;
+        "language": LanguageKeys;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "quite": () => Promise<void>;
         "unInvoicedByBrokerName"?: string;
@@ -312,6 +313,7 @@ declare namespace LocalJSX {
         "handleQrChanges"?: (code: string) => void;
         "handleScanner"?: (code: string) => void;
         "item"?: ServiceItem;
+        "language"?: LanguageKeys;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "unInvoicedByBrokerName"?: string;
         "vin"?: string;

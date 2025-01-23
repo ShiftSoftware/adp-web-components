@@ -3,7 +3,8 @@
   "direction": "rtl",
   "language": "arabic",
   "errors": {
-    "wrongResponseFormat": "تنسيق الرد خاطئ"
+    "wrongResponseFormat": "تنسيق الرد خاطئ",
+    "noServiceAvailable": "لا توجد خدمة متاحة"
   },
   "vehicleLookup": {
     "warranty": {
@@ -75,6 +76,30 @@
       "cancelled": "تم الغاء",
       "pending": "قيد الانتظار",
       "warning": "تحذير"
+    },
+    "dynamicRedeem": {
+      "serviceType": "نوع الخدمة",
+      "name": "اسم",
+      "activationDate": "تاريخ التفعيل",
+      "expireDate": "تاريخ انتهاء الصلاحية",
+      "menuCode": "كود القائمة",
+      "scanTheInvoice": "مسح الفاتورة",
+      "processing": "يعالج ...",
+      "warning": "تحذير",
+      "skipServicesWarning": "الخدمات التالية لا تزال 'معلقة' وسيتم وضع علامة 'ملغاة' عليها.",
+      "confirmSkipServices": "تأكيد وضع علامة 'ملغاة' على الخدمات المذكورة أعلاه.",
+      "notInvoiced": "لم يتم إصدار فاتورة لهذه المركبة بعد من قبل شريك الأعمال الموثوق به التالي:",
+      "confirmNotInvoiced": "تأكيد المطالبة دون فاتورة شريك الأعمال الموثوق به",
+
+      "claimAt": "Claimed At",
+      "redeemingDealer": "Redeeming Dealer",
+      "invoiceNumber": "Invoice Number",
+      "wip": "WIP",
+      "claim": "Claim",
+      "processed": "Processed",
+      "expired": "Expired",
+      "cancelled": "Cancelled",
+      "pending": "Pending"
     }
   }
 }

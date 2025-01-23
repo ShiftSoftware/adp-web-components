@@ -3,7 +3,8 @@
   "direction": "ltr",
   "language": "english",
   "errors": {
-    "wrongResponseFormat": "Wrong response format"
+    "wrongResponseFormat": "Wrong response format",
+    "noServiceAvailable": "No Service Available"
   },
   "vehicleLookup": {
     "warranty": {
@@ -75,6 +76,30 @@
       "cancelled": "Cancelled",
       "pending": "Pending",
       "warning": "Warning"
+    },
+    "dynamicRedeem": {
+      "serviceType": "Service Type",
+      "name": "Name",
+      "activationDate": "Activation Date",
+      "expireDate": "Expiry Date",
+      "menuCode": "Menu Code",
+      "scanTheInvoice": "Scan the Invoice",
+      "processing": "Processing ...",
+      "warning": "Warning",
+      "skipServicesWarning": "the following Services Are still 'Pending' and they will be marked as 'Cancelled'.",
+      "confirmSkipServices": "Confirm Marking the above services as 'Cancelled'.",
+      "notInvoiced": "This Vehicle is not yet invoiced by the following Trusted Business Partner:",
+      "confirmNotInvoiced": "Confirm Claiming without Trusted Business Partner Invoice",
+
+      "claimAt": "Claimed At",
+      "redeemingDealer": "Redeeming Dealer",
+      "invoiceNumber": "Invoice Number",
+      "wip": "WIP",
+      "claim": "Claim",
+      "processed": "Processed",
+      "expired": "Expired",
+      "cancelled": "Cancelled",
+      "pending": "Pending"
     }
   }
 }

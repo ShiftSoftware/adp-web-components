@@ -112,7 +112,7 @@ export class DynamicClaim implements VehicleInformationInterface {
 
       if (this.networkTimeoutRef === scopedTimeoutRef) {
         if (!vehicleResponse) throw new Error('wrongResponseFormat');
-        if (!Array.isArray(vehicleResponse.serviceItems)) throw new Error('No Service Available');
+        if (!Array.isArray(vehicleResponse.serviceItems)) throw new Error('noServiceAvailable');
         this.vehicleInformation = vehicleResponse;
       }
 
@@ -432,11 +432,11 @@ export class DynamicClaim implements VehicleInformationInterface {
 
     return (
       <Host>
-        <dynamic-redeem id="dynamic-redeem"></dynamic-redeem>
+        <dynamic-redeem language={this.language} id="dynamic-redeem"></dynamic-redeem>
         <div class={cn('dynamic-claim-wrapper', { loading: this.isLoading, idle: this.isIdle })}>
           <div class="dynamic-claim-header">
             <strong onAnimationEnd={this.removeLoadAnimationClass} class="dynamic-claim-header-vin load-animation">
-              {this.errorMessage && <span style={{ color: 'red' }}>{this.errorMessage}</span>}
+              {this.errorMessage && <span style={{ color: 'red' }}>{this.locale.errors[this.errorMessage]}</span>}
               {!this.errorMessage && this.vehicleInformation?.vin}
             </strong>
           </div>

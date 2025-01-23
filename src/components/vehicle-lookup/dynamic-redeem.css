@@ -84,8 +84,7 @@
 .dynamic-claim-processor-info-box table td {
   padding: 5px;
   border-bottom: 1px solid #ededed;
-  text-align: center;
-  text-align: left;
+  text-align: start;
 }
 
 .dynamic-claim-processor-progress {
@@ -231,7 +230,7 @@
   width: 20px;
   height: 20px;
   vertical-align: sub;
-  margin-right: 5px;
+  margin-inline-end: 5px;
   background-color: #ff9100;
   -webkit-mask-image: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14h-2V9h2m0 9h-2v-2h2M1 21h22L12 2z"/></svg>');
 }
@@ -262,4 +261,8 @@
 
 .dynamic-claim-processor-progress.disabled {
   opacity: 0.6;
+}
+
+.warning-ul {
+  padding-inline-start: 2.5rem;
 }
