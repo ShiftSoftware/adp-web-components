@@ -123,6 +123,7 @@ export class DynamicClaim implements VehicleInformationInterface {
     } catch (error) {
       if (error && error?.name === 'AbortError') return;
 
+      console.error(error);
       this.isLoading = false;
       this.vehicleInformation = null;
       this.errorMessage = error.message;
@@ -438,7 +439,11 @@ export class DynamicClaim implements VehicleInformationInterface {
         <div class={cn('dynamic-claim-wrapper', { loading: this.isLoading, idle: this.isIdle })}>
           <div class="dynamic-claim-header">
             <strong onAnimationEnd={this.removeLoadAnimationClass} class="dynamic-claim-header-vin load-animation">
-              {this.errorMessage && <span style={{ color: 'red' }}>{this.locale.errors[this.errorMessage] || this.errorMessage}</span>}
+              {this.errorMessage && (
+                <span dir={this.locale.direction} style={{ color: 'red' }}>
+                  {this.locale.errors[this.errorMessage] || this.locale.errors.wildCard}
+                </span>
+              )}
               {!this.errorMessage && this.vehicleInformation?.vin}
             </strong>
           </div>

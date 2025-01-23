@@ -92,6 +92,7 @@ export class ServiceHistory implements VehicleInformationInterface {
     } catch (error) {
       if (error && error?.name === 'AbortError') return;
 
+      console.error(error);
       this.state = 'error';
       this.vehicleInformation = null;
       this.errorMessage = error.message;
@@ -118,7 +119,7 @@ export class ServiceHistory implements VehicleInformationInterface {
 
     return (
       <Host>
-        <div class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
+        <div dir={this.locale.direction} class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
           <div>
             <Loading isLoading={this.state.includes('loading')} />
             <div class={cn('transition-all duration-700', { 'scale-0': this.state.includes('loading') || this.state === 'idle', 'opacity-0': this.state.includes('loading') })}>
@@ -126,7 +127,9 @@ export class ServiceHistory implements VehicleInformationInterface {
 
               {['error', 'error-loading'].includes(this.state) && (
                 <div class="py-[16px]">
-                  <div class=" px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">{this.locale.errors[this.errorMessage] || this.errorMessage}</div>
+                  <div class=" px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">
+                    {this.locale.errors[this.errorMessage] || this.locale.errors.wildCard}
+                  </div>
                 </div>
               )}
 

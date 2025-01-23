@@ -210,6 +210,7 @@ export class WarrantyDetails implements VehicleInformationInterface {
     } catch (error) {
       if (error && error?.name === 'AbortError') return;
 
+      console.error(error);
       this.state = 'error';
       this.vehicleInformation = null;
       this.errorMessage = error.message;
@@ -262,7 +263,7 @@ export class WarrantyDetails implements VehicleInformationInterface {
 
               {['error', 'error-loading'].includes(this.state) && (
                 <div class="py-4">
-                  <StatusCard desc={this.locale.errors[this.errorMessage] || this.errorMessage} className="mx-auto reject-card max-w-500" />{' '}
+                  <StatusCard desc={this.locale.errors[this.errorMessage] || this.locale.errors.wildCard} className="mx-auto reject-card max-w-500" />{' '}
                 </div>
               )}
 

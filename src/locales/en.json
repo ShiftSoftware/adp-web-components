@@ -3,8 +3,10 @@
   "direction": "ltr",
   "language": "english",
   "errors": {
+    "noBaseUrl": "Please provide base-url",
+    "noServiceAvailable": "No Service Available",
     "wrongResponseFormat": "Wrong response format",
-    "noServiceAvailable": "No Service Available"
+    "wildCard": "An unexpected error occurred please try again later."
   },
   "vehicleLookup": {
     "warranty": {
@@ -89,17 +91,7 @@
       "skipServicesWarning": "the following Services Are still 'Pending' and they will be marked as 'Cancelled'.",
       "confirmSkipServices": "Confirm Marking the above services as 'Cancelled'.",
       "notInvoiced": "This Vehicle is not yet invoiced by the following Trusted Business Partner:",
-      "confirmNotInvoiced": "Confirm Claiming without Trusted Business Partner Invoice",
-
-      "claimAt": "Claimed At",
-      "redeemingDealer": "Redeeming Dealer",
-      "invoiceNumber": "Invoice Number",
-      "wip": "WIP",
-      "claim": "Claim",
-      "processed": "Processed",
-      "expired": "Expired",
-      "cancelled": "Cancelled",
-      "pending": "Pending"
+      "confirmNotInvoiced": "Confirm Claiming without Trusted Business Partner Invoice"
     }
   }
 }

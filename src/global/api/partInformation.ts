@@ -38,7 +38,7 @@ export const getPartInformation = async (component: PartInformationInterface, ge
 
     return handleResult(newData);
   } else {
-    if (!baseUrl) throw new Error('Please provide base-url');
+    if (!baseUrl) throw new Error('noBaseUrl');
 
     const response = await fetch(`${baseUrl}${partNumber}?${queryString}`, { signal: abortController.signal, headers: headers });
 

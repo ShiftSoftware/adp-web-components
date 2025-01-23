@@ -54,7 +54,7 @@ export const getVehicleInformation = async (component: VehicleInformationInterfa
 
     return handleResult(newData);
   } else {
-    if (!baseUrl) throw new Error('Please provide base-url');
+    if (!baseUrl) throw new Error('noBaseUrl');
 
     const componentHeaders = { ...headers };
 
