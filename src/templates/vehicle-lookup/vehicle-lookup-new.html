@@ -89,6 +89,33 @@
             </div>
           </div>
 
+          <div class="button-container">
+            <button class="sample-button" onclick="updateLang('en')">En</button>
+            <button class="sample-button" onclick="updateLang('ku')">Ku</button>
+            <button class="sample-button" onclick="updateLang('ar')">Ar</button>
+          </div>
+
+          <style>
+            .button-container {
+              margin-top: 50px;
+              border: 1px solid #e1e1e1;
+              padding: 20px;
+              display: flex;
+              flex-wrap: wrap;
+              align-content: center;
+              justify-content: center;
+              gap: 10px;
+            }
+            .sample-button {
+              background-color: #428bca;
+              padding: 10px 15px;
+            }
+
+            .sample-button:hover {
+              background-color: #3071a9;
+            }
+          </style>
+
           <div class="well" style="background: white; margin-top: 30px; border-radius: 10px">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist" id="vehicle-info-tab" style="display: flex; justify-content: center; border-bottom: none">

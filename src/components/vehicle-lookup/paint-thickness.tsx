@@ -146,7 +146,7 @@ export class PaintThickness implements ImageViewerInterface {
 
               {['error', 'error-loading'].includes(this.state) && (
                 <div class="py-[16px]">
-                  <div class=" px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">{this.locale.errors[this.errorMessage]}</div>
+                  <div class=" px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">{this.locale.errors[this.errorMessage] || this.errorMessage}</div>
                 </div>
               )}
               {['data', 'data-loading'].includes(this.state) && (

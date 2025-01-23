@@ -2,6 +2,7 @@ import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stenci
 
 import cn from '~lib/cn';
 import validateVin from '~lib/validate-vin';
+import { LanguageKeys } from '~types/locale-schema';
 
 import { DotNetObjectReference } from '~types/components';
 
@@ -33,14 +34,13 @@ export class VehicleLookup {
   @Prop() baseUrl: string = '';
   @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
-
-  @Prop() loadingStateChanged?: (isLoading: boolean) => void;
+  @Prop() language: LanguageKeys = 'en';
+  @Prop() blazorErrorStateListener = '';
   @Prop() blazorOnLoadingStateChange = '';
+  @Prop() errorStateListener?: (newError: string) => void;
+  @Prop() loadingStateChanged?: (isLoading: boolean) => void;
 
   @State() wrapperErrorState = '';
-  @Prop() errorStateListener?: (newError: string) => void;
-  @Prop() blazorErrorStateListener = '';
-
   @State() blazorRef?: DotNetObjectReference;
 
   @Element() el: HTMLElement;
@@ -141,29 +141,29 @@ export class VehicleLookup {
     return (
       <Host>
         <div class={cn('w-full', { hidden: this.activeElement !== 'vehicle-specification' })}>
-          <vehicle-specification isDev={this.isDev} base-url={this.baseUrl} query-string={this.queryString}></vehicle-specification>
+          <vehicle-specification language={this.language} isDev={this.isDev} base-url={this.baseUrl} query-string={this.queryString}></vehicle-specification>
         </div>
 
         <div class={cn('w-full', { hidden: this.activeElement !== 'vehicle-accessories' })}>
-          <vehicle-accessories isDev={this.isDev} base-url={this.baseUrl} query-string={this.queryString}></vehicle-accessories>
+          <vehicle-accessories language={this.language} isDev={this.isDev} base-url={this.baseUrl} query-string={this.queryString}></vehicle-accessories>
         </div>
 
         <div class={cn('w-full', { hidden: this.activeElement !== 'warranty-details' })}>
-          <warranty-details show-ssc="true" show-warranty="true" isDev={this.isDev} base-url={this.baseUrl} query-string={this.queryString}>
+          <warranty-details language={this.language} isDev={this.isDev} show-ssc="true" show-warranty="true" base-url={this.baseUrl} query-string={this.queryString}>
             <slot></slot>
           </warranty-details>
         </div>
 
         <div class={cn('w-full', { hidden: this.activeElement !== 'service-history' })}>
-          <service-history isDev={this.isDev} base-url={this.baseUrl} query-string={this.queryString}></service-history>
+          <service-history language={this.language} isDev={this.isDev} base-url={this.baseUrl} query-string={this.queryString}></service-history>
         </div>
 
         <div class={cn('w-full', { hidden: this.activeElement !== 'paint-thickness' })}>
-          <paint-thickness isDev={this.isDev} base-url={this.baseUrl} query-string={this.queryString}></paint-thickness>
+          <paint-thickness language={this.language} isDev={this.isDev} base-url={this.baseUrl} query-string={this.queryString}></paint-thickness>
         </div>
 
         <div class={cn('w-full', { hidden: this.activeElement !== 'dynamic-claim' })}>
-          <dynamic-claim isDev={this.isDev} base-url={this.baseUrl} query-string={this.queryString}></dynamic-claim>
+          <dynamic-claim language={this.language} isDev={this.isDev} base-url={this.baseUrl} query-string={this.queryString}></dynamic-claim>
         </div>
       </Host>
     );

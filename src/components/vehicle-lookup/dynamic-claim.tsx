@@ -408,7 +408,7 @@ export class DynamicClaim implements VehicleInformationInterface {
             </table>
 
             {item.status === 'pending' && (
-              <button onClick={() => this.claim(item)} class="dynamic-claim-button claim-button">
+              <button onClick={() => this.claim(item)} class="claim-button">
                 <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g stroke-width="0"></g>
                   <g stroke-linecap="round" stroke-linejoin="round"></g>
@@ -436,7 +436,7 @@ export class DynamicClaim implements VehicleInformationInterface {
         <div class={cn('dynamic-claim-wrapper', { loading: this.isLoading, idle: this.isIdle })}>
           <div class="dynamic-claim-header">
             <strong onAnimationEnd={this.removeLoadAnimationClass} class="dynamic-claim-header-vin load-animation">
-              {this.errorMessage && <span style={{ color: 'red' }}>{this.locale.errors[this.errorMessage]}</span>}
+              {this.errorMessage && <span style={{ color: 'red' }}>{this.locale.errors[this.errorMessage] || this.errorMessage}</span>}
               {!this.errorMessage && this.vehicleInformation?.vin}
             </strong>
           </div>

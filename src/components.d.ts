@@ -130,6 +130,7 @@ export namespace Components {
         "fetchVin": (vin: string, headers?: any) => Promise<"VIN is required" | "Invalid VIN">;
         "getPageContext": () => Promise<{ componentsList: ComponentMap; }>;
         "isDev": boolean;
+        "language": LanguageKeys;
         "loadingStateChanged"?: (isLoading: boolean) => void;
         "queryString": string;
         "setBlazorRef": (newBlazorRef: DotNetObjectReference) => Promise<void>;
@@ -373,6 +374,7 @@ declare namespace LocalJSX {
         "blazorOnLoadingStateChange"?: string;
         "errorStateListener"?: (newError: string) => void;
         "isDev"?: boolean;
+        "language"?: LanguageKeys;
         "loadingStateChanged"?: (isLoading: boolean) => void;
         "queryString"?: string;
     }

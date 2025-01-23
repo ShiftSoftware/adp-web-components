@@ -259,7 +259,7 @@ export class WarrantyDetails implements VehicleInformationInterface {
 
               {['error', 'error-loading'].includes(this.state) && (
                 <div class="py-4">
-                  <StatusCard desc={this.locale.errors[this.errorMessage]} className="mx-auto reject-card max-w-500" />{' '}
+                  <StatusCard desc={this.locale.errors[this.errorMessage] || this.errorMessage} className="mx-auto reject-card max-w-500" />{' '}
                 </div>
               )}
 
