@@ -2,8 +2,8 @@ import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stenci
 
 import cn from '~lib/cn';
 import validateVin from '~lib/validate-vin';
-import { LanguageKeys } from '~types/locale-schema';
 
+import { LanguageKeys } from '~types/locales';
 import { DotNetObjectReference } from '~types/components';
 
 import { DynamicClaim } from './dynamic-claim';

@@ -1,8 +1,9 @@
 import { h } from '@stencil/core';
 
-import StatusCard from './StatusCard';
+import { Locale } from '~types/locales';
 import { Warranty } from '~types/vehicle-information';
-import { Locale } from '~types/locale-schema';
+
+import StatusCard from './StatusCard';
 
 type Props = {
   locale: Locale;

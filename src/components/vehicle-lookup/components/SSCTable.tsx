@@ -1,8 +1,10 @@
 import { h } from '@stencil/core';
+
 import XIcon from '../assets/x-mark.svg';
 import CheckIcon from '../assets/check.svg';
+
+import { Locale } from '~types/locales';
 import { SSC } from '~types/vehicle-information';
-import { Locale } from '~types/locale-schema';
 
 type Props = {
   ssc: SSC[];
