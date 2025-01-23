@@ -5,14 +5,14 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { LanguageKeys } from "./global/types/locales/index";
 import { PartInformation } from "./global/types/part-information";
 import { DotNetObjectReference, MockJson } from "./global/types/components";
-import { LanguageKeys } from "./global/types/locales/index";
 import { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
 import { ActiveElement, ComponentMap } from "./components/vehicle-lookup/vehicle-lookup";
+export { LanguageKeys } from "./global/types/locales/index";
 export { PartInformation } from "./global/types/part-information";
 export { DotNetObjectReference, MockJson } from "./global/types/components";
-export { LanguageKeys } from "./global/types/locales/index";
 export { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
 export { ActiveElement, ComponentMap } from "./components/vehicle-lookup/vehicle-lookup";
 export namespace Components {
@@ -20,6 +20,7 @@ export namespace Components {
         "baseUrl": string;
         "fetchData": (partNumber?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
+        "language": LanguageKeys;
         "loadedResponse"?: (response: PartInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString": string;
@@ -31,6 +32,7 @@ export namespace Components {
         "fetchData": (partNumber?: string, headers?: any) => Promise<void>;
         "hiddenFields"?: string;
         "isDev": boolean;
+        "language": LanguageKeys;
         "loadedResponse"?: (response: PartInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "localizationName"?: string;
@@ -81,6 +83,7 @@ export namespace Components {
         "headerTitle": string;
         "hiddenFields": string;
         "isDev": boolean;
+        "language": LanguageKeys;
         "loadedResponse"?: (response: PartInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "localizationName"?: string;
@@ -288,6 +291,7 @@ declare namespace LocalJSX {
     interface DeadStockLookup {
         "baseUrl"?: string;
         "isDev"?: boolean;
+        "language"?: LanguageKeys;
         "loadedResponse"?: (response: PartInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString"?: string;
@@ -296,6 +300,7 @@ declare namespace LocalJSX {
         "baseUrl"?: string;
         "hiddenFields"?: string;
         "isDev"?: boolean;
+        "language"?: LanguageKeys;
         "loadedResponse"?: (response: PartInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "localizationName"?: string;
@@ -338,6 +343,7 @@ declare namespace LocalJSX {
         "headerTitle"?: string;
         "hiddenFields"?: string;
         "isDev"?: boolean;
+        "language"?: LanguageKeys;
         "loadedResponse"?: (response: PartInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "localizationName"?: string;

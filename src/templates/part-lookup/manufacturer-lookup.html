@@ -14,6 +14,7 @@
     <h1>Manufacturer Lookup</h1>
     <manufacturer-lookup
       is-dev="true"
+      language="ku"
       query-string=""
       id="manufacturer-lookup"
       localization-name="kurdish"
@@ -21,6 +22,12 @@
       base-url="http://localhost:7174/api/secure-part-lookup/"
     >
     </manufacturer-lookup>
+
+    <div class="button-container">
+      <button class="sample-button" onclick="updateLang('en')">En</button>
+      <button class="sample-button" onclick="updateLang('ku')">Ku</button>
+      <button class="sample-button" onclick="updateLang('ar')">Ar</button>
+    </div>
 
     <div class="button-container">
       <button class="sample-button" onclick="fetchData()">reload</button>
@@ -55,6 +62,10 @@
           console.log('isLoading: ' + isLoading);
         };
       });
+
+      function updateLang(newLang) {
+        manufacturerLookup.language = newLang;
+      }
 
       function fetchData(newVin) {
         manufacturerLookup.fetchData(newVin);

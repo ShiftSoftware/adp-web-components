@@ -12,7 +12,13 @@
     <a href="#" onclick="history.back()" style="color: blue; display: block; margin-bottom: 16px">Back</a>
 
     <h1>Dead Stock Lookup</h1>
-    <dead-stock-lookup is-dev="true" query-string="" id="dead-stock-lookup" base-url="http://localhost:7174/api/secure-part-lookup/"> </dead-stock-lookup>
+    <dead-stock-lookup language="ku" is-dev="true" query-string="" id="dead-stock-lookup" base-url="http://localhost:7174/api/secure-part-lookup/"> </dead-stock-lookup>
+
+    <div class="button-container">
+      <button class="sample-button" onclick="updateLang('en')">En</button>
+      <button class="sample-button" onclick="updateLang('ku')">Ku</button>
+      <button class="sample-button" onclick="updateLang('ar')">Ar</button>
+    </div>
 
     <div class="button-container">
       <button class="sample-button" onclick="fetchData()">reload</button>
@@ -47,6 +53,10 @@
           console.log('isLoading: ' + isLoading);
         };
       });
+
+      function updateLang(newLang) {
+        deadStockLookup.language = newLang;
+      }
 
       function fetchData(newVin) {
         deadStockLookup.fetchData(newVin);

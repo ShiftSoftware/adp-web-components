@@ -14,6 +14,7 @@
     <h1>Distributor Lookup</h1>
     <distributor-lookup
       is-dev="true"
+      language="ku"
       query-string=""
       id="distributor-lookup"
       localization-name="arabic"
@@ -21,6 +22,12 @@
       base-url="http://localhost:7174/api/secure-part-lookup/"
     >
     </distributor-lookup>
+
+    <div class="button-container">
+      <button class="sample-button" onclick="updateLang('en')">En</button>
+      <button class="sample-button" onclick="updateLang('ku')">Ku</button>
+      <button class="sample-button" onclick="updateLang('ar')">Ar</button>
+    </div>
 
     <div class="button-container">
       <button class="sample-button" onclick="fetchData()">reload</button>
@@ -57,6 +64,10 @@
           console.log('isLoading: ' + isLoading);
         };
       });
+
+      function updateLang(newLang) {
+        distributorLookup.language = newLang;
+      }
 
       function fetchData(newVin) {
         distributorLookup.fetchData(newVin);

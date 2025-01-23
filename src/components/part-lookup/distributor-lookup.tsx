@@ -2,8 +2,12 @@ import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stenci
 
 import cn from '~lib/cn';
 import { capitalize } from '~lib/general';
+import { getLocaleLanguage } from '~lib/get-local-language';
+
 import { AppStates, MockJson } from '~types/components';
 import { PartInformation } from '~types/part-information';
+import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/locales';
+
 import { getPartInformation, PartInformationInterface } from '~api/partInformation';
 
 import Loading from '../components/Loading';
@@ -20,19 +24,30 @@ export class DistributorLookup implements PartInformationInterface {
   @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
   @Prop() hiddenFields?: string = '';
+  @Prop() language: LanguageKeys = 'en';
   @Prop() localizationName?: string = '';
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
   @Prop() loadedResponse?: (response: PartInformation) => void;
 
   @State() state: AppStates = 'idle';
-  @State() externalPartNumber?: string = null;
-  @State() errorMessage?: string = null;
+  @State() errorMessage?: ErrorKeys = null;
   @State() partInformation?: PartInformation;
+  @State() externalPartNumber?: string = null;
+  @State() locale: Locale = localeSchema.getDefault();
 
   abortController: AbortController;
   networkTimeoutRef: ReturnType<typeof setTimeout>;
 
   @Element() el: HTMLElement;
+
+  async componentWillLoad() {
+    await this.changeLanguage(this.language);
+  }
+
+  @Watch('language')
+  async changeLanguage(newLanguage: LanguageKeys) {
+    this.locale = await getLocaleLanguage(newLanguage);
+  }
 
   private handleSettingData(response: PartInformation) {
     this.partInformation = response;
@@ -132,7 +147,7 @@ export class DistributorLookup implements PartInformationInterface {
             <div class={cn('transition-all duration-700', { 'scale-0': this.state.includes('loading') || this.state === 'idle', 'opacity-0': this.state.includes('loading') })}>
               {['error', 'error-loading'].includes(this.state) && (
                 <div class="py-[16px]">
-                  <div class=" px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">{this.errorMessage}</div>
+                  <div class=" px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">{this.locale.errors[this.errorMessage] || this.errorMessage}</div>
                 </div>
               )}
 
