@@ -86,6 +86,9 @@ export class VehicleSpecification implements VehicleInformationInterface {
     } catch (error) {
       if (error && error?.name === 'AbortError') return;
 
+      console.log(this.locale);
+      console.log(this.locale.errors.wildCard);
+
       console.error(error);
       this.state = 'error';
       this.vehicleInformation = null;
@@ -122,7 +125,7 @@ export class VehicleSpecification implements VehicleInformationInterface {
               {['error', 'error-loading'].includes(this.state) && (
                 <div class="py-4">
                   <div class=" px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">
-                    {this.locale.errors[this.errorMessage] || this.locale.errors.wildCard}
+                    {this.locale.errors[this.errorMessage] || this.locale.errors.wildCard} kk
                   </div>
                 </div>
               )}
