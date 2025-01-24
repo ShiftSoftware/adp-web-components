@@ -134,6 +134,8 @@ export class DeadStockLookup implements PartInformationInterface {
   }
 
   render() {
+    const texts = this.locale.partLookup.deadStock;
+
     return (
       <Host>
         <div dir={this.locale.direction} class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
@@ -151,7 +153,7 @@ export class DeadStockLookup implements PartInformationInterface {
               {['data', 'data-loading'].includes(this.state) && (
                 <div>
                   <div class="flex mt-[12px] max-h-[70dvh] overflow-hidden rounded-[4px] flex-col border border-[#d6d8dc]">
-                    <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">Dead stock</div>
+                    <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">{texts.deadStock}</div>
 
                     {this.partInformation?.deadStock?.map(deadStock => (
                       <div key={deadStock.companyIntegrationID} class="py-[10px] px-[20px]">
@@ -181,8 +183,8 @@ export class DeadStockLookup implements PartInformationInterface {
                             <table class="w-full overflow-auto relative border-collapse">
                               <thead>
                                 <tr>
-                                  <th class="py-[20px] px-[10px] text-left whitespace-nowrap border-b border-[#d6d8dc]">Branch</th>
-                                  <th class="py-[20px] px-[10px] text-left whitespace-nowrap border-b border-[#d6d8dc]">Available Qty</th>
+                                  <th class="py-[20px] px-[10px] text-start whitespace-nowrap border-b border-[#d6d8dc]">{texts.branch}</th>
+                                  <th class="py-[20px] px-[10px] text-start whitespace-nowrap border-b border-[#d6d8dc]">{texts.availableQuantity}</th>
                                 </tr>
                               </thead>
 
@@ -192,9 +194,9 @@ export class DeadStockLookup implements PartInformationInterface {
                                     class="transition-colors border-b border-[#d6d8dc] last:border-none duration-100 hover:bg-slate-100"
                                     key={branchDeadStock.companyBranchIntegrationID}
                                   >
-                                    <td class={cn('py-[20px] px-[10px] text-left whitespace-nowrap')}>{branchDeadStock.companyBranchName}</td>
+                                    <td class={cn('py-[20px] px-[10px] text-start whitespace-nowrap')}>{branchDeadStock.companyBranchName}</td>
 
-                                    <td class={cn('py-[20px] px-[10px] text-left whitespace-nowrap')}>
+                                    <td class={cn('py-[20px] px-[10px] text-start whitespace-nowrap')}>
                                       <strong>{branchDeadStock.quantity}</strong>
                                     </td>
                                   </tr>

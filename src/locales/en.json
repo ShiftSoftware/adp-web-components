@@ -95,7 +95,11 @@
     }
   },
   "partLookup": {
-    "deadStock": {},
+    "deadStock": {
+      "deadStock": "Dead Stock",
+      "branch": "Branch",
+      "availableQuantity": "Available Qty"
+    },
     "distributor": {
       "info": "Info",
       "distributorStock": "Distributor Stock",

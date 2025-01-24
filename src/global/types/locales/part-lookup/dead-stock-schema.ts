@@ -1,5 +1,7 @@
-import { object } from 'yup';
+import { object, string } from 'yup';
 
 export const deadStockSchema = object({
-  //   test: string().required(),
+  deadStock: string().required(),
+  branch: string().required(),
+  availableQuantity: string().required(),
 });

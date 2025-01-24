@@ -95,7 +95,11 @@
     }
   },
   "partLookup": {
-    "deadStock": {},
+    "deadStock": {
+      "deadStock": "ستۆکی مردوو",
+      "branch": "لق",
+      "availableQuantity": "بڕی بەردەست"
+    },
     "distributor": {
       "info": "زانیاری",
       "distributorStock": "کۆگا",
@@ -109,7 +113,7 @@
       "postLocalDescription": "وەسفی",
       "dealerPurchasePrice": "نرخی کڕین لای بریکار",
       "recommendedRetailPrice": "نرخی پێشنیارکراوی فرۆشتنی تاکەکەسی",
-      "supersededFrom": "گۆڕدراوە لەلایەن",
+      "supersededFrom": "گۆڕدراوە لە",
       "supersededTo": "گۆڕدراوە بۆ"
     },
     "manufacturer": {}

@@ -95,7 +95,11 @@
     }
   },
   "partLookup": {
-    "deadStock": {},
+    "deadStock": {
+      "deadStock": "مخزون ميت",
+      "branch": "فرع",
+      "availableQuantity": "الكمية المتوفرة"
+    },
     "distributor": {
       "info": "معلومات",
       "distributorStock": "موزع الأسهم",
