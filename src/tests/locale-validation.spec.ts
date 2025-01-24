@@ -1,7 +1,8 @@
 import path from 'path';
 import * as fs from 'fs';
-import { ARABIC_JSON_FILE, ENGLISH_JSON_FILE, KURDISH_JSON_FILE, Locale, localeSchema } from '~types/locales';
 import { ValidationError } from 'yup';
+
+import { ARABIC_JSON_FILE, ENGLISH_JSON_FILE, KURDISH_JSON_FILE, Locale, localeSchema, RUSSIAN_JSON_FILE } from '~types/locales';
 
 function getFilePath(fileName: string): string {
   const filePath = path.join(__dirname, `../locales/${fileName}`);
@@ -52,5 +53,11 @@ describe('Localization files', () => {
     isFileExists(KURDISH_JSON_FILE);
 
     await isValidSchema(KURDISH_JSON_FILE);
+  });
+
+  it('Russian Localization', async () => {
+    isFileExists(RUSSIAN_JSON_FILE);
+
+    await isValidSchema(RUSSIAN_JSON_FILE);
   });
 });
