@@ -10,7 +10,7 @@ export const distributorSchema = object({
   location: string().required(),
   description: string().required(),
   productGroup: string().required(),
-  postLocalDescription: string().required(),
+  localDescription: string().required(),
   dealerPurchasePrice: string().required(),
   recommendedRetailPrice: string().required(),
   supersededFrom: string().required(),

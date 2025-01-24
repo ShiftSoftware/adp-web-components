@@ -1,7 +1,6 @@
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import cn from '~lib/cn';
-import { capitalize } from '~lib/general';
 import { getLocaleLanguage } from '~lib/get-local-language';
 
 import { AppStates, MockJson } from '~types/components';
@@ -127,7 +126,7 @@ export class DistributorLookup implements PartInformationInterface {
           { label: texts.description, key: 'partDescription', value: this.partInformation.stockParts[0].partDescription },
           { label: texts.productGroup, key: 'group', value: this.partInformation.stockParts[0].group },
           {
-            label: this.locale.direction === 'ltr' ? `${capitalize(localName)} ${texts.postLocalDescription}` : `${texts.postLocalDescription} ${capitalize(localName)}`,
+            label: texts.localDescription.replace('$', localName),
             key: 'localDescription',
             value: this.partInformation.stockParts[0].localDescription,
           },

@@ -1,7 +1,6 @@
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import cn from '~lib/cn';
-import { capitalize } from '~lib/general';
 import { getLocaleLanguage } from '~lib/get-local-language';
 
 import { AppStates, MockJson } from '~types/components';
@@ -130,7 +129,7 @@ export class ManufacturerLookup implements PartInformationInterface {
           { label: texts.specialPrice, key: 'specialPrice', value: this.partInformation.tmcPart.specialPrice?.toFixed(2) },
           { label: texts.wholesalesPrice, key: 'salesPrice', value: this.partInformation.tmcPart.salesPrice?.toFixed(2) },
           { label: texts.pnc, key: 'pnc', value: this.partInformation.tmcPart.pnc },
-          { label: texts.pncName.replace('$$', capitalize(localName)), key: 'pncLocalName', value: this.partInformation.tmcPart.pncLocalName },
+          { label: texts.pncName.replace('$', localName), key: 'pncLocalName', value: this.partInformation.tmcPart.pncLocalName },
           { label: texts.binCode, key: 'binCode', value: this.partInformation.tmcPart.binCode },
           { label: texts.dimension1, key: 'dimension1', value: this.partInformation.tmcPart.dimension1 },
           { label: texts.dimension2, key: 'dimension2', value: this.partInformation.tmcPart.dimension2 },
