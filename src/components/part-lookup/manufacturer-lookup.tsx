@@ -117,27 +117,29 @@ export class ManufacturerLookup implements PartInformationInterface {
   }
 
   render() {
+    const texts = this.locale.partLookup.manufacturer;
+
     const localName = this.partInformation ? this.localizationName || 'russian' : 'russian';
 
     const hiddenFields = this.partInformation ? this.hiddenFields.split(',').map(field => field.trim()) || [] : [];
 
     const manufacturerData = this.partInformation
       ? [
-          { label: 'Origin', key: 'origin', value: this.partInformation.tmcPart.origin },
-          { label: 'Warranty Price', key: 'warrantyPrice', value: this.partInformation.tmcPart.warrantyPrice?.toFixed(2) },
-          { label: 'Special Price', key: 'specialPrice', value: this.partInformation.tmcPart.specialPrice?.toFixed(2) },
-          { label: 'Wholesales Price', key: 'salesPrice', value: this.partInformation.tmcPart.salesPrice?.toFixed(2) },
-          { label: 'PNC', key: 'pnc', value: this.partInformation.tmcPart.pnc },
-          { label: `PNC ${capitalize(localName)} Name`, key: 'pncLocalName', value: this.partInformation.tmcPart.pncLocalName },
-          { label: 'Bin Code', key: 'binCode', value: this.partInformation.tmcPart.binCode },
-          { label: 'Dimension 1', key: 'dimension1', value: this.partInformation.tmcPart.dimension1 },
-          { label: 'Dimension 2', key: 'dimension2', value: this.partInformation.tmcPart.dimension2 },
-          { label: 'Dimension 3', key: 'dimension3', value: this.partInformation.tmcPart.dimension3 },
-          { label: 'Net Weight', key: 'netWeight', value: this.partInformation.tmcPart.netWeight },
-          { label: 'Gross Weight', key: 'grossWeight', value: this.partInformation.tmcPart.grossWeight },
-          { label: 'Cubic Measure', key: 'cubicMeasure', value: this.partInformation.tmcPart.cubicMeasure },
-          { label: 'HS Code', key: 'hsCode', value: this.partInformation.tmcPart.hsCode },
-          { label: 'UZ HS Code', key: 'uzHsCode', value: this.partInformation.tmcPart.uzHsCode },
+          { label: texts.origin, key: 'origin', value: this.partInformation.tmcPart.origin },
+          { label: texts.warrantyPrice, key: 'warrantyPrice', value: this.partInformation.tmcPart.warrantyPrice?.toFixed(2) },
+          { label: texts.specialPrice, key: 'specialPrice', value: this.partInformation.tmcPart.specialPrice?.toFixed(2) },
+          { label: texts.wholesalesPrice, key: 'salesPrice', value: this.partInformation.tmcPart.salesPrice?.toFixed(2) },
+          { label: texts.pnc, key: 'pnc', value: this.partInformation.tmcPart.pnc },
+          { label: texts.pncName.replace('$$', capitalize(localName)), key: 'pncLocalName', value: this.partInformation.tmcPart.pncLocalName },
+          { label: texts.binCode, key: 'binCode', value: this.partInformation.tmcPart.binCode },
+          { label: texts.dimension1, key: 'dimension1', value: this.partInformation.tmcPart.dimension1 },
+          { label: texts.dimension2, key: 'dimension2', value: this.partInformation.tmcPart.dimension2 },
+          { label: texts.dimension3, key: 'dimension3', value: this.partInformation.tmcPart.dimension3 },
+          { label: texts.netWeight, key: 'netWeight', value: this.partInformation.tmcPart.netWeight },
+          { label: texts.grossWeight, key: 'grossWeight', value: this.partInformation.tmcPart.grossWeight },
+          { label: texts.cubicMeasure, key: 'cubicMeasure', value: this.partInformation.tmcPart.cubicMeasure },
+          { label: texts.hsCode, key: 'hsCode', value: this.partInformation.tmcPart.hsCode },
+          { label: texts.uzHsCode, key: 'uzHsCode', value: this.partInformation.tmcPart.uzHsCode },
         ]
       : [];
 
