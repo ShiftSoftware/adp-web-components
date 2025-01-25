@@ -9,12 +9,14 @@ import { LanguageKeys } from "./global/types/locales/index";
 import { PartInformation } from "./global/types/part-information";
 import { DotNetObjectReference, MockJson } from "./global/types/components";
 import { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
-import { ActiveElement, ComponentMap } from "./components/vehicle-lookup/vehicle-lookup";
+import { ActiveElement, ComponentMap } from "./components/part-lookup/part-lookup";
+import { ActiveElement as ActiveElement1, ComponentMap as ComponentMap1 } from "./components/vehicle-lookup/vehicle-lookup";
 export { LanguageKeys } from "./global/types/locales/index";
 export { PartInformation } from "./global/types/part-information";
 export { DotNetObjectReference, MockJson } from "./global/types/components";
 export { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
-export { ActiveElement, ComponentMap } from "./components/vehicle-lookup/vehicle-lookup";
+export { ActiveElement, ComponentMap } from "./components/part-lookup/part-lookup";
+export { ActiveElement as ActiveElement1, ComponentMap as ComponentMap1 } from "./components/vehicle-lookup/vehicle-lookup";
 export namespace Components {
     interface DeadStockLookup {
         "baseUrl": string;
@@ -102,6 +104,21 @@ export namespace Components {
         "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
     }
+    interface PartLookup {
+        "activeElement"?: ActiveElement;
+        "baseUrl": string;
+        "blazorErrorStateListener": string;
+        "blazorOnLoadingStateChange": string;
+        "childeProps"?: string | Object;
+        "errorStateListener"?: (newError: string) => void;
+        "fetchPartNumber": (partNumber: string, quantity: string, headers?: any) => Promise<string>;
+        "getPageContext": () => Promise<{ componentsList: ComponentMap; }>;
+        "isDev": boolean;
+        "language": LanguageKeys;
+        "loadingStateChanged"?: (isLoading: boolean) => void;
+        "queryString": string;
+        "setBlazorRef": (newBlazorRef: DotNetObjectReference) => Promise<void>;
+    }
     interface ServiceHistory {
         "baseUrl": string;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
@@ -125,13 +142,13 @@ export namespace Components {
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
     }
     interface VehicleLookup {
-        "activeElement"?: ActiveElement;
+        "activeElement"?: ActiveElement1;
         "baseUrl": string;
         "blazorErrorStateListener": string;
         "blazorOnLoadingStateChange": string;
         "errorStateListener"?: (newError: string) => void;
-        "fetchVin": (vin: string, headers?: any) => Promise<"VIN is required" | "Invalid VIN">;
-        "getPageContext": () => Promise<{ componentsList: ComponentMap; }>;
+        "fetchVin": (vin: string, headers?: any) => Promise<"Invalid VIN" | "VIN is required">;
+        "getPageContext": () => Promise<{ componentsList: ComponentMap1; }>;
         "isDev": boolean;
         "language": LanguageKeys;
         "loadingStateChanged"?: (isLoading: boolean) => void;
@@ -241,6 +258,12 @@ declare global {
         prototype: HTMLPaintThicknessElement;
         new (): HTMLPaintThicknessElement;
     };
+    interface HTMLPartLookupElement extends Components.PartLookup, HTMLStencilElement {
+    }
+    var HTMLPartLookupElement: {
+        prototype: HTMLPartLookupElement;
+        new (): HTMLPartLookupElement;
+    };
     interface HTMLServiceHistoryElement extends Components.ServiceHistory, HTMLStencilElement {
     }
     var HTMLServiceHistoryElement: {
@@ -280,6 +303,7 @@ declare global {
         "general-inquiry-form": HTMLGeneralInquiryFormElement;
         "manufacturer-lookup": HTMLManufacturerLookupElement;
         "paint-thickness": HTMLPaintThicknessElement;
+        "part-lookup": HTMLPartLookupElement;
         "service-history": HTMLServiceHistoryElement;
         "vehicle-accessories": HTMLVehicleAccessoriesElement;
         "vehicle-lookup": HTMLVehicleLookupElement;
@@ -357,6 +381,18 @@ declare namespace LocalJSX {
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString"?: string;
     }
+    interface PartLookup {
+        "activeElement"?: ActiveElement;
+        "baseUrl"?: string;
+        "blazorErrorStateListener"?: string;
+        "blazorOnLoadingStateChange"?: string;
+        "childeProps"?: string | Object;
+        "errorStateListener"?: (newError: string) => void;
+        "isDev"?: boolean;
+        "language"?: LanguageKeys;
+        "loadingStateChanged"?: (isLoading: boolean) => void;
+        "queryString"?: string;
+    }
     interface ServiceHistory {
         "baseUrl"?: string;
         "isDev"?: boolean;
@@ -374,7 +410,7 @@ declare namespace LocalJSX {
         "queryString"?: string;
     }
     interface VehicleLookup {
-        "activeElement"?: ActiveElement;
+        "activeElement"?: ActiveElement1;
         "baseUrl"?: string;
         "blazorErrorStateListener"?: string;
         "blazorOnLoadingStateChange"?: string;
@@ -425,6 +461,7 @@ declare namespace LocalJSX {
         "general-inquiry-form": GeneralInquiryForm;
         "manufacturer-lookup": ManufacturerLookup;
         "paint-thickness": PaintThickness;
+        "part-lookup": PartLookup;
         "service-history": ServiceHistory;
         "vehicle-accessories": VehicleAccessories;
         "vehicle-lookup": VehicleLookup;
@@ -444,6 +481,7 @@ declare module "@stencil/core" {
             "general-inquiry-form": LocalJSX.GeneralInquiryForm & JSXBase.HTMLAttributes<HTMLGeneralInquiryFormElement>;
             "manufacturer-lookup": LocalJSX.ManufacturerLookup & JSXBase.HTMLAttributes<HTMLManufacturerLookupElement>;
             "paint-thickness": LocalJSX.PaintThickness & JSXBase.HTMLAttributes<HTMLPaintThicknessElement>;
+            "part-lookup": LocalJSX.PartLookup & JSXBase.HTMLAttributes<HTMLPartLookupElement>;
             "service-history": LocalJSX.ServiceHistory & JSXBase.HTMLAttributes<HTMLServiceHistoryElement>;
             "vehicle-accessories": LocalJSX.VehicleAccessories & JSXBase.HTMLAttributes<HTMLVehicleAccessoriesElement>;
             "vehicle-lookup": LocalJSX.VehicleLookup & JSXBase.HTMLAttributes<HTMLVehicleLookupElement>;

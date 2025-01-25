@@ -81,7 +81,7 @@
             </div>
 
             <div class="col-sm-12 text-center btn_list clearfix" style="margin-top: 20px">
-              <button onclick="fetchVin()" id="searchButton" type="button" class="btn_type_5 f14 font_f_o_b">
+              <button onclick="fetchPartNumber()" id="searchButton" type="button" class="btn_type_5 f14 font_f_o_b">
                 <i id="search-icon" class="fa fa-search"></i>
                 <i id="spinner-icon" class="fa fa-spin fa-spinner" style="display: none"></i>
                 <span id="search-text">Search</span>
@@ -94,6 +94,16 @@
             <button class="sample-button" onclick="updateLang('ku')">Ku</button>
             <button class="sample-button" onclick="updateLang('ar')">Ar</button>
             <button class="sample-button" onclick="updateLang('ru')">Ru</button>
+          </div>
+
+          <div class="button-container">
+            <button class="sample-button" onclick="fetchPartNumber()">reload</button>
+            <button class="sample-button" onclick="fetchPartNumber('error')">Error</button>
+            <button class="sample-button" onclick="fetchPartNumber('')">Empty (close)</button>
+            <button class="sample-button" onclick="fetchPartNumber('T5245160030')">T5245160030</button>
+            <button class="sample-button" onclick="fetchPartNumber('T5245160030/1')">T5245160030/1</button>
+            <button class="sample-button" onclick="fetchPartNumber('T5245160030/11')">T5245160030/11</button>
+            <button class="sample-button" onclick="fetchPartNumber('MR0AX8CDXP4446478')">MR0AX8CDXP4446478</button>
           </div>
 
           <style>
@@ -120,35 +130,26 @@
           <div class="well" style="background: white; margin-top: 30px; border-radius: 10px">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist" id="vehicle-info-tab" style="display: flex; justify-content: center; border-bottom: none">
-              <li role="presentation" onclick="changeLookup('vehicle-specification')" class="active">
-                <a class="disable-auto-scroll" href="#specification" aria-controls="specification" role="tab" data-toggle="tab"><span>Specification</span></a>
+              <li role="presentation" onclick="changeLookup('dead-stock-lookup')" class="active">
+                <a class="disable-auto-scroll" href="#deadStock" aria-controls="deadStock" role="tab" data-toggle="tab"><span>DeadStock</span></a>
               </li>
-              <li role="presentation" onclick="changeLookup('vehicle-accessories')">
-                <a class="disable-auto-scroll" href="#accessories" aria-controls="accessories" role="tab" data-toggle="tab"><span>Accessories</span></a>
+              <li role="presentation" onclick="changeLookup('distributor-lookup')">
+                <a class="disable-auto-scroll" href="#distributor" aria-controls="distributor" role="tab" data-toggle="tab"><span>Distributor</span></a>
               </li>
-              <li role="presentation" onclick="changeLookup('warranty-details')">
-                <a class="disable-auto-scroll" href="#warranty-and-ssc" aria-controls="warranty-and-ssc" role="tab" data-toggle="tab"><span>Warranty & SSC</span></a>
-              </li>
-              <li role="presentation" onclick="changeLookup('service-history')">
-                <a class="disable-auto-scroll" href="#history" aria-controls="history" role="tab" data-toggle="tab"><span>Service History</span></a>
-              </li>
-              <li role="presentation" onclick="changeLookup('paint-thickness')">
-                <a class="disable-auto-scroll" href="#thickness" aria-controls="thickness" role="tab" data-toggle="tab"><span>Paint Thickness</span></a>
-              </li>
-              <li role="presentation" onclick="changeLookup('dynamic-claim')">
-                <a class="disable-auto-scroll" href="#swift-claim" aria-controls="swift-claim" role="tab" data-toggle="tab"><span>Swift Claim</span></a>
+              <li role="presentation" onclick="changeLookup('manufacturer-lookup')">
+                <a class="disable-auto-scroll" href="#manufacturer" aria-controls="manufacturer" role="tab" data-toggle="tab"><span>Manufacturer</span></a>
               </li>
             </ul>
 
             <!-- Tab panes -->
             <div class="tab-content" style="background: white; border: 1px solid #dddddd; padding: 25px; border-radius: 10px">
-              <vehicle-lookup
+              <part-lookup
                 language="ku"
                 query-string=""
-                id="vehicle-lookup"
-                active-element="vehicle-specification"
+                id="part-lookup"
+                active-element="dead-stock-lookup"
                 base-url="https://tiq-vehicles-functions.azurewebsites.net/api/secure-vehicle-lookup/"
-              ></vehicle-lookup>
+              ></part-lookup>
             </div>
           </div>
         </div>
@@ -156,7 +157,7 @@
     </div>
 
     <script>
-      let vehicleLookup;
+      let partLookup;
       let searching = false;
 
       const searchIcon = document.getElementById('search-icon');
@@ -166,21 +167,23 @@
       const input = document.getElementById('vinInput');
 
       function updateLang(newLang) {
-        vehicleLookup.language = newLang;
+        partLookup.language = newLang;
       }
 
       function changeLookup(newIndex) {
-        vehicleLookup.activeElement = newIndex;
+        partLookup.activeElement = newIndex;
       }
 
-      function fetchVin() {
-        vehicleLookup.fetchVin(input.value);
+      function fetchPartNumber(vin) {
+        console.log(vin);
+
+        partLookup.fetchPartNumber(vin || input.value);
       }
 
       document.addEventListener('DOMContentLoaded', async function () {
-        vehicleLookup = document.getElementById('vehicle-lookup');
+        partLookup = document.getElementById('part-lookup');
 
-        vehicleLookup.onLoadingStateChanged = function onLoadingStateChanged(isLoading) {
+        partLookup.onLoadingStateChanged = function onLoadingStateChanged(isLoading) {
           if (isLoading) {
             $("li:not('.active')").addClass('disabled');
             searching = true;
