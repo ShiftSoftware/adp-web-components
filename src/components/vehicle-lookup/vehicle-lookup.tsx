@@ -2,9 +2,10 @@ import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stenci
 
 import cn from '~lib/cn';
 import validateVin from '~lib/validate-vin';
+import { getLocaleLanguage } from '~lib/get-local-language';
 
-import { LanguageKeys } from '~types/locales';
 import { DotNetObjectReference } from '~types/components';
+import { LanguageKeys, Locale, localeSchema } from '~types/locales';
 
 import { DynamicClaim } from './dynamic-claim';
 import { PaintThickness } from './paint-thickness';
@@ -42,10 +43,20 @@ export class VehicleLookup {
 
   @State() wrapperErrorState = '';
   @State() blazorRef?: DotNetObjectReference;
+  @State() locale: Locale = localeSchema.getDefault();
 
   @Element() el: HTMLElement;
 
   private componentsList: ComponentMap;
+
+  async componentWillLoad() {
+    await this.changeLanguage(this.language);
+  }
+
+  @Watch('language')
+  async changeLanguage(newLanguage: LanguageKeys) {
+    this.locale = await getLocaleLanguage(newLanguage);
+  }
 
   async componentDidLoad() {
     const vehicleSpecification = this.el.getElementsByTagName('vehicle-specification')[0] as unknown as VehicleSpecification;
@@ -119,9 +130,9 @@ export class VehicleLookup {
 
     if (!activeElement) return;
 
-    if (vin == '') return (this.wrapperErrorState = 'VIN is required');
+    if (vin == '') return (this.wrapperErrorState = this.locale.errors.vinNumberRequired);
 
-    if (!validateVin(vin)) return (this.wrapperErrorState = 'Invalid VIN');
+    if (!validateVin(vin)) return (this.wrapperErrorState = this.locale.errors.invalidVin);
 
     activeElement.fetchData(vin, headers);
   }

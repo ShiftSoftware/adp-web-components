@@ -147,7 +147,7 @@ export namespace Components {
         "blazorErrorStateListener": string;
         "blazorOnLoadingStateChange": string;
         "errorStateListener"?: (newError: string) => void;
-        "fetchVin": (vin: string, headers?: any) => Promise<"VIN is required" | "Invalid VIN">;
+        "fetchVin": (vin: string, headers?: any) => Promise<string>;
         "getPageContext": () => Promise<{ componentsList: ComponentMap1; }>;
         "isDev": boolean;
         "language": LanguageKeys;

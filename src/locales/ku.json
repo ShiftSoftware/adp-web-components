@@ -3,10 +3,13 @@
   "direction": "rtl",
   "language": "kurdish",
   "errors": {
-    "wildCard": "کێشەیەکی چاوەڕواننەکراو ڕویدا تکایە دواتر هەوڵبدەوە.",
+    "invalidVin": "ژمارەی شانسی نادروستە",
     "noBaseUrl": "تکایە base-url دابین بکە",
+    "vinNumberRequired": "ژمارەی شانسی پێویستە",
+    "partNumberRequired": "ژمارەی پارچە پێویستە",
     "wrongResponseFormat": "فۆرماتی وەڵامدانەوە هەڵەیە",
-    "noServiceAvailable": "هیچ خزمەتگوزارییەک بەردەست نییە"
+    "noServiceAvailable": "هیچ خزمەتگوزارییەک بەردەست نییە",
+    "wildCard": "کێشەیەکی چاوەڕواننەکراو ڕویدا تکایە دواتر هەوڵبدەوە."
   },
   "vehicleLookup": {
     "warranty": {

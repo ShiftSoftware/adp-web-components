@@ -3,9 +3,12 @@
   "direction": "ltr",
   "language": "russian",
   "errors": {
+    "invalidVin": "Invalid VIN",
     "noBaseUrl": "Please provide base-url",
+    "vinNumberRequired": "VIN is required",
     "noServiceAvailable": "No Service Available",
     "wrongResponseFormat": "Wrong response format",
+    "partNumberRequired": "Part Number is Required",
     "wildCard": "An unexpected error occurred please try again later."
   },
   "vehicleLookup": {

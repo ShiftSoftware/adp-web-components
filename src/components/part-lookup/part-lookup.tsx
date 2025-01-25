@@ -1,13 +1,14 @@
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { LanguageKeys } from '~types/locales';
 import { DotNetObjectReference } from '~types/components';
+import { LanguageKeys, Locale, localeSchema } from '~types/locales';
 
 import { DeadStockLookup } from './dead-stock-lookup';
 import { DistributorLookup } from './distributor-lookup';
 import { ManufacturerLookup } from './manufacturer-lookup';
 
 import cn from '~lib/cn';
+import { getLocaleLanguage } from '~lib/get-local-language';
 
 const DEAD_STOCK_TAG = 'dead-stock-lookup' as const;
 const DISTRIBUTOR_TAG = 'distributor-lookup' as const;
@@ -46,10 +47,20 @@ export class PartLookup {
 
   @State() wrapperErrorState = '';
   @State() blazorRef?: DotNetObjectReference;
+  @State() locale: Locale = localeSchema.getDefault();
 
   @Element() el: HTMLElement;
 
   private componentsList: ComponentMap;
+
+  async componentWillLoad() {
+    await this.changeLanguage(this.language);
+  }
+
+  @Watch('language')
+  async changeLanguage(newLanguage: LanguageKeys) {
+    this.locale = await getLocaleLanguage(newLanguage);
+  }
 
   async componentDidLoad() {
     const deadStockLookup = this.el.getElementsByTagName('dead-stock-lookup')[0] as unknown as DeadStockLookup;
@@ -93,7 +104,7 @@ export class PartLookup {
 
     if (!activeElement) return;
 
-    if (partNumber == '') return (this.wrapperErrorState = 'Part Number is Required');
+    if (partNumber == '') return (this.wrapperErrorState = this.locale.errors.partNumberRequired);
 
     const searchingText = quantity.trim() || quantity.trim() === '0' ? `${partNumber.trim()}/${quantity.trim()}` : partNumber.trim();
 
