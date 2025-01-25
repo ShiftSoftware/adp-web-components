@@ -1,7 +1,7 @@
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { DotNetObjectReference } from '~types/components';
-import { LanguageKeys, Locale, localeSchema } from '~types/locales';
+import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/locales';
 
 import { DeadStockLookup } from './dead-stock-lookup';
 import { DistributorLookup } from './distributor-lookup';
@@ -70,10 +70,17 @@ export class PartLookup {
 
     Object.values(this.componentsList).forEach(element => {
       if (!element) return;
-      if (this.loadingStateChanged) element.loadingStateChange = this.loadingStateChangingMiddleware;
+      element.errorCallback = this.syncErrorAcrossComponents;
       element.loadedResponse = newResponse => this.handleLoadData(newResponse, element);
+      if (this.loadingStateChanged) element.loadingStateChange = this.loadingStateChangingMiddleware;
     });
   }
+
+  private syncErrorAcrossComponents = (newErrorMessage: ErrorKeys) => {
+    Object.values(this.componentsList).forEach(element => {
+      if (element) element.setErrorMessage(newErrorMessage);
+    });
+  };
 
   private loadingStateChangingMiddleware = (newState: boolean) => {
     if (this.loadingStateChanged) this.loadingStateChanged(newState);

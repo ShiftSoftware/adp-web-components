@@ -5,13 +5,13 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { LanguageKeys } from "./global/types/locales/index";
+import { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
 import { PartInformation } from "./global/types/part-information";
 import { DotNetObjectReference, MockJson } from "./global/types/components";
 import { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
 import { ActiveElement } from "./components/part-lookup/part-lookup";
 import { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
-export { LanguageKeys } from "./global/types/locales/index";
+export { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
 export { PartInformation } from "./global/types/part-information";
 export { DotNetObjectReference, MockJson } from "./global/types/components";
 export { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
@@ -20,6 +20,7 @@ export { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/veh
 export namespace Components {
     interface DeadStockLookup {
         "baseUrl": string;
+        "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (partNumber?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
         "language": LanguageKeys;
@@ -27,10 +28,12 @@ export namespace Components {
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString": string;
         "setData": (newData: PartInformation | string, headers?: any) => Promise<void>;
+        "setErrorMessage": (message: ErrorKeys) => Promise<void>;
         "setMockData": (newMockData: MockJson<PartInformation>) => Promise<void>;
     }
     interface DistributorLookup {
         "baseUrl": string;
+        "errorCallback": (errorMessage: string) => void;
         "fetchData": (partNumber?: string, headers?: any) => Promise<void>;
         "hiddenFields"?: string;
         "isDev": boolean;
@@ -40,6 +43,7 @@ export namespace Components {
         "localizationName"?: string;
         "queryString": string;
         "setData": (newData: PartInformation | string, headers?: any) => Promise<void>;
+        "setErrorMessage": (message: ErrorKeys) => Promise<void>;
         "setMockData": (newMockData: MockJson<PartInformation>) => Promise<void>;
     }
     interface DynamicClaim {
@@ -81,6 +85,7 @@ export namespace Components {
     }
     interface ManufacturerLookup {
         "baseUrl": string;
+        "errorCallback": (errorMessage: string) => void;
         "fetchData": (partNumber?: string, headers?: any) => Promise<void>;
         "headerTitle": string;
         "hiddenFields": string;
@@ -91,6 +96,7 @@ export namespace Components {
         "localizationName"?: string;
         "queryString": string;
         "setData": (newData: PartInformation | string, headers?: any) => Promise<void>;
+        "setErrorMessage": (message: ErrorKeys) => Promise<void>;
         "setMockData": (newMockData: MockJson<PartInformation>) => Promise<void>;
     }
     interface PaintThickness {
@@ -312,6 +318,7 @@ declare global {
 declare namespace LocalJSX {
     interface DeadStockLookup {
         "baseUrl"?: string;
+        "errorCallback"?: (errorMessage: ErrorKeys) => void;
         "isDev"?: boolean;
         "language"?: LanguageKeys;
         "loadedResponse"?: (response: PartInformation) => void;
@@ -320,6 +327,7 @@ declare namespace LocalJSX {
     }
     interface DistributorLookup {
         "baseUrl"?: string;
+        "errorCallback"?: (errorMessage: string) => void;
         "hiddenFields"?: string;
         "isDev"?: boolean;
         "language"?: LanguageKeys;
@@ -362,6 +370,7 @@ declare namespace LocalJSX {
     }
     interface ManufacturerLookup {
         "baseUrl"?: string;
+        "errorCallback"?: (errorMessage: string) => void;
         "headerTitle"?: string;
         "hiddenFields"?: string;
         "isDev"?: boolean;

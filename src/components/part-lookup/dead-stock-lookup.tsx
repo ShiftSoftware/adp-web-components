@@ -25,6 +25,7 @@ export class DeadStockLookup implements PartInformationInterface {
   @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
   @Prop() language: LanguageKeys = 'en';
+  @Prop() errorCallback: (errorMessage: ErrorKeys) => void;
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
   @Prop() loadedResponse?: (response: PartInformation) => void;
 
@@ -91,13 +92,19 @@ export class DeadStockLookup implements PartInformationInterface {
       this.state = 'data';
     } catch (error) {
       if (error && error?.name === 'AbortError') return;
-
+      if (this.errorCallback) this.errorCallback(error.message);
       console.error(error);
-      this.state = 'error';
-      this.partInformation = null;
-      this.errorMessage = error.message;
+      this.setErrorMessage(error.message);
     }
   }
+
+  @Method()
+  async setErrorMessage(message: ErrorKeys) {
+    this.state = 'error';
+    this.partInformation = null;
+    this.errorMessage = message;
+  }
+
   @Method()
   async fetchData(partNumber: string = this.externalPartNumber, headers: any = {}) {
     await this.setData(partNumber, headers);
@@ -143,7 +150,7 @@ export class DeadStockLookup implements PartInformationInterface {
             <Loading isLoading={this.state.includes('loading')} />
             <div class={cn('transition-all duration-700', { 'scale-0': this.state.includes('loading') || this.state === 'idle', 'opacity-0': this.state.includes('loading') })}>
               {['error', 'error-loading'].includes(this.state) && (
-                <div class="py-[16px]">
+                <div class="py-[16px] min-h-[100px] flex items-center">
                   <div class=" px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">
                     {this.locale.errors[this.errorMessage] || this.locale.errors.wildCard}
                   </div>
