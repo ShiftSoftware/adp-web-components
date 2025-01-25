@@ -12,7 +12,8 @@
     <a href="#" onclick="history.back()" style="color: blue; display: block; margin-bottom: 16px">Back</a>
 
     <h1>Dead Stock Lookup</h1>
-    <dead-stock-lookup language="ku" is-dev="true" query-string="" id="dead-stock-lookup" base-url="http://localhost:7174/api/secure-part-lookup/"> </dead-stock-lookup>
+    <dead-stock-lookup language="ku" is-dev="true" query-string="" id="dead-stock-lookup" base-url="https://tiq-vehicles-functions.azurewebsites.net/api/secure-part-lookup/">
+    </dead-stock-lookup>
 
     <div class="button-container">
       <button class="sample-button" onclick="updateLang('en')">En</button>
@@ -74,7 +75,7 @@
 
           newElement.id = 'toggle-item';
           newElement.setAttribute('is-dev', 'true');
-          newElement.setAttribute('base-url', 'http://localhost:7174/api/secure-vehicle-lookup-test/');
+          newElement.setAttribute('base-url', 'https://tiq-vehicles-functions.azurewebsites.net/api/secure-part-lookup/');
 
           newElement.setData(mockData['T5245160030']);
           container.appendChild(newElement);

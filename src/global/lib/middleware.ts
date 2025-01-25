@@ -18,6 +18,20 @@
         console.error(`Error invoking function "${functionName}" on element "${selector}":`, error);
       }
     };
+
+    window['blazorInvokeSet'] = async function (selector, field, value) {
+      const element = document.querySelector(selector);
+      if (!element) {
+        console.error(`Element with selector "${selector}" not found.`);
+        return;
+      }
+
+      try {
+        return (element[field] = value);
+      } catch (error) {
+        console.error(`Setting field ${field} failed to set value: ${value}:`, error);
+      }
+    };
     console.log('Global blazorInvoke initialized.');
   }
 })();

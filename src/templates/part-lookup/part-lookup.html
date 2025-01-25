@@ -72,9 +72,9 @@
               <div class="row">
                 <div class="col-lg-offset-3 col-lg-6" runat="server" id="colCustomerName">
                   <div>
-                    <p class="font_f_o_b f16 mb10 error_bg text-center">VIN <span class="required">*Required</span></p>
+                    <p class="font_f_o_b f16 mb10 error_bg text-center">Part number <span class="required">*Required</span></p>
                   </div>
-                  <input value="MR0AX8CDXP4446478" class="shift-form-field" style="width: 100%" autocomplete="off" id="vinInput" />
+                  <input value="T5245160030" class="shift-form-field" style="width: 100%" autocomplete="off" id="vinInput" />
                   <div class="ltc-ferrari-red error-message error text-center"></div>
                 </div>
               </div>
@@ -145,10 +145,11 @@
             <div class="tab-content" style="background: white; border: 1px solid #dddddd; padding: 25px; border-radius: 10px">
               <part-lookup
                 language="ku"
-                query-string=""
                 id="part-lookup"
                 active-element="dead-stock-lookup"
-                base-url="https://tiq-vehicles-functions.azurewebsites.net/api/secure-vehicle-lookup/"
+                query-string=""
+                children-props='{"manufacturer-lookup":{"headerTitle":"kodo"}}'
+                base-url="https://vehicles-functions-adp.azurewebsites.net/api/secure-part-lookup/"
               ></part-lookup>
             </div>
           </div>
@@ -175,8 +176,6 @@
       }
 
       function fetchPartNumber(vin) {
-        console.log(vin);
-
         partLookup.fetchPartNumber(vin || input.value);
       }
 

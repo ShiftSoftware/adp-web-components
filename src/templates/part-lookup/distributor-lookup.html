@@ -19,7 +19,7 @@
       id="distributor-lookup"
       localization-name="arabic"
       hidden-fields="fob, supersededFrom"
-      base-url="http://localhost:7174/api/secure-part-lookup/"
+      base-url="https://tiq-vehicles-functions.azurewebsites.net/api/secure-part-lookup/"
     >
     </distributor-lookup>
 
@@ -85,7 +85,7 @@
 
           newElement.id = 'toggle-item';
           newElement.setAttribute('is-dev', 'true');
-          newElement.setAttribute('base-url', 'http://localhost:7174/api/secure-vehicle-lookup-test/');
+          newElement.setAttribute('base-url', 'https://tiq-vehicles-functions.azurewebsites.net/api/secure-part-lookup/');
 
           newElement.setData(mockData['T5245160030']);
           container.appendChild(newElement);

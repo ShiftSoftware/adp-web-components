@@ -109,9 +109,9 @@ export namespace Components {
         "baseUrl": string;
         "blazorErrorStateListener": string;
         "blazorOnLoadingStateChange": string;
-        "childeProps"?: string | Object;
+        "childrenProps"?: string | Object;
         "errorStateListener"?: (newError: string) => void;
-        "fetchPartNumber": (partNumber: string, quantity: string, headers?: any) => Promise<string>;
+        "fetchPartNumber": (partNumber: string, quantity?: string, headers?: any) => Promise<string>;
         "getPageContext": () => Promise<{ componentsList: ComponentMap; }>;
         "isDev": boolean;
         "language": LanguageKeys;
@@ -147,7 +147,7 @@ export namespace Components {
         "blazorErrorStateListener": string;
         "blazorOnLoadingStateChange": string;
         "errorStateListener"?: (newError: string) => void;
-        "fetchVin": (vin: string, headers?: any) => Promise<"Invalid VIN" | "VIN is required">;
+        "fetchVin": (vin: string, headers?: any) => Promise<"VIN is required" | "Invalid VIN">;
         "getPageContext": () => Promise<{ componentsList: ComponentMap1; }>;
         "isDev": boolean;
         "language": LanguageKeys;
@@ -386,7 +386,7 @@ declare namespace LocalJSX {
         "baseUrl"?: string;
         "blazorErrorStateListener"?: string;
         "blazorOnLoadingStateChange"?: string;
-        "childeProps"?: string | Object;
+        "childrenProps"?: string | Object;
         "errorStateListener"?: (newError: string) => void;
         "isDev"?: boolean;
         "language"?: LanguageKeys;

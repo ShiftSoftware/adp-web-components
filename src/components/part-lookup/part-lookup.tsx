@@ -39,7 +39,7 @@ export class PartLookup {
   @Prop() language: LanguageKeys = 'en';
   @Prop() blazorErrorStateListener = '';
   @Prop() blazorOnLoadingStateChange = '';
-  @Prop() childeProps?: string | Object = '';
+  @Prop() childrenProps?: string | Object = '';
   @Prop() activeElement?: ActiveElement = '';
   @Prop() errorStateListener?: (newError: string) => void;
   @Prop() loadingStateChanged?: (isLoading: boolean) => void;
@@ -86,7 +86,7 @@ export class PartLookup {
   }
 
   @Method()
-  async fetchPartNumber(partNumber: string, quantity: string, headers: any = {}) {
+  async fetchPartNumber(partNumber: string, quantity: string = '', headers: any = {}) {
     const activeElement = this.componentsList[this.activeElement] || null;
 
     this.wrapperErrorState = '';
@@ -119,16 +119,18 @@ export class PartLookup {
     };
 
     try {
-      if (this.childeProps) {
+      if (this.childrenProps) {
         let parsedProps = {};
-        if (typeof this.childeProps === 'string') parsedProps = JSON.parse(this.childeProps);
-        else if (typeof this.childeProps === 'object') parsedProps = this.childeProps;
+        if (typeof this.childrenProps === 'string') parsedProps = JSON.parse(this.childrenProps);
+        else if (typeof this.childrenProps === 'object') parsedProps = this.childrenProps;
 
         Object.keys(props).forEach(key => {
           if (typeof parsedProps[key] === 'object') props[key] = parsedProps[key];
         });
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
 
     return (
       <Host>
