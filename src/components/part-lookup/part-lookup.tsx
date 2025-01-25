@@ -10,14 +10,10 @@ import { ManufacturerLookup } from './manufacturer-lookup';
 import cn from '~lib/cn';
 import { getLocaleLanguage } from '~lib/get-local-language';
 
-const DEAD_STOCK_TAG = 'dead-stock-lookup' as const;
-const DISTRIBUTOR_TAG = 'distributor-lookup' as const;
-const MANUFACTURER_TAG = 'manufacturer-lookup' as const;
-
 const componentTags = {
-  deadStock: DEAD_STOCK_TAG,
-  distributor: DISTRIBUTOR_TAG,
-  manufacturer: MANUFACTURER_TAG,
+  deadStock: 'dead-stock-lookup',
+  distributor: 'distributor-lookup',
+  manufacturer: 'manufacturer-lookup',
 } as const;
 
 export type ComponentMap = {
@@ -35,12 +31,11 @@ export type ActiveElement = (typeof componentTags)[keyof typeof componentTags] |
 })
 export class PartLookup {
   @Prop() baseUrl: string = '';
-  @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
   @Prop() language: LanguageKeys = 'en';
   @Prop() blazorErrorStateListener = '';
+  @Prop() childrenProps?: string | Object;
   @Prop() blazorOnLoadingStateChange = '';
-  @Prop() childrenProps?: string | Object = '';
   @Prop() activeElement?: ActiveElement = '';
   @Prop() errorStateListener?: (newError: string) => void;
   @Prop() loadingStateChanged?: (isLoading: boolean) => void;
@@ -111,11 +106,6 @@ export class PartLookup {
     activeElement.fetchData(searchingText, headers);
   }
 
-  @Method()
-  async getPageContext() {
-    return { componentsList: this.componentsList };
-  }
-
   private handleLoadData(newResponse, activeElement) {
     Object.values(this.componentsList).forEach(element => {
       if (element !== null && element !== activeElement && newResponse) element.setData(newResponse);
@@ -146,33 +136,15 @@ export class PartLookup {
     return (
       <Host>
         <div class={cn('w-full', { hidden: this.activeElement !== componentTags.deadStock })}>
-          <dead-stock-lookup
-            isDev={this.isDev}
-            base-url={this.baseUrl}
-            language={this.language}
-            query-string={this.queryString}
-            {...props[componentTags.deadStock]}
-          ></dead-stock-lookup>
+          <dead-stock-lookup base-url={this.baseUrl} language={this.language} query-string={this.queryString} {...props[componentTags.deadStock]}></dead-stock-lookup>
         </div>
 
         <div class={cn('w-full', { hidden: this.activeElement !== componentTags.distributor })}>
-          <distributor-lookup
-            isDev={this.isDev}
-            base-url={this.baseUrl}
-            language={this.language}
-            query-string={this.queryString}
-            {...props[componentTags.distributor]}
-          ></distributor-lookup>
+          <distributor-lookup base-url={this.baseUrl} language={this.language} query-string={this.queryString} {...props[componentTags.distributor]}></distributor-lookup>
         </div>
 
         <div class={cn('w-full', { hidden: this.activeElement !== componentTags.manufacturer })}>
-          <manufacturer-lookup
-            isDev={this.isDev}
-            base-url={this.baseUrl}
-            language={this.language}
-            query-string={this.queryString}
-            {...props[componentTags.manufacturer]}
-          ></manufacturer-lookup>
+          <manufacturer-lookup base-url={this.baseUrl} language={this.language} query-string={this.queryString} {...props[componentTags.manufacturer]}></manufacturer-lookup>
         </div>
 
         <slot></slot>

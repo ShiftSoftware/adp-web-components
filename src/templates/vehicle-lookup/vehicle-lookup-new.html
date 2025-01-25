@@ -162,6 +162,7 @@
       const searchIcon = document.getElementById('search-icon');
       const searchText = document.getElementById('search-text');
       const spinnerIcon = document.getElementById('spinner-icon');
+      const errorMessage = document.getElementsByClassName('error-message')[0];
 
       const input = document.getElementById('vinInput');
 
@@ -179,6 +180,16 @@
 
       document.addEventListener('DOMContentLoaded', async function () {
         vehicleLookup = document.getElementById('vehicle-lookup');
+
+        vehicleLookup.errorStateListener = async function errorStateListener(error) {
+          if (error) {
+            input.classList.add('error_bg');
+            errorMessage.innerHTML = error;
+          } else {
+            input.classList.remove('error_bg');
+            errorMessage.innerHTML = '';
+          }
+        };
 
         vehicleLookup.onLoadingStateChanged = function onLoadingStateChanged(isLoading) {
           if (isLoading) {

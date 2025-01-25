@@ -14,16 +14,26 @@ import { WarrantyDetails } from './warranty-details';
 import { VehicleAccessories } from './vehicle-accessories';
 import { VehicleSpecification } from './vehicle-specification';
 
+const componentTags = {
+  dynamicClaim: 'dynamic-claim',
+  paintThickness: 'paint-thickness',
+  serviceHistory: 'service-history',
+  warrantyDetails: 'warranty-details',
+  vehicleAccessories: 'vehicle-accessories',
+  vehicleSpecification: 'vehicle-specification',
+} as const;
+
 export type ComponentMap = {
-  'dynamic-claim': DynamicClaim;
-  'paint-thickness': PaintThickness;
-  'service-history': ServiceHistory;
-  'warranty-details': WarrantyDetails;
-  'vehicle-accessories': VehicleAccessories;
-  'vehicle-specification': VehicleSpecification;
+  [componentTags.dynamicClaim]: DynamicClaim;
+  [componentTags.paintThickness]: PaintThickness;
+  [componentTags.serviceHistory]: ServiceHistory;
+  [componentTags.warrantyDetails]: WarrantyDetails;
+  [componentTags.vehicleAccessories]: VehicleAccessories;
+  [componentTags.vehicleSpecification]: VehicleSpecification;
 };
 
-export type ActiveElement = keyof ComponentMap | '';
+export type ActiveElement = (typeof componentTags)[keyof typeof componentTags] | '';
+
 @Component({
   shadow: false,
   tag: 'vehicle-lookup',
@@ -37,6 +47,7 @@ export class VehicleLookup {
   @Prop() queryString: string = '';
   @Prop() language: LanguageKeys = 'en';
   @Prop() blazorErrorStateListener = '';
+  @Prop() childrenProps?: string | Object;
   @Prop() blazorOnLoadingStateChange = '';
   @Prop() errorStateListener?: (newError: string) => void;
   @Prop() loadingStateChanged?: (isLoading: boolean) => void;
@@ -59,30 +70,35 @@ export class VehicleLookup {
   }
 
   async componentDidLoad() {
-    const vehicleSpecification = this.el.getElementsByTagName('vehicle-specification')[0] as unknown as VehicleSpecification;
-    const vehicleAccessories = this.el.getElementsByTagName('vehicle-accessories')[0] as unknown as VehicleAccessories;
-    const vehicleDetails = this.el.getElementsByTagName('warranty-details')[0] as unknown as WarrantyDetails;
+    const vehicleClaim = this.el.getElementsByTagName('dynamic-claim')[0] as unknown as DynamicClaim;
     const vehicleHistory = this.el.getElementsByTagName('service-history')[0] as unknown as ServiceHistory;
     const vehicleThickness = this.el.getElementsByTagName('paint-thickness')[0] as unknown as PaintThickness;
-    const vehicleClaim = this.el.getElementsByTagName('dynamic-claim')[0] as unknown as DynamicClaim;
+    const vehicleDetails = this.el.getElementsByTagName('warranty-details')[0] as unknown as WarrantyDetails;
+    const vehicleAccessories = this.el.getElementsByTagName('vehicle-accessories')[0] as unknown as VehicleAccessories;
+    const vehicleSpecification = this.el.getElementsByTagName('vehicle-specification')[0] as unknown as VehicleSpecification;
 
     this.componentsList = {
-      'vehicle-specification': vehicleSpecification,
-      'vehicle-accessories': vehicleAccessories,
-      'warranty-details': vehicleDetails,
-      'service-history': vehicleHistory,
-      'paint-thickness': vehicleThickness,
-      'dynamic-claim': vehicleClaim,
+      [componentTags.dynamicClaim]: vehicleClaim,
+      [componentTags.serviceHistory]: vehicleHistory,
+      [componentTags.warrantyDetails]: vehicleDetails,
+      [componentTags.paintThickness]: vehicleThickness,
+      [componentTags.vehicleAccessories]: vehicleAccessories,
+      [componentTags.vehicleSpecification]: vehicleSpecification,
     } as const;
 
     Object.values(this.componentsList).forEach(element => {
       if (!element) return;
 
-      if (this.loadingStateChanged) element.loadingStateChange = this.loadingStateChanged;
+      if (this.loadingStateChanged) element.loadingStateChange = this.loadingStateChangingMiddleware;
 
       element.loadedResponse = newResponse => this.handleLoadData(newResponse, element);
     });
   }
+
+  private loadingStateChangingMiddleware = (newState: boolean) => {
+    if (this.loadingStateChanged) this.loadingStateChanged(newState);
+    if (this.blazorRef && this.blazorOnLoadingStateChange) this.blazorRef.invokeMethodAsync(this.blazorOnLoadingStateChange, newState);
+  };
 
   @Watch('wrapperErrorState')
   async errorListener(newState) {
@@ -90,36 +106,9 @@ export class VehicleLookup {
     if (this.blazorRef && this.blazorErrorStateListener) this.blazorRef.invokeMethodAsync(this.blazorErrorStateListener, newState);
   }
 
-  @Watch('onLoadingStateChanged')
-  async handleLoadingListenerPropChange(newProp) {
-    Object.values(this.componentsList).forEach(element => {
-      if (!element) return;
-
-      element.loadingStateChange = newProp;
-    });
-  }
-
-  @Watch('blazorOnLoadingStateChange')
-  async handleBlazorLoadingRefChange(loadingInvokeRef) {
-    if (this.blazorRef) {
-      Object.values(this.componentsList).forEach(element => {
-        if (!element) return;
-
-        element.loadingStateChange = newState => this.blazorRef.invokeMethodAsync(loadingInvokeRef, newState);
-      });
-    }
-  }
-
   @Method()
   async setBlazorRef(newBlazorRef: DotNetObjectReference) {
     this.blazorRef = newBlazorRef;
-    if (this.blazorOnLoadingStateChange) {
-      Object.values(this.componentsList).forEach(element => {
-        if (!element) return;
-
-        element.loadingStateChange = newState => this.blazorRef.invokeMethodAsync(this.blazorOnLoadingStateChange, newState);
-      });
-    }
   }
 
   @Method()
@@ -137,11 +126,6 @@ export class VehicleLookup {
     activeElement.fetchData(vin, headers);
   }
 
-  @Method()
-  async getPageContext() {
-    return { componentsList: this.componentsList };
-  }
-
   private handleLoadData(newResponse, activeElement) {
     Object.values(this.componentsList).forEach(element => {
       if (element !== null && element !== activeElement && newResponse) element.setData(newResponse);
@@ -149,32 +133,67 @@ export class VehicleLookup {
   }
 
   render() {
+    const props = {
+      [componentTags.dynamicClaim]: {},
+      [componentTags.paintThickness]: {},
+      [componentTags.serviceHistory]: {},
+      [componentTags.warrantyDetails]: {},
+      [componentTags.vehicleAccessories]: {},
+      [componentTags.vehicleSpecification]: {},
+    };
+
+    try {
+      if (this.childrenProps) {
+        let parsedProps = {};
+        if (typeof this.childrenProps === 'string') parsedProps = JSON.parse(this.childrenProps);
+        else if (typeof this.childrenProps === 'object') parsedProps = this.childrenProps;
+
+        Object.keys(props).forEach(key => {
+          if (typeof parsedProps[key] === 'object') props[key] = parsedProps[key];
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
     return (
       <Host>
-        <div class={cn('w-full', { hidden: this.activeElement !== 'vehicle-specification' })}>
-          <vehicle-specification language={this.language} isDev={this.isDev} base-url={this.baseUrl} query-string={this.queryString}></vehicle-specification>
+        <div class={cn('w-full', { hidden: this.activeElement !== componentTags.vehicleSpecification })}>
+          <vehicle-specification
+            base-url={this.baseUrl}
+            language={this.language}
+            query-string={this.queryString}
+            {...props[componentTags.vehicleSpecification]}
+          ></vehicle-specification>
         </div>
 
-        <div class={cn('w-full', { hidden: this.activeElement !== 'vehicle-accessories' })}>
-          <vehicle-accessories language={this.language} isDev={this.isDev} base-url={this.baseUrl} query-string={this.queryString}></vehicle-accessories>
+        <div class={cn('w-full', { hidden: this.activeElement !== componentTags.vehicleAccessories })}>
+          <vehicle-accessories base-url={this.baseUrl} language={this.language} query-string={this.queryString} {...props[componentTags.vehicleAccessories]}></vehicle-accessories>
         </div>
 
-        <div class={cn('w-full', { hidden: this.activeElement !== 'warranty-details' })}>
-          <warranty-details language={this.language} isDev={this.isDev} show-ssc="true" show-warranty="true" base-url={this.baseUrl} query-string={this.queryString}>
+        <div class={cn('w-full', { hidden: this.activeElement !== componentTags.warrantyDetails })}>
+          <warranty-details
+            show-ssc="true"
+            show-warranty="true"
+            base-url={this.baseUrl}
+            language={this.language}
+            query-string={this.queryString}
+            {...props[componentTags.warrantyDetails]}
+          >
             <slot></slot>
           </warranty-details>
         </div>
 
-        <div class={cn('w-full', { hidden: this.activeElement !== 'service-history' })}>
-          <service-history language={this.language} isDev={this.isDev} base-url={this.baseUrl} query-string={this.queryString}></service-history>
+        <div class={cn('w-full', { hidden: this.activeElement !== componentTags.serviceHistory })}>
+          <service-history language={this.language} base-url={this.baseUrl} query-string={this.queryString} {...props[componentTags.serviceHistory]}></service-history>
         </div>
 
-        <div class={cn('w-full', { hidden: this.activeElement !== 'paint-thickness' })}>
-          <paint-thickness language={this.language} isDev={this.isDev} base-url={this.baseUrl} query-string={this.queryString}></paint-thickness>
+        <div class={cn('w-full', { hidden: this.activeElement !== componentTags.paintThickness })}>
+          <paint-thickness base-url={this.baseUrl} language={this.language} query-string={this.queryString} {...props[componentTags.paintThickness]}></paint-thickness>
         </div>
 
-        <div class={cn('w-full', { hidden: this.activeElement !== 'dynamic-claim' })}>
-          <dynamic-claim language={this.language} isDev={this.isDev} base-url={this.baseUrl} query-string={this.queryString}></dynamic-claim>
+        <div class={cn('w-full', { hidden: this.activeElement !== componentTags.dynamicClaim })}>
+          <dynamic-claim {...props[componentTags.dynamicClaim]} language={this.language} base-url={this.baseUrl} query-string={this.queryString}></dynamic-claim>
         </div>
       </Host>
     );

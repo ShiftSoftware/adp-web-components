@@ -9,14 +9,14 @@ import { LanguageKeys } from "./global/types/locales/index";
 import { PartInformation } from "./global/types/part-information";
 import { DotNetObjectReference, MockJson } from "./global/types/components";
 import { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
-import { ActiveElement, ComponentMap } from "./components/part-lookup/part-lookup";
-import { ActiveElement as ActiveElement1, ComponentMap as ComponentMap1 } from "./components/vehicle-lookup/vehicle-lookup";
+import { ActiveElement } from "./components/part-lookup/part-lookup";
+import { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export { LanguageKeys } from "./global/types/locales/index";
 export { PartInformation } from "./global/types/part-information";
 export { DotNetObjectReference, MockJson } from "./global/types/components";
 export { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
-export { ActiveElement, ComponentMap } from "./components/part-lookup/part-lookup";
-export { ActiveElement as ActiveElement1, ComponentMap as ComponentMap1 } from "./components/vehicle-lookup/vehicle-lookup";
+export { ActiveElement } from "./components/part-lookup/part-lookup";
+export { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export namespace Components {
     interface DeadStockLookup {
         "baseUrl": string;
@@ -112,8 +112,6 @@ export namespace Components {
         "childrenProps"?: string | Object;
         "errorStateListener"?: (newError: string) => void;
         "fetchPartNumber": (partNumber: string, quantity?: string, headers?: any) => Promise<string>;
-        "getPageContext": () => Promise<{ componentsList: ComponentMap; }>;
-        "isDev": boolean;
         "language": LanguageKeys;
         "loadingStateChanged"?: (isLoading: boolean) => void;
         "queryString": string;
@@ -146,9 +144,9 @@ export namespace Components {
         "baseUrl": string;
         "blazorErrorStateListener": string;
         "blazorOnLoadingStateChange": string;
+        "childrenProps"?: string | Object;
         "errorStateListener"?: (newError: string) => void;
         "fetchVin": (vin: string, headers?: any) => Promise<string>;
-        "getPageContext": () => Promise<{ componentsList: ComponentMap1; }>;
         "isDev": boolean;
         "language": LanguageKeys;
         "loadingStateChanged"?: (isLoading: boolean) => void;
@@ -388,7 +386,6 @@ declare namespace LocalJSX {
         "blazorOnLoadingStateChange"?: string;
         "childrenProps"?: string | Object;
         "errorStateListener"?: (newError: string) => void;
-        "isDev"?: boolean;
         "language"?: LanguageKeys;
         "loadingStateChanged"?: (isLoading: boolean) => void;
         "queryString"?: string;
@@ -414,6 +411,7 @@ declare namespace LocalJSX {
         "baseUrl"?: string;
         "blazorErrorStateListener"?: string;
         "blazorOnLoadingStateChange"?: string;
+        "childrenProps"?: string | Object;
         "errorStateListener"?: (newError: string) => void;
         "isDev"?: boolean;
         "language"?: LanguageKeys;

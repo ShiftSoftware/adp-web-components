@@ -147,7 +147,6 @@
                 language="ku"
                 id="part-lookup"
                 active-element="dead-stock-lookup"
-                query-string=""
                 children-props='{"manufacturer-lookup":{"headerTitle":"kodo"}}'
                 base-url="https://vehicles-functions-adp.azurewebsites.net/api/secure-part-lookup/"
               ></part-lookup>
@@ -164,6 +163,7 @@
       const searchIcon = document.getElementById('search-icon');
       const searchText = document.getElementById('search-text');
       const spinnerIcon = document.getElementById('spinner-icon');
+      const errorMessage = document.getElementsByClassName('error-message')[0];
 
       const input = document.getElementById('vinInput');
 
@@ -181,6 +181,16 @@
 
       document.addEventListener('DOMContentLoaded', async function () {
         partLookup = document.getElementById('part-lookup');
+
+        partLookup.errorStateListener = async function errorStateListener(error) {
+          if (error) {
+            input.classList.add('error_bg');
+            errorMessage.innerHTML = error;
+          } else {
+            input.classList.remove('error_bg');
+            errorMessage.innerHTML = '';
+          }
+        };
 
         partLookup.onLoadingStateChanged = function onLoadingStateChanged(isLoading) {
           if (isLoading) {
