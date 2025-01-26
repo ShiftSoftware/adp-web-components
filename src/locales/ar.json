@@ -9,7 +9,8 @@
     "partNumberRequired": "رقم القطعة مطلوب",
     "wrongResponseFormat": "تنسيق الرد خاطئ",
     "noServiceAvailable": "لا توجد خدمة متاحة",
-    "wildCard": "حدث خطأ غير متوقع، يرجى المحاولة مرة أخرى لاحقًا."
+    "wildCard": "حدث خطأ غير متوقع، يرجى المحاولة مرة أخرى لاحقًا.",
+    "requestFailedPleaseTryAgainLater": "فشل الطلب، يرجى المحاولة مرة أخرى لاحقًا"
   },
   "vehicleLookup": {
     "warranty": {

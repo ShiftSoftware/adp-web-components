@@ -1,7 +1,7 @@
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { DotNetObjectReference } from '~types/components';
-import { LanguageKeys, Locale, localeSchema } from '~types/locales';
+import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/locales';
 
 import { DeadStockLookup } from './dead-stock-lookup';
 import { DistributorLookup } from './distributor-lookup';
@@ -70,8 +70,21 @@ export class PartLookup {
 
     Object.values(this.componentsList).forEach(element => {
       if (!element) return;
-      if (this.loadingStateChanged) element.loadingStateChange = this.loadingStateChangingMiddleware;
+      element.errorCallback = this.syncErrorAcrossComponents;
+      element.loadingStateChange = this.loadingStateChangingMiddleware;
       element.loadedResponse = newResponse => this.handleLoadData(newResponse, element);
+    });
+  }
+
+  private syncErrorAcrossComponents = (newErrorMessage: ErrorKeys) => {
+    Object.values(this.componentsList).forEach(element => {
+      if (element) element.setErrorMessage(newErrorMessage);
+    });
+  };
+
+  private handleLoadData(newResponse, activeElement) {
+    Object.values(this.componentsList).forEach(element => {
+      if (element !== null && element !== activeElement && newResponse) element.setData(newResponse);
     });
   }
 
@@ -104,12 +117,6 @@ export class PartLookup {
     const searchingText = quantity.trim() || quantity.trim() === '0' ? `${partNumber.trim()}/${quantity.trim()}` : partNumber.trim();
 
     activeElement.fetchData(searchingText, headers);
-  }
-
-  private handleLoadData(newResponse, activeElement) {
-    Object.values(this.componentsList).forEach(element => {
-      if (element !== null && element !== activeElement && newResponse) element.setData(newResponse);
-    });
   }
 
   render() {

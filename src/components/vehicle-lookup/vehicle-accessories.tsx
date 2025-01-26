@@ -25,6 +25,7 @@ export class VehicleAccessories implements ImageViewerInterface {
   @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
   @Prop() language: LanguageKeys = 'en';
+  @Prop() errorCallback: (errorMessage: ErrorKeys) => void;
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
   @Prop() loadedResponse?: (response: VehicleInformation) => void;
 
@@ -95,12 +96,17 @@ export class VehicleAccessories implements ImageViewerInterface {
       this.state = 'data';
     } catch (error) {
       if (error && error?.name === 'AbortError') return;
-
+      if (this.errorCallback) this.errorCallback(error.message);
       console.error(error);
-      this.state = 'error';
-      this.vehicleInformation = null;
-      this.errorMessage = error.message;
+      this.setErrorMessage(error.message);
     }
+  }
+
+  @Method()
+  async setErrorMessage(message: ErrorKeys) {
+    this.state = 'error';
+    this.vehicleInformation = null;
+    this.errorMessage = message;
   }
 
   @Method()
@@ -143,8 +149,8 @@ export class VehicleAccessories implements ImageViewerInterface {
               <div class={cn('text-center pt-[4px] text-[20px]', { 'text-red-600': !!this.errorMessage })}>{this.vehicleInformation?.vin}</div>
 
               {['error', 'error-loading'].includes(this.state) && (
-                <div class="py-[16px]">
-                  <div class=" px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">
+                <div class="py-[16px] min-h-[100px] flex items-center">
+                  <div class="px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">
                     {this.locale.errors[this.errorMessage] || this.locale.errors.wildCard}
                   </div>
                 </div>

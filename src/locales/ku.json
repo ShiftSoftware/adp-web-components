@@ -9,7 +9,8 @@
     "partNumberRequired": "ژمارەی پارچە پێویستە",
     "wrongResponseFormat": "فۆرماتی وەڵامدانەوە هەڵەیە",
     "noServiceAvailable": "هیچ خزمەتگوزارییەک بەردەست نییە",
-    "wildCard": "کێشەیەکی چاوەڕواننەکراو ڕویدا تکایە دواتر هەوڵبدەوە."
+    "wildCard": "کێشەیەکی چاوەڕواننەکراو ڕویدا تکایە دواتر هەوڵبدەوە.",
+    "requestFailedPleaseTryAgainLater": "داواکارییەکە شکستی هێنا تکایە دواتر هەوڵبدەرەوە"
   },
   "vehicleLookup": {
     "warranty": {
