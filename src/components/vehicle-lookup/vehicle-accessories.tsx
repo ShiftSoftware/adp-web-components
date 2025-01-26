@@ -149,8 +149,8 @@ export class VehicleAccessories implements ImageViewerInterface {
               <div class={cn('text-center pt-[4px] text-[20px]', { 'text-red-600': !!this.errorMessage })}>{this.vehicleInformation?.vin}</div>
 
               {['error', 'error-loading'].includes(this.state) && (
-                <div class="py-[16px]">
-                  <div class=" px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">
+                <div class="py-[16px] min-h-[100px] flex items-center">
+                  <div class="px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">
                     {this.locale.errors[this.errorMessage] || this.locale.errors.wildCard}
                   </div>
                 </div>

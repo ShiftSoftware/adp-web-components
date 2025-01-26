@@ -3,7 +3,6 @@ import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stenci
 import Loader from '~assets/loader.svg';
 import Loading from './components/Loading';
 import SSCTable from './components/SSCTable';
-import StatusCard from './components/StatusCard';
 import CardsContainer from './components/CardsContainer';
 
 import cn from '~lib/cn';
@@ -268,8 +267,10 @@ export class WarrantyDetails implements VehicleInformationInterface {
               )}
 
               {['error', 'error-loading'].includes(this.state) && (
-                <div class="py-4">
-                  <StatusCard desc={this.locale.errors[this.errorMessage] || this.locale.errors.wildCard} className="mx-auto reject-card max-w-500" />{' '}
+                <div class="py-[16px] min-h-[100px] flex items-center">
+                  <div class="px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">
+                    {this.locale.errors[this.errorMessage] || this.locale.errors.wildCard}
+                  </div>
                 </div>
               )}
 
