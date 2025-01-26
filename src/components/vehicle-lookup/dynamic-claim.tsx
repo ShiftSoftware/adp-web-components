@@ -131,6 +131,7 @@ export class DynamicClaim implements VehicleInformationInterface {
 
   @Method()
   async setErrorMessage(message: ErrorKeys) {
+    this.isIdle = false;
     this.isLoading = false;
     this.vehicleInformation = null;
     this.errorMessage = message;
@@ -438,6 +439,8 @@ export class DynamicClaim implements VehicleInformationInterface {
   render() {
     const serviceItems = this.vehicleInformation?.serviceItems || [];
     const texts = this.locale.vehicleLookup.dynamicClaim;
+
+    console.log(this.errorMessage);
 
     return (
       <Host>
