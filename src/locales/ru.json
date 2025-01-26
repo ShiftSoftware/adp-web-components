@@ -9,7 +9,8 @@
     "noServiceAvailable": "No Service Available",
     "wrongResponseFormat": "Wrong response format",
     "partNumberRequired": "Part Number is Required",
-    "wildCard": "An unexpected error occurred please try again later."
+    "wildCard": "An unexpected error occurred please try again later.",
+    "requestFailedPleaseTryAgainLater": "Request failed please try again later"
   },
   "vehicleLookup": {
     "warranty": {

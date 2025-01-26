@@ -35,6 +35,7 @@ export class DynamicClaim implements VehicleInformationInterface {
   @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
   @Prop() language: LanguageKeys = 'en';
+  @Prop() errorCallback: (errorMessage: ErrorKeys) => void;
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
   @Prop() loadedResponse?: (response: VehicleInformation) => void;
 
@@ -122,12 +123,17 @@ export class DynamicClaim implements VehicleInformationInterface {
       this.isLoading = false;
     } catch (error) {
       if (error && error?.name === 'AbortError') return;
-
+      if (this.errorCallback) this.errorCallback(error.message);
       console.error(error);
-      this.isLoading = false;
-      this.vehicleInformation = null;
-      this.errorMessage = error.message;
+      this.setErrorMessage(error.message);
     }
+  }
+
+  @Method()
+  async setErrorMessage(message: ErrorKeys) {
+    this.isLoading = false;
+    this.vehicleInformation = null;
+    this.errorMessage = message;
   }
 
   @Method()
@@ -333,7 +339,7 @@ export class DynamicClaim implements VehicleInformationInterface {
           this.dynamicRedeem.handleScanner = null;
         } catch (error) {
           console.error(error);
-          alert('Request failed please try again later');
+          alert(this.locale.errors.requestFailedPleaseTryAgainLater);
           this.dynamicRedeem.quite();
           this.dynamicRedeem.handleScanner = null;
         }

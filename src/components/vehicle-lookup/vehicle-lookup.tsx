@@ -5,7 +5,7 @@ import validateVin from '~lib/validate-vin';
 import { getLocaleLanguage } from '~lib/get-local-language';
 
 import { DotNetObjectReference } from '~types/components';
-import { LanguageKeys, Locale, localeSchema } from '~types/locales';
+import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/locales';
 
 import { DynamicClaim } from './dynamic-claim';
 import { PaintThickness } from './paint-thickness';
@@ -89,9 +89,21 @@ export class VehicleLookup {
     Object.values(this.componentsList).forEach(element => {
       if (!element) return;
 
-      if (this.loadingStateChanged) element.loadingStateChange = this.loadingStateChangingMiddleware;
-
+      element.errorCallback = this.syncErrorAcrossComponents;
+      element.loadingStateChange = this.loadingStateChangingMiddleware;
       element.loadedResponse = newResponse => this.handleLoadData(newResponse, element);
+    });
+  }
+
+  private syncErrorAcrossComponents = (newErrorMessage: ErrorKeys) => {
+    Object.values(this.componentsList).forEach(element => {
+      if (element) element.setErrorMessage(newErrorMessage);
+    });
+  };
+
+  private handleLoadData(newResponse, activeElement) {
+    Object.values(this.componentsList).forEach(element => {
+      if (element !== null && element !== activeElement && newResponse) element.setData(newResponse);
     });
   }
 
@@ -124,12 +136,6 @@ export class VehicleLookup {
     if (!validateVin(vin)) return (this.wrapperErrorState = this.locale.errors.invalidVin);
 
     activeElement.fetchData(vin, headers);
-  }
-
-  private handleLoadData(newResponse, activeElement) {
-    Object.values(this.componentsList).forEach(element => {
-      if (element !== null && element !== activeElement && newResponse) element.setData(newResponse);
-    });
   }
 
   render() {

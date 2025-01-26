@@ -25,6 +25,7 @@ export class VehicleAccessories implements ImageViewerInterface {
   @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
   @Prop() language: LanguageKeys = 'en';
+  @Prop() errorCallback: (errorMessage: ErrorKeys) => void;
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
   @Prop() loadedResponse?: (response: VehicleInformation) => void;
 
@@ -95,12 +96,17 @@ export class VehicleAccessories implements ImageViewerInterface {
       this.state = 'data';
     } catch (error) {
       if (error && error?.name === 'AbortError') return;
-
+      if (this.errorCallback) this.errorCallback(error.message);
       console.error(error);
-      this.state = 'error';
-      this.vehicleInformation = null;
-      this.errorMessage = error.message;
+      this.setErrorMessage(error.message);
     }
+  }
+
+  @Method()
+  async setErrorMessage(message: ErrorKeys) {
+    this.state = 'error';
+    this.vehicleInformation = null;
+    this.errorMessage = message;
   }
 
   @Method()

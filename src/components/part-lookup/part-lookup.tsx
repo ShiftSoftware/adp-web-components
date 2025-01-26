@@ -71,8 +71,8 @@ export class PartLookup {
     Object.values(this.componentsList).forEach(element => {
       if (!element) return;
       element.errorCallback = this.syncErrorAcrossComponents;
+      element.loadingStateChange = this.loadingStateChangingMiddleware;
       element.loadedResponse = newResponse => this.handleLoadData(newResponse, element);
-      if (this.loadingStateChanged) element.loadingStateChange = this.loadingStateChangingMiddleware;
     });
   }
 
@@ -81,6 +81,12 @@ export class PartLookup {
       if (element) element.setErrorMessage(newErrorMessage);
     });
   };
+
+  private handleLoadData(newResponse, activeElement) {
+    Object.values(this.componentsList).forEach(element => {
+      if (element !== null && element !== activeElement && newResponse) element.setData(newResponse);
+    });
+  }
 
   private loadingStateChangingMiddleware = (newState: boolean) => {
     if (this.loadingStateChanged) this.loadingStateChanged(newState);
@@ -111,12 +117,6 @@ export class PartLookup {
     const searchingText = quantity.trim() || quantity.trim() === '0' ? `${partNumber.trim()}/${quantity.trim()}` : partNumber.trim();
 
     activeElement.fetchData(searchingText, headers);
-  }
-
-  private handleLoadData(newResponse, activeElement) {
-    Object.values(this.componentsList).forEach(element => {
-      if (element !== null && element !== activeElement && newResponse) element.setData(newResponse);
-    });
   }
 
   render() {

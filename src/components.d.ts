@@ -49,6 +49,7 @@ export namespace Components {
     interface DynamicClaim {
         "baseUrl": string;
         "completeClaim": () => Promise<void>;
+        "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
         "language": LanguageKeys;
@@ -56,6 +57,7 @@ export namespace Components {
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString": string;
         "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
+        "setErrorMessage": (message: ErrorKeys) => Promise<void>;
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
     }
     interface DynamicRedeem {
@@ -101,6 +103,7 @@ export namespace Components {
     }
     interface PaintThickness {
         "baseUrl": string;
+        "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
         "language": LanguageKeys;
@@ -108,6 +111,7 @@ export namespace Components {
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString": string;
         "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
+        "setErrorMessage": (message: ErrorKeys) => Promise<void>;
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
     }
     interface PartLookup {
@@ -125,6 +129,7 @@ export namespace Components {
     }
     interface ServiceHistory {
         "baseUrl": string;
+        "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
         "language": LanguageKeys;
@@ -132,10 +137,12 @@ export namespace Components {
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString": string;
         "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
+        "setErrorMessage": (message: ErrorKeys) => Promise<void>;
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
     }
     interface VehicleAccessories {
         "baseUrl": string;
+        "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
         "language": LanguageKeys;
@@ -143,6 +150,7 @@ export namespace Components {
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString": string;
         "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
+        "setErrorMessage": (message: ErrorKeys) => Promise<void>;
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
     }
     interface VehicleLookup {
@@ -161,6 +169,7 @@ export namespace Components {
     }
     interface VehicleSpecification {
         "baseUrl": string;
+        "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
         "language": LanguageKeys;
@@ -168,6 +177,7 @@ export namespace Components {
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString": string;
         "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
+        "setErrorMessage": (message: ErrorKeys) => Promise<void>;
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
     }
     interface WarrantyDetails {
@@ -182,6 +192,7 @@ export namespace Components {
         "customerEmail"?: string;
         "customerName"?: string;
         "customerPhone"?: string;
+        "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
         "language": LanguageKeys;
@@ -190,6 +201,7 @@ export namespace Components {
         "queryString": string;
         "recaptchaKey": string;
         "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
+        "setErrorMessage": (message: ErrorKeys) => Promise<void>;
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
         "showSsc": boolean;
         "showWarranty": boolean;
@@ -338,6 +350,7 @@ declare namespace LocalJSX {
     }
     interface DynamicClaim {
         "baseUrl"?: string;
+        "errorCallback"?: (errorMessage: ErrorKeys) => void;
         "isDev"?: boolean;
         "language"?: LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
@@ -382,6 +395,7 @@ declare namespace LocalJSX {
     }
     interface PaintThickness {
         "baseUrl"?: string;
+        "errorCallback"?: (errorMessage: ErrorKeys) => void;
         "isDev"?: boolean;
         "language"?: LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
@@ -401,6 +415,7 @@ declare namespace LocalJSX {
     }
     interface ServiceHistory {
         "baseUrl"?: string;
+        "errorCallback"?: (errorMessage: ErrorKeys) => void;
         "isDev"?: boolean;
         "language"?: LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
@@ -409,6 +424,7 @@ declare namespace LocalJSX {
     }
     interface VehicleAccessories {
         "baseUrl"?: string;
+        "errorCallback"?: (errorMessage: ErrorKeys) => void;
         "isDev"?: boolean;
         "language"?: LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
@@ -429,6 +445,7 @@ declare namespace LocalJSX {
     }
     interface VehicleSpecification {
         "baseUrl"?: string;
+        "errorCallback"?: (errorMessage: ErrorKeys) => void;
         "isDev"?: boolean;
         "language"?: LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
@@ -447,6 +464,7 @@ declare namespace LocalJSX {
         "customerEmail"?: string;
         "customerName"?: string;
         "customerPhone"?: string;
+        "errorCallback"?: (errorMessage: ErrorKeys) => void;
         "isDev"?: boolean;
         "language"?: LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;

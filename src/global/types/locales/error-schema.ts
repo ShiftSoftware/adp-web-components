@@ -8,4 +8,5 @@ export const errorsSchema = object({
   partNumberRequired: string().required(),
   noServiceAvailable: string().required(),
   wrongResponseFormat: string().required(),
+  requestFailedPleaseTryAgainLater: string().required(),
 });
