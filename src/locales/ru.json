@@ -3,6 +3,7 @@
   "direction": "ltr",
   "language": "русский",
   "errors": {
+    "noPartsFound": "Детали не найдены",
     "invalidVin": "Недействительный Вин",
     "noBaseUrl": "Укажите базовый URL",
     "vinNumberRequired": "требуется вин-код",

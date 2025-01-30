@@ -42,6 +42,8 @@ export const getPartInformation = async (component: PartInformationInterface, ge
 
     const response = await fetch(`${baseUrl}${partNumber}?${queryString}`, { signal: abortController.signal, headers: headers });
 
+    if (response.status === 204) throw new Error('noPartsFound');
+
     const newData = (await response.json()) as PartInformation;
 
     return handleResult(newData);

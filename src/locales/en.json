@@ -4,6 +4,7 @@
   "language": "english",
   "errors": {
     "invalidVin": "Invalid VIN",
+    "noPartsFound": "No parts found",
     "noBaseUrl": "Please provide base-url",
     "vinNumberRequired": "VIN is required",
     "noServiceAvailable": "No Service Available",

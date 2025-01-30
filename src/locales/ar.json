@@ -3,6 +3,7 @@
   "direction": "rtl",
   "language": "arabic",
   "errors": {
+    "noPartsFound": "لم يتم العثور على أجزاء",
     "noBaseUrl": "من فضلك قدم base-url",
     "invalidVin": "رقم الشانسی غير صالح",
     "vinNumberRequired": "رقم الشانسی مطلوب",
