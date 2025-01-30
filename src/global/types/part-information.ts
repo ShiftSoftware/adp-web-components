@@ -1,14 +1,8 @@
 export type PartInformation = {
   partNumber: string;
-  tmcPart: TMCPart;
-  stockParts: StockPart[];
-  deadStock: DeadStock[];
-};
-
-export type TMCPart = {
-  warrantyPrice: number;
-  specialPrice: number;
-  salesPrice: number;
+  partDescription: string;
+  localDescription: string;
+  group: string;
   pnc: string;
   pncLocalName: string;
   binCode: string;
@@ -21,9 +15,22 @@ export type TMCPart = {
   hsCode: string;
   uzHsCode: string;
   origin: string;
-  partDescription: string;
-  group: string;
+  supersededTo: string[];
+  stockParts: StockPart[];
+  prices: PartPrice[];
+  deadStock: DeadStock[];
 };
+
+export type PartPrice = {
+  countryIntegrationID: string;
+  countryName: string;
+  regionIntegrationID: string;
+  regionName: string;
+  warrantyPrice: number;
+  fob: number;
+  price: number;
+};
+
 
 export type DeadStock = {
   companyIntegrationID: string;
@@ -38,14 +45,7 @@ export type BranchDeadStock = {
 };
 
 export type StockPart = {
-  localDescription: string;
-  fob: number;
-  partDescription: string;
-  supersededTo: string;
-  supersededFrom: string;
   quantityLookUpResult: string;
-  price: number;
-  group: string;
   locationID: string;
   locationName: string;
 };

@@ -129,17 +129,16 @@ export class DistributorLookup implements PartInformationInterface {
 
     const partsInformation = this.partInformation
       ? [
-          { label: texts.description, key: 'partDescription', value: this.partInformation.stockParts[0].partDescription },
-          { label: texts.productGroup, key: 'group', value: this.partInformation.stockParts[0].group },
+          { label: texts.description, key: 'partDescription', value: this.partInformation.partDescription },
+          { label: texts.productGroup, key: 'group', value: this.partInformation.group },
           {
             label: texts.localDescription.replace('$', localName),
             key: 'localDescription',
-            value: this.partInformation.stockParts[0].localDescription,
+            value: this.partInformation.localDescription,
           },
-          { label: texts.dealerPurchasePrice, key: 'fob', value: this.partInformation.stockParts[0].fob?.toFixed(2) },
-          { label: texts.recommendedRetailPrice, key: 'price', value: this.partInformation.stockParts[0].price?.toFixed(2) },
-          { label: texts.supersededFrom, key: 'supersededFrom', value: this.partInformation.stockParts[0].supersededFrom },
-          { label: texts.supersededTo, key: 'supersededTo', value: this.partInformation.stockParts[0].supersededTo },
+          { label: texts.dealerPurchasePrice, key: 'fob', value: null, values: this.partInformation.prices.map(price => { return { header: price?.countryName, body: price?.fob?.toFixed(2) } }) },
+          { label: texts.recommendedRetailPrice, key: 'price', value: this.partInformation.prices[0].price?.toFixed(2) },
+          { label: texts.supersededTo, key: 'supersededTo', value: this.partInformation.supersededTo },
         ]
       : [];
 
@@ -172,10 +171,22 @@ export class DistributorLookup implements PartInformationInterface {
 
                     <div class="py-[10px] px-[30px] flex flex-col gap-[15px]">
                       <div class="grid grid-cols-3 gap-[50px]">
-                        {displayedFields.map(({ label, value, key }) => (
+                        {displayedFields.map(({ label, value, values, key }) => (
                           <div key={key} class="flex flex-col flex-1">
                             <strong class="py-[10px] px-0 border-b-[gray] border-b">{label}</strong>
-                            <div class="py-[10px] px-0">{value}</div>
+                            {
+                              values ?
+                                <div>{
+                                  (values.map(x => (
+                                    <span key={x.header} class="inline-flex items-center bg-red-50 text-red-800 text-sm font-medium px-3 py-1 me-3 mt-2 rounded-lg border border-red-300">
+                                      <span class="font-semibold">{x.header}:</span>
+                                      <span class="ml-1">{x.body}</span>
+                                    </span>)
+                                  ))}
+                                </div>
+                                :
+                                (<div class="py-[10px] px-0">{value}</div>)
+                            }
                           </div>
                         ))}
                       </div>

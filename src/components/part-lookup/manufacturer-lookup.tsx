@@ -130,21 +130,21 @@ export class ManufacturerLookup implements PartInformationInterface {
 
     const manufacturerData = this.partInformation
       ? [
-          { label: texts.origin, key: 'origin', value: this.partInformation.tmcPart.origin },
-          { label: texts.warrantyPrice, key: 'warrantyPrice', value: this.partInformation.tmcPart.warrantyPrice?.toFixed(2) },
-          { label: texts.specialPrice, key: 'specialPrice', value: this.partInformation.tmcPart.specialPrice?.toFixed(2) },
-          { label: texts.wholesalesPrice, key: 'salesPrice', value: this.partInformation.tmcPart.salesPrice?.toFixed(2) },
-          { label: texts.pnc, key: 'pnc', value: this.partInformation.tmcPart.pnc },
-          { label: texts.pncName.replace('$', localName), key: 'pncLocalName', value: this.partInformation.tmcPart.pncLocalName },
-          { label: texts.binCode, key: 'binCode', value: this.partInformation.tmcPart.binCode },
-          { label: texts.dimension1, key: 'dimension1', value: this.partInformation.tmcPart.dimension1 },
-          { label: texts.dimension2, key: 'dimension2', value: this.partInformation.tmcPart.dimension2 },
-          { label: texts.dimension3, key: 'dimension3', value: this.partInformation.tmcPart.dimension3 },
-          { label: texts.netWeight, key: 'netWeight', value: this.partInformation.tmcPart.netWeight },
-          { label: texts.grossWeight, key: 'grossWeight', value: this.partInformation.tmcPart.grossWeight },
-          { label: texts.cubicMeasure, key: 'cubicMeasure', value: this.partInformation.tmcPart.cubicMeasure },
-          { label: texts.hsCode, key: 'hsCode', value: this.partInformation.tmcPart.hsCode },
-          { label: texts.uzHsCode, key: 'uzHsCode', value: this.partInformation.tmcPart.uzHsCode },
+          { label: texts.origin, key: 'origin', value: this.partInformation.origin },
+          { label: texts.warrantyPrice, key: 'warrantyPrice', value: this.partInformation.prices[0].warrantyPrice?.toFixed(2) },
+          { label: texts.specialPrice, key: 'specialPrice', value: this.partInformation.prices[0].fob?.toFixed(2) },
+          { label: texts.wholesalesPrice, key: 'salesPrice', value: this.partInformation.prices[0].price?.toFixed(2) },
+          { label: texts.pnc, key: 'pnc', value: this.partInformation.pnc },
+          { label: texts.pncName.replace('$', localName), key: 'pncLocalName', value: this.partInformation.pncLocalName },
+          { label: texts.binCode, key: 'binCode', value: this.partInformation.binCode },
+          { label: texts.dimension1, key: 'dimension1', value: this.partInformation.dimension1 },
+          { label: texts.dimension2, key: 'dimension2', value: this.partInformation.dimension2 },
+          { label: texts.dimension3, key: 'dimension3', value: this.partInformation.dimension3 },
+          { label: texts.netWeight, key: 'netWeight', value: this.partInformation.netWeight },
+          { label: texts.grossWeight, key: 'grossWeight', value: this.partInformation.grossWeight },
+          { label: texts.cubicMeasure, key: 'cubicMeasure', value: this.partInformation.cubicMeasure },
+          { label: texts.hsCode, key: 'hsCode', value: this.partInformation.hsCode },
+          { label: texts.uzHsCode, key: 'uzHsCode', value: this.partInformation.uzHsCode },
         ]
       : [];
 
