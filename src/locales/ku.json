@@ -119,7 +119,7 @@
       "dealerPurchasePrice": "نرخی کڕین لای بریکار",
       "recommendedRetailPrice": "نرخی پێشنیارکراوی فرۆشتنی تاکەکەسی",
       "supersededFrom": "گۆڕدراوە لە",
-      "supersededTo": "گۆڕدراوە بۆ"
+      "supersessions": "پارچەی هاوشێوە"
     },
     "manufacturer": {
       "origin": "ڕەسەن",

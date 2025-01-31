@@ -14,5 +14,5 @@ export const distributorSchema = object({
   dealerPurchasePrice: string().required(),
   recommendedRetailPrice: string().required(),
   supersededFrom: string().required(),
-  supersededTo: string().required(),
+  supersessions: string().required(),
 });

@@ -119,7 +119,7 @@
       "dealerPurchasePrice": "Цена покупки дилера",
       "recommendedRetailPrice": "Рекомендуемая розничная цена",
       "supersededFrom": "Заменен от",
-      "supersededTo": "Заменено на"
+      "supersessions": "замены"
     },
     "manufacturer": {
       "origin": "Источник",

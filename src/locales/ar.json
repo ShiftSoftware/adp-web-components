@@ -119,7 +119,7 @@
       "dealerPurchasePrice": "سعر شراء التاجر",
       "recommendedRetailPrice": "سعر التجزئة الموصى به",
       "supersededFrom": "تم استبداله من",
-      "supersededTo": "تم استبداله الی"
+      "supersessions": "البدائل"
     },
     "manufacturer": {
       "origin": "أصل",

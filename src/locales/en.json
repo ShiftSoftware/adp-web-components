@@ -119,7 +119,7 @@
       "dealerPurchasePrice": "Dealer Purchase price",
       "recommendedRetailPrice": "Recommended Retail price",
       "supersededFrom": "Superseded From",
-      "supersededTo": "Superseded To"
+      "supersessions": "Supersessions"
     },
     "manufacturer": {
       "origin": "Origin",
