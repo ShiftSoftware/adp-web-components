@@ -129,25 +129,46 @@ export class DistributorLookup implements PartInformationInterface {
 
     const partsInformation = this.partInformation
       ? [
-        { label: texts.description, key: 'partDescription', value: this.partInformation.partDescription },
-        { label: texts.productGroup, key: 'group', value: this.partInformation.group },
-        {
-          label: texts.localDescription.replace('$', localName),
-          key: 'localDescription',
-          value: this.partInformation.localDescription,
-        },
-        { label: texts.dealerPurchasePrice, key: 'fob', value: null, values: this.partInformation.prices.map(price => { return { header: price?.countryName, body: price?.fob?.toFixed(2) } }) },
-        { label: texts.recommendedRetailPrice, key: 'price', value: null, values: this.partInformation.prices.map(price => { return { header: price?.countryName, body: price?.price?.toFixed(2) } }) },
-        { label: texts.supersessions, key: 'supersededTo', value: null, values: this.partInformation.supersededTo.map(part => { return { header: null, body: part } }) },
-      ]
+          { label: texts.description, key: 'partDescription', value: this.partInformation.partDescription },
+          { label: texts.productGroup, key: 'group', value: this.partInformation.group },
+          {
+            label: texts.localDescription.replace('$', localName),
+            key: 'localDescription',
+            value: this.partInformation.localDescription,
+          },
+          {
+            label: texts.dealerPurchasePrice,
+            key: 'fob',
+            value: null,
+            values: this.partInformation.prices.map(price => {
+              return { header: price?.countryName, body: price?.fob?.formattedValue };
+            }),
+          },
+          {
+            label: texts.recommendedRetailPrice,
+            key: 'price',
+            value: null,
+            values: this.partInformation.prices.map(price => {
+              return { header: price?.countryName, body: price?.price?.formattedValue };
+            }),
+          },
+          {
+            label: texts.supersessions,
+            key: 'supersededTo',
+            value: null,
+            values: this.partInformation.supersededTo.map(part => {
+              return { header: null, body: part };
+            }),
+          },
+        ]
       : [];
 
     const displayedFields = partsInformation.filter(part => !hiddenFields.includes(part.key));
 
     const displayDistributer = this.partInformation
       ? !this.partInformation.stockParts.some(
-        ({ quantityLookUpResult }) => quantityLookUpResult === 'LookupIsSkipped' || quantityLookUpResult === 'QuantityNotWithinLookupThreshold',
-      )
+          ({ quantityLookUpResult }) => quantityLookUpResult === 'LookupIsSkipped' || quantityLookUpResult === 'QuantityNotWithinLookupThreshold',
+        )
       : false;
 
     return (
@@ -174,19 +195,21 @@ export class DistributorLookup implements PartInformationInterface {
                         {displayedFields.map(({ label, value, values, key }) => (
                           <div key={key} class="flex flex-col flex-1">
                             <strong class="py-[10px] px-0 border-b-[gray] border-b">{label}</strong>
-                            {
-                              values ?
-                                <div>{
-                                  (values.map(x => (
-                                    <span key={x.header + x.body} class="inline-flex items-center bg-red-50 text-red-800 text-sm font-medium px-3 py-1 me-1 mt-2 rounded-lg border border-red-300">
-                                      {x.header && <span class="font-semibold">{x.header}:</span>}
-                                      <span class="ml-1">{x.body}</span>
-                                    </span>)
-                                  ))}
-                                </div>
-                                :
-                                (<div class="py-[10px] px-0">{value}</div>)
-                            }
+                            {values ? (
+                              <div>
+                                {values.map(x => (
+                                  <span
+                                    key={x.header + x.body}
+                                    class="inline-flex items-center bg-red-50 text-red-800 text-sm font-medium px-3 py-1 me-1 mt-2 rounded-lg border border-red-300"
+                                  >
+                                    {x.header && <span class="font-semibold">{x.header}:</span>}
+                                    <span class="ml-1">{x.body}</span>
+                                  </span>
+                                ))}
+                              </div>
+                            ) : (
+                              <div class="py-[10px] px-0">{value}</div>
+                            )}
                           </div>
                         ))}
                       </div>
@@ -225,8 +248,8 @@ export class DistributorLookup implements PartInformationInterface {
                                       {stock.quantityLookUpResult === 'Available'
                                         ? texts.available
                                         : stock.quantityLookUpResult === 'PartiallyAvailable'
-                                          ? texts.partiallyAvailable
-                                          : texts.notAvailable}
+                                        ? texts.partiallyAvailable
+                                        : texts.notAvailable}
                                     </strong>
                                   </div>
                                 </td>

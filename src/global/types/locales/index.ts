@@ -21,6 +21,7 @@ export const languageMapper = {
 export const localeSchema = object({
   errors: errorsSchema,
   lang: string().required(),
+  noData: string().required(),
   partLookup: partLookupSchema,
   language: string().required(),
   direction: string().required(),

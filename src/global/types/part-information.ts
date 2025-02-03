@@ -26,11 +26,17 @@ export type PartPrice = {
   countryName: string;
   regionIntegrationID: string;
   regionName: string;
-  warrantyPrice: number;
-  fob: number;
-  price: number;
+  fob: UnitData;
+  price: UnitData;
+  warrantyPrice: UnitData;
 };
 
+type UnitData = {
+  value: number;
+  cultureName: string;
+  formattedValue: string;
+  currecntySymbol: string;
+};
 
 export type DeadStock = {
   companyIntegrationID: string;

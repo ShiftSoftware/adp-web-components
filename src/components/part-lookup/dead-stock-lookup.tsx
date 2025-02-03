@@ -162,6 +162,7 @@ export class DeadStockLookup implements PartInformationInterface {
                   <div class="flex mt-[12px] max-h-[70dvh] overflow-hidden rounded-[4px] flex-col border border-[#d6d8dc]">
                     <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">{texts.deadStock}</div>
 
+                    {!this.partInformation?.deadStock?.length && <div class="h-[80px] flex items-center justify-center text-[18px]">{this.locale.noData}</div>}
                     {this.partInformation?.deadStock?.map(deadStock => (
                       <div key={deadStock.companyIntegrationID} class="py-[10px] px-[20px]">
                         <div

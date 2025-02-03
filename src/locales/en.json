@@ -2,6 +2,7 @@
   "lang": "en",
   "direction": "ltr",
   "language": "english",
+  "noData": "No data is available.",
   "errors": {
     "invalidVin": "Invalid VIN",
     "noPartsFound": "No parts found",
