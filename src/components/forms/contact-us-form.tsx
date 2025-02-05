@@ -45,27 +45,18 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
 
   private form = new FormHook(this, contactUsSchema);
 
-  private nameController = this.form.newController('name', 'text');
-  private name2Controller = this.form.newController('name2', 'text');
-
   async formSubmit(formValues: ContactUs) {
     console.log(formValues);
   }
 
   render() {
-    const { formController } = this.form;
-
-    console.log(formController);
-
     if (this.structureObject === null) return <form-structure-error language={this.language} />;
 
     return (
       <Host>
-        <form dir={this.locale.direction} {...formController}>
-          <form-input {...this.nameController} label="Name" name="name"></form-input>
-          <form-input {...this.name2Controller} label="Name2" name="name2"></form-input>
-          <button type="submit">sd</button>
-        </form>
+        <form-structure form={this.form} structureObject={this.structureObject} isLoading={this.isLoading} renderControl={this.renderControl}>
+          <slot></slot>
+        </form-structure>
       </Host>
     );
   }

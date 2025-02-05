@@ -61,7 +61,9 @@ export class FormHook<T> {
   getFormErrors = () => this.formErrors;
 
   getValues = () => {
-    const form = this.context.el.shadowRoot.querySelector('form') as HTMLFormElement;
+    const formDom = this.context.el.shadowRoot || this.context.el;
+
+    const form = formDom.querySelector('form') as HTMLFormElement;
     const formData = new FormData(form);
     const formObject = Object.fromEntries(formData.entries() as Iterable<[string, FormDataEntryValue]>);
 
@@ -70,7 +72,9 @@ export class FormHook<T> {
 
   private focusFirstInput = (errorFields: Partial<Field>[]) => {
     if (errorFields.length) {
-      const domElements = errorFields.map(field => this.context.el.shadowRoot.querySelector(`input[name="${field.name}"]`)).filter(dom => dom) as HTMLInputElement[];
+      const formDom = this.context.el.shadowRoot || this.context.el;
+
+      const domElements = errorFields.map(field => formDom.querySelector(`input[name="${field.name}"]`)).filter(dom => dom) as HTMLInputElement[];
 
       const sortedDomElements = domElements.sort((a, b) => {
         if (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) return -1; // a comes before b
