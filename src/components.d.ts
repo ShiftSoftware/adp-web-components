@@ -9,12 +9,14 @@ import { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
 import { PartInformation } from "./global/types/part-information";
 import { DotNetObjectReference, MockJson } from "./global/types/components";
 import { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
+import { StructureObject } from "./global/types/forms";
 import { ActiveElement } from "./components/part-lookup/part-lookup";
 import { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
 export { PartInformation } from "./global/types/part-information";
 export { DotNetObjectReference, MockJson } from "./global/types/components";
 export { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
+export { StructureObject } from "./global/types/forms";
 export { ActiveElement } from "./components/part-lookup/part-lookup";
 export { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export namespace Components {
@@ -84,17 +86,14 @@ export namespace Components {
         "name": string;
     }
     interface FormStructure {
-        "class": string;
-        "containerClass": string;
-        "disabled": boolean;
-        "errorClass": string;
-        "errorMessage": string;
-        "isError": boolean;
-        "label": string;
-        "labelClass": string;
-        "name": string;
+        "structure": any;
+    }
+    interface FormStructureError {
+        "language": LanguageKeys;
     }
     interface GeneralInquiryForm {
+        "structure": string;
+        "structureObject": StructureObject;
     }
     interface ManufacturerLookup {
         "baseUrl": string;
@@ -225,10 +224,6 @@ export interface FormInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLFormInputElement;
 }
-export interface FormStructureCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLFormStructureElement;
-}
 declare global {
     interface HTMLDeadStockLookupElement extends Components.DeadStockLookup, HTMLStencilElement {
     }
@@ -271,22 +266,17 @@ declare global {
         prototype: HTMLFormInputElement;
         new (): HTMLFormInputElement;
     };
-    interface HTMLFormStructureElementEventMap {
-        "onInput": any;
-    }
     interface HTMLFormStructureElement extends Components.FormStructure, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLFormStructureElementEventMap>(type: K, listener: (this: HTMLFormStructureElement, ev: FormStructureCustomEvent<HTMLFormStructureElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLFormStructureElementEventMap>(type: K, listener: (this: HTMLFormStructureElement, ev: FormStructureCustomEvent<HTMLFormStructureElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLFormStructureElement: {
         prototype: HTMLFormStructureElement;
         new (): HTMLFormStructureElement;
+    };
+    interface HTMLFormStructureErrorElement extends Components.FormStructureError, HTMLStencilElement {
+    }
+    var HTMLFormStructureErrorElement: {
+        prototype: HTMLFormStructureErrorElement;
+        new (): HTMLFormStructureErrorElement;
     };
     interface HTMLGeneralInquiryFormElement extends Components.GeneralInquiryForm, HTMLStencilElement {
     }
@@ -349,6 +339,7 @@ declare global {
         "dynamic-redeem": HTMLDynamicRedeemElement;
         "form-input": HTMLFormInputElement;
         "form-structure": HTMLFormStructureElement;
+        "form-structure-error": HTMLFormStructureErrorElement;
         "general-inquiry-form": HTMLGeneralInquiryFormElement;
         "manufacturer-lookup": HTMLManufacturerLookupElement;
         "paint-thickness": HTMLPaintThicknessElement;
@@ -413,18 +404,14 @@ declare namespace LocalJSX {
         "onOnInput"?: (event: FormInputCustomEvent<any>) => void;
     }
     interface FormStructure {
-        "class"?: string;
-        "containerClass"?: string;
-        "disabled"?: boolean;
-        "errorClass"?: string;
-        "errorMessage"?: string;
-        "isError"?: boolean;
-        "label"?: string;
-        "labelClass"?: string;
-        "name"?: string;
-        "onOnInput"?: (event: FormStructureCustomEvent<any>) => void;
+        "structure"?: any;
+    }
+    interface FormStructureError {
+        "language"?: LanguageKeys;
     }
     interface GeneralInquiryForm {
+        "structure"?: string;
+        "structureObject"?: StructureObject;
     }
     interface ManufacturerLookup {
         "baseUrl"?: string;
@@ -529,6 +516,7 @@ declare namespace LocalJSX {
         "dynamic-redeem": DynamicRedeem;
         "form-input": FormInput;
         "form-structure": FormStructure;
+        "form-structure-error": FormStructureError;
         "general-inquiry-form": GeneralInquiryForm;
         "manufacturer-lookup": ManufacturerLookup;
         "paint-thickness": PaintThickness;
@@ -550,6 +538,7 @@ declare module "@stencil/core" {
             "dynamic-redeem": LocalJSX.DynamicRedeem & JSXBase.HTMLAttributes<HTMLDynamicRedeemElement>;
             "form-input": LocalJSX.FormInput & JSXBase.HTMLAttributes<HTMLFormInputElement>;
             "form-structure": LocalJSX.FormStructure & JSXBase.HTMLAttributes<HTMLFormStructureElement>;
+            "form-structure-error": LocalJSX.FormStructureError & JSXBase.HTMLAttributes<HTMLFormStructureErrorElement>;
             "general-inquiry-form": LocalJSX.GeneralInquiryForm & JSXBase.HTMLAttributes<HTMLGeneralInquiryFormElement>;
             "manufacturer-lookup": LocalJSX.ManufacturerLookup & JSXBase.HTMLAttributes<HTMLManufacturerLookupElement>;
             "paint-thickness": LocalJSX.PaintThickness & JSXBase.HTMLAttributes<HTMLPaintThicknessElement>;

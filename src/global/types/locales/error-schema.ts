@@ -6,6 +6,7 @@ export const errorsSchema = object({
   invalidVin: string().required(),
   noPartsFound: string().required(),
   vinNumberRequired: string().required(),
+  wrongFormStructure: string().required(),
   partNumberRequired: string().required(),
   noServiceAvailable: string().required(),
   wrongResponseFormat: string().required(),

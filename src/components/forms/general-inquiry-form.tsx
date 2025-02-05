@@ -1,6 +1,10 @@
-import { Component, Element, Host, State, h } from '@stencil/core';
 import { InferType, object, string } from 'yup';
+import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
+
+import { StructureObject } from '~types/forms';
+
 import { FormHook, FormHookInterface } from '~lib/form-hook';
+import { isValidStructure } from '~lib/validate-form-structure';
 
 const inquirySchema = object({
   name: string().required('r').min(4, 'kd').max(7, 'kk'),
@@ -16,8 +20,24 @@ type Inquiry = InferType<typeof inquirySchema>;
 })
 export class GeneralInquiryForm implements FormHookInterface<Inquiry> {
   @State() isLoading: boolean;
-  @Element() el: HTMLElement;
   @State() renderControl = {};
+  @Prop() structure: string = '[]';
+  @Prop() structureObject: StructureObject = null;
+
+  @Element() el: HTMLElement;
+
+  async componentWillLoad() {
+    await this.structureValidation(this.structure);
+  }
+
+  @Watch('structure')
+  async onStructureChange(newStructure: string) {
+    await this.structureValidation(newStructure);
+  }
+
+  async structureValidation(structureString: string) {
+    this.structureObject = isValidStructure(structureString);
+  }
 
   private form = new FormHook(this, inquirySchema);
 
@@ -30,6 +50,8 @@ export class GeneralInquiryForm implements FormHookInterface<Inquiry> {
 
   render() {
     const { formController } = this.form;
+
+    if (this.structureObject === null) return <form-structure-error />;
 
     return (
       <Host>

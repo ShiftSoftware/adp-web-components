@@ -4,13 +4,14 @@
   "language": "русский",
   "noData": "Данных нет.",
   "errors": {
+    "noBaseUrl": "Укажите базовый URL",
     "noPartsFound": "Детали не найдены",
     "invalidVin": "Недействительный Вин",
-    "noBaseUrl": "Укажите базовый URL",
     "vinNumberRequired": "требуется вин-код",
     "noServiceAvailable": "Нет доступных услуг",
-    "wrongResponseFormat": "Неправильный формат ответа",
     "partNumberRequired": "Требуется номер детали",
+    "wrongResponseFormat": "Неправильный формат ответа",
+    "wrongFormStructure": "Структура формы недействительна.",
     "wildCard": "Произошла неожиданная ошибка, пожалуйста, попробуйте еще раз позже.",
     "requestFailedPleaseTryAgainLater": "Запрос не удался, попробуйте еще раз позже"
   },

@@ -6,7 +6,7 @@ import { FormInputInterface } from '~lib/form-hook';
 @Component({
   shadow: false,
   tag: 'form-input',
-  styleUrl: 'general-form-elements.css',
+  styleUrl: 'form-input.css',
 })
 export class FormInput implements FormInputInterface {
   @Prop() name: string;
