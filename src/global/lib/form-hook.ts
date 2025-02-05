@@ -1,4 +1,6 @@
 import { AnyObjectSchema } from 'yup';
+import { LanguageKeys, Locale } from '~types/locales';
+import { StructureObject } from '~types/forms';
 
 export interface FormInputInterface {
   name: string;
@@ -13,9 +15,13 @@ export interface FormInputInterface {
 }
 
 export interface FormHookInterface<T> {
+  locale: Locale;
   el: HTMLElement;
+  structure: string;
   renderControl: {};
   isLoading: boolean;
+  language: LanguageKeys;
+  structureObject: StructureObject;
   formSubmit: (formValues: T) => void;
 }
 

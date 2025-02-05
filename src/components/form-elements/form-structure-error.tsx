@@ -26,7 +26,7 @@ export class FormStructureError {
   render() {
     return (
       <Host>
-        <div class="py-[16px] min-h-[100px] flex items-center">
+        <div dir={this.locale.direction} class="py-[16px] min-h-[100px] flex items-center">
           <div class="px-[16px] py-[8px] border text-[#58151c] border-[#f2aeb5] bg-[#f7d7d8] text-[20px] rounded-[8px] w-fit mx-auto">{this.locale.errors.wrongFormStructure}</div>
         </div>
       </Host>

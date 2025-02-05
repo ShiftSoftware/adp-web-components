@@ -9,17 +9,19 @@ import { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
 import { PartInformation } from "./global/types/part-information";
 import { DotNetObjectReference, MockJson } from "./global/types/components";
 import { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
-import { StructureObject } from "./global/types/forms";
 import { ActiveElement } from "./components/part-lookup/part-lookup";
 import { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
 export { PartInformation } from "./global/types/part-information";
 export { DotNetObjectReference, MockJson } from "./global/types/components";
 export { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
-export { StructureObject } from "./global/types/forms";
 export { ActiveElement } from "./components/part-lookup/part-lookup";
 export { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export namespace Components {
+    interface ContactUsForm {
+        "language": LanguageKeys;
+        "structure": string;
+    }
     interface DeadStockLookup {
         "baseUrl": string;
         "errorCallback": (errorMessage: ErrorKeys) => void;
@@ -90,10 +92,6 @@ export namespace Components {
     }
     interface FormStructureError {
         "language": LanguageKeys;
-    }
-    interface GeneralInquiryForm {
-        "structure": string;
-        "structureObject": StructureObject;
     }
     interface ManufacturerLookup {
         "baseUrl": string;
@@ -225,6 +223,12 @@ export interface FormInputCustomEvent<T> extends CustomEvent<T> {
     target: HTMLFormInputElement;
 }
 declare global {
+    interface HTMLContactUsFormElement extends Components.ContactUsForm, HTMLStencilElement {
+    }
+    var HTMLContactUsFormElement: {
+        prototype: HTMLContactUsFormElement;
+        new (): HTMLContactUsFormElement;
+    };
     interface HTMLDeadStockLookupElement extends Components.DeadStockLookup, HTMLStencilElement {
     }
     var HTMLDeadStockLookupElement: {
@@ -278,12 +282,6 @@ declare global {
         prototype: HTMLFormStructureErrorElement;
         new (): HTMLFormStructureErrorElement;
     };
-    interface HTMLGeneralInquiryFormElement extends Components.GeneralInquiryForm, HTMLStencilElement {
-    }
-    var HTMLGeneralInquiryFormElement: {
-        prototype: HTMLGeneralInquiryFormElement;
-        new (): HTMLGeneralInquiryFormElement;
-    };
     interface HTMLManufacturerLookupElement extends Components.ManufacturerLookup, HTMLStencilElement {
     }
     var HTMLManufacturerLookupElement: {
@@ -333,6 +331,7 @@ declare global {
         new (): HTMLWarrantyDetailsElement;
     };
     interface HTMLElementTagNameMap {
+        "contact-us-form": HTMLContactUsFormElement;
         "dead-stock-lookup": HTMLDeadStockLookupElement;
         "distributor-lookup": HTMLDistributorLookupElement;
         "dynamic-claim": HTMLDynamicClaimElement;
@@ -340,7 +339,6 @@ declare global {
         "form-input": HTMLFormInputElement;
         "form-structure": HTMLFormStructureElement;
         "form-structure-error": HTMLFormStructureErrorElement;
-        "general-inquiry-form": HTMLGeneralInquiryFormElement;
         "manufacturer-lookup": HTMLManufacturerLookupElement;
         "paint-thickness": HTMLPaintThicknessElement;
         "part-lookup": HTMLPartLookupElement;
@@ -352,6 +350,10 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface ContactUsForm {
+        "language"?: LanguageKeys;
+        "structure"?: string;
+    }
     interface DeadStockLookup {
         "baseUrl"?: string;
         "errorCallback"?: (errorMessage: ErrorKeys) => void;
@@ -408,10 +410,6 @@ declare namespace LocalJSX {
     }
     interface FormStructureError {
         "language"?: LanguageKeys;
-    }
-    interface GeneralInquiryForm {
-        "structure"?: string;
-        "structureObject"?: StructureObject;
     }
     interface ManufacturerLookup {
         "baseUrl"?: string;
@@ -510,6 +508,7 @@ declare namespace LocalJSX {
         "userId"?: string;
     }
     interface IntrinsicElements {
+        "contact-us-form": ContactUsForm;
         "dead-stock-lookup": DeadStockLookup;
         "distributor-lookup": DistributorLookup;
         "dynamic-claim": DynamicClaim;
@@ -517,7 +516,6 @@ declare namespace LocalJSX {
         "form-input": FormInput;
         "form-structure": FormStructure;
         "form-structure-error": FormStructureError;
-        "general-inquiry-form": GeneralInquiryForm;
         "manufacturer-lookup": ManufacturerLookup;
         "paint-thickness": PaintThickness;
         "part-lookup": PartLookup;
@@ -532,6 +530,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "contact-us-form": LocalJSX.ContactUsForm & JSXBase.HTMLAttributes<HTMLContactUsFormElement>;
             "dead-stock-lookup": LocalJSX.DeadStockLookup & JSXBase.HTMLAttributes<HTMLDeadStockLookupElement>;
             "distributor-lookup": LocalJSX.DistributorLookup & JSXBase.HTMLAttributes<HTMLDistributorLookupElement>;
             "dynamic-claim": LocalJSX.DynamicClaim & JSXBase.HTMLAttributes<HTMLDynamicClaimElement>;
@@ -539,7 +538,6 @@ declare module "@stencil/core" {
             "form-input": LocalJSX.FormInput & JSXBase.HTMLAttributes<HTMLFormInputElement>;
             "form-structure": LocalJSX.FormStructure & JSXBase.HTMLAttributes<HTMLFormStructureElement>;
             "form-structure-error": LocalJSX.FormStructureError & JSXBase.HTMLAttributes<HTMLFormStructureErrorElement>;
-            "general-inquiry-form": LocalJSX.GeneralInquiryForm & JSXBase.HTMLAttributes<HTMLGeneralInquiryFormElement>;
             "manufacturer-lookup": LocalJSX.ManufacturerLookup & JSXBase.HTMLAttributes<HTMLManufacturerLookupElement>;
             "paint-thickness": LocalJSX.PaintThickness & JSXBase.HTMLAttributes<HTMLPaintThicknessElement>;
             "part-lookup": LocalJSX.PartLookup & JSXBase.HTMLAttributes<HTMLPartLookupElement>;
