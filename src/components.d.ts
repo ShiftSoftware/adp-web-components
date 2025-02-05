@@ -83,6 +83,17 @@ export namespace Components {
         "labelClass": string;
         "name": string;
     }
+    interface FormStructure {
+        "class": string;
+        "containerClass": string;
+        "disabled": boolean;
+        "errorClass": string;
+        "errorMessage": string;
+        "isError": boolean;
+        "label": string;
+        "labelClass": string;
+        "name": string;
+    }
     interface GeneralInquiryForm {
     }
     interface ManufacturerLookup {
@@ -214,6 +225,10 @@ export interface FormInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLFormInputElement;
 }
+export interface FormStructureCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLFormStructureElement;
+}
 declare global {
     interface HTMLDeadStockLookupElement extends Components.DeadStockLookup, HTMLStencilElement {
     }
@@ -255,6 +270,23 @@ declare global {
     var HTMLFormInputElement: {
         prototype: HTMLFormInputElement;
         new (): HTMLFormInputElement;
+    };
+    interface HTMLFormStructureElementEventMap {
+        "onInput": any;
+    }
+    interface HTMLFormStructureElement extends Components.FormStructure, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLFormStructureElementEventMap>(type: K, listener: (this: HTMLFormStructureElement, ev: FormStructureCustomEvent<HTMLFormStructureElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLFormStructureElementEventMap>(type: K, listener: (this: HTMLFormStructureElement, ev: FormStructureCustomEvent<HTMLFormStructureElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLFormStructureElement: {
+        prototype: HTMLFormStructureElement;
+        new (): HTMLFormStructureElement;
     };
     interface HTMLGeneralInquiryFormElement extends Components.GeneralInquiryForm, HTMLStencilElement {
     }
@@ -316,6 +348,7 @@ declare global {
         "dynamic-claim": HTMLDynamicClaimElement;
         "dynamic-redeem": HTMLDynamicRedeemElement;
         "form-input": HTMLFormInputElement;
+        "form-structure": HTMLFormStructureElement;
         "general-inquiry-form": HTMLGeneralInquiryFormElement;
         "manufacturer-lookup": HTMLManufacturerLookupElement;
         "paint-thickness": HTMLPaintThicknessElement;
@@ -378,6 +411,18 @@ declare namespace LocalJSX {
         "labelClass"?: string;
         "name"?: string;
         "onOnInput"?: (event: FormInputCustomEvent<any>) => void;
+    }
+    interface FormStructure {
+        "class"?: string;
+        "containerClass"?: string;
+        "disabled"?: boolean;
+        "errorClass"?: string;
+        "errorMessage"?: string;
+        "isError"?: boolean;
+        "label"?: string;
+        "labelClass"?: string;
+        "name"?: string;
+        "onOnInput"?: (event: FormStructureCustomEvent<any>) => void;
     }
     interface GeneralInquiryForm {
     }
@@ -483,6 +528,7 @@ declare namespace LocalJSX {
         "dynamic-claim": DynamicClaim;
         "dynamic-redeem": DynamicRedeem;
         "form-input": FormInput;
+        "form-structure": FormStructure;
         "general-inquiry-form": GeneralInquiryForm;
         "manufacturer-lookup": ManufacturerLookup;
         "paint-thickness": PaintThickness;
@@ -503,6 +549,7 @@ declare module "@stencil/core" {
             "dynamic-claim": LocalJSX.DynamicClaim & JSXBase.HTMLAttributes<HTMLDynamicClaimElement>;
             "dynamic-redeem": LocalJSX.DynamicRedeem & JSXBase.HTMLAttributes<HTMLDynamicRedeemElement>;
             "form-input": LocalJSX.FormInput & JSXBase.HTMLAttributes<HTMLFormInputElement>;
+            "form-structure": LocalJSX.FormStructure & JSXBase.HTMLAttributes<HTMLFormStructureElement>;
             "general-inquiry-form": LocalJSX.GeneralInquiryForm & JSXBase.HTMLAttributes<HTMLGeneralInquiryFormElement>;
             "manufacturer-lookup": LocalJSX.ManufacturerLookup & JSXBase.HTMLAttributes<HTMLManufacturerLookupElement>;
             "paint-thickness": LocalJSX.PaintThickness & JSXBase.HTMLAttributes<HTMLPaintThicknessElement>;

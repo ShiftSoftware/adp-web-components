@@ -10,9 +10,9 @@ const inquirySchema = object({
 type Inquiry = InferType<typeof inquirySchema>;
 
 @Component({
-  shadow: true,
+  shadow: false,
   tag: 'general-inquiry-form',
-  styleUrl: 'general-inquiry-form.css',
+  styleUrl: 'genera-form.css',
 })
 export class GeneralInquiryForm implements FormHookInterface<Inquiry> {
   @State() isLoading: boolean;

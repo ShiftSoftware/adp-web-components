@@ -5,8 +5,8 @@ import { FormInputInterface } from '~lib/form-hook';
 
 @Component({
   shadow: false,
-  tag: 'form-input',
-  styleUrl: 'form-input.css',
+  tag: 'form-structure',
+  styleUrl: 'general-form-elements.css',
 })
 export class FormInput implements FormInputInterface {
   @Prop() name: string;
@@ -32,8 +32,8 @@ export class FormInput implements FormInputInterface {
             onInput={onInput}
             disabled={disabled}
             class={cn(
-              'border disabled:opacity-75 flex-1 py-[6px] px-[12px] transition-colors duration-300 rounded-lg outline-none focus:border-slate-600 w-full',
-              { '!border-red-500': isError },
+              'border disabled:opacity-75 flex-1 py-[6px] px-[12px] transition-all duration-300 rounded-md outline-0 focus:border-slate-600 focus:shadow-[0_0_0_0.2rem_rgba(71,85,105,0.25)] w-full',
+              { '!border-red-500 focus:shadow-[0_0_0_0.2rem_rgba(239,68,68,0.25)]': isError },
               inputClass,
             )}
           />
