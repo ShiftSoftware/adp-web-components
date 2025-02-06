@@ -95,6 +95,7 @@ export namespace Components {
         "language": LanguageKeys;
         "name": string;
         "placeholder": string;
+        "type": string;
     }
     interface FormStructure {
         "form": FormHook<any>;
@@ -420,6 +421,7 @@ declare namespace LocalJSX {
         "language"?: LanguageKeys;
         "name"?: string;
         "placeholder"?: string;
+        "type"?: string;
     }
     interface FormStructure {
         "form"?: FormHook<any>;

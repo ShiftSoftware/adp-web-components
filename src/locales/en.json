@@ -17,10 +17,13 @@
   },
   "forms": {
     "inputValueIsIncorrect": "Field value is incorrect.",
+
     "contactUs": {
       "fullName": "Full Name",
       "fullNameIsRequired": "Full Name is required.",
-      "fullNameMinimum": "Full Name must be 3 characters or more."
+      "fullNameMinimum": "Full Name must be 3 characters or more.",
+      "emailAddress": "Email Address",
+      "emailAddressNotValid": "Please enter a valid email address."
     }
   },
   "vehicleLookup": {

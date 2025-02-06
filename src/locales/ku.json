@@ -17,10 +17,13 @@
   },
   "forms": {
     "inputValueIsIncorrect": "تکایە بەهای باشتر دابین بکەن",
+
     "contactUs": {
       "fullName": "ناوی تەواو",
       "fullNameIsRequired": "ناوی تەواو پێویستە.",
-      "fullNameMinimum": "ناوی تەواو دەبێت ٣ پیت یان زیاتر بێت."
+      "fullNameMinimum": "ناوی تەواو دەبێت ٣ پیت یان زیاتر بێت.",
+      "emailAddress": "ناونیشانی ئیمەیڵ",
+      "emailAddressNotValid": "تکایە ناونیشانی ئیمەیڵێکی دروست دابنێ."
     }
   },
   "vehicleLookup": {

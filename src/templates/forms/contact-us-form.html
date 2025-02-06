@@ -6,7 +6,6 @@
     <title>General Inquiry Form</title>
     <script nomodule src="/build/shift-components.js"></script>
     <script type="module" src="/build/shift-components.esm.js"></script>
-    <script src="./mock-data.js"></script>
   </head>
   <style>
     body {
@@ -44,7 +43,7 @@
       <button class="sample-button" onclick="updateLang('ru')">Ru</button>
     </div>
 
-    <contact-us-form id="contact-us-form" structure='[["div","name"], "div.d3#s2", "name2", "submit.Submit"]' id="inquiry-form"></contact-us-form>
+    <contact-us-form id="contact-us-form" structure='[["div","name"], "email", "submit.Submit"]' id="inquiry-form"></contact-us-form>
 
     <script>
       let contactUsForm;

@@ -17,10 +17,13 @@
   },
   "forms": {
     "inputValueIsIncorrect": "قيمة الحقل غير صحيحة.",
+
     "contactUs": {
       "fullName": "الاسم الكامل",
       "fullNameIsRequired": "الاسم الكامل مطلوب.",
-      "fullNameMinimum": "الاسم الكامل يجب أن يتكون من 3 أحرف أو أكثر."
+      "fullNameMinimum": "الاسم الكامل يجب أن يتكون من 3 أحرف أو أكثر.",
+      "emailAddress": "البريد الإلكتروني",
+      "emailAddressNotValid": "يرجى إدخال عنوان بريد إلكتروني صالح."
     }
   },
   "vehicleLookup": {

@@ -8,6 +8,7 @@ import { FormHook } from '~lib/form-hook';
 import { isValidStructure } from '~lib/validate-form-structure';
 
 const contactUsSchema = object({
+  email: string().email('emailAddressNotValid'),
   name: string().required('fullNameIsRequired').min(3, 'fullNameMinimum'),
 });
 
@@ -15,11 +16,17 @@ type ContactUs = InferType<typeof contactUsSchema>;
 
 const formElementMapper: FormElementMapper = {
   name: 'text',
+  email: 'text',
 };
 
 const formFieldParams: FormFieldParams = {
   name: {
     label: 'fullName',
+    formLocaleName: 'contactUs',
+  },
+  email: {
+    type: 'email',
+    label: 'emailAddress',
     formLocaleName: 'contactUs',
   },
 };
