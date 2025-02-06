@@ -86,6 +86,7 @@ export namespace Components {
         "disabled": boolean;
         "errorClass": string;
         "errorMessage": string;
+        "inputChanges": (event: InputEvent) => void;
         "isError": boolean;
         "label": string;
         "labelClass": string;
@@ -234,10 +235,6 @@ export namespace Components {
         "userId"?: string;
     }
 }
-export interface FormInputCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLFormInputElement;
-}
 declare global {
     interface HTMLContactUsFormElement extends Components.ContactUsForm, HTMLStencilElement {
     }
@@ -269,18 +266,7 @@ declare global {
         prototype: HTMLDynamicRedeemElement;
         new (): HTMLDynamicRedeemElement;
     };
-    interface HTMLFormInputElementEventMap {
-        "inputChanges": any;
-    }
     interface HTMLFormInputElement extends Components.FormInput, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLFormInputElementEventMap>(type: K, listener: (this: HTMLFormInputElement, ev: FormInputCustomEvent<HTMLFormInputElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLFormInputElementEventMap>(type: K, listener: (this: HTMLFormInputElement, ev: FormInputCustomEvent<HTMLFormInputElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLFormInputElement: {
         prototype: HTMLFormInputElement;
@@ -422,11 +408,11 @@ declare namespace LocalJSX {
         "disabled"?: boolean;
         "errorClass"?: string;
         "errorMessage"?: string;
+        "inputChanges"?: (event: InputEvent) => void;
         "isError"?: boolean;
         "label"?: string;
         "labelClass"?: string;
         "name"?: string;
-        "onInputChanges"?: (event: FormInputCustomEvent<any>) => void;
         "placeholder"?: string;
     }
     interface FormStructure {

@@ -20,7 +20,7 @@ export class FormInput implements FormInputInterface {
   @Prop() placeholder: string;
   @Prop() errorMessage: string;
   @Prop() containerClass: string;
-  @Event() inputChanges: (event: InputEvent) => void;
+  @Prop() inputChanges: (event: InputEvent) => void;
 
   render() {
     const { class: inputClass, errorClass, containerClass, disabled, label, isError, labelClass, name, errorMessage, placeholder, inputChanges } = this;
@@ -35,7 +35,7 @@ export class FormInput implements FormInputInterface {
             onInput={inputChanges}
             placeholder={placeholder}
             class={cn(
-              'border disabled:opacity-75 flex-1 py-[6px] px-[12px] transition-all duration-300 rounded-md outline-none focus:border-slate-600 focus:shadow-[0_0_0_0.2rem_rgba(71,85,105,0.25)] w-full',
+              'border mb-0.5 disabled:opacity-75 flex-1 py-[6px] px-[12px] transition-all duration-300 rounded-md outline-none focus:border-slate-600 focus:shadow-[0_0_0_0.2rem_rgba(71,85,105,0.25)] w-full',
               { '!border-red-500 focus:shadow-[0_0_0_0.2rem_rgba(239,68,68,0.25)]': isError },
               inputClass,
             )}
