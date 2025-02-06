@@ -10,7 +10,7 @@ import { PartInformation } from "./global/types/part-information";
 import { DotNetObjectReference, MockJson } from "./global/types/components";
 import { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
 import { FormHook } from "./global/lib/form-hook";
-import { StructureObject } from "./global/types/forms";
+import { FormElementMapper, FormFieldParams, StructureObject } from "./global/types/forms";
 import { ActiveElement } from "./components/part-lookup/part-lookup";
 import { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
@@ -18,7 +18,7 @@ export { PartInformation } from "./global/types/part-information";
 export { DotNetObjectReference, MockJson } from "./global/types/components";
 export { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
 export { FormHook } from "./global/lib/form-hook";
-export { StructureObject } from "./global/types/forms";
+export { FormElementMapper, FormFieldParams, StructureObject } from "./global/types/forms";
 export { ActiveElement } from "./components/part-lookup/part-lookup";
 export { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export namespace Components {
@@ -90,9 +90,12 @@ export namespace Components {
         "label": string;
         "labelClass": string;
         "name": string;
+        "placeholder": string;
     }
     interface FormStructure {
         "form": FormHook<any>;
+        "formElementMapper": FormElementMapper;
+        "formFieldParams": FormFieldParams;
         "isLoading": boolean;
         "language": LanguageKeys;
         "renderControl": {};
@@ -100,6 +103,11 @@ export namespace Components {
     }
     interface FormStructureError {
         "language": LanguageKeys;
+    }
+    interface FormSubmit {
+        "isLoading": boolean;
+        "params": FormFieldParams;
+        "structureElement": StructureObject;
     }
     interface ManufacturerLookup {
         "baseUrl": string;
@@ -262,7 +270,7 @@ declare global {
         new (): HTMLDynamicRedeemElement;
     };
     interface HTMLFormInputElementEventMap {
-        "onInput": any;
+        "inputChanges": any;
     }
     interface HTMLFormInputElement extends Components.FormInput, HTMLStencilElement {
         addEventListener<K extends keyof HTMLFormInputElementEventMap>(type: K, listener: (this: HTMLFormInputElement, ev: FormInputCustomEvent<HTMLFormInputElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -289,6 +297,12 @@ declare global {
     var HTMLFormStructureErrorElement: {
         prototype: HTMLFormStructureErrorElement;
         new (): HTMLFormStructureErrorElement;
+    };
+    interface HTMLFormSubmitElement extends Components.FormSubmit, HTMLStencilElement {
+    }
+    var HTMLFormSubmitElement: {
+        prototype: HTMLFormSubmitElement;
+        new (): HTMLFormSubmitElement;
     };
     interface HTMLManufacturerLookupElement extends Components.ManufacturerLookup, HTMLStencilElement {
     }
@@ -347,6 +361,7 @@ declare global {
         "form-input": HTMLFormInputElement;
         "form-structure": HTMLFormStructureElement;
         "form-structure-error": HTMLFormStructureErrorElement;
+        "form-submit": HTMLFormSubmitElement;
         "manufacturer-lookup": HTMLManufacturerLookupElement;
         "paint-thickness": HTMLPaintThicknessElement;
         "part-lookup": HTMLPartLookupElement;
@@ -411,10 +426,13 @@ declare namespace LocalJSX {
         "label"?: string;
         "labelClass"?: string;
         "name"?: string;
-        "onOnInput"?: (event: FormInputCustomEvent<any>) => void;
+        "onInputChanges"?: (event: FormInputCustomEvent<any>) => void;
+        "placeholder"?: string;
     }
     interface FormStructure {
         "form"?: FormHook<any>;
+        "formElementMapper"?: FormElementMapper;
+        "formFieldParams"?: FormFieldParams;
         "isLoading"?: boolean;
         "language"?: LanguageKeys;
         "renderControl"?: {};
@@ -422,6 +440,11 @@ declare namespace LocalJSX {
     }
     interface FormStructureError {
         "language"?: LanguageKeys;
+    }
+    interface FormSubmit {
+        "isLoading"?: boolean;
+        "params"?: FormFieldParams;
+        "structureElement"?: StructureObject;
     }
     interface ManufacturerLookup {
         "baseUrl"?: string;
@@ -528,6 +551,7 @@ declare namespace LocalJSX {
         "form-input": FormInput;
         "form-structure": FormStructure;
         "form-structure-error": FormStructureError;
+        "form-submit": FormSubmit;
         "manufacturer-lookup": ManufacturerLookup;
         "paint-thickness": PaintThickness;
         "part-lookup": PartLookup;
@@ -550,6 +574,7 @@ declare module "@stencil/core" {
             "form-input": LocalJSX.FormInput & JSXBase.HTMLAttributes<HTMLFormInputElement>;
             "form-structure": LocalJSX.FormStructure & JSXBase.HTMLAttributes<HTMLFormStructureElement>;
             "form-structure-error": LocalJSX.FormStructureError & JSXBase.HTMLAttributes<HTMLFormStructureErrorElement>;
+            "form-submit": LocalJSX.FormSubmit & JSXBase.HTMLAttributes<HTMLFormSubmitElement>;
             "manufacturer-lookup": LocalJSX.ManufacturerLookup & JSXBase.HTMLAttributes<HTMLManufacturerLookupElement>;
             "paint-thickness": LocalJSX.PaintThickness & JSXBase.HTMLAttributes<HTMLPaintThicknessElement>;
             "part-lookup": LocalJSX.PartLookup & JSXBase.HTMLAttributes<HTMLPartLookupElement>;

@@ -1,10 +1,10 @@
-import { Component, Host, Prop, State, Watch, h } from '@stencil/core';
+import { Component, Fragment, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { FormHook } from '~lib/form-hook';
 import { getLocaleLanguage } from '~lib/get-local-language';
 
-import { StructureObject } from '~types/forms';
 import { LanguageKeys, Locale, localeSchema } from '~types/locales';
+import { FieldControllers, FormElementMapper, FormFieldParams, StructureObject } from '~types/forms';
 
 @Component({
   shadow: false,
@@ -16,18 +16,23 @@ export class FormStructure {
   @Prop() renderControl = {};
   @Prop() form: FormHook<any>;
   @Prop() language: LanguageKeys = 'en';
+  @Prop() formFieldParams: FormFieldParams;
+  @Prop() formElementMapper: FormElementMapper;
   @Prop() structureObject: StructureObject = null;
 
+  @State() fieldControllers: FieldControllers;
   @State() locale: Locale = localeSchema.getDefault();
-
-  private nameController;
-  private name2Controller;
 
   async componentWillLoad() {
     await this.changeLanguage(this.language);
 
-    this.nameController = this.form.newController('name', 'text');
-    this.name2Controller = this.form.newController('name2', 'text');
+    const tempFieldContext = {};
+
+    Object.entries(this.formElementMapper).forEach(([key, value]) => {
+      tempFieldContext[key] = this.form.newController(key, value);
+    });
+
+    this.fieldControllers = tempFieldContext;
   }
 
   @Watch('language')
@@ -35,17 +40,45 @@ export class FormStructure {
     this.locale = await getLocaleLanguage(newLanguage);
   }
 
+  private renderLoop(structureElement: StructureObject) {
+    if (structureElement.element === '') return <Fragment>{structureElement.children.map(child => this.renderLoop(child))}</Fragment>;
+
+    if (structureElement.element === 'div')
+      return (
+        <div class={structureElement.class} id={structureElement.id}>
+          {structureElement.children.map(child => this.renderLoop(child))}
+        </div>
+      );
+
+    if (structureElement.element === 'slot') return <slot />;
+
+    if (structureElement.element === 'button')
+      return (
+        <button type="button" id={structureElement.id}>
+          {structureElement.class}
+        </button>
+      );
+
+    const params = this.formFieldParams[structureElement.element] ? this.formFieldParams[structureElement.element] : {};
+
+    if (structureElement.element === 'submit') return <form-submit isLoading={this.isLoading} params={params} structureElement={structureElement} />;
+
+    if (this.fieldControllers[structureElement.element]) {
+      const fieldController = this.fieldControllers[structureElement.element];
+
+      if (fieldController.fieldType === 'text') return <form-input {...fieldController} {...params} />;
+    }
+
+    return false;
+  }
+
   render() {
     const { formController } = this.form;
-
-    console.log(this.nameController);
 
     return (
       <Host>
         <form dir={this.locale.direction} {...formController}>
-          <form-input {...this.nameController} label="Name" name="name"></form-input>
-          <form-input {...this.name2Controller} label="Name2" name="name2"></form-input>
-          <button type="submit">sd</button>
+          {this.renderLoop(this.structureObject)}
         </form>
       </Host>
     );

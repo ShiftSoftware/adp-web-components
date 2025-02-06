@@ -2,9 +2,9 @@ import { InferType, object, string } from 'yup';
 import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { LanguageKeys, Locale, localeSchema } from '~types/locales';
-import { StructureObject } from '~types/forms';
+import { FormElementMapper, FormFieldParams, FormHookInterface, StructureObject } from '~types/forms';
 
-import { FormHook, FormHookInterface } from '~lib/form-hook';
+import { FormHook } from '~lib/form-hook';
 import { isValidStructure } from '~lib/validate-form-structure';
 
 const contactUsSchema = object({
@@ -13,6 +13,21 @@ const contactUsSchema = object({
 });
 
 type ContactUs = InferType<typeof contactUsSchema>;
+
+const formElementMapper: FormElementMapper = {
+  name: 'text',
+  name2: 'text',
+};
+
+const formFieldParams: FormFieldParams = {
+  name: {
+    placeholder: 'askjhd',
+    label: 'kodo',
+  },
+  name2: {
+    label: 'k333333odo',
+  },
+};
 
 @Component({
   shadow: false,
@@ -47,6 +62,10 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
 
   async formSubmit(formValues: ContactUs) {
     console.log(formValues);
+
+    await new Promise(r => setTimeout(r, 10000));
+
+    console.log(99);
   }
 
   render() {
@@ -54,7 +73,14 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
 
     return (
       <Host>
-        <form-structure form={this.form} structureObject={this.structureObject} isLoading={this.isLoading} renderControl={this.renderControl}>
+        <form-structure
+          form={this.form}
+          isLoading={this.isLoading}
+          formFieldParams={formFieldParams}
+          renderControl={this.renderControl}
+          formElementMapper={formElementMapper}
+          structureObject={this.structureObject}
+        >
           <slot></slot>
         </form-structure>
       </Host>

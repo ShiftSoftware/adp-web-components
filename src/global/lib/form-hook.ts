@@ -1,45 +1,5 @@
 import { AnyObjectSchema } from 'yup';
-import { LanguageKeys, Locale } from '~types/locales';
-import { StructureObject } from '~types/forms';
-
-export interface FormInputInterface {
-  name: string;
-  label: string;
-  class: string;
-  isError: boolean;
-  disabled: boolean;
-  labelClass: string;
-  errorClass: string;
-  errorMessage: string;
-  containerClass: string;
-}
-
-export interface FormHookInterface<T> {
-  locale: Locale;
-  el: HTMLElement;
-  structure: string;
-  renderControl: {};
-  isLoading: boolean;
-  language: LanguageKeys;
-  structureObject: StructureObject;
-  formSubmit: (formValues: T) => void;
-}
-
-type FieldType = 'text';
-
-type ValidationType = 'onSubmit' | 'always';
-
-interface Field {
-  name: string;
-  isError: boolean;
-  disabled: boolean;
-  errorMessage: string;
-  onInput: (event: InputEvent) => void;
-}
-
-export interface FormStateOptions {
-  validationType?: ValidationType;
-}
+import { Field, FieldType, FormHookInterface, FormStateOptions, ValidationType } from '~types/forms';
 
 export class FormHook<T> {
   private isSubmitted = false;
@@ -94,7 +54,7 @@ export class FormHook<T> {
       try {
         this.isSubmitted = true;
         this.context.isLoading = true;
-        this.signal({ isError: false });
+        this.signal({ isError: false, disabled: true });
         const formObject = this.getValues();
         const values = await this.schemaObject.validate(formObject, { abortEarly: false, strict: true });
         await this.context.formSubmit(values);
@@ -118,6 +78,7 @@ export class FormHook<T> {
           this.focusFirstInput(errorFields);
         } else console.error('Unexpected Error:', error);
       } finally {
+        this.signal({ disabled: false });
         this.context.isLoading = false;
       }
     })();
@@ -127,10 +88,11 @@ export class FormHook<T> {
     if (fieldType === 'text')
       this.subscribedFields[name] = {
         name,
+        fieldType,
         isError: false,
         disabled: false,
         errorMessage: '',
-        onInput: (event: InputEvent) => {
+        inputChanges: (event: InputEvent) => {
           const value = (event.target as HTMLInputElement).value;
           this.onChanges(name, value);
         },
