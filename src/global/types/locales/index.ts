@@ -1,5 +1,6 @@
 import { InferType, object, string } from 'yup';
 
+import { FormsSchema } from './forms';
 import { errorsSchema } from './error-schema';
 import { partLookupSchema } from './part-lookup';
 import { vehicleLookupSchema } from './vehicle-lookup';
@@ -19,6 +20,7 @@ export const languageMapper = {
 };
 
 export const localeSchema = object({
+  forms: FormsSchema,
   errors: errorsSchema,
   lang: string().required(),
   noData: string().required(),

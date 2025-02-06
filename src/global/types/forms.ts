@@ -4,6 +4,8 @@ export interface FormInputInterface {
   name: string;
   label: string;
   class: string;
+  locale: Locale;
+  language: string;
   isError: boolean;
   disabled: boolean;
   labelClass: string;
@@ -57,4 +59,11 @@ export type StructureArray = (string | StructureArray)[];
 
 export type StructureObject = FormElementStructure | null;
 
-export type FormFieldParams = Record<string, any>;
+export type LocaleFormKeys = 'contactUs';
+
+type Params = {
+  [key: string]: any;
+  formLocaleName: LocaleFormKeys;
+};
+
+export type FormFieldParams = Record<string, Params>;

@@ -66,7 +66,7 @@ export class FormStructure {
     if (this.fieldControllers[structureElement.element]) {
       const fieldController = this.fieldControllers[structureElement.element];
 
-      if (fieldController.fieldType === 'text') return <form-input {...fieldController} {...params} />;
+      if (fieldController.fieldType === 'text') return <form-input language={this.language} {...fieldController} {...params} />;
     }
 
     return false;

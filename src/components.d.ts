@@ -9,16 +9,16 @@ import { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
 import { PartInformation } from "./global/types/part-information";
 import { DotNetObjectReference, MockJson } from "./global/types/components";
 import { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
+import { FormElementMapper, FormFieldParams, LocaleFormKeys, StructureObject } from "./global/types/forms";
 import { FormHook } from "./global/lib/form-hook";
-import { FormElementMapper, FormFieldParams, StructureObject } from "./global/types/forms";
 import { ActiveElement } from "./components/part-lookup/part-lookup";
 import { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
 export { PartInformation } from "./global/types/part-information";
 export { DotNetObjectReference, MockJson } from "./global/types/components";
 export { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
+export { FormElementMapper, FormFieldParams, LocaleFormKeys, StructureObject } from "./global/types/forms";
 export { FormHook } from "./global/lib/form-hook";
-export { FormElementMapper, FormFieldParams, StructureObject } from "./global/types/forms";
 export { ActiveElement } from "./components/part-lookup/part-lookup";
 export { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export namespace Components {
@@ -86,11 +86,13 @@ export namespace Components {
         "disabled": boolean;
         "errorClass": string;
         "errorMessage": string;
+        "formLocaleName": LocaleFormKeys;
         "inputChanges": (event: InputEvent) => void;
         "isError": boolean;
         "isRequired": boolean;
         "label": string;
         "labelClass": string;
+        "language": LanguageKeys;
         "name": string;
         "placeholder": string;
     }
@@ -409,11 +411,13 @@ declare namespace LocalJSX {
         "disabled"?: boolean;
         "errorClass"?: string;
         "errorMessage"?: string;
+        "formLocaleName"?: LocaleFormKeys;
         "inputChanges"?: (event: InputEvent) => void;
         "isError"?: boolean;
         "isRequired"?: boolean;
         "label"?: string;
         "labelClass"?: string;
+        "language"?: LanguageKeys;
         "name"?: string;
         "placeholder"?: string;
     }

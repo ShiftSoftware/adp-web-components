@@ -15,6 +15,14 @@
     "wildCard": "Произошла неожиданная ошибка, пожалуйста, попробуйте еще раз позже.",
     "requestFailedPleaseTryAgainLater": "Запрос не удался, попробуйте еще раз позже"
   },
+  "forms": {
+    "inputValueIsIncorrect": "Значение поля неверно.",
+    "contactUs": {
+      "fullName": "Полное имя",
+      "fullNameIsRequired": "Необходимо указать полное имя.",
+      "fullNameMinimum": "Полное имя должно содержать не менее 3 символов."
+    }
+  },
   "vehicleLookup": {
     "warranty": {
       "authorized": "Авторизованный",

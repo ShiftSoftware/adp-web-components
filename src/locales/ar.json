@@ -15,6 +15,14 @@
     "wildCard": "حدث خطأ غير متوقع، يرجى المحاولة مرة أخرى لاحقًا.",
     "requestFailedPleaseTryAgainLater": "فشل الطلب، يرجى المحاولة مرة أخرى لاحقًا"
   },
+  "forms": {
+    "inputValueIsIncorrect": "قيمة الحقل غير صحيحة.",
+    "contactUs": {
+      "fullName": "الاسم الكامل",
+      "fullNameIsRequired": "الاسم الكامل مطلوب.",
+      "fullNameMinimum": "الاسم الكامل يجب أن يتكون من 3 أحرف أو أكثر."
+    }
+  },
   "vehicleLookup": {
     "warranty": {
       "authorized": "مُصرح به",

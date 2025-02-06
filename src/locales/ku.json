@@ -15,6 +15,14 @@
     "wildCard": "کێشەیەکی چاوەڕواننەکراو ڕویدا تکایە دواتر هەوڵبدەوە.",
     "requestFailedPleaseTryAgainLater": "داواکارییەکە شکستی هێنا تکایە دواتر هەوڵبدەرەوە"
   },
+  "forms": {
+    "inputValueIsIncorrect": "تکایە بەهای باشتر دابین بکەن",
+    "contactUs": {
+      "fullName": "ناوی تەواو",
+      "fullNameIsRequired": "ناوی تەواو پێویستە.",
+      "fullNameMinimum": "ناوی تەواو دەبێت ٣ پیت یان زیاتر بێت."
+    }
+  },
   "vehicleLookup": {
     "warranty": {
       "authorized": "ڕێگەپێدراو",

@@ -14,7 +14,7 @@
     }
 
     .button-container {
-      margin-top: 50px;
+      margin: 50px 0px;
       border: 1px solid #e1e1e1;
       padding: 20px;
       display: flex;
@@ -36,7 +36,6 @@
   <body>
     <a href="#" onclick="history.back()" style="color: blue; display: block; margin-bottom: 16px">Back</a>
     <h1>Contact Us Form</h1>
-    <contact-us-form id="contact-us-form" structure='[["div","name"], "div.d3#s2", "name2", "submit.Submit"]' id="inquiry-form"></contact-us-form>
 
     <div class="button-container">
       <button class="sample-button" onclick="updateLang('en')">En</button>
@@ -44,6 +43,8 @@
       <button class="sample-button" onclick="updateLang('ar')">Ar</button>
       <button class="sample-button" onclick="updateLang('ru')">Ru</button>
     </div>
+
+    <contact-us-form id="contact-us-form" structure='[["div","name"], "div.d3#s2", "name2", "submit.Submit"]' id="inquiry-form"></contact-us-form>
 
     <script>
       let contactUsForm;

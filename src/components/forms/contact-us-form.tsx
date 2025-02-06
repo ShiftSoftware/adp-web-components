@@ -8,24 +8,19 @@ import { FormHook } from '~lib/form-hook';
 import { isValidStructure } from '~lib/validate-form-structure';
 
 const contactUsSchema = object({
-  name2: string().required(),
-  name: string().required('r').min(4, 'kd').max(7, 'kk'),
+  name: string().required('fullNameIsRequired').min(3, 'fullNameMinimum'),
 });
 
 type ContactUs = InferType<typeof contactUsSchema>;
 
 const formElementMapper: FormElementMapper = {
   name: 'text',
-  name2: 'text',
 };
 
 const formFieldParams: FormFieldParams = {
   name: {
-    placeholder: 'askjhd',
-    label: 'kodo',
-  },
-  name2: {
-    label: 'k333333odo',
+    label: 'fullName',
+    formLocaleName: 'contactUs',
   },
 };
 
@@ -75,6 +70,7 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
       <Host>
         <form-structure
           form={this.form}
+          language={this.language}
           isLoading={this.isLoading}
           formFieldParams={formFieldParams}
           renderControl={this.renderControl}
