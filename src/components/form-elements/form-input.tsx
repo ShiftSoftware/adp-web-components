@@ -17,18 +17,24 @@ export class FormInput implements FormInputInterface {
   @Prop() disabled: boolean;
   @Prop() labelClass: string;
   @Prop() errorClass: string;
+  @Prop() isRequired: boolean;
   @Prop() placeholder: string;
   @Prop() errorMessage: string;
   @Prop() containerClass: string;
   @Prop() inputChanges: (event: InputEvent) => void;
 
   render() {
-    const { class: inputClass, errorClass, containerClass, disabled, label, isError, labelClass, name, errorMessage, placeholder, inputChanges } = this;
+    const { class: inputClass, errorClass, containerClass, disabled, label, isError, labelClass, name, errorMessage, placeholder, isRequired, inputChanges } = this;
 
     return (
       <Host>
         <label class={cn('relative w-full pb-[20px] inline-flex flex-col', containerClass)}>
-          {label && <div class={cn('mb-[4px]', labelClass)}>{label}</div>}
+          {label && (
+            <div class={cn('mb-[4px]', labelClass)}>
+              {label}
+              {isRequired && <span class="ms-0.5 text-red-600">*</span>}
+            </div>
+          )}
           <input
             name={name}
             disabled={disabled}

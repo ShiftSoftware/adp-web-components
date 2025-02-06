@@ -8,8 +8,8 @@ import { FormHook } from '~lib/form-hook';
 import { isValidStructure } from '~lib/validate-form-structure';
 
 const contactUsSchema = object({
-  name: string().required('r').min(4, 'kd').max(7, 'kk'),
   name2: string().required(),
+  name: string().required('r').min(4, 'kd').max(7, 'kk'),
 });
 
 type ContactUs = InferType<typeof contactUsSchema>;

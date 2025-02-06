@@ -8,6 +8,7 @@ export interface FormInputInterface {
   disabled: boolean;
   labelClass: string;
   errorClass: string;
+  isRequired: boolean;
   errorMessage: string;
   containerClass: string;
 }
@@ -33,6 +34,7 @@ export interface Field {
   name: string;
   isError: boolean;
   disabled: boolean;
+  isRequired: boolean;
   fieldType: FieldType;
   errorMessage: string;
   inputChanges: (event: InputEvent) => void;

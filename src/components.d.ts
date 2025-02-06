@@ -88,6 +88,7 @@ export namespace Components {
         "errorMessage": string;
         "inputChanges": (event: InputEvent) => void;
         "isError": boolean;
+        "isRequired": boolean;
         "label": string;
         "labelClass": string;
         "name": string;
@@ -410,6 +411,7 @@ declare namespace LocalJSX {
         "errorMessage"?: string;
         "inputChanges"?: (event: InputEvent) => void;
         "isError"?: boolean;
+        "isRequired"?: boolean;
         "label"?: string;
         "labelClass"?: string;
         "name"?: string;

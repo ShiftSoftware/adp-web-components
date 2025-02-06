@@ -1,4 +1,4 @@
-import { AnyObjectSchema } from 'yup';
+import { AnyObjectSchema, SchemaDescription } from 'yup';
 import { Field, FieldType, FormHookInterface, FormStateOptions, ValidationType } from '~types/forms';
 
 export class FormHook<T> {
@@ -85,6 +85,8 @@ export class FormHook<T> {
   };
 
   newController = (name: string, fieldType: FieldType) => {
+    const validationDescription = this.schemaObject.describe().fields[name] as SchemaDescription;
+
     if (fieldType === 'text')
       this.subscribedFields[name] = {
         name,
@@ -92,6 +94,7 @@ export class FormHook<T> {
         isError: false,
         disabled: false,
         errorMessage: '',
+        isRequired: validationDescription?.tests.some(test => test.name === 'required'),
         inputChanges: (event: InputEvent) => {
           const value = (event.target as HTMLInputElement).value;
           this.onChanges(name, value);
