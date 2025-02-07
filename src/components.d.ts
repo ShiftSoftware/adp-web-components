@@ -97,6 +97,7 @@ export namespace Components {
         "language": LanguageKeys;
         "name": string;
         "placeholder": string;
+        "preFix": string;
         "type": string;
     }
     interface FormSelect {
@@ -445,6 +446,7 @@ declare namespace LocalJSX {
         "language"?: LanguageKeys;
         "name"?: string;
         "placeholder"?: string;
+        "preFix"?: string;
         "type"?: string;
     }
     interface FormSelect {

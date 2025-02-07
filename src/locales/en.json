@@ -28,7 +28,10 @@
       "emailAddress": "Email Address",
       "emailAddressNotValid": "Please enter a valid email address.",
       "city": "City",
-      "selectCity": "Select a city."
+      "selectCity": "Select a city.",
+      "phoneNumber": "Phone Number",
+      "phoneNumberIsRequired": "Phone Number is Required.",
+      "phoneNumberFormatInvalid": "Phone Number format is invalid."
     }
   },
   "vehicleLookup": {

@@ -12,6 +12,11 @@ const contactUsSchema = object({
   cityId: string().required(),
   email: string().email('emailAddressNotValid'),
   name: string().required('fullNameIsRequired').min(3, 'fullNameMinimum'),
+  phone: string()
+    .required('phoneNumberIsRequired')
+    .transform(value => value.replace(/^0/, ''))
+    .matches(/^\d+$/, 'phoneNumberFormatInvalid')
+    .length(10, 'phoneNumberFormatInvalid'),
 });
 
 type ContactUs = InferType<typeof contactUsSchema>;
@@ -19,6 +24,7 @@ type ContactUs = InferType<typeof contactUsSchema>;
 const formElementMapper: FormElementMapper = {
   name: 'text',
   email: 'text',
+  phone: 'number',
   cityId: 'select',
 };
 
@@ -32,6 +38,7 @@ const formFieldParams: FormFieldParams = {
     label: 'emailAddress',
     formLocaleName: 'contactUs',
   },
+  phone: { preFix: '+964', type: 'number', label: 'phoneNumber', formLocaleName: 'contactUs' },
   cityId: {
     label: 'city',
     fetcher: async (language: LanguageKeys, signal: AbortSignal): Promise<FormSelectItem[]> => {

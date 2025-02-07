@@ -46,7 +46,7 @@ export type FormInputChanges = (event: InputEvent | string) => void;
 
 export type FormSelectFetcher = (language: string, signal: AbortSignal) => FormSelectItem[];
 
-export type FieldType = 'text' | 'select';
+export type FieldType = 'text' | 'select' | 'number';
 
 export type FormElementMapper = Record<string, FieldType>;
 

@@ -56,7 +56,7 @@ export class FormHook<T> {
         this.context.isLoading = true;
         this.signal({ isError: false, disabled: true });
         const formObject = this.getValues();
-        const values = await this.schemaObject.validate(formObject, { abortEarly: false, strict: true });
+        const values = await this.schemaObject.validate(formObject, { abortEarly: false });
         await this.context.formSubmit(values);
       } catch (error) {
         if (error.name === 'ValidationError') {
@@ -87,28 +87,26 @@ export class FormHook<T> {
   newController = (name: string, fieldType: FieldType) => {
     const validationDescription = this.schemaObject.describe().fields[name] as SchemaDescription;
 
-    if (fieldType === 'text')
+    const sharedFields = {
+      name,
+      fieldType,
+      isError: false,
+      disabled: false,
+      errorMessage: '',
+      isRequired: validationDescription?.tests.some(test => test.name === 'required'),
+    };
+
+    if (fieldType === 'text' || fieldType === 'number')
       this.subscribedFields[name] = {
-        name,
-        fieldType,
-        isError: false,
-        disabled: false,
-        errorMessage: '',
-        isRequired: validationDescription?.tests.some(test => test.name === 'required'),
+        ...sharedFields,
         inputChanges: (event: InputEvent) => {
           const value = (event.target as HTMLInputElement).value;
           this.onChanges(name, value);
         },
       };
-
-    if (fieldType === 'select')
+    else if (fieldType === 'select')
       this.subscribedFields[name] = {
-        name,
-        fieldType,
-        isError: false,
-        disabled: false,
-        errorMessage: '',
-        isRequired: validationDescription?.tests.some(test => test.name === 'required'),
+        ...sharedFields,
         inputChanges: (value: string) => {
           this.onChanges(name, value);
         },

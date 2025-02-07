@@ -8,4 +8,7 @@ export const contactUsSchema = object({
   emailAddressNotValid: string().required(),
   city: string().required(),
   selectCity: string().required(),
+  phoneNumber: string().required(),
+  phoneNumberIsRequired: string().required(),
+  phoneNumberFormatInvalid: string().required(),
 });

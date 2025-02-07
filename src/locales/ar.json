@@ -28,7 +28,10 @@
       "emailAddress": "البريد الإلكتروني",
       "emailAddressNotValid": "يرجى إدخال عنوان بريد إلكتروني صالح.",
       "city": "مدينة",
-      "selectCity": "اختر مدينة."
+      "selectCity": "اختر مدينة.",
+      "phoneNumber": "رقم الهاتف",
+      "phoneNumberIsRequired": "رقم الهاتف مطلوب.",
+      "phoneNumberFormatInvalid": "تنسيق رقم الهاتف غير صالح."
     }
   },
   "vehicleLookup": {

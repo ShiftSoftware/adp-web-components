@@ -28,7 +28,10 @@
       "emailAddress": "ناونیشانی ئیمەیڵ",
       "emailAddressNotValid": "تکایە ناونیشانی ئیمەیڵێکی دروست دابنێ.",
       "city": "شار",
-      "selectCity": "شارێک هەڵبژێرە."
+      "selectCity": "شارێک هەڵبژێرە.",
+      "phoneNumber": "ژمارەی مۆبایل",
+      "phoneNumberIsRequired": "ژمارەی مۆبایل پێویستە.",
+      "phoneNumberFormatInvalid": "فۆرماتی ژمارەی تەلەفۆن نادروستە."
     }
   },
   "vehicleLookup": {

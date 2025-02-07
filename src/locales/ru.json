@@ -28,7 +28,10 @@
       "emailAddress": "Адрес электронной почты",
       "emailAddressNotValid": "Пожалуйста, введите действительный адрес электронной почты.",
       "city": "город",
-      "selectCity": "Выберите город."
+      "selectCity": "Выберите город.",
+      "phoneNumber": "Номер телефона",
+      "phoneNumberIsRequired": "Номер телефона обязателен.",
+      "phoneNumberFormatInvalid": "Неверный формат номера телефона."
     }
   },
   "vehicleLookup": {
