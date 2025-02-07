@@ -19,7 +19,6 @@ export class FormSelect implements FormSelectInterface {
   @Prop() label: string;
   @Prop() isError: boolean;
   @Prop() disabled: boolean;
-  @Prop() isLoading: boolean;
   @Prop() isRequired: boolean;
   @Prop() formLocaleName: string;
   @Prop() fetcher: FormSelectFetcher;
@@ -27,6 +26,7 @@ export class FormSelect implements FormSelectInterface {
   @Prop() inputChanges: FormInputChanges;
   @Prop() placeholder: string = 'Select an option';
 
+  @State() isLoading: boolean;
   @State() isOpen: boolean = false;
   @State() selectedValue: string = '';
   @State() openUpwards: boolean = false;
@@ -38,16 +38,15 @@ export class FormSelect implements FormSelectInterface {
   private abortController: AbortController;
 
   @Watch('language')
-  async changeLanguage(newLanguage: LanguageKeys, skipFetch = false) {
+  async changeLanguage(newLanguage: LanguageKeys) {
     this.locale = await getLocaleLanguage(newLanguage);
-
-    if (!skipFetch || typeof skipFetch === 'string') this.fetch();
+    this.fetch();
   }
 
   dropdownRef!: HTMLElement;
 
   async componentWillLoad() {
-    await this.changeLanguage(this.language, true);
+    await this.changeLanguage(this.language);
   }
 
   toggleDropdown = () => {
@@ -121,7 +120,6 @@ export class FormSelect implements FormSelectInterface {
   async componentDidLoad() {
     document.addEventListener('click', this.closeDropdown);
     document.addEventListener('keydown', this.handleKeyDown.bind(this));
-    this.fetch();
   }
 
   async disconnectedCallback() {

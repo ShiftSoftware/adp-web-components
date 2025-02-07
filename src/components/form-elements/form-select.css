@@ -6,3 +6,8 @@
 * {
   font-family: Arial;
 }
+
+.rtl-form-input::placeholder {
+  direction: rtl;
+  text-align: right;
+}

@@ -90,6 +90,7 @@ export namespace Components {
         "errorMessage": string;
         "formLocaleName": LocaleFormKeys;
         "inputChanges": FormInputChanges;
+        "inputPreFix": string;
         "isError": boolean;
         "isRequired": boolean;
         "label": string;
@@ -97,7 +98,6 @@ export namespace Components {
         "language": LanguageKeys;
         "name": string;
         "placeholder": string;
-        "preFix": string;
         "type": string;
     }
     interface FormSelect {
@@ -106,7 +106,6 @@ export namespace Components {
         "formLocaleName": string;
         "inputChanges": FormInputChanges;
         "isError": boolean;
-        "isLoading": boolean;
         "isRequired": boolean;
         "label": string;
         "language": LanguageKeys;
@@ -439,6 +438,7 @@ declare namespace LocalJSX {
         "errorMessage"?: string;
         "formLocaleName"?: LocaleFormKeys;
         "inputChanges"?: FormInputChanges;
+        "inputPreFix"?: string;
         "isError"?: boolean;
         "isRequired"?: boolean;
         "label"?: string;
@@ -446,7 +446,6 @@ declare namespace LocalJSX {
         "language"?: LanguageKeys;
         "name"?: string;
         "placeholder"?: string;
-        "preFix"?: string;
         "type"?: string;
     }
     interface FormSelect {
@@ -455,7 +454,6 @@ declare namespace LocalJSX {
         "formLocaleName"?: string;
         "inputChanges"?: FormInputChanges;
         "isError"?: boolean;
-        "isLoading"?: boolean;
         "isRequired"?: boolean;
         "label"?: string;
         "language"?: LanguageKeys;

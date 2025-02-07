@@ -16,11 +16,11 @@ export class FormInput implements FormInputInterface {
   @Prop() type: string;
   @Prop() label: string;
   @Prop() class: string;
-  @Prop() preFix: string;
   @Prop() isError: boolean;
   @Prop() disabled: boolean;
   @Prop() labelClass: string;
   @Prop() errorClass: string;
+  @Prop() inputPreFix: string;
   @Prop() isRequired: boolean;
   @Prop() placeholder: string;
   @Prop() errorMessage: string;
@@ -60,18 +60,18 @@ export class FormInput implements FormInputInterface {
               {isRequired && <span class="ms-0.5 text-red-600">*</span>}
             </div>
           )}
-          <div class={cn('relative', { 'opacity-75': disabled })}>
-            {this.preFix && <div class="prefix absolute h-[38px] px-2 left-0 top-0 pointer-events-none items-center justify-center flex">{this.preFix}</div>}
+          <div dir="ltr" class={cn('relative', { 'opacity-75': disabled })}>
+            {this.inputPreFix && <div class="prefix absolute h-[38px] px-2 left-0 top-0 pointer-events-none items-center justify-center flex">{this.inputPreFix}</div>}
             <input
               name={name}
               type={type}
               disabled={disabled}
               onInput={inputChanges}
-              style={{ ...(prefixWidth ? { paddingInlineStart: `${prefixWidth}px` } : {}) }}
+              style={{ ...(prefixWidth ? { paddingLeft: `${prefixWidth}px` } : {}) }}
               placeholder={texts[placeholder] || texts[label] || placeholder || label}
               class={cn(
-                'border mb-[4px] disabled:bg-white flex-1 py-[6px] px-[12px] transition-all duration-300 rounded-md outline-none focus:border-slate-600 focus:shadow-[0_0_0_0.2rem_rgba(71,85,105,0.25)] w-full',
-                { '!border-red-500 focus:shadow-[0_0_0_0.2rem_rgba(239,68,68,0.25)]': isError },
+                'border form-input mb-[4px] disabled:bg-white flex-1 py-[6px] px-[12px] transition-all duration-300 rounded-md outline-none focus:border-slate-600 focus:shadow-[0_0_0_0.2rem_rgba(71,85,105,0.25)] w-full',
+                { '!border-red-500 focus:shadow-[0_0_0_0.2rem_rgba(239,68,68,0.25)]': isError, 'rtl-form-input': this.locale.direction === 'rtl' },
                 inputClass,
               )}
             />

@@ -38,7 +38,7 @@ const formFieldParams: FormFieldParams = {
     label: 'emailAddress',
     formLocaleName: 'contactUs',
   },
-  phone: { preFix: '+964', type: 'number', label: 'phoneNumber', formLocaleName: 'contactUs' },
+  phone: { inputPreFix: '+964', type: 'number', label: 'phoneNumber', formLocaleName: 'contactUs' },
   cityId: {
     label: 'city',
     fetcher: async (language: LanguageKeys, signal: AbortSignal): Promise<FormSelectItem[]> => {
