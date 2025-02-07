@@ -3,6 +3,9 @@
   "direction": "ltr",
   "language": "english",
   "noData": "No data is available.",
+  "general": {
+    "noSelectOptions": "There is no options."
+  },
   "errors": {
     "invalidVin": "Invalid VIN",
     "noPartsFound": "No parts found",
@@ -23,7 +26,9 @@
       "fullNameIsRequired": "Full Name is required.",
       "fullNameMinimum": "Full Name must be 3 characters or more.",
       "emailAddress": "Email Address",
-      "emailAddressNotValid": "Please enter a valid email address."
+      "emailAddressNotValid": "Please enter a valid email address.",
+      "city": "City",
+      "selectCity": "Select a city."
     }
   },
   "vehicleLookup": {

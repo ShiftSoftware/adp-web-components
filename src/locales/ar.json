@@ -3,6 +3,9 @@
   "direction": "rtl",
   "language": "arabic",
   "noData": "لا توجد بيانات متاحة.",
+  "general": {
+    "noSelectOptions": "لا يوجد خيارات."
+  },
   "errors": {
     "noBaseUrl": "من فضلك قدم base-url",
     "invalidVin": "رقم الشانسی غير صالح",
@@ -23,7 +26,9 @@
       "fullNameIsRequired": "الاسم الكامل مطلوب.",
       "fullNameMinimum": "الاسم الكامل يجب أن يتكون من 3 أحرف أو أكثر.",
       "emailAddress": "البريد الإلكتروني",
-      "emailAddressNotValid": "يرجى إدخال عنوان بريد إلكتروني صالح."
+      "emailAddressNotValid": "يرجى إدخال عنوان بريد إلكتروني صالح.",
+      "city": "مدينة",
+      "selectCity": "اختر مدينة."
     }
   },
   "vehicleLookup": {

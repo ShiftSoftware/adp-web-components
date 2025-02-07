@@ -2,12 +2,14 @@ import { InferType, object, string } from 'yup';
 import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { LanguageKeys, Locale, localeSchema } from '~types/locales';
-import { FormElementMapper, FormFieldParams, FormHookInterface, StructureObject } from '~types/forms';
+import { FormElementMapper, FormFieldParams, FormHookInterface, FormSelectItem, StructureObject } from '~types/forms';
 
 import { FormHook } from '~lib/form-hook';
 import { isValidStructure } from '~lib/validate-form-structure';
+import { CITY_ENDPOINT } from '~api/urls';
 
 const contactUsSchema = object({
+  cityId: string().required(),
   email: string().email('emailAddressNotValid'),
   name: string().required('fullNameIsRequired').min(3, 'fullNameMinimum'),
 });
@@ -17,6 +19,7 @@ type ContactUs = InferType<typeof contactUsSchema>;
 const formElementMapper: FormElementMapper = {
   name: 'text',
   email: 'text',
+  cityId: 'select',
 };
 
 const formFieldParams: FormFieldParams = {
@@ -29,6 +32,20 @@ const formFieldParams: FormFieldParams = {
     label: 'emailAddress',
     formLocaleName: 'contactUs',
   },
+  cityId: {
+    label: 'city',
+    fetcher: async (language: LanguageKeys, signal: AbortSignal): Promise<FormSelectItem[]> => {
+      const response = await fetch(CITY_ENDPOINT, { signal, headers: { 'Accept-Language': language } });
+
+      const arrayRes = (await response.json()) as { Name: string; ID: string; IntegrationId: string }[];
+
+      const selectItems = arrayRes.map(item => ({ label: item.Name, value: item.ID })) as FormSelectItem[];
+
+      return selectItems;
+    },
+    placeholder: 'selectCity',
+    formLocaleName: 'contactUs',
+  },
 };
 
 @Component({
@@ -37,6 +54,8 @@ const formFieldParams: FormFieldParams = {
   styleUrl: 'contact-us-form.css',
 })
 export class ContactUsForm implements FormHookInterface<ContactUs> {
+  @Prop() baseUrl: string;
+  @Prop() queryString: string;
   @Prop() structure: string = '[]';
   @Prop() language: LanguageKeys = 'en';
 

@@ -12,8 +12,8 @@ import { FieldControllers, FormElementMapper, FormFieldParams, StructureObject }
   styleUrl: 'form-structure.css',
 })
 export class FormStructure {
-  @Prop() isLoading: boolean;
   @Prop() renderControl = {};
+  @Prop() isLoading: boolean;
   @Prop() form: FormHook<any>;
   @Prop() language: LanguageKeys = 'en';
   @Prop() formFieldParams: FormFieldParams;
@@ -67,6 +67,8 @@ export class FormStructure {
       const fieldController = this.fieldControllers[structureElement.element];
 
       if (fieldController.fieldType === 'text') return <form-input language={this.language} {...fieldController} {...params} />;
+
+      if (fieldController.fieldType === 'select') return <form-select language={this.language} {...fieldController} {...params} />;
     }
 
     return false;

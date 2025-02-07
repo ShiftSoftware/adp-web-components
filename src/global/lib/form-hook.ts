@@ -34,7 +34,7 @@ export class FormHook<T> {
     if (errorFields.length) {
       const formDom = this.context.el.shadowRoot || this.context.el;
 
-      const domElements = errorFields.map(field => formDom.querySelector(`input[name="${field.name}"]`)).filter(dom => dom) as HTMLInputElement[];
+      const domElements = errorFields.map(field => formDom.querySelector(`*[name="${field.name}"]`)).filter(dom => dom) as HTMLInputElement[];
 
       const sortedDomElements = domElements.sort((a, b) => {
         if (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) return -1; // a comes before b
@@ -97,6 +97,19 @@ export class FormHook<T> {
         isRequired: validationDescription?.tests.some(test => test.name === 'required'),
         inputChanges: (event: InputEvent) => {
           const value = (event.target as HTMLInputElement).value;
+          this.onChanges(name, value);
+        },
+      };
+
+    if (fieldType === 'select')
+      this.subscribedFields[name] = {
+        name,
+        fieldType,
+        isError: false,
+        disabled: false,
+        errorMessage: '',
+        isRequired: validationDescription?.tests.some(test => test.name === 'required'),
+        inputChanges: (value: string) => {
           this.onChanges(name, value);
         },
       };

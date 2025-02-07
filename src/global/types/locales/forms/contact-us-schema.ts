@@ -6,4 +6,6 @@ export const contactUsSchema = object({
   fullNameIsRequired: string().required(),
   emailAddress: string().required(),
   emailAddressNotValid: string().required(),
+  city: string().required(),
+  selectCity: string().required(),
 });

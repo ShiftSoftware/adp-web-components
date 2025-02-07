@@ -3,6 +3,9 @@
   "direction": "rtl",
   "language": "kurdish",
   "noData": "هیچ داتایەک لەبەردەستدا نییە.",
+  "general": {
+    "noSelectOptions": "هیچ بژاردەیەک نییە."
+  },
   "errors": {
     "invalidVin": "ژمارەی شانسی نادروستە",
     "noBaseUrl": "تکایە base-url دابین بکە",
@@ -23,7 +26,9 @@
       "fullNameIsRequired": "ناوی تەواو پێویستە.",
       "fullNameMinimum": "ناوی تەواو دەبێت ٣ پیت یان زیاتر بێت.",
       "emailAddress": "ناونیشانی ئیمەیڵ",
-      "emailAddressNotValid": "تکایە ناونیشانی ئیمەیڵێکی دروست دابنێ."
+      "emailAddressNotValid": "تکایە ناونیشانی ئیمەیڵێکی دروست دابنێ.",
+      "city": "شار",
+      "selectCity": "شارێک هەڵبژێرە."
     }
   },
   "vehicleLookup": {

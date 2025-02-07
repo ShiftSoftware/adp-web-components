@@ -9,7 +9,7 @@ import { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
 import { PartInformation } from "./global/types/part-information";
 import { DotNetObjectReference, MockJson } from "./global/types/components";
 import { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
-import { FormElementMapper, FormFieldParams, LocaleFormKeys, StructureObject } from "./global/types/forms";
+import { FormElementMapper, FormFieldParams, FormInputChanges, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
 import { FormHook } from "./global/lib/form-hook";
 import { ActiveElement } from "./components/part-lookup/part-lookup";
 import { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
@@ -17,13 +17,15 @@ export { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
 export { PartInformation } from "./global/types/part-information";
 export { DotNetObjectReference, MockJson } from "./global/types/components";
 export { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
-export { FormElementMapper, FormFieldParams, LocaleFormKeys, StructureObject } from "./global/types/forms";
+export { FormElementMapper, FormFieldParams, FormInputChanges, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
 export { FormHook } from "./global/lib/form-hook";
 export { ActiveElement } from "./components/part-lookup/part-lookup";
 export { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export namespace Components {
     interface ContactUsForm {
+        "baseUrl": string;
         "language": LanguageKeys;
+        "queryString": string;
         "structure": string;
     }
     interface DeadStockLookup {
@@ -87,7 +89,7 @@ export namespace Components {
         "errorClass": string;
         "errorMessage": string;
         "formLocaleName": LocaleFormKeys;
-        "inputChanges": (event: InputEvent) => void;
+        "inputChanges": FormInputChanges;
         "isError": boolean;
         "isRequired": boolean;
         "label": string;
@@ -96,6 +98,19 @@ export namespace Components {
         "name": string;
         "placeholder": string;
         "type": string;
+    }
+    interface FormSelect {
+        "disabled": boolean;
+        "fetcher": FormSelectFetcher;
+        "formLocaleName": string;
+        "inputChanges": FormInputChanges;
+        "isError": boolean;
+        "isLoading": boolean;
+        "isRequired": boolean;
+        "label": string;
+        "language": LanguageKeys;
+        "name": string;
+        "placeholder": string;
     }
     interface FormStructure {
         "form": FormHook<any>;
@@ -276,6 +291,12 @@ declare global {
         prototype: HTMLFormInputElement;
         new (): HTMLFormInputElement;
     };
+    interface HTMLFormSelectElement extends Components.FormSelect, HTMLStencilElement {
+    }
+    var HTMLFormSelectElement: {
+        prototype: HTMLFormSelectElement;
+        new (): HTMLFormSelectElement;
+    };
     interface HTMLFormStructureElement extends Components.FormStructure, HTMLStencilElement {
     }
     var HTMLFormStructureElement: {
@@ -349,6 +370,7 @@ declare global {
         "dynamic-claim": HTMLDynamicClaimElement;
         "dynamic-redeem": HTMLDynamicRedeemElement;
         "form-input": HTMLFormInputElement;
+        "form-select": HTMLFormSelectElement;
         "form-structure": HTMLFormStructureElement;
         "form-structure-error": HTMLFormStructureErrorElement;
         "form-submit": HTMLFormSubmitElement;
@@ -364,7 +386,9 @@ declare global {
 }
 declare namespace LocalJSX {
     interface ContactUsForm {
+        "baseUrl"?: string;
         "language"?: LanguageKeys;
+        "queryString"?: string;
         "structure"?: string;
     }
     interface DeadStockLookup {
@@ -413,7 +437,7 @@ declare namespace LocalJSX {
         "errorClass"?: string;
         "errorMessage"?: string;
         "formLocaleName"?: LocaleFormKeys;
-        "inputChanges"?: (event: InputEvent) => void;
+        "inputChanges"?: FormInputChanges;
         "isError"?: boolean;
         "isRequired"?: boolean;
         "label"?: string;
@@ -422,6 +446,19 @@ declare namespace LocalJSX {
         "name"?: string;
         "placeholder"?: string;
         "type"?: string;
+    }
+    interface FormSelect {
+        "disabled"?: boolean;
+        "fetcher"?: FormSelectFetcher;
+        "formLocaleName"?: string;
+        "inputChanges"?: FormInputChanges;
+        "isError"?: boolean;
+        "isLoading"?: boolean;
+        "isRequired"?: boolean;
+        "label"?: string;
+        "language"?: LanguageKeys;
+        "name"?: string;
+        "placeholder"?: string;
     }
     interface FormStructure {
         "form"?: FormHook<any>;
@@ -543,6 +580,7 @@ declare namespace LocalJSX {
         "dynamic-claim": DynamicClaim;
         "dynamic-redeem": DynamicRedeem;
         "form-input": FormInput;
+        "form-select": FormSelect;
         "form-structure": FormStructure;
         "form-structure-error": FormStructureError;
         "form-submit": FormSubmit;
@@ -566,6 +604,7 @@ declare module "@stencil/core" {
             "dynamic-claim": LocalJSX.DynamicClaim & JSXBase.HTMLAttributes<HTMLDynamicClaimElement>;
             "dynamic-redeem": LocalJSX.DynamicRedeem & JSXBase.HTMLAttributes<HTMLDynamicRedeemElement>;
             "form-input": LocalJSX.FormInput & JSXBase.HTMLAttributes<HTMLFormInputElement>;
+            "form-select": LocalJSX.FormSelect & JSXBase.HTMLAttributes<HTMLFormSelectElement>;
             "form-structure": LocalJSX.FormStructure & JSXBase.HTMLAttributes<HTMLFormStructureElement>;
             "form-structure-error": LocalJSX.FormStructureError & JSXBase.HTMLAttributes<HTMLFormStructureErrorElement>;
             "form-submit": LocalJSX.FormSubmit & JSXBase.HTMLAttributes<HTMLFormSubmitElement>;

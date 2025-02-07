@@ -3,6 +3,9 @@
   "direction": "ltr",
   "language": "русский",
   "noData": "Данных нет.",
+  "general": {
+    "noSelectOptions": "Вариантов нет."
+  },
   "errors": {
     "noBaseUrl": "Укажите базовый URL",
     "noPartsFound": "Детали не найдены",
@@ -23,7 +26,9 @@
       "fullNameIsRequired": "Необходимо указать полное имя.",
       "fullNameMinimum": "Полное имя должно содержать не менее 3 символов.",
       "emailAddress": "Адрес электронной почты",
-      "emailAddressNotValid": "Пожалуйста, введите действительный адрес электронной почты."
+      "emailAddressNotValid": "Пожалуйста, введите действительный адрес электронной почты.",
+      "city": "город",
+      "selectCity": "Выберите город."
     }
   },
   "vehicleLookup": {

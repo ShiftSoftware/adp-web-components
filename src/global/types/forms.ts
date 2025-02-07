@@ -12,7 +12,18 @@ export interface FormInputInterface {
   errorClass: string;
   isRequired: boolean;
   errorMessage: string;
+  formLocaleName: string;
   containerClass: string;
+}
+
+export interface FormSelectInterface {
+  name: string;
+  locale: Locale;
+  language: string;
+  isError: boolean;
+  disabled: boolean;
+  isRequired: boolean;
+  formLocaleName: string;
 }
 
 export interface FormHookInterface<T> {
@@ -26,7 +37,16 @@ export interface FormHookInterface<T> {
   formSubmit: (formValues: T) => void;
 }
 
-export type FieldType = 'text';
+export type FormSelectItem = {
+  value: string;
+  label: string;
+};
+
+export type FormInputChanges = (event: InputEvent | string) => void;
+
+export type FormSelectFetcher = (language: string, signal: AbortSignal) => FormSelectItem[];
+
+export type FieldType = 'text' | 'select';
 
 export type FormElementMapper = Record<string, FieldType>;
 
@@ -39,7 +59,7 @@ export interface Field {
   isRequired: boolean;
   fieldType: FieldType;
   errorMessage: string;
-  inputChanges: (event: InputEvent) => void;
+  inputChanges: FormInputChanges;
 }
 
 export type FieldControllers = Record<string, Field>;
