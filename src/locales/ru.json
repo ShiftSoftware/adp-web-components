@@ -45,7 +45,10 @@
       "phoneNumberFormatInvalid": "Неверный формат номера телефона.",
       "inquiryType": "Тип запроса",
       "selectInquiryType": "Выберите тип запроса",
-      "inquiryTypeIsRequired": "Требуется указать тип запроса."
+      "inquiryTypeIsRequired": "Требуется указать тип запроса.",
+      "writeAMessage": "Написать сообщение",
+      "leaveUsMessage": "Оставьте нам сообщение",
+      "messageIsRequired": "Сообщение обязательно."
     }
   },
   "vehicleLookup": {

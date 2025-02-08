@@ -1,31 +1,5 @@
 import { LanguageKeys, Locale } from '~types/locales';
 
-export interface FormInputInterface {
-  name: string;
-  label: string;
-  class: string;
-  locale: Locale;
-  language: string;
-  isError: boolean;
-  disabled: boolean;
-  labelClass: string;
-  errorClass: string;
-  isRequired: boolean;
-  errorMessage: string;
-  formLocaleName: string;
-  containerClass: string;
-}
-
-export interface FormSelectInterface {
-  name: string;
-  locale: Locale;
-  language: string;
-  isError: boolean;
-  disabled: boolean;
-  isRequired: boolean;
-  formLocaleName: string;
-}
-
 export interface FormHookInterface<T> {
   locale: Locale;
   el: HTMLElement;
@@ -46,7 +20,7 @@ export type FormInputChanges = (event: InputEvent | string) => void;
 
 export type FormSelectFetcher = (language: string, signal: AbortSignal) => FormSelectItem[];
 
-export type FieldType = 'text' | 'select' | 'number';
+export type FieldType = 'text' | 'select' | 'number' | 'text-area';
 
 export type FormElementMapper = Record<string, FieldType>;
 

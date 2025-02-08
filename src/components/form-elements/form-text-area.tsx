@@ -8,19 +8,17 @@ import { FormInputChanges, LocaleFormKeys } from '~types/forms';
 
 @Component({
   shadow: false,
-  tag: 'form-input',
-  styleUrl: 'form-input.css',
+  tag: 'form-text-area',
+  styleUrl: 'form-text-area.css',
 })
-export class FormInput {
+export class FormTextArea {
   @Prop() name: string;
-  @Prop() type: string;
   @Prop() label: string;
   @Prop() class: string;
   @Prop() isError: boolean;
   @Prop() disabled: boolean;
   @Prop() labelClass: string;
   @Prop() errorClass: string;
-  @Prop() inputPreFix: string;
   @Prop() isRequired: boolean;
   @Prop() placeholder: string;
   @Prop() errorMessage: string;
@@ -43,7 +41,7 @@ export class FormInput {
   }
 
   render() {
-    const { class: inputClass, type, errorClass, containerClass, disabled, label, isError, labelClass, name, errorMessage, placeholder, isRequired, inputChanges } = this;
+    const { class: inputClass, errorClass, containerClass, disabled, label, isError, labelClass, name, errorMessage, placeholder, isRequired, inputChanges } = this;
 
     const prefix = this.el.getElementsByClassName('prefix')[0];
 
@@ -60,23 +58,21 @@ export class FormInput {
               {isRequired && <span class="ms-0.5 text-red-600">*</span>}
             </div>
           )}
-          <div dir={type === 'number' ? 'ltr' : this.locale.direction} class={cn('relative', { 'opacity-75': disabled })}>
-            {this.inputPreFix && <div class="prefix absolute h-[38px] px-2 left-0 top-0 pointer-events-none items-center justify-center flex">{this.inputPreFix}</div>}
-            <input
+          <div class={cn('relative', { 'opacity-75': disabled })}>
+            <textarea
               name={name}
-              type={type}
               disabled={disabled}
               onInput={inputChanges}
               style={{ ...(prefixWidth ? { paddingLeft: `${prefixWidth}px` } : {}) }}
               placeholder={texts[placeholder] || texts[label] || placeholder || label}
               class={cn(
-                'border form-input mb-[4px] disabled:bg-white flex-1 py-[6px] px-[12px] transition duration-300 rounded-md outline-none focus:border-slate-600 focus:shadow-[0_0_0_0.2rem_rgba(71,85,105,0.25)] w-full',
-                { '!border-red-500 focus:shadow-[0_0_0_0.2rem_rgba(239,68,68,0.25)]': isError, 'rtl-form-input': this.locale.direction === 'rtl' && type === 'number' },
+                'border h-[200px] form-input resize-none mb-[4px] disabled:bg-white flex-1 py-[6px] px-[12px] transition duration-300 rounded-md outline-none focus:border-slate-600 focus:shadow-[0_0_0_0.2rem_rgba(71,85,105,0.25)] w-full',
+                { '!border-red-500 focus:shadow-[0_0_0_0.2rem_rgba(239,68,68,0.25)]': isError },
                 inputClass,
               )}
             />
           </div>
-          <div class={cn('absolute bottom-0 -z-10 text-red-500 transition duration-300', { '-translate-y-full opacity-0': !isError }, errorClass)}>
+          <div class={cn('absolute bottom-0 -z-10 text-red-500 transition-all duration-300', { '-translate-y-full opacity-0': !isError }, errorClass)}>
             {texts[errorMessage] || this.locale.forms.inputValueIsIncorrect || errorMessage}
           </div>
         </label>

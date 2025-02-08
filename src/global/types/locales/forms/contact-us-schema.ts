@@ -15,4 +15,7 @@ export const contactUsSchema = object({
   inquiryType: string().required(),
   selectInquiryType: string().required(),
   inquiryTypeIsRequired: string().required(),
+  writeAMessage: string().required(),
+  leaveUsMessage: string().required(),
+  messageIsRequired: string().required(),
 });

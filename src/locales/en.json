@@ -45,7 +45,10 @@
       "phoneNumberFormatInvalid": "Phone Number format is invalid.",
       "inquiryType": "Inquiry Type",
       "selectInquiryType": "Select Inquiry Type",
-      "inquiryTypeIsRequired": "Inquiry Type is required."
+      "inquiryTypeIsRequired": "Inquiry Type is required.",
+      "writeAMessage": "Write a Message",
+      "leaveUsMessage": "Leave us a Message",
+      "messageIsRequired": "Message is required."
     }
   },
   "vehicleLookup": {

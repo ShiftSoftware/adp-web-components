@@ -12,13 +12,14 @@ import { getLocaleLanguage } from '~lib/get-local-language';
 const contactUsSchema = object({
   cityId: string().required('cityIsRequired'),
   email: string().email('emailAddressNotValid'),
+  message: string().required('messageIsRequired'),
+  generalTicketType: string().required('inquiryTypeIsRequired'),
   name: string().required('fullNameIsRequired').min(3, 'fullNameMinimum'),
   phone: string()
     .required('phoneNumberIsRequired')
     .transform(value => value.replace(/^0/, ''))
     .matches(/^\d+$/, 'phoneNumberFormatInvalid')
     .length(10, 'phoneNumberFormatInvalid'),
-  generalTicketType: string().required('inquiryTypeIsRequired'),
 });
 
 type ContactUs = InferType<typeof contactUsSchema>;
@@ -28,6 +29,7 @@ const formElementMapper: FormElementMapper = {
   email: 'text',
   phone: 'number',
   cityId: 'select',
+  message: 'text-area',
   generalTicketType: 'select',
 };
 
@@ -40,6 +42,11 @@ const formFieldParams: FormFieldParams = {
     type: 'email',
     label: 'emailAddress',
     formLocaleName: 'contactUs',
+  },
+  message: {
+    label: 'writeAMessage',
+    formLocaleName: 'contactUs',
+    placeholder: 'leaveUsMessage',
   },
   phone: { inputPreFix: '+964', type: 'number', label: 'phoneNumber', formLocaleName: 'contactUs' },
   cityId: {

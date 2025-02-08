@@ -98,7 +98,7 @@ export class FormHook<T> {
       isRequired: validationDescription?.tests.some(test => test.name === 'required'),
     };
 
-    if (fieldType === 'text' || fieldType === 'number')
+    if (fieldType === 'text' || fieldType === 'number' || fieldType === 'text-area')
       this.subscribedFields[name] = {
         ...sharedFields,
         inputChanges: (event: InputEvent) => {

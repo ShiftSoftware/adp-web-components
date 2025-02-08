@@ -130,6 +130,22 @@ export namespace Components {
         "params": FormFieldParams;
         "structureElement": StructureObject;
     }
+    interface FormTextArea {
+        "class": string;
+        "containerClass": string;
+        "disabled": boolean;
+        "errorClass": string;
+        "errorMessage": string;
+        "formLocaleName": LocaleFormKeys;
+        "inputChanges": FormInputChanges;
+        "isError": boolean;
+        "isRequired": boolean;
+        "label": string;
+        "labelClass": string;
+        "language": LanguageKeys;
+        "name": string;
+        "placeholder": string;
+    }
     interface ManufacturerLookup {
         "baseUrl": string;
         "errorCallback": (errorMessage: string) => void;
@@ -316,6 +332,12 @@ declare global {
         prototype: HTMLFormSubmitElement;
         new (): HTMLFormSubmitElement;
     };
+    interface HTMLFormTextAreaElement extends Components.FormTextArea, HTMLStencilElement {
+    }
+    var HTMLFormTextAreaElement: {
+        prototype: HTMLFormTextAreaElement;
+        new (): HTMLFormTextAreaElement;
+    };
     interface HTMLManufacturerLookupElement extends Components.ManufacturerLookup, HTMLStencilElement {
     }
     var HTMLManufacturerLookupElement: {
@@ -375,6 +397,7 @@ declare global {
         "form-structure": HTMLFormStructureElement;
         "form-structure-error": HTMLFormStructureErrorElement;
         "form-submit": HTMLFormSubmitElement;
+        "form-text-area": HTMLFormTextAreaElement;
         "manufacturer-lookup": HTMLManufacturerLookupElement;
         "paint-thickness": HTMLPaintThicknessElement;
         "part-lookup": HTMLPartLookupElement;
@@ -478,6 +501,22 @@ declare namespace LocalJSX {
         "isLoading"?: boolean;
         "params"?: FormFieldParams;
         "structureElement"?: StructureObject;
+    }
+    interface FormTextArea {
+        "class"?: string;
+        "containerClass"?: string;
+        "disabled"?: boolean;
+        "errorClass"?: string;
+        "errorMessage"?: string;
+        "formLocaleName"?: LocaleFormKeys;
+        "inputChanges"?: FormInputChanges;
+        "isError"?: boolean;
+        "isRequired"?: boolean;
+        "label"?: string;
+        "labelClass"?: string;
+        "language"?: LanguageKeys;
+        "name"?: string;
+        "placeholder"?: string;
     }
     interface ManufacturerLookup {
         "baseUrl"?: string;
@@ -586,6 +625,7 @@ declare namespace LocalJSX {
         "form-structure": FormStructure;
         "form-structure-error": FormStructureError;
         "form-submit": FormSubmit;
+        "form-text-area": FormTextArea;
         "manufacturer-lookup": ManufacturerLookup;
         "paint-thickness": PaintThickness;
         "part-lookup": PartLookup;
@@ -610,6 +650,7 @@ declare module "@stencil/core" {
             "form-structure": LocalJSX.FormStructure & JSXBase.HTMLAttributes<HTMLFormStructureElement>;
             "form-structure-error": LocalJSX.FormStructureError & JSXBase.HTMLAttributes<HTMLFormStructureErrorElement>;
             "form-submit": LocalJSX.FormSubmit & JSXBase.HTMLAttributes<HTMLFormSubmitElement>;
+            "form-text-area": LocalJSX.FormTextArea & JSXBase.HTMLAttributes<HTMLFormTextAreaElement>;
             "manufacturer-lookup": LocalJSX.ManufacturerLookup & JSXBase.HTMLAttributes<HTMLManufacturerLookupElement>;
             "paint-thickness": LocalJSX.PaintThickness & JSXBase.HTMLAttributes<HTMLPaintThicknessElement>;
             "part-lookup": LocalJSX.PartLookup & JSXBase.HTMLAttributes<HTMLPartLookupElement>;

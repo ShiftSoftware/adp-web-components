@@ -45,7 +45,10 @@
       "phoneNumberFormatInvalid": "تنسيق رقم الهاتف غير صالح.",
       "inquiryType": "نوع الاستفسار",
       "selectInquiryType": "حدد نوع الاستفسار",
-      "inquiryTypeIsRequired": "نوع الاستفسار مطلوب."
+      "inquiryTypeIsRequired": "نوع الاستفسار مطلوب.",
+      "writeAMessage": "اكتب رسالة",
+      "leaveUsMessage": "اترك لنا رسالة",
+      "messageIsRequired": "الرسالة مطلوبة."
     }
   },
   "vehicleLookup": {

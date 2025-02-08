@@ -5,7 +5,7 @@ import cn from '~lib/cn';
 import { getLocaleLanguage } from '~lib/get-local-language';
 
 import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/locales';
-import { FormInputChanges, FormSelectFetcher, FormSelectInterface, FormSelectItem } from '~types/forms';
+import { FormInputChanges, FormSelectFetcher, FormSelectItem } from '~types/forms';
 
 import Loader from '~assets/loader.svg';
 
@@ -14,7 +14,7 @@ import Loader from '~assets/loader.svg';
   tag: 'form-select',
   styleUrl: 'form-select.css',
 })
-export class FormSelect implements FormSelectInterface {
+export class FormSelect {
   @Prop() name: string;
   @Prop() label: string;
   @Prop() isError: boolean;

@@ -45,7 +45,10 @@
       "phoneNumberFormatInvalid": "فۆرماتی ژمارەی تەلەفۆن نادروستە.",
       "inquiryType": "جۆری پرسیار",
       "selectInquiryType": "جۆری پرسیار هەڵبژێرە",
-      "inquiryTypeIsRequired": "جۆری پرسیار پێویستە."
+      "inquiryTypeIsRequired": "جۆری پرسیار پێویستە.",
+      "writeAMessage": "پەیامێک بنووسە",
+      "leaveUsMessage": "پەیامێکمان بۆ بەجێبهێڵە",
+      "messageIsRequired": "پەیام پێویستە."
     }
   },
   "vehicleLookup": {
