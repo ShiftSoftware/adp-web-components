@@ -12,10 +12,12 @@ import { FormInputChanges, LocaleFormKeys } from '~types/forms';
   styleUrl: 'form-text-area.css',
 })
 export class FormTextArea {
+  @Prop() id: string;
   @Prop() name: string;
   @Prop() label: string;
   @Prop() isError: boolean;
   @Prop() disabled: boolean;
+  @Prop() className: string;
   @Prop() isRequired: boolean;
   @Prop() placeholder: string;
   @Prop() errorMessage: string;
@@ -47,7 +49,7 @@ export class FormTextArea {
 
     return (
       <Host>
-        <label class="relative w-full inline-flex flex-col">
+        <label id={this.id} class={cn('relative w-full inline-flex flex-col', this.className)}>
           {label && (
             <div class="mb-[4px]">
               {texts[label] || label}
@@ -68,7 +70,11 @@ export class FormTextArea {
             />
           </div>
 
-          <div class={cn('absolute -z-10 text-red-500 opacity-0 -translate-y-[4px] bottom-0 transition duration-300', { 'translate-y-full error-message opacity-100': isError })}>
+          <div
+            class={cn('absolute pt-[1px] text-[12px] -z-10 text-red-500 opacity-0 -translate-y-[4px] bottom-0 transition duration-300', {
+              'translate-y-full error-message opacity-100': isError,
+            })}
+          >
             {texts[errorMessage] || this.locale.forms.inputValueIsIncorrect || errorMessage}
           </div>
         </label>

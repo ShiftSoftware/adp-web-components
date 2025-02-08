@@ -88,7 +88,7 @@ const formFieldParams: FormFieldParams = {
 };
 
 const themes = {
-  tiq: '[["div#inputs_wrapper", "name", "email", "cityId", "phone", "generalTicketType" ],"message", "submit.Submit"]',
+  tiq: '["div#container", ["div#inputs_wrapper", "name", "email", "cityId", "phone", "generalTicketType" ], "message#message", "submit.Submit"]',
 };
 
 @Component({

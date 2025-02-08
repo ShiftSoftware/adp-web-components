@@ -15,10 +15,12 @@ import Loader from '~assets/loader.svg';
   styleUrl: 'form-select.css',
 })
 export class FormSelect {
+  @Prop() id: string;
   @Prop() name: string;
   @Prop() label: string;
   @Prop() isError: boolean;
   @Prop() disabled: boolean;
+  @Prop() className: string;
   @Prop() isRequired: boolean;
   @Prop() errorMessage: string;
   @Prop() formLocaleName: string;
@@ -137,7 +139,7 @@ export class FormSelect {
 
     return (
       <Host>
-        <label class="relative w-full inline-flex flex-col">
+        <label id={this.id} class={cn('relative w-full inline-flex flex-col', this.className)}>
           {this.label && (
             <div class="mb-[4px]">
               {texts[this.label] || this.label}
@@ -219,7 +221,9 @@ export class FormSelect {
           </div>
 
           <div
-            class={cn('absolute -z-10 text-red-500 opacity-0 -translate-y-[4px] bottom-0 transition duration-300', { 'translate-y-full error-message opacity-100': this.isError })}
+            class={cn('absolute pt-[1px] -z-10 text-[12px] text-red-500 opacity-0 -translate-y-[4px] bottom-0 transition duration-300', {
+              'translate-y-full error-message opacity-100': this.isError,
+            })}
           >
             {texts[this.errorMessage] || this.locale.forms.inputValueIsIncorrect || this.errorMessage}
           </div>
