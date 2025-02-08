@@ -137,7 +137,7 @@ export class FormSelect {
 
     return (
       <Host>
-        <label class="relative w-full pb-[20px] inline-flex flex-col">
+        <label class="relative w-full inline-flex flex-col">
           {this.label && (
             <div class="mb-[4px]">
               {texts[this.label] || this.label}
@@ -154,7 +154,7 @@ export class FormSelect {
               disabled={this.disabled}
               onClick={this.toggleDropdown}
               class={cn(
-                'select-button enabled:focus:border-slate-600 enabled:focus:shadow-[0_0_0_0.2rem_rgba(71,85,105,0.25)] border mb-[4px] bg-white h-[38px] flex justify-between overflow-hidden disabled:opacity-75 flex-1 py-[6px] px-[12px] transition-all duration-300 rounded-md outline-none w-full',
+                'select-button enabled:focus:border-slate-600 enabled:focus:shadow-[0_0_0_0.2rem_rgba(71,85,105,0.25)] border bg-white h-[38px] flex justify-between overflow-hidden disabled:opacity-75 flex-1 py-[6px] px-[12px] transition-all duration-300 rounded-md outline-none w-full',
                 {
                   'text-[#9CA3AF]': !selectedItem,
                   '!border-red-500 focus:shadow-[0_0_0_0.2rem_rgba(239,68,68,0.25)]': this.isError,
@@ -218,7 +218,9 @@ export class FormSelect {
             </div>
           </div>
 
-          <div class={cn('absolute bottom-0 -z-10 !text-red-500 transition-all duration-300', { '-translate-y-full opacity-0': !this.isError })}>
+          <div
+            class={cn('absolute -z-10 text-red-500 opacity-0 -translate-y-[4px] bottom-0 transition duration-300', { 'translate-y-full error-message opacity-100': this.isError })}
+          >
             {texts[this.errorMessage] || this.locale.forms.inputValueIsIncorrect || this.errorMessage}
           </div>
         </label>

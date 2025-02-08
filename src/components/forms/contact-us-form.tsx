@@ -8,9 +8,10 @@ import { FormHook } from '~lib/form-hook';
 import { isValidStructure } from '~lib/validate-form-structure';
 import { CITY_ENDPOINT } from '~api/urls';
 import { getLocaleLanguage } from '~lib/get-local-language';
+import cn from '~lib/cn';
 
 const contactUsSchema = object({
-  cityId: string().required('cityIsRequired'),
+  cityId: string(),
   email: string().email('emailAddressNotValid'),
   message: string().required('messageIsRequired'),
   generalTicketType: string().required('inquiryTypeIsRequired'),
@@ -86,16 +87,21 @@ const formFieldParams: FormFieldParams = {
   },
 };
 
+const themes = {
+  tiq: '[["div#inputs_wrapper", "name", "email", "cityId", "phone", "generalTicketType" ],"message", "submit.Submit"]',
+};
+
 @Component({
   shadow: false,
   tag: 'contact-us-form',
   styleUrl: 'contact-us-form.css',
 })
 export class ContactUsForm implements FormHookInterface<ContactUs> {
+  @Prop() theme: string;
   @Prop() baseUrl: string;
   @Prop() queryString: string;
-  @Prop() structure: string = '[]';
   @Prop() language: LanguageKeys = 'en';
+  @Prop() structure: string = '["submit.Submit"]';
 
   @State() isLoading: boolean;
   @State() renderControl = {};
@@ -105,7 +111,12 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
   @Element() el: HTMLElement;
 
   async componentWillLoad() {
-    await this.structureValidation(this.structure);
+    let structure;
+
+    if (this.theme && themes[this.theme]) structure = themes[this.theme];
+    else structure = this.structure;
+
+    await this.structureValidation(structure);
   }
 
   @Watch('structure')
@@ -131,7 +142,11 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
     if (this.structureObject === null) return <form-structure-error language={this.language} />;
 
     return (
-      <Host>
+      <Host
+        class={cn({
+          [`contact-us-${this.theme}`]: this.theme,
+        })}
+      >
         <form-structure
           form={this.form}
           language={this.language}

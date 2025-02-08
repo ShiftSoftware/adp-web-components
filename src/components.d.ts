@@ -27,6 +27,7 @@ export namespace Components {
         "language": LanguageKeys;
         "queryString": string;
         "structure": string;
+        "theme": string;
     }
     interface DeadStockLookup {
         "baseUrl": string;
@@ -84,9 +85,7 @@ export namespace Components {
     }
     interface FormInput {
         "class": string;
-        "containerClass": string;
         "disabled": boolean;
-        "errorClass": string;
         "errorMessage": string;
         "formLocaleName": LocaleFormKeys;
         "inputChanges": FormInputChanges;
@@ -94,7 +93,6 @@ export namespace Components {
         "isError": boolean;
         "isRequired": boolean;
         "label": string;
-        "labelClass": string;
         "language": LanguageKeys;
         "name": string;
         "placeholder": string;
@@ -131,17 +129,13 @@ export namespace Components {
         "structureElement": StructureObject;
     }
     interface FormTextArea {
-        "class": string;
-        "containerClass": string;
         "disabled": boolean;
-        "errorClass": string;
         "errorMessage": string;
         "formLocaleName": LocaleFormKeys;
         "inputChanges": FormInputChanges;
         "isError": boolean;
         "isRequired": boolean;
         "label": string;
-        "labelClass": string;
         "language": LanguageKeys;
         "name": string;
         "placeholder": string;
@@ -414,6 +408,7 @@ declare namespace LocalJSX {
         "language"?: LanguageKeys;
         "queryString"?: string;
         "structure"?: string;
+        "theme"?: string;
     }
     interface DeadStockLookup {
         "baseUrl"?: string;
@@ -456,9 +451,7 @@ declare namespace LocalJSX {
     }
     interface FormInput {
         "class"?: string;
-        "containerClass"?: string;
         "disabled"?: boolean;
-        "errorClass"?: string;
         "errorMessage"?: string;
         "formLocaleName"?: LocaleFormKeys;
         "inputChanges"?: FormInputChanges;
@@ -466,7 +459,6 @@ declare namespace LocalJSX {
         "isError"?: boolean;
         "isRequired"?: boolean;
         "label"?: string;
-        "labelClass"?: string;
         "language"?: LanguageKeys;
         "name"?: string;
         "placeholder"?: string;
@@ -503,17 +495,13 @@ declare namespace LocalJSX {
         "structureElement"?: StructureObject;
     }
     interface FormTextArea {
-        "class"?: string;
-        "containerClass"?: string;
         "disabled"?: boolean;
-        "errorClass"?: string;
         "errorMessage"?: string;
         "formLocaleName"?: LocaleFormKeys;
         "inputChanges"?: FormInputChanges;
         "isError"?: boolean;
         "isRequired"?: boolean;
         "label"?: string;
-        "labelClass"?: string;
         "language"?: LanguageKeys;
         "name"?: string;
         "placeholder"?: string;

@@ -80,11 +80,9 @@ export class FormStructure {
     const { formController } = this.form;
 
     return (
-      <Host>
-        <form dir={this.locale.direction} {...formController}>
-          {this.renderLoop(this.structureObject)}
-        </form>
-      </Host>
+      <form dir={this.locale.direction} {...formController}>
+        {this.renderLoop(this.structureObject)}
+      </form>
     );
   }
 }

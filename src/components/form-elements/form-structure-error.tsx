@@ -7,7 +7,7 @@ import { LanguageKeys, Locale, localeSchema } from '~types/locales';
 @Component({
   shadow: false,
   tag: 'form-structure-error',
-  styleUrl: 'form-structure-errors.css',
+  styleUrl: 'form-structure-error.css',
 })
 export class FormStructureError {
   @Prop() language: LanguageKeys = 'en';
