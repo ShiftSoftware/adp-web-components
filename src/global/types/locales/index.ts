@@ -1,10 +1,11 @@
 import { InferType, object, string } from 'yup';
 
 import { FormsSchema } from './forms';
+import { generalSchema } from './general';
 import { errorsSchema } from './error-schema';
 import { partLookupSchema } from './part-lookup';
 import { vehicleLookupSchema } from './vehicle-lookup';
-import { generalSchema } from './general';
+import { generalTicketTypesSchema } from './inquiryTypes';
 
 export const ARABIC_JSON_FILE = 'ar.json';
 export const ENGLISH_JSON_FILE = 'en.json';
@@ -30,6 +31,7 @@ export const localeSchema = object({
   language: string().required(),
   direction: string().required(),
   vehicleLookup: vehicleLookupSchema,
+  generalTicketTypes: generalTicketTypesSchema,
 });
 
 export type Locale = InferType<typeof localeSchema>;

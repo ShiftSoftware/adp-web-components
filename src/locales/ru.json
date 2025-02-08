@@ -18,6 +18,16 @@
     "wildCard": "Произошла неожиданная ошибка, пожалуйста, попробуйте еще раз позже.",
     "requestFailedPleaseTryAgainLater": "Запрос не удался, попробуйте еще раз позже"
   },
+  "generalTicketTypes": {
+    "TLP": "TLP",
+    "Complaint": "Жалоба",
+    "PartInquiry": "PartInquiry",
+    "SalesCampaign": "SalesCampaign",
+    "GeneralInquiry": "Общий запрос",
+    "ServiceCampaign": "ServiceCampaign",
+    "InstallmentPayment": "InstallmentPayment",
+    "ServicePriceInquiry": "ServicePriceInquiry"
+  },
   "forms": {
     "inputValueIsIncorrect": "Значение поля неверно.",
 
@@ -29,9 +39,13 @@
       "emailAddressNotValid": "Пожалуйста, введите действительный адрес электронной почты.",
       "city": "город",
       "selectCity": "Выберите город.",
+      "cityIsRequired": "Город обязателен.",
       "phoneNumber": "Номер телефона",
       "phoneNumberIsRequired": "Номер телефона обязателен.",
-      "phoneNumberFormatInvalid": "Неверный формат номера телефона."
+      "phoneNumberFormatInvalid": "Неверный формат номера телефона.",
+      "inquiryType": "Тип запроса",
+      "selectInquiryType": "Выберите тип запроса",
+      "inquiryTypeIsRequired": "Требуется указать тип запроса."
     }
   },
   "vehicleLookup": {

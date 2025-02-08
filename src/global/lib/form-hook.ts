@@ -66,14 +66,16 @@ export class FormHook<T> {
           error.inner.forEach((element: { path: string; message: string }) => {
             if (element.path) {
               this.formErrors[element.path] = element.message;
-              if (!errorFields.find(field => field.name === element.path))
+              if (!errorFields.find(field => field.name === element.path)) {
                 errorFields.push({
                   isError: true,
                   name: element.path,
                   errorMessage: element.message,
                 });
+              }
             }
           });
+
           this.signal(errorFields);
           this.focusFirstInput(errorFields);
         } else console.error('Unexpected Error:', error);

@@ -7,9 +7,10 @@ import { FormElementMapper, FormFieldParams, FormHookInterface, FormSelectItem, 
 import { FormHook } from '~lib/form-hook';
 import { isValidStructure } from '~lib/validate-form-structure';
 import { CITY_ENDPOINT } from '~api/urls';
+import { getLocaleLanguage } from '~lib/get-local-language';
 
 const contactUsSchema = object({
-  cityId: string().required(),
+  cityId: string().required('cityIsRequired'),
   email: string().email('emailAddressNotValid'),
   name: string().required('fullNameIsRequired').min(3, 'fullNameMinimum'),
   phone: string()
@@ -17,6 +18,7 @@ const contactUsSchema = object({
     .transform(value => value.replace(/^0/, ''))
     .matches(/^\d+$/, 'phoneNumberFormatInvalid')
     .length(10, 'phoneNumberFormatInvalid'),
+  generalTicketType: string().required('inquiryTypeIsRequired'),
 });
 
 type ContactUs = InferType<typeof contactUsSchema>;
@@ -26,6 +28,7 @@ const formElementMapper: FormElementMapper = {
   email: 'text',
   phone: 'number',
   cityId: 'select',
+  generalTicketType: 'select',
 };
 
 const formFieldParams: FormFieldParams = {
@@ -41,6 +44,8 @@ const formFieldParams: FormFieldParams = {
   phone: { inputPreFix: '+964', type: 'number', label: 'phoneNumber', formLocaleName: 'contactUs' },
   cityId: {
     label: 'city',
+    placeholder: 'selectCity',
+    formLocaleName: 'contactUs',
     fetcher: async (language: LanguageKeys, signal: AbortSignal): Promise<FormSelectItem[]> => {
       const response = await fetch(CITY_ENDPOINT, { signal, headers: { 'Accept-Language': language } });
 
@@ -50,8 +55,27 @@ const formFieldParams: FormFieldParams = {
 
       return selectItems;
     },
-    placeholder: 'selectCity',
+  },
+  generalTicketType: {
+    label: 'inquiryType',
     formLocaleName: 'contactUs',
+    placeholder: 'selectInquiryType',
+    fetcher: async (language: LanguageKeys, _: AbortSignal): Promise<FormSelectItem[]> => {
+      const ticketTypes = (await getLocaleLanguage(language)).generalTicketTypes;
+
+      const generalInquiryTypes: FormSelectItem[] = [
+        {
+          value: 'GeneralInquiry',
+          label: ticketTypes.GeneralInquiry,
+        },
+        {
+          value: 'Complaint',
+          label: ticketTypes.Complaint,
+        },
+      ];
+
+      return generalInquiryTypes;
+    },
   },
 };
 

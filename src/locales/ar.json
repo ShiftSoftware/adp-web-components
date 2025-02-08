@@ -18,6 +18,16 @@
     "wildCard": "حدث خطأ غير متوقع، يرجى المحاولة مرة أخرى لاحقًا.",
     "requestFailedPleaseTryAgainLater": "فشل الطلب، يرجى المحاولة مرة أخرى لاحقًا"
   },
+  "generalTicketTypes": {
+    "TLP": "TLP",
+    "Complaint": "شكوى",
+    "PartInquiry": "PartInquiry",
+    "SalesCampaign": "SalesCampaign",
+    "GeneralInquiry": "نوع الاستفسار",
+    "ServiceCampaign": "ServiceCampaign",
+    "InstallmentPayment": "InstallmentPayment",
+    "ServicePriceInquiry": "ServicePriceInquiry"
+  },
   "forms": {
     "inputValueIsIncorrect": "قيمة الحقل غير صحيحة.",
 
@@ -29,9 +39,13 @@
       "emailAddressNotValid": "يرجى إدخال عنوان بريد إلكتروني صالح.",
       "city": "مدينة",
       "selectCity": "اختر مدينة.",
+      "cityIsRequired": "المدينة مطلوبة.",
       "phoneNumber": "رقم الهاتف",
       "phoneNumberIsRequired": "رقم الهاتف مطلوب.",
-      "phoneNumberFormatInvalid": "تنسيق رقم الهاتف غير صالح."
+      "phoneNumberFormatInvalid": "تنسيق رقم الهاتف غير صالح.",
+      "inquiryType": "نوع الاستفسار",
+      "selectInquiryType": "حدد نوع الاستفسار",
+      "inquiryTypeIsRequired": "نوع الاستفسار مطلوب."
     }
   },
   "vehicleLookup": {

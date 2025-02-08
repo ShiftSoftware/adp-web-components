@@ -20,6 +20,7 @@ export class FormSelect implements FormSelectInterface {
   @Prop() isError: boolean;
   @Prop() disabled: boolean;
   @Prop() isRequired: boolean;
+  @Prop() errorMessage: string;
   @Prop() formLocaleName: string;
   @Prop() fetcher: FormSelectFetcher;
   @Prop() language: LanguageKeys = 'en';
@@ -31,7 +32,7 @@ export class FormSelect implements FormSelectInterface {
   @State() selectedValue: string = '';
   @State() openUpwards: boolean = false;
   @State() options: FormSelectItem[] = [];
-  @State() errorMessage?: ErrorKeys = null;
+  @State() fetchingErrorMessage?: ErrorKeys = null;
   @State() locale: Locale = localeSchema.getDefault();
 
   @Element() el!: HTMLElement;
@@ -95,23 +96,19 @@ export class FormSelect implements FormSelectInterface {
     try {
       this.isLoading = true;
 
-      this.options = [];
-
-      this.selectedValue = '';
-
       if (this.abortController) this.abortController.abort();
 
       this.abortController = new AbortController();
 
       const options = await this.fetcher(this.language, this.abortController.signal);
 
-      this.errorMessage = null;
+      this.fetchingErrorMessage = null;
       this.options = options;
     } catch (error) {
       if (error && error?.name === 'AbortError') return;
       console.error(error);
       this.options = [];
-      this.errorMessage = error.message;
+      this.fetchingErrorMessage = error.message;
     } finally {
       this.isLoading = false;
     }
@@ -133,6 +130,11 @@ export class FormSelect implements FormSelectInterface {
 
     const selectedItem = this.options.find(item => this.selectedValue === item.value);
 
+    if (!selectedItem) {
+      this.inputChanges('');
+      this.selectedValue = '';
+    }
+
     return (
       <Host>
         <label class="relative w-full pb-[20px] inline-flex flex-col">
@@ -145,7 +147,7 @@ export class FormSelect implements FormSelectInterface {
 
           <input name={this.name} type="string" hidden value={this.selectedValue} />
 
-          <div class="relative z-10">
+          <div class="relative">
             <button
               type="button"
               name={this.name}
@@ -176,7 +178,7 @@ export class FormSelect implements FormSelectInterface {
 
             <div
               class={cn(
-                'select-container flex flex-col pointer-events-none absolute w-full bg-white border rounded-md shadow opacity-0 transition-opacity duration-300 max-h-[250px] overflow-auto',
+                'select-container z-[10] flex flex-col pointer-events-none absolute w-full bg-white border rounded-md shadow opacity-0 transition-opacity duration-300 max-h-[250px] overflow-auto',
                 {
                   'opacity-100 pointer-events-auto': this.isOpen,
                   'top-0 -mt-[8px] -translate-y-full': this.openUpwards,
@@ -208,9 +210,9 @@ export class FormSelect implements FormSelectInterface {
                   </button>
                 ))}
               {!this.options.length && (
-                <div class={cn('select-empty-container h-[100px] flex items-center justify-center', { 'text-red-500': this.errorMessage })}>
-                  {this.errorMessage && (this.locale.errors[this.errorMessage] || this.locale.errors.wildCard)}
-                  {!this.errorMessage && (this.isLoading ? <img class="animate-spin-2s size-[22px]" src={Loader} /> : this.locale.general.noSelectOptions)}
+                <div class={cn('select-empty-container h-[100px] flex items-center justify-center', { 'text-red-500': this.fetchingErrorMessage })}>
+                  {this.fetchingErrorMessage && (this.locale.errors[this.fetchingErrorMessage] || this.locale.errors.wildCard)}
+                  {!this.fetchingErrorMessage && (this.isLoading ? <img class="animate-spin-2s size-[22px]" src={Loader} /> : this.locale.general.noSelectOptions)}
                 </div>
               )}
             </div>

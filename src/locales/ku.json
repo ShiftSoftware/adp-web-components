@@ -18,6 +18,16 @@
     "wildCard": "کێشەیەکی چاوەڕواننەکراو ڕویدا تکایە دواتر هەوڵبدەوە.",
     "requestFailedPleaseTryAgainLater": "داواکارییەکە شکستی هێنا تکایە دواتر هەوڵبدەرەوە"
   },
+  "generalTicketTypes": {
+    "TLP": "TLP",
+    "Complaint": "سکاڵا",
+    "PartInquiry": "PartInquiry",
+    "SalesCampaign": "SalesCampaign",
+    "GeneralInquiry": "جۆری پرسیار",
+    "ServiceCampaign": "ServiceCampaign",
+    "InstallmentPayment": "InstallmentPayment",
+    "ServicePriceInquiry": "ServicePriceInquiry"
+  },
   "forms": {
     "inputValueIsIncorrect": "تکایە بەهای باشتر دابین بکەن",
 
@@ -29,9 +39,13 @@
       "emailAddressNotValid": "تکایە ناونیشانی ئیمەیڵێکی دروست دابنێ.",
       "city": "شار",
       "selectCity": "شارێک هەڵبژێرە.",
+      "cityIsRequired": "شار پێویستە.",
       "phoneNumber": "ژمارەی مۆبایل",
       "phoneNumberIsRequired": "ژمارەی مۆبایل پێویستە.",
-      "phoneNumberFormatInvalid": "فۆرماتی ژمارەی تەلەفۆن نادروستە."
+      "phoneNumberFormatInvalid": "فۆرماتی ژمارەی تەلەفۆن نادروستە.",
+      "inquiryType": "جۆری پرسیار",
+      "selectInquiryType": "جۆری پرسیار هەڵبژێرە",
+      "inquiryTypeIsRequired": "جۆری پرسیار پێویستە."
     }
   },
   "vehicleLookup": {
