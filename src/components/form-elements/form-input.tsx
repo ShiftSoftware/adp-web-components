@@ -3,8 +3,8 @@ import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
 import cn from '~lib/cn';
 import { getLocaleLanguage } from '~lib/get-local-language';
 
-import { LanguageKeys, Locale, localeSchema } from '~types/locales';
 import { FormInputChanges, LocaleFormKeys } from '~types/forms';
+import { LanguageKeys, Locale, localeSchema } from '~types/locales';
 
 @Component({
   shadow: false,
@@ -70,7 +70,7 @@ export class FormInput {
               style={{ ...(prefixWidth ? { paddingLeft: `${prefixWidth}px` } : {}) }}
               placeholder={texts[placeholder] || texts[label] || placeholder || label}
               class={cn(
-                'border form-input disabled:bg-white flex-1 py-[6px] px-[12px] transition duration-300 rounded-md outline-none focus:border-slate-600 focus:shadow-[0_0_0_0.2rem_rgba(71,85,105,0.25)] w-full',
+                'border appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none form-input disabled:bg-white flex-1 py-[6px] px-[12px] transition duration-300 rounded-md outline-none focus:border-slate-600 focus:shadow-[0_0_0_0.2rem_rgba(71,85,105,0.25)] w-full',
                 { '!border-red-500 focus:shadow-[0_0_0_0.2rem_rgba(239,68,68,0.25)]': isError, 'rtl-form-input': this.locale.direction === 'rtl' && type === 'number' },
                 inputClass,
               )}

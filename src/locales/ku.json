@@ -29,6 +29,7 @@
     "ServicePriceInquiry": "ServicePriceInquiry"
   },
   "forms": {
+    "reCaptchaIsRequired": "پێویستە کاپچا",
     "inputValueIsIncorrect": "تکایە بەهای باشتر دابین بکەن",
 
     "contactUs": {

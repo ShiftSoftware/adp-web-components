@@ -1,14 +1,18 @@
 import { InferType, object, string } from 'yup';
 import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
 
+import { Grecaptcha } from '~types/general';
 import { LanguageKeys, Locale, localeSchema } from '~types/locales';
 import { FormElementMapper, FormFieldParams, FormHookInterface, FormSelectItem, StructureObject } from '~types/forms';
 
-import { FormHook } from '~lib/form-hook';
-import { isValidStructure } from '~lib/validate-form-structure';
-import { CITY_ENDPOINT } from '~api/urls';
-import { getLocaleLanguage } from '~lib/get-local-language';
 import cn from '~lib/cn';
+import { FormHook } from '~lib/form-hook';
+import { getLocaleLanguage } from '~lib/get-local-language';
+import { isValidStructure } from '~lib/validate-form-structure';
+
+import { CITY_ENDPOINT } from '~api/urls';
+
+declare const grecaptcha: Grecaptcha;
 
 const contactUsSchema = object({
   cityId: string(),
@@ -23,7 +27,7 @@ const contactUsSchema = object({
     .length(10, 'phoneNumberFormatInvalid'),
 });
 
-type ContactUs = InferType<typeof contactUsSchema>;
+export type ContactUs = InferType<typeof contactUsSchema>;
 
 const formElementMapper: FormElementMapper = {
   name: 'text',
@@ -88,7 +92,7 @@ const formFieldParams: FormFieldParams = {
 };
 
 const themes = {
-  tiq: '["div#container", ["div#inputs_wrapper", "name", "email", "cityId", "phone", "generalTicketType" ], "message#message", "submit.Submit"]',
+  tiq: '["div#container", ["div#inputs_wrapper", "name", "email", "cityId", "phone", "generalTicketType" ], "message#message",["div#recaptcha_container", "slot"], "submit.Submit"]',
 };
 
 @Component({
@@ -99,14 +103,23 @@ const themes = {
 export class ContactUsForm implements FormHookInterface<ContactUs> {
   @Prop() theme: string;
   @Prop() baseUrl: string;
-  @Prop() queryString: string;
+  @Prop() brandId: string;
+  @Prop() queryString: string = '';
   @Prop() language: LanguageKeys = 'en';
+  @Prop() errorCallback: (error: any) => void;
   @Prop() structure: string = '["submit.Submit"]';
+  @Prop() loadingChanges: (loading: boolean) => void;
+  @Prop() successCallback: (values: ContactUs) => void;
+  @Prop() recaptchaKey: string = '6Lehq6IpAAAAAETTDS2Zh60nHIT1a8oVkRtJ2WsA';
 
   @State() isLoading: boolean;
   @State() renderControl = {};
   @State() structureObject: StructureObject = null;
   @State() locale: Locale = localeSchema.getDefault();
+
+  recaptchaWidget: number | null = null;
+
+  private form = new FormHook(this, contactUsSchema);
 
   @Element() el: HTMLElement;
 
@@ -116,7 +129,12 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
     if (this.theme && themes[this.theme]) structure = themes[this.theme];
     else structure = this.structure;
 
-    await this.structureValidation(structure);
+    await Promise.all([this.structureValidation(structure), this.changeLanguage(this.language)]);
+  }
+
+  @Watch('language')
+  async changeLanguage(newLanguage: LanguageKeys) {
+    this.locale = await getLocaleLanguage(newLanguage);
   }
 
   @Watch('structure')
@@ -128,14 +146,48 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
     this.structureObject = isValidStructure(structureString);
   }
 
-  private form = new FormHook(this, contactUsSchema);
+  async componentDidLoad() {
+    try {
+      if (this.recaptchaKey) {
+        const script = document.createElement('script');
+        script.src = `https://www.google.com/recaptcha/api.js?render=${this.recaptchaKey}&hl=${this.language}`;
+        script.async = true;
+        script.defer = true;
+
+        document.head.appendChild(script);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async formSubmit(formValues: ContactUs) {
-    console.log(formValues);
+    try {
+      if (this.loadingChanges) this.loadingChanges(true);
 
-    await new Promise(r => setTimeout(r, 10000));
+      const token = await grecaptcha.execute(this.recaptchaKey, { action: 'submit' });
+      console.log(token);
 
-    console.log(99);
+      console.log(formValues);
+
+      const response = await fetch(`${this.baseUrl}?${this.queryString}`, {
+        method: 'post',
+        headers: {
+          'Brand': this.brandId,
+          'Recaptcha-Token': token,
+          'Accept-Language': this.language,
+        },
+      });
+
+      console.log(response);
+
+      if (this.successCallback) this.successCallback(formValues);
+    } catch (error) {
+      console.log(error);
+      if (this.errorCallback) this.errorCallback(error);
+    } finally {
+      if (this.loadingChanges) this.loadingChanges(false);
+    }
   }
 
   render() {

@@ -6,6 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
+import { ContactUs } from "./components/forms/contact-us-form";
 import { PartInformation } from "./global/types/part-information";
 import { DotNetObjectReference, MockJson } from "./global/types/components";
 import { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
@@ -14,6 +15,7 @@ import { FormHook } from "./global/lib/form-hook";
 import { ActiveElement } from "./components/part-lookup/part-lookup";
 import { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
+export { ContactUs } from "./components/forms/contact-us-form";
 export { PartInformation } from "./global/types/part-information";
 export { DotNetObjectReference, MockJson } from "./global/types/components";
 export { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
@@ -24,9 +26,14 @@ export { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/veh
 export namespace Components {
     interface ContactUsForm {
         "baseUrl": string;
+        "brandId": string;
+        "errorCallback": (error: any) => void;
         "language": LanguageKeys;
+        "loadingChanges": (loading: boolean) => void;
         "queryString": string;
+        "recaptchaKey": string;
         "structure": string;
+        "successCallback": (values: ContactUs) => void;
         "theme": string;
     }
     interface DeadStockLookup {
@@ -411,9 +418,14 @@ declare global {
 declare namespace LocalJSX {
     interface ContactUsForm {
         "baseUrl"?: string;
+        "brandId"?: string;
+        "errorCallback"?: (error: any) => void;
         "language"?: LanguageKeys;
+        "loadingChanges"?: (loading: boolean) => void;
         "queryString"?: string;
+        "recaptchaKey"?: string;
         "structure"?: string;
+        "successCallback"?: (values: ContactUs) => void;
         "theme"?: string;
     }
     interface DeadStockLookup {

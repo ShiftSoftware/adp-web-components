@@ -29,6 +29,7 @@
     "ServicePriceInquiry": "ServicePriceInquiry"
   },
   "forms": {
+    "reCaptchaIsRequired": "Требуется капча",
     "inputValueIsIncorrect": "Значение поля неверно.",
 
     "contactUs": {

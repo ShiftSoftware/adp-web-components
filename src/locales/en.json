@@ -29,6 +29,7 @@
     "ServicePriceInquiry": "ServicePriceInquiry"
   },
   "forms": {
+    "reCaptchaIsRequired": "Required Captcha",
     "inputValueIsIncorrect": "Field value is incorrect.",
 
     "contactUs": {
