@@ -107,9 +107,9 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
   @Prop() queryString: string = '';
   @Prop() language: LanguageKeys = 'en';
   @Prop() errorCallback: (error: any) => void;
+  @Prop() successCallback: (values: any) => void;
   @Prop() structure: string = '["submit.Submit"]';
   @Prop() loadingChanges: (loading: boolean) => void;
-  @Prop() successCallback: (values: ContactUs) => void;
   @Prop() recaptchaKey: string = '6Lehq6IpAAAAAETTDS2Zh60nHIT1a8oVkRtJ2WsA';
 
   @State() isLoading: boolean;
@@ -174,12 +174,13 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
           'Brand': this.brandId,
           'Recaptcha-Token': token,
           'Accept-Language': this.language,
+          'Content-Type': 'application/json',
         },
       });
 
-      console.log(response);
+      const data = await response.json();
 
-      if (this.successCallback) this.successCallback(formValues);
+      if (this.successCallback) this.successCallback(data);
     } catch (error) {
       console.log(error);
       if (this.errorCallback) this.errorCallback(error);
