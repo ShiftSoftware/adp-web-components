@@ -1,39 +1,5 @@
-import { AnyObjectSchema } from 'yup';
-
-export interface FormInputInterface {
-  name: string;
-  label: string;
-  class: string;
-  isError: boolean;
-  disabled: boolean;
-  labelClass: string;
-  errorClass: string;
-  errorMessage: string;
-  containerClass: string;
-}
-
-export interface FormHookInterface<T> {
-  el: HTMLElement;
-  renderControl: {};
-  isLoading: boolean;
-  formSubmit: (formValues: T) => void;
-}
-
-type FieldType = 'text';
-
-type ValidationType = 'onSubmit' | 'always';
-
-interface Field {
-  name: string;
-  isError: boolean;
-  disabled: boolean;
-  errorMessage: string;
-  onInput: (event: InputEvent) => void;
-}
-
-export interface FormStateOptions {
-  validationType?: ValidationType;
-}
+import { AnyObjectSchema, SchemaDescription } from 'yup';
+import { Field, FieldType, FormHookInterface, FormStateOptions, ValidationType } from '~types/forms';
 
 export class FormHook<T> {
   private isSubmitted = false;
@@ -55,7 +21,9 @@ export class FormHook<T> {
   getFormErrors = () => this.formErrors;
 
   getValues = () => {
-    const form = this.context.el.shadowRoot.querySelector('form') as HTMLFormElement;
+    const formDom = this.context.el.shadowRoot || this.context.el;
+
+    const form = formDom.querySelector('form') as HTMLFormElement;
     const formData = new FormData(form);
     const formObject = Object.fromEntries(formData.entries() as Iterable<[string, FormDataEntryValue]>);
 
@@ -64,7 +32,9 @@ export class FormHook<T> {
 
   private focusFirstInput = (errorFields: Partial<Field>[]) => {
     if (errorFields.length) {
-      const domElements = errorFields.map(field => this.context.el.shadowRoot.querySelector(`input[name="${field.name}"]`)).filter(dom => dom) as HTMLInputElement[];
+      const formDom = this.context.el.shadowRoot || this.context.el;
+
+      const domElements = errorFields.map(field => formDom.querySelector(`*[name="${field.name}"]`)).filter(dom => dom) as HTMLInputElement[];
 
       const sortedDomElements = domElements.sort((a, b) => {
         if (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) return -1; // a comes before b
@@ -84,9 +54,9 @@ export class FormHook<T> {
       try {
         this.isSubmitted = true;
         this.context.isLoading = true;
-        this.signal({ isError: false });
+        this.signal({ isError: false, disabled: true });
         const formObject = this.getValues();
-        const values = await this.schemaObject.validate(formObject, { abortEarly: false, strict: true });
+        const values = await this.schemaObject.validate(formObject, { abortEarly: false });
         await this.context.formSubmit(values);
       } catch (error) {
         if (error.name === 'ValidationError') {
@@ -96,32 +66,50 @@ export class FormHook<T> {
           error.inner.forEach((element: { path: string; message: string }) => {
             if (element.path) {
               this.formErrors[element.path] = element.message;
-              if (!errorFields.find(field => field.name === element.path))
+              if (!errorFields.find(field => field.name === element.path)) {
                 errorFields.push({
                   isError: true,
                   name: element.path,
                   errorMessage: element.message,
                 });
+              }
             }
           });
+
           this.signal(errorFields);
           this.focusFirstInput(errorFields);
         } else console.error('Unexpected Error:', error);
       } finally {
+        this.signal({ disabled: false });
         this.context.isLoading = false;
       }
     })();
   };
 
   newController = (name: string, fieldType: FieldType) => {
-    if (fieldType === 'text')
+    const validationDescription = this.schemaObject.describe().fields[name] as SchemaDescription;
+
+    const sharedFields = {
+      name,
+      fieldType,
+      isError: false,
+      disabled: false,
+      errorMessage: '',
+      isRequired: validationDescription?.tests.some(test => test.name === 'required'),
+    };
+
+    if (fieldType === 'text' || fieldType === 'number' || fieldType === 'text-area')
       this.subscribedFields[name] = {
-        name,
-        isError: false,
-        disabled: false,
-        errorMessage: '',
-        onInput: (event: InputEvent) => {
+        ...sharedFields,
+        inputChanges: (event: InputEvent) => {
           const value = (event.target as HTMLInputElement).value;
+          this.onChanges(name, value);
+        },
+      };
+    else if (fieldType === 'select')
+      this.subscribedFields[name] = {
+        ...sharedFields,
+        inputChanges: (value: string) => {
           this.onChanges(name, value);
         },
       };

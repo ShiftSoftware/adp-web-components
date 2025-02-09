@@ -3,16 +3,54 @@
   "direction": "ltr",
   "language": "русский",
   "noData": "Данных нет.",
+  "general": {
+    "noSelectOptions": "Вариантов нет."
+  },
   "errors": {
+    "noBaseUrl": "Укажите базовый URL",
     "noPartsFound": "Детали не найдены",
     "invalidVin": "Недействительный Вин",
-    "noBaseUrl": "Укажите базовый URL",
     "vinNumberRequired": "требуется вин-код",
     "noServiceAvailable": "Нет доступных услуг",
-    "wrongResponseFormat": "Неправильный формат ответа",
     "partNumberRequired": "Требуется номер детали",
+    "wrongResponseFormat": "Неправильный формат ответа",
+    "wrongFormStructure": "Структура формы недействительна.",
     "wildCard": "Произошла неожиданная ошибка, пожалуйста, попробуйте еще раз позже.",
     "requestFailedPleaseTryAgainLater": "Запрос не удался, попробуйте еще раз позже"
+  },
+  "generalTicketTypes": {
+    "TLP": "TLP",
+    "Complaint": "Жалоба",
+    "PartInquiry": "PartInquiry",
+    "SalesCampaign": "SalesCampaign",
+    "GeneralInquiry": "Общий запрос",
+    "ServiceCampaign": "ServiceCampaign",
+    "InstallmentPayment": "InstallmentPayment",
+    "ServicePriceInquiry": "ServicePriceInquiry"
+  },
+  "forms": {
+    "reCaptchaIsRequired": "Требуется капча",
+    "inputValueIsIncorrect": "Значение поля неверно.",
+
+    "contactUs": {
+      "fullName": "Полное имя",
+      "fullNameIsRequired": "Необходимо указать полное имя.",
+      "fullNameMinimum": "Полное имя должно содержать не менее 3 символов.",
+      "emailAddress": "Адрес электронной почты",
+      "emailAddressNotValid": "Пожалуйста, введите действительный адрес электронной почты.",
+      "city": "город",
+      "selectCity": "Выберите город.",
+      "cityIsRequired": "Город обязателен.",
+      "phoneNumber": "Номер телефона",
+      "phoneNumberIsRequired": "Номер телефона обязателен.",
+      "phoneNumberFormatInvalid": "Неверный формат номера телефона.",
+      "inquiryType": "Тип запроса",
+      "selectInquiryType": "Выберите тип запроса",
+      "inquiryTypeIsRequired": "Требуется указать тип запроса.",
+      "writeAMessage": "Написать сообщение",
+      "leaveUsMessage": "Оставьте нам сообщение",
+      "messageIsRequired": "Сообщение обязательно."
+    }
   },
   "vehicleLookup": {
     "warranty": {

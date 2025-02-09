@@ -56,6 +56,7 @@ export const config: Config = {
     },
   ],
   devServer: {
+    port: 3000,
     reloadStrategy: 'pageReload',
   },
   testing: {

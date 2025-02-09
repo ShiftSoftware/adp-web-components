@@ -8,6 +8,7 @@ import CardsContainer from './components/CardsContainer';
 import cn from '~lib/cn';
 import { getLocaleLanguage } from '~lib/get-local-language';
 
+import { Grecaptcha } from '~types/general';
 import { AppStates, MockJson } from '~types/components';
 import { VehicleInformation, Warranty } from '~types/vehicle-information';
 import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/locales';
@@ -16,16 +17,7 @@ import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicle
 
 let mockData: MockJson<VehicleInformation> = {};
 
-declare const grecaptcha: {
-  getResponse(): string;
-  reset(widgetId?: number): void;
-  ready(callback: () => void): void;
-  execute(siteKey: string, options: { action: string }): Promise<string>;
-  render(
-    container: HTMLElement | string,
-    parameters: { 'sitekey': string; 'callback'?: (token: string) => void; 'error-callback'?: () => void; 'expired-callback'?: () => void },
-  ): number;
-};
+declare const grecaptcha: Grecaptcha;
 
 @Component({
   shadow: true,

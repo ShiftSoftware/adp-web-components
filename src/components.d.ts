@@ -6,18 +6,36 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
+import { ContactUs } from "./components/forms/contact-us-form";
 import { PartInformation } from "./global/types/part-information";
 import { DotNetObjectReference, MockJson } from "./global/types/components";
 import { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
+import { FormElementMapper, FormFieldParams, FormInputChanges, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
+import { FormHook } from "./global/lib/form-hook";
 import { ActiveElement } from "./components/part-lookup/part-lookup";
 import { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
+export { ContactUs } from "./components/forms/contact-us-form";
 export { PartInformation } from "./global/types/part-information";
 export { DotNetObjectReference, MockJson } from "./global/types/components";
 export { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
+export { FormElementMapper, FormFieldParams, FormInputChanges, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
+export { FormHook } from "./global/lib/form-hook";
 export { ActiveElement } from "./components/part-lookup/part-lookup";
 export { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export namespace Components {
+    interface ContactUsForm {
+        "baseUrl": string;
+        "brandId": string;
+        "errorCallback": (error: any) => void;
+        "language": LanguageKeys;
+        "loadingChanges": (loading: boolean) => void;
+        "queryString": string;
+        "recaptchaKey": string;
+        "structure": string;
+        "successCallback": (values: ContactUs) => void;
+        "theme": string;
+    }
     interface DeadStockLookup {
         "baseUrl": string;
         "errorCallback": (errorMessage: ErrorKeys) => void;
@@ -74,16 +92,66 @@ export namespace Components {
     }
     interface FormInput {
         "class": string;
-        "containerClass": string;
+        "componentClass": string;
+        "componentId": string;
         "disabled": boolean;
-        "errorClass": string;
         "errorMessage": string;
+        "formLocaleName": LocaleFormKeys;
+        "inputChanges": FormInputChanges;
+        "inputPreFix": string;
         "isError": boolean;
+        "isRequired": boolean;
         "label": string;
-        "labelClass": string;
+        "language": LanguageKeys;
         "name": string;
+        "placeholder": string;
+        "type": string;
     }
-    interface GeneralInquiryForm {
+    interface FormSelect {
+        "componentClass": string;
+        "componentId": string;
+        "disabled": boolean;
+        "errorMessage": string;
+        "fetcher": FormSelectFetcher;
+        "formLocaleName": string;
+        "inputChanges": FormInputChanges;
+        "isError": boolean;
+        "isRequired": boolean;
+        "label": string;
+        "language": LanguageKeys;
+        "name": string;
+        "placeholder": string;
+    }
+    interface FormStructure {
+        "form": FormHook<any>;
+        "formElementMapper": FormElementMapper;
+        "formFieldParams": FormFieldParams;
+        "isLoading": boolean;
+        "language": LanguageKeys;
+        "renderControl": {};
+        "structureObject": StructureObject;
+    }
+    interface FormStructureError {
+        "language": LanguageKeys;
+    }
+    interface FormSubmit {
+        "isLoading": boolean;
+        "params": FormFieldParams;
+        "structureElement": StructureObject;
+    }
+    interface FormTextArea {
+        "componentClass": string;
+        "componentId": string;
+        "disabled": boolean;
+        "errorMessage": string;
+        "formLocaleName": LocaleFormKeys;
+        "inputChanges": FormInputChanges;
+        "isError": boolean;
+        "isRequired": boolean;
+        "label": string;
+        "language": LanguageKeys;
+        "name": string;
+        "placeholder": string;
     }
     interface ManufacturerLookup {
         "baseUrl": string;
@@ -210,11 +278,13 @@ export namespace Components {
         "userId"?: string;
     }
 }
-export interface FormInputCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLFormInputElement;
-}
 declare global {
+    interface HTMLContactUsFormElement extends Components.ContactUsForm, HTMLStencilElement {
+    }
+    var HTMLContactUsFormElement: {
+        prototype: HTMLContactUsFormElement;
+        new (): HTMLContactUsFormElement;
+    };
     interface HTMLDeadStockLookupElement extends Components.DeadStockLookup, HTMLStencilElement {
     }
     var HTMLDeadStockLookupElement: {
@@ -239,28 +309,41 @@ declare global {
         prototype: HTMLDynamicRedeemElement;
         new (): HTMLDynamicRedeemElement;
     };
-    interface HTMLFormInputElementEventMap {
-        "onInput": any;
-    }
     interface HTMLFormInputElement extends Components.FormInput, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLFormInputElementEventMap>(type: K, listener: (this: HTMLFormInputElement, ev: FormInputCustomEvent<HTMLFormInputElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLFormInputElementEventMap>(type: K, listener: (this: HTMLFormInputElement, ev: FormInputCustomEvent<HTMLFormInputElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLFormInputElement: {
         prototype: HTMLFormInputElement;
         new (): HTMLFormInputElement;
     };
-    interface HTMLGeneralInquiryFormElement extends Components.GeneralInquiryForm, HTMLStencilElement {
+    interface HTMLFormSelectElement extends Components.FormSelect, HTMLStencilElement {
     }
-    var HTMLGeneralInquiryFormElement: {
-        prototype: HTMLGeneralInquiryFormElement;
-        new (): HTMLGeneralInquiryFormElement;
+    var HTMLFormSelectElement: {
+        prototype: HTMLFormSelectElement;
+        new (): HTMLFormSelectElement;
+    };
+    interface HTMLFormStructureElement extends Components.FormStructure, HTMLStencilElement {
+    }
+    var HTMLFormStructureElement: {
+        prototype: HTMLFormStructureElement;
+        new (): HTMLFormStructureElement;
+    };
+    interface HTMLFormStructureErrorElement extends Components.FormStructureError, HTMLStencilElement {
+    }
+    var HTMLFormStructureErrorElement: {
+        prototype: HTMLFormStructureErrorElement;
+        new (): HTMLFormStructureErrorElement;
+    };
+    interface HTMLFormSubmitElement extends Components.FormSubmit, HTMLStencilElement {
+    }
+    var HTMLFormSubmitElement: {
+        prototype: HTMLFormSubmitElement;
+        new (): HTMLFormSubmitElement;
+    };
+    interface HTMLFormTextAreaElement extends Components.FormTextArea, HTMLStencilElement {
+    }
+    var HTMLFormTextAreaElement: {
+        prototype: HTMLFormTextAreaElement;
+        new (): HTMLFormTextAreaElement;
     };
     interface HTMLManufacturerLookupElement extends Components.ManufacturerLookup, HTMLStencilElement {
     }
@@ -311,12 +394,17 @@ declare global {
         new (): HTMLWarrantyDetailsElement;
     };
     interface HTMLElementTagNameMap {
+        "contact-us-form": HTMLContactUsFormElement;
         "dead-stock-lookup": HTMLDeadStockLookupElement;
         "distributor-lookup": HTMLDistributorLookupElement;
         "dynamic-claim": HTMLDynamicClaimElement;
         "dynamic-redeem": HTMLDynamicRedeemElement;
         "form-input": HTMLFormInputElement;
-        "general-inquiry-form": HTMLGeneralInquiryFormElement;
+        "form-select": HTMLFormSelectElement;
+        "form-structure": HTMLFormStructureElement;
+        "form-structure-error": HTMLFormStructureErrorElement;
+        "form-submit": HTMLFormSubmitElement;
+        "form-text-area": HTMLFormTextAreaElement;
         "manufacturer-lookup": HTMLManufacturerLookupElement;
         "paint-thickness": HTMLPaintThicknessElement;
         "part-lookup": HTMLPartLookupElement;
@@ -328,6 +416,18 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface ContactUsForm {
+        "baseUrl"?: string;
+        "brandId"?: string;
+        "errorCallback"?: (error: any) => void;
+        "language"?: LanguageKeys;
+        "loadingChanges"?: (loading: boolean) => void;
+        "queryString"?: string;
+        "recaptchaKey"?: string;
+        "structure"?: string;
+        "successCallback"?: (values: ContactUs) => void;
+        "theme"?: string;
+    }
     interface DeadStockLookup {
         "baseUrl"?: string;
         "errorCallback"?: (errorMessage: ErrorKeys) => void;
@@ -369,17 +469,66 @@ declare namespace LocalJSX {
     }
     interface FormInput {
         "class"?: string;
-        "containerClass"?: string;
+        "componentClass"?: string;
+        "componentId"?: string;
         "disabled"?: boolean;
-        "errorClass"?: string;
         "errorMessage"?: string;
+        "formLocaleName"?: LocaleFormKeys;
+        "inputChanges"?: FormInputChanges;
+        "inputPreFix"?: string;
         "isError"?: boolean;
+        "isRequired"?: boolean;
         "label"?: string;
-        "labelClass"?: string;
+        "language"?: LanguageKeys;
         "name"?: string;
-        "onOnInput"?: (event: FormInputCustomEvent<any>) => void;
+        "placeholder"?: string;
+        "type"?: string;
     }
-    interface GeneralInquiryForm {
+    interface FormSelect {
+        "componentClass"?: string;
+        "componentId"?: string;
+        "disabled"?: boolean;
+        "errorMessage"?: string;
+        "fetcher"?: FormSelectFetcher;
+        "formLocaleName"?: string;
+        "inputChanges"?: FormInputChanges;
+        "isError"?: boolean;
+        "isRequired"?: boolean;
+        "label"?: string;
+        "language"?: LanguageKeys;
+        "name"?: string;
+        "placeholder"?: string;
+    }
+    interface FormStructure {
+        "form"?: FormHook<any>;
+        "formElementMapper"?: FormElementMapper;
+        "formFieldParams"?: FormFieldParams;
+        "isLoading"?: boolean;
+        "language"?: LanguageKeys;
+        "renderControl"?: {};
+        "structureObject"?: StructureObject;
+    }
+    interface FormStructureError {
+        "language"?: LanguageKeys;
+    }
+    interface FormSubmit {
+        "isLoading"?: boolean;
+        "params"?: FormFieldParams;
+        "structureElement"?: StructureObject;
+    }
+    interface FormTextArea {
+        "componentClass"?: string;
+        "componentId"?: string;
+        "disabled"?: boolean;
+        "errorMessage"?: string;
+        "formLocaleName"?: LocaleFormKeys;
+        "inputChanges"?: FormInputChanges;
+        "isError"?: boolean;
+        "isRequired"?: boolean;
+        "label"?: string;
+        "language"?: LanguageKeys;
+        "name"?: string;
+        "placeholder"?: string;
     }
     interface ManufacturerLookup {
         "baseUrl"?: string;
@@ -478,12 +627,17 @@ declare namespace LocalJSX {
         "userId"?: string;
     }
     interface IntrinsicElements {
+        "contact-us-form": ContactUsForm;
         "dead-stock-lookup": DeadStockLookup;
         "distributor-lookup": DistributorLookup;
         "dynamic-claim": DynamicClaim;
         "dynamic-redeem": DynamicRedeem;
         "form-input": FormInput;
-        "general-inquiry-form": GeneralInquiryForm;
+        "form-select": FormSelect;
+        "form-structure": FormStructure;
+        "form-structure-error": FormStructureError;
+        "form-submit": FormSubmit;
+        "form-text-area": FormTextArea;
         "manufacturer-lookup": ManufacturerLookup;
         "paint-thickness": PaintThickness;
         "part-lookup": PartLookup;
@@ -498,12 +652,17 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "contact-us-form": LocalJSX.ContactUsForm & JSXBase.HTMLAttributes<HTMLContactUsFormElement>;
             "dead-stock-lookup": LocalJSX.DeadStockLookup & JSXBase.HTMLAttributes<HTMLDeadStockLookupElement>;
             "distributor-lookup": LocalJSX.DistributorLookup & JSXBase.HTMLAttributes<HTMLDistributorLookupElement>;
             "dynamic-claim": LocalJSX.DynamicClaim & JSXBase.HTMLAttributes<HTMLDynamicClaimElement>;
             "dynamic-redeem": LocalJSX.DynamicRedeem & JSXBase.HTMLAttributes<HTMLDynamicRedeemElement>;
             "form-input": LocalJSX.FormInput & JSXBase.HTMLAttributes<HTMLFormInputElement>;
-            "general-inquiry-form": LocalJSX.GeneralInquiryForm & JSXBase.HTMLAttributes<HTMLGeneralInquiryFormElement>;
+            "form-select": LocalJSX.FormSelect & JSXBase.HTMLAttributes<HTMLFormSelectElement>;
+            "form-structure": LocalJSX.FormStructure & JSXBase.HTMLAttributes<HTMLFormStructureElement>;
+            "form-structure-error": LocalJSX.FormStructureError & JSXBase.HTMLAttributes<HTMLFormStructureErrorElement>;
+            "form-submit": LocalJSX.FormSubmit & JSXBase.HTMLAttributes<HTMLFormSubmitElement>;
+            "form-text-area": LocalJSX.FormTextArea & JSXBase.HTMLAttributes<HTMLFormTextAreaElement>;
             "manufacturer-lookup": LocalJSX.ManufacturerLookup & JSXBase.HTMLAttributes<HTMLManufacturerLookupElement>;
             "paint-thickness": LocalJSX.PaintThickness & JSXBase.HTMLAttributes<HTMLPaintThicknessElement>;
             "part-lookup": LocalJSX.PartLookup & JSXBase.HTMLAttributes<HTMLPartLookupElement>;
