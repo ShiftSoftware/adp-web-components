@@ -85,11 +85,11 @@ export namespace Components {
     }
     interface FormInput {
         "class": string;
-        "className": string;
+        "componentClass": string;
+        "componentId": string;
         "disabled": boolean;
         "errorMessage": string;
         "formLocaleName": LocaleFormKeys;
-        "id": string;
         "inputChanges": FormInputChanges;
         "inputPreFix": string;
         "isError": boolean;
@@ -101,12 +101,12 @@ export namespace Components {
         "type": string;
     }
     interface FormSelect {
-        "className": string;
+        "componentClass": string;
+        "componentId": string;
         "disabled": boolean;
         "errorMessage": string;
         "fetcher": FormSelectFetcher;
         "formLocaleName": string;
-        "id": string;
         "inputChanges": FormInputChanges;
         "isError": boolean;
         "isRequired": boolean;
@@ -133,11 +133,11 @@ export namespace Components {
         "structureElement": StructureObject;
     }
     interface FormTextArea {
-        "className": string;
+        "componentClass": string;
+        "componentId": string;
         "disabled": boolean;
         "errorMessage": string;
         "formLocaleName": LocaleFormKeys;
-        "id": string;
         "inputChanges": FormInputChanges;
         "isError": boolean;
         "isRequired": boolean;
@@ -457,11 +457,11 @@ declare namespace LocalJSX {
     }
     interface FormInput {
         "class"?: string;
-        "className"?: string;
+        "componentClass"?: string;
+        "componentId"?: string;
         "disabled"?: boolean;
         "errorMessage"?: string;
         "formLocaleName"?: LocaleFormKeys;
-        "id"?: string;
         "inputChanges"?: FormInputChanges;
         "inputPreFix"?: string;
         "isError"?: boolean;
@@ -473,12 +473,12 @@ declare namespace LocalJSX {
         "type"?: string;
     }
     interface FormSelect {
-        "className"?: string;
+        "componentClass"?: string;
+        "componentId"?: string;
         "disabled"?: boolean;
         "errorMessage"?: string;
         "fetcher"?: FormSelectFetcher;
         "formLocaleName"?: string;
-        "id"?: string;
         "inputChanges"?: FormInputChanges;
         "isError"?: boolean;
         "isRequired"?: boolean;
@@ -505,11 +505,11 @@ declare namespace LocalJSX {
         "structureElement"?: StructureObject;
     }
     interface FormTextArea {
-        "className"?: string;
+        "componentClass"?: string;
+        "componentId"?: string;
         "disabled"?: boolean;
         "errorMessage"?: string;
         "formLocaleName"?: LocaleFormKeys;
-        "id"?: string;
         "inputChanges"?: FormInputChanges;
         "isError"?: boolean;
         "isRequired"?: boolean;

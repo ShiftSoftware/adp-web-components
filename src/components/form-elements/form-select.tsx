@@ -15,14 +15,14 @@ import Loader from '~assets/loader.svg';
   styleUrl: 'form-select.css',
 })
 export class FormSelect {
-  @Prop() id: string;
   @Prop() name: string;
   @Prop() label: string;
   @Prop() isError: boolean;
   @Prop() disabled: boolean;
-  @Prop() className: string;
+  @Prop() componentId: string;
   @Prop() isRequired: boolean;
   @Prop() errorMessage: string;
+  @Prop() componentClass: string;
   @Prop() formLocaleName: string;
   @Prop() fetcher: FormSelectFetcher;
   @Prop() language: LanguageKeys = 'en';
@@ -139,7 +139,7 @@ export class FormSelect {
 
     return (
       <Host>
-        <label id={this.id} class={cn('relative w-full inline-flex flex-col', this.className)}>
+        <label id={this.componentId} class={cn('relative w-full inline-flex flex-col', this.componentClass)}>
           {this.label && (
             <div class="mb-[4px]">
               {texts[this.label] || this.label}

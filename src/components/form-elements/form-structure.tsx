@@ -67,13 +67,13 @@ export class FormStructure {
       const fieldController = this.fieldControllers[structureElement.element];
 
       if (fieldController.fieldType === 'text' || fieldController.fieldType === 'number')
-        return <form-input id={structureElement.id} className={structureElement.class} language={this.language} {...fieldController} {...params} />;
+        return <form-input componentId={structureElement.id} componentClass={structureElement.class} language={this.language} {...fieldController} {...params} />;
 
       if (fieldController.fieldType === 'text-area')
-        return <form-text-area id={structureElement.id} className={structureElement.class} language={this.language} {...fieldController} {...params} />;
+        return <form-text-area componentId={structureElement.id} componentClass={structureElement.class} language={this.language} {...fieldController} {...params} />;
 
       if (fieldController.fieldType === 'select')
-        return <form-select id={structureElement.id} className={structureElement.class} language={this.language} {...fieldController} {...params} />;
+        return <form-select componentId={structureElement.id} componentClass={structureElement.class} language={this.language} {...fieldController} {...params} />;
     }
 
     return false;
@@ -83,9 +83,11 @@ export class FormStructure {
     const { formController } = this.form;
 
     return (
-      <form dir={this.locale.direction} {...formController}>
-        {this.renderLoop(this.structureObject)}
-      </form>
+      <Host>
+        <form dir={this.locale.direction} {...formController}>
+          {this.renderLoop(this.structureObject)}
+        </form>
+      </Host>
     );
   }
 }

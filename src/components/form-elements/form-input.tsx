@@ -12,19 +12,19 @@ import { FormInputChanges, LocaleFormKeys } from '~types/forms';
   styleUrl: 'form-input.css',
 })
 export class FormInput {
-  @Prop() id: string;
   @Prop() name: string;
   @Prop() type: string;
   @Prop() label: string;
   // this will be class = 'hydrate' and it will render last component render
   @Prop() class: string;
   @Prop() isError: boolean;
-  @Prop() className: string;
   @Prop() disabled: boolean;
+  @Prop() componentId: string;
   @Prop() inputPreFix: string;
   @Prop() isRequired: boolean;
   @Prop() placeholder: string;
   @Prop() errorMessage: string;
+  @Prop() componentClass: string;
   @Prop() language: LanguageKeys = 'en';
   @Prop() formLocaleName: LocaleFormKeys;
   @Prop() inputChanges: FormInputChanges;
@@ -53,7 +53,7 @@ export class FormInput {
 
     return (
       <Host>
-        <label id={this.id} class={cn('relative w-full inline-flex flex-col', this.className)}>
+        <label id={this.componentId} class={cn('relative w-full inline-flex flex-col', this.componentClass)}>
           {label && (
             <div class="mb-[4px]">
               {texts[label] || label}
