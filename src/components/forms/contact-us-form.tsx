@@ -166,12 +166,10 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
       if (this.loadingChanges) this.loadingChanges(true);
 
       const token = await grecaptcha.execute(this.recaptchaKey, { action: 'submit' });
-      console.log(token);
-
-      console.log(formValues);
 
       const response = await fetch(`${this.baseUrl}?${this.queryString}`, {
         method: 'post',
+        body: JSON.stringify(formValues),
         headers: {
           'Brand': this.brandId,
           'Recaptcha-Token': token,
