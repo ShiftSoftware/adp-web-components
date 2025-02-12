@@ -1,104 +1,26 @@
-import { InferType, object, string } from 'yup';
 import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { Grecaptcha } from '~types/general';
+import { FormHookInterface, StructureObject } from '~types/forms';
 import { LanguageKeys, Locale, localeSchema } from '~types/locales';
-import { FormElementMapper, FormFieldParams, FormHookInterface, FormSelectItem, StructureObject } from '~types/forms';
 
 import cn from '~lib/cn';
 import { FormHook } from '~lib/form-hook';
 import { getLocaleLanguage } from '~lib/get-local-language';
 import { isValidStructure } from '~lib/validate-form-structure';
 
-import { CITY_ENDPOINT } from '~api/urls';
+import { formFieldParams } from './contact-us/params';
+import { formElementMapper } from './contact-us/mapper';
+import { ContactUs, contactUsSchema } from './contact-us/validations';
+
+import themes from './contact-us/themes.json';
 
 declare const grecaptcha: Grecaptcha;
-
-const contactUsSchema = object({
-  cityId: string(),
-  email: string().email('emailAddressNotValid'),
-  message: string().required('messageIsRequired'),
-  generalTicketType: string().required('inquiryTypeIsRequired'),
-  name: string().required('fullNameIsRequired').min(3, 'fullNameMinimum'),
-  phone: string()
-    .required('phoneNumberIsRequired')
-    .transform(value => value.replace(/^0/, ''))
-    .matches(/^\d+$/, 'phoneNumberFormatInvalid')
-    .length(10, 'phoneNumberFormatInvalid'),
-});
-
-export type ContactUs = InferType<typeof contactUsSchema>;
-
-const formElementMapper: FormElementMapper = {
-  name: 'text',
-  email: 'text',
-  phone: 'number',
-  cityId: 'select',
-  message: 'text-area',
-  generalTicketType: 'select',
-};
-
-const formFieldParams: FormFieldParams = {
-  name: {
-    label: 'fullName',
-    formLocaleName: 'contactUs',
-  },
-  email: {
-    type: 'email',
-    label: 'emailAddress',
-    formLocaleName: 'contactUs',
-  },
-  message: {
-    label: 'writeAMessage',
-    formLocaleName: 'contactUs',
-    placeholder: 'leaveUsMessage',
-  },
-  phone: { inputPreFix: '+964', type: 'number', label: 'phoneNumber', formLocaleName: 'contactUs' },
-  cityId: {
-    label: 'city',
-    placeholder: 'selectCity',
-    formLocaleName: 'contactUs',
-    fetcher: async (language: LanguageKeys, signal: AbortSignal): Promise<FormSelectItem[]> => {
-      const response = await fetch(CITY_ENDPOINT, { signal, headers: { 'Accept-Language': language } });
-
-      const arrayRes = (await response.json()) as { Name: string; ID: string; IntegrationId: string }[];
-
-      const selectItems = arrayRes.map(item => ({ label: item.Name, value: item.ID })) as FormSelectItem[];
-
-      return selectItems;
-    },
-  },
-  generalTicketType: {
-    label: 'inquiryType',
-    formLocaleName: 'contactUs',
-    placeholder: 'selectInquiryType',
-    fetcher: async (language: LanguageKeys, _: AbortSignal): Promise<FormSelectItem[]> => {
-      const ticketTypes = (await getLocaleLanguage(language)).generalTicketTypes;
-
-      const generalInquiryTypes: FormSelectItem[] = [
-        {
-          value: 'GeneralInquiry',
-          label: ticketTypes.GeneralInquiry,
-        },
-        {
-          value: 'Complaint',
-          label: ticketTypes.Complaint,
-        },
-      ];
-
-      return generalInquiryTypes;
-    },
-  },
-};
-
-const themes = {
-  tiq: '["div#container", ["div#inputs_wrapper", "name", "email", "cityId", "phone", "generalTicketType" ], "message#message",["div#recaptcha_container", "slot"], "submit.Submit"]',
-};
 
 @Component({
   shadow: false,
   tag: 'contact-us-form',
-  styleUrl: 'contact-us-form.css',
+  styleUrl: 'contact-us/form.css',
 })
 export class ContactUsForm implements FormHookInterface<ContactUs> {
   @Prop() theme: string;

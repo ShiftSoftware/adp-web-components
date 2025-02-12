@@ -37,9 +37,9 @@ const recursiveParser = (structuredArray: StructureArray): StructureObject => {
 
 export const formStructureStringExample = '[["div.kodo#j7","name.name#name"], "div.d3#s2"]';
 
-export const isValidStructure = (structureString: string): StructureObject => {
+export const isValidStructure = (requestedStructure: string | StructureArray): StructureObject => {
   try {
-    const parsedStructure = JSON.parse(structureString) as StructureArray;
+    const parsedStructure: StructureArray = typeof requestedStructure === 'string' ? JSON.parse(requestedStructure) : requestedStructure;
 
     if (!Array.isArray(parsedStructure) || !parsedStructure.length) throw new Error('Invalid structure');
 

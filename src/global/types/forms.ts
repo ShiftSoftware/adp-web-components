@@ -55,7 +55,7 @@ export type StructureObject = FormElementStructure | null;
 
 export type LocaleFormKeys = 'contactUs';
 
-type Params = {
+export type Params = {
   [key: string]: any;
   formLocaleName: LocaleFormKeys;
 };
