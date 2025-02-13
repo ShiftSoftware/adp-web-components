@@ -4,6 +4,7 @@ import { getLocaleLanguage } from '~lib/get-local-language';
 
 import { LanguageKeys } from '~types/locales';
 import { FormFieldParams, FormSelectItem, Params } from '~types/forms';
+import { phoneValidator } from './validations';
 
 const name: Params = {
   label: 'fullName',
@@ -22,7 +23,21 @@ const message: Params = {
   placeholder: 'leaveUsMessage',
 };
 
-const phone: Params = { inputPreFix: '+964', type: 'number', label: 'phoneNumber', formLocaleName: 'contactUs' };
+const phone: Params = {
+  type: 'text',
+  label: 'phoneNumber',
+  numberDirection: true,
+  formLocaleName: 'contactUs',
+  defaultValue: phoneValidator.default,
+  onChangeMiddleware: (event: InputEvent) => {
+    const target = event.target as HTMLInputElement;
+
+    phoneValidator.reset();
+    target.value = phoneValidator.input(target.value as string);
+
+    return event;
+  },
+};
 
 const cityId: Params = {
   label: 'city',

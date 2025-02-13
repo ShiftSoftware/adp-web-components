@@ -24,10 +24,13 @@ export class FormInput {
   @Prop() isRequired: boolean;
   @Prop() placeholder: string;
   @Prop() errorMessage: string;
+  @Prop() defaultValue?: string;
   @Prop() componentClass: string;
+  @Prop() numberDirection?: boolean;
   @Prop() language: LanguageKeys = 'en';
   @Prop() formLocaleName: LocaleFormKeys;
   @Prop() inputChanges: FormInputChanges;
+  @Prop() onChangeMiddleware?: (event: InputEvent) => InputEvent;
 
   @State() locale: Locale = localeSchema.getDefault();
 
@@ -51,6 +54,8 @@ export class FormInput {
 
     const texts = this.locale.forms[this.formLocaleName];
 
+    const onInput = this.onChangeMiddleware ? event => inputChanges(this.onChangeMiddleware(event)) : inputChanges;
+
     return (
       <Host>
         <label id={this.componentId} class={cn('relative w-full inline-flex flex-col', this.componentClass)}>
@@ -60,18 +65,19 @@ export class FormInput {
               {isRequired && <span class="ms-0.5 text-red-600">*</span>}
             </div>
           )}
-          <div dir={type === 'number' ? 'ltr' : this.locale.direction} class={cn('relative', { 'opacity-75': disabled })}>
+          <div dir={this.numberDirection ? 'ltr' : this.locale.direction} class={cn('relative', { 'opacity-75': disabled })}>
             {this.inputPreFix && <div class="prefix absolute h-[38px] px-2 left-0 top-0 pointer-events-none items-center justify-center flex">{this.inputPreFix}</div>}
             <input
               name={name}
               type={type}
+              onInput={onInput}
               disabled={disabled}
-              onInput={inputChanges}
+              defaultValue={this.defaultValue}
               style={{ ...(prefixWidth ? { paddingLeft: `${prefixWidth}px` } : {}) }}
               placeholder={texts[placeholder] || texts[label] || placeholder || label}
               class={cn(
                 'border appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none form-input disabled:bg-white flex-1 py-[6px] px-[12px] transition duration-300 rounded-md outline-none focus:border-slate-600 focus:shadow-[0_0_0_0.2rem_rgba(71,85,105,0.25)] w-full',
-                { '!border-red-500 focus:shadow-[0_0_0_0.2rem_rgba(239,68,68,0.25)]': isError, 'rtl-form-input': this.locale.direction === 'rtl' && type === 'number' },
+                { '!border-red-500 focus:shadow-[0_0_0_0.2rem_rgba(239,68,68,0.25)]': isError, 'rtl-form-input': this.locale.direction === 'rtl' && this.numberDirection },
                 inputClass,
               )}
             />

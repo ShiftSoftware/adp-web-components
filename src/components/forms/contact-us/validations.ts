@@ -1,4 +1,16 @@
+import { AsYouType } from 'libphonenumber-js';
 import { InferType, object, string } from 'yup';
+
+export const phoneValidator = new AsYouType('IQ') as AsYouType & {
+  default: string;
+  metadata: {
+    numberingPlan: { metadata: [string] };
+  };
+};
+
+phoneValidator.default = '+' + phoneValidator.metadata.numberingPlan.metadata[0];
+
+phoneValidator.input(phoneValidator.default);
 
 export const contactUsSchema = object({
   cityId: string(),
@@ -8,9 +20,7 @@ export const contactUsSchema = object({
   name: string().required('fullNameIsRequired').min(3, 'fullNameMinimum'),
   phone: string()
     .required('phoneNumberIsRequired')
-    .transform(value => value.replace(/^0/, ''))
-    .matches(/^\d+$/, 'phoneNumberFormatInvalid')
-    .length(10, 'phoneNumberFormatInvalid'),
+    .test('libphonenumber-validation', 'phoneNumberFormatInvalid', () => phoneValidator.isValid()),
 });
 
 export type ContactUs = InferType<typeof contactUsSchema>;

@@ -92,6 +92,7 @@ export namespace Components {
         "class": string;
         "componentClass": string;
         "componentId": string;
+        "defaultValue"?: string;
         "disabled": boolean;
         "errorMessage": string;
         "formLocaleName": LocaleFormKeys;
@@ -102,6 +103,8 @@ export namespace Components {
         "label": string;
         "language": LanguageKeys;
         "name": string;
+        "numberDirection"?: boolean;
+        "onChangeMiddleware"?: (event: InputEvent) => InputEvent;
         "placeholder": string;
         "type": string;
     }
@@ -469,6 +472,7 @@ declare namespace LocalJSX {
         "class"?: string;
         "componentClass"?: string;
         "componentId"?: string;
+        "defaultValue"?: string;
         "disabled"?: boolean;
         "errorMessage"?: string;
         "formLocaleName"?: LocaleFormKeys;
@@ -479,6 +483,8 @@ declare namespace LocalJSX {
         "label"?: string;
         "language"?: LanguageKeys;
         "name"?: string;
+        "numberDirection"?: boolean;
+        "onChangeMiddleware"?: (event: InputEvent) => InputEvent;
         "placeholder"?: string;
         "type"?: string;
     }
