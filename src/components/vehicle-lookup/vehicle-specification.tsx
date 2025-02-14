@@ -162,7 +162,9 @@ export class VehicleSpecification implements VehicleInformationInterface {
                             </td>
                             {['identifiers.katashiki', 'vehicleVariantInfo.modelYear', 'vehicleVariantInfo.sfx'].map(infoPath => {
                               const [place, field] = infoPath.split('.');
-                              const cellValue = this?.vehicleInformation?.[place][field].toString();
+                              const targetPlace = this?.vehicleInformation?.[place];
+                              const cellValue = targetPlace && targetPlace[field] ? targetPlace[field].toString() : '';
+
                               return (
                                 <td key={infoPath} class={cn('px-[10px] py-[20px] text-center whitespace-nowrap')}>
                                   {cellValue.trim() ? cellValue : '...'}

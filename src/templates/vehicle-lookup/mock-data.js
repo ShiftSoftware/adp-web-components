@@ -1680,11 +1680,7 @@ const mockData = {
       },
     ],
     ssc: null,
-    vehicleVariantInfo: {
-      modelCode: '13461',
-      sfx: 'HN',
-      modelYear: 2023,
-    },
+    vehicleVariantInfo: null,
     vehicleSpecification: {
       modelDesc: 'HILUX 2.7 D/C 4*4/AT/High/ADD',
       variantDesc: '2.7L/DC/4x4/AT/High/ADD',
