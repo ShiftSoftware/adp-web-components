@@ -4,6 +4,7 @@
   "language": "arabic",
   "noData": "لا توجد بيانات متاحة.",
   "general": {
+    "close": "أغلق",
     "noSelectOptions": "لا يوجد خيارات."
   },
   "errors": {

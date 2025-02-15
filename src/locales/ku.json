@@ -4,6 +4,7 @@
   "language": "kurdish",
   "noData": "هیچ داتایەک لەبەردەستدا نییە.",
   "general": {
+    "close": "داخستن",
     "noSelectOptions": "هیچ بژاردەیەک نییە."
   },
   "errors": {

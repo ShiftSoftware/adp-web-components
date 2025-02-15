@@ -4,6 +4,7 @@
   "language": "english",
   "noData": "No data is available.",
   "general": {
+    "close": "Close",
     "noSelectOptions": "There is no options."
   },
   "errors": {

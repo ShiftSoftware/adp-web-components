@@ -18,6 +18,8 @@ export class FormHook<T> {
     if (formStateOptions?.validationType) this.validationType = formStateOptions.validationType;
   }
 
+  resetFormErrorMessage = () => (this.context.errorMessage = '');
+
   getFormErrors = () => this.formErrors;
 
   getValues = () => {

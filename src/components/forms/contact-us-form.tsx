@@ -36,6 +36,7 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
 
   @State() isLoading: boolean;
   @State() renderControl = {};
+  @State() errorMessage: string;
   @State() structureObject: StructureObject = null;
   @State() locale: Locale = localeSchema.getDefault();
 
@@ -104,8 +105,10 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
 
       if (this.successCallback) this.successCallback(data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
+
       if (this.errorCallback) this.errorCallback(error);
+      if (error?.message) this.errorMessage = error.message;
     } finally {
       if (this.loadingChanges) this.loadingChanges(false);
     }
@@ -124,6 +127,7 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
           form={this.form}
           language={this.language}
           isLoading={this.isLoading}
+          errorMessage={this.errorMessage}
           formFieldParams={formFieldParams}
           renderControl={this.renderControl}
           formElementMapper={formElementMapper}

@@ -6,6 +6,7 @@ export interface FormHookInterface<T> {
   structure: string;
   renderControl: {};
   isLoading: boolean;
+  errorMessage: string;
   language: LanguageKeys;
   structureObject: StructureObject;
   formSubmit: (formValues: T) => void;

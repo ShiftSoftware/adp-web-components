@@ -88,6 +88,11 @@ export namespace Components {
         "unInvoicedByBrokerName"?: string;
         "vin"?: string;
     }
+    interface FormDialog {
+        "dialogClosed": () => void;
+        "errorMessage": string;
+        "language": LanguageKeys;
+    }
     interface FormInput {
         "class": string;
         "componentClass": string;
@@ -124,6 +129,7 @@ export namespace Components {
         "placeholder": string;
     }
     interface FormStructure {
+        "errorMessage": string;
         "form": FormHook<any>;
         "formElementMapper": FormElementMapper;
         "formFieldParams": FormFieldParams;
@@ -310,6 +316,12 @@ declare global {
         prototype: HTMLDynamicRedeemElement;
         new (): HTMLDynamicRedeemElement;
     };
+    interface HTMLFormDialogElement extends Components.FormDialog, HTMLStencilElement {
+    }
+    var HTMLFormDialogElement: {
+        prototype: HTMLFormDialogElement;
+        new (): HTMLFormDialogElement;
+    };
     interface HTMLFormInputElement extends Components.FormInput, HTMLStencilElement {
     }
     var HTMLFormInputElement: {
@@ -400,6 +412,7 @@ declare global {
         "distributor-lookup": HTMLDistributorLookupElement;
         "dynamic-claim": HTMLDynamicClaimElement;
         "dynamic-redeem": HTMLDynamicRedeemElement;
+        "form-dialog": HTMLFormDialogElement;
         "form-input": HTMLFormInputElement;
         "form-select": HTMLFormSelectElement;
         "form-structure": HTMLFormStructureElement;
@@ -468,6 +481,11 @@ declare namespace LocalJSX {
         "unInvoicedByBrokerName"?: string;
         "vin"?: string;
     }
+    interface FormDialog {
+        "dialogClosed"?: () => void;
+        "errorMessage"?: string;
+        "language"?: LanguageKeys;
+    }
     interface FormInput {
         "class"?: string;
         "componentClass"?: string;
@@ -504,6 +522,7 @@ declare namespace LocalJSX {
         "placeholder"?: string;
     }
     interface FormStructure {
+        "errorMessage"?: string;
         "form"?: FormHook<any>;
         "formElementMapper"?: FormElementMapper;
         "formFieldParams"?: FormFieldParams;
@@ -636,6 +655,7 @@ declare namespace LocalJSX {
         "distributor-lookup": DistributorLookup;
         "dynamic-claim": DynamicClaim;
         "dynamic-redeem": DynamicRedeem;
+        "form-dialog": FormDialog;
         "form-input": FormInput;
         "form-select": FormSelect;
         "form-structure": FormStructure;
@@ -661,6 +681,7 @@ declare module "@stencil/core" {
             "distributor-lookup": LocalJSX.DistributorLookup & JSXBase.HTMLAttributes<HTMLDistributorLookupElement>;
             "dynamic-claim": LocalJSX.DynamicClaim & JSXBase.HTMLAttributes<HTMLDynamicClaimElement>;
             "dynamic-redeem": LocalJSX.DynamicRedeem & JSXBase.HTMLAttributes<HTMLDynamicRedeemElement>;
+            "form-dialog": LocalJSX.FormDialog & JSXBase.HTMLAttributes<HTMLFormDialogElement>;
             "form-input": LocalJSX.FormInput & JSXBase.HTMLAttributes<HTMLFormInputElement>;
             "form-select": LocalJSX.FormSelect & JSXBase.HTMLAttributes<HTMLFormSelectElement>;
             "form-structure": LocalJSX.FormStructure & JSXBase.HTMLAttributes<HTMLFormStructureElement>;

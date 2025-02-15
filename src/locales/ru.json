@@ -4,6 +4,7 @@
   "language": "русский",
   "noData": "Данных нет.",
   "general": {
+    "close": "Закрывать",
     "noSelectOptions": "Вариантов нет."
   },
   "errors": {

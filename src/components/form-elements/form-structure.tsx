@@ -15,6 +15,7 @@ export class FormStructure {
   @Prop() renderControl = {};
   @Prop() isLoading: boolean;
   @Prop() form: FormHook<any>;
+  @Prop() errorMessage: string;
   @Prop() language: LanguageKeys = 'en';
   @Prop() formFieldParams: FormFieldParams;
   @Prop() formElementMapper: FormElementMapper;
@@ -80,11 +81,12 @@ export class FormStructure {
   }
 
   render() {
-    const { formController } = this.form;
+    const { formController, resetFormErrorMessage } = this.form;
 
     return (
       <Host>
         <form dir={this.locale.direction} {...formController}>
+          <form-dialog dialogClosed={resetFormErrorMessage} language={this.language} errorMessage={this.errorMessage} />
           {this.renderLoop(this.structureObject)}
         </form>
       </Host>
