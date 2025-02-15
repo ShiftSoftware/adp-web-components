@@ -31,11 +31,11 @@ export class FormSubmit {
         )}
       >
         <div class="opacity-0">{this.structureElement.class}</div>
-        <div class={cn('absolute size-full top-0 left-0 flex items-center justify-center transition duration-1000', { 'translate-y-full': this.isLoading })}>
+        <div class={cn('absolute size-full top-0 left-0 flex items-center justify-center transition !duration-1000', { 'translate-y-full': this.isLoading })}>
           {this.structureElement.class}
         </div>
 
-        <div class={cn('absolute flex justify-center items-center top-0 left-0 size-full transition duration-1000 -translate-y-full', { 'translate-y-0': this.isLoading })}>
+        <div class={cn('absolute flex justify-center items-center top-0 left-0 size-full transition !duration-1000 -translate-y-full', { 'translate-y-0': this.isLoading })}>
           <img class="animate-spin-2s size-[22px]" src={Loader} />
         </div>
       </button>

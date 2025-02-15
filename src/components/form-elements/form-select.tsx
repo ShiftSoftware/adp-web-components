@@ -1,11 +1,11 @@
 import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import cn from '~lib/cn';
-
+import { FormHook } from '~lib/form-hook';
 import { getLocaleLanguage } from '~lib/get-local-language';
 
 import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/locales';
-import { FormInputChanges, FormSelectFetcher, FormSelectItem } from '~types/forms';
+import { FormElement, FormInputChanges, FormSelectFetcher, FormSelectItem } from '~types/forms';
 
 import Loader from '~assets/loader.svg';
 
@@ -14,12 +14,13 @@ import Loader from '~assets/loader.svg';
   tag: 'form-select',
   styleUrl: 'form-select.css',
 })
-export class FormSelect {
+export class FormSelect implements FormElement {
   @Prop() name: string;
   @Prop() label: string;
   @Prop() isError: boolean;
   @Prop() disabled: boolean;
   @Prop() componentId: string;
+  @Prop() form: FormHook<any>;
   @Prop() isRequired: boolean;
   @Prop() errorMessage: string;
   @Prop() componentClass: string;
@@ -46,9 +47,8 @@ export class FormSelect {
     this.fetch();
   }
 
-  dropdownRef!: HTMLElement;
-
   async componentWillLoad() {
+    this.form.subscribe(this.name, this);
     await this.changeLanguage(this.language);
   }
 
@@ -87,6 +87,12 @@ export class FormSelect {
       this.isOpen = false;
     }
   }
+
+  reset = (newValue: string = '') => {
+    const defaultOption = this.options.find(opt => opt.value === newValue) || { value: newValue, label: '' };
+
+    this.handleSelection(defaultOption);
+  };
 
   closeDropdown = (event: MouseEvent) => {
     if (!this.el.contains(event.target as Node)) {

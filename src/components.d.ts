@@ -120,6 +120,7 @@ export namespace Components {
         "disabled": boolean;
         "errorMessage": string;
         "fetcher": FormSelectFetcher;
+        "form": FormHook<any>;
         "formLocaleName": string;
         "inputChanges": FormInputChanges;
         "isError": boolean;
@@ -516,6 +517,7 @@ declare namespace LocalJSX {
         "disabled"?: boolean;
         "errorMessage"?: string;
         "fetcher"?: FormSelectFetcher;
+        "form"?: FormHook<any>;
         "formLocaleName"?: string;
         "inputChanges"?: FormInputChanges;
         "isError"?: boolean;

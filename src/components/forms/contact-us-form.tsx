@@ -104,6 +104,8 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
       const data = await response.json();
 
       if (this.successCallback) this.successCallback(data);
+
+      this.form.reset();
     } catch (error) {
       console.error(error);
 
@@ -116,9 +118,6 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
 
   render() {
     if (this.structureObject === null) return <form-structure-error language={this.language} />;
-
-    // @ts-ignore
-    window.kk = this.form;
 
     return (
       <Host

@@ -76,7 +76,7 @@ export class FormStructure {
         );
 
       if (fieldController.fieldType === 'select')
-        return <form-select componentId={structureElement.id} componentClass={structureElement.class} language={this.language} {...fieldController} {...params} />;
+        return <form-select form={this.form} componentId={structureElement.id} componentClass={structureElement.class} language={this.language} {...fieldController} {...params} />;
     }
 
     return false;
