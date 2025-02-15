@@ -117,6 +117,9 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
   render() {
     if (this.structureObject === null) return <form-structure-error language={this.language} />;
 
+    // @ts-ignore
+    window.kk = this.form;
+
     return (
       <Host
         class={cn({

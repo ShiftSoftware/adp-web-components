@@ -62,3 +62,9 @@ export type Params = {
 };
 
 export type FormFieldParams = Record<string, Params>;
+
+export interface FormElement {
+  reset: (newValue?: string) => void;
+}
+
+export type Subscribers = { name: string; context: FormElement }[];

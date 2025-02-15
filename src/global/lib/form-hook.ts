@@ -1,10 +1,12 @@
 import { AnyObjectSchema, SchemaDescription } from 'yup';
-import { Field, FieldType, FormHookInterface, FormStateOptions, ValidationType } from '~types/forms';
+import { Field, FieldType, FormElement, FormHookInterface, FormStateOptions, Subscribers, ValidationType } from '~types/forms';
 
 export class FormHook<T> {
   private isSubmitted = false;
+  private subscribers: Subscribers = [];
   private context: FormHookInterface<T>;
   private schemaObject: AnyObjectSchema;
+  private haltValidation: boolean = false;
   private validationType: ValidationType = 'onSubmit';
   private subscribedFields: { [key: string]: Field } = {};
   formErrors: { [key: string]: string } = {};
@@ -16,6 +18,25 @@ export class FormHook<T> {
     this.schemaObject = schemaObject;
     this.formController = { onSubmit: this.onSubmit };
     if (formStateOptions?.validationType) this.validationType = formStateOptions.validationType;
+  }
+
+  subscribe = (formName: string, formElement: FormElement) => this.subscribers.push({ name: formName, context: formElement });
+
+  unsubscribe = (formName: string) => (this.subscribers = this.subscribers.filter(({ name }) => name !== formName));
+
+  reset() {
+    this.haltValidation = true;
+
+    this.signal({ isError: false, disabled: false });
+
+    this.subscribers.forEach(subscriber => {
+      subscriber.context.reset();
+    });
+
+    this.isSubmitted = false;
+    this.haltValidation = false;
+
+    this.context.renderControl = {};
   }
 
   resetFormErrorMessage = () => (this.context.errorMessage = '');
@@ -80,6 +101,7 @@ export class FormHook<T> {
 
           this.signal(errorFields);
           this.focusFirstInput(errorFields);
+          this.context.renderControl = {};
         } else console.error('Unexpected Error:', error);
       } finally {
         this.signal({ disabled: false });
@@ -130,7 +152,9 @@ export class FormHook<T> {
   };
 
   private onChanges = async (name: string, value: string) => {
+    if (this.haltValidation) return;
     if (!this.isSubmitted && this.validationType !== 'always') return;
+
     const wasError = this.subscribedFields[name].isError;
 
     try {

@@ -1,17 +1,18 @@
 import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import cn from '~lib/cn';
+import { FormHook } from '~lib/form-hook';
 import { getLocaleLanguage } from '~lib/get-local-language';
 
-import { FormInputChanges, LocaleFormKeys } from '~types/forms';
 import { LanguageKeys, Locale, localeSchema } from '~types/locales';
+import { FormElement, FormInputChanges, LocaleFormKeys } from '~types/forms';
 
 @Component({
   shadow: false,
   tag: 'form-input',
   styleUrl: 'form-input.css',
 })
-export class FormInput {
+export class FormInput implements FormElement {
   @Prop() name: string;
   @Prop() type: string;
   @Prop() label: string;
@@ -19,6 +20,7 @@ export class FormInput {
   @Prop() class: string;
   @Prop() isError: boolean;
   @Prop() disabled: boolean;
+  @Prop() form: FormHook<any>;
   @Prop() componentId: string;
   @Prop() inputPreFix: string;
   @Prop() isRequired: boolean;
@@ -36,13 +38,36 @@ export class FormInput {
 
   @Element() el!: HTMLElement;
 
+  private inputRef: HTMLInputElement;
+
   async componentWillLoad() {
+    this.form.subscribe(this.name, this);
     await this.changeLanguage(this.language);
+  }
+
+  async componentDidLoad() {
+    this.inputRef = this.el.getElementsByClassName('form-input-' + this.name)[0] as HTMLInputElement;
+  }
+
+  async disconnectedCallback() {
+    this.form.unsubscribe(this.name);
   }
 
   @Watch('language')
   async changeLanguage(newLanguage: LanguageKeys) {
     this.locale = await getLocaleLanguage(newLanguage);
+  }
+
+  reset(newValue?: string) {
+    const onInput = this.onChangeMiddleware ? event => this.inputChanges(this.onChangeMiddleware(event)) : this.inputChanges;
+
+    const value = newValue || this.defaultValue || '';
+
+    const target = { value } as HTMLInputElement;
+    const event = { target } as unknown as InputEvent;
+
+    onInput(event);
+    this.inputRef.value = value;
   }
 
   render() {
@@ -77,6 +102,7 @@ export class FormInput {
               placeholder={texts[placeholder] || texts[label] || placeholder || label}
               class={cn(
                 'border appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none form-input disabled:bg-white flex-1 py-[6px] px-[12px] transition duration-300 rounded-md outline-none focus:border-slate-600 focus:shadow-[0_0_0_0.2rem_rgba(71,85,105,0.25)] w-full',
+                'form-input-' + name,
                 { '!border-red-500 focus:shadow-[0_0_0_0.2rem_rgba(239,68,68,0.25)]': isError, 'rtl-form-input': this.locale.direction === 'rtl' && this.numberDirection },
                 inputClass,
               )}

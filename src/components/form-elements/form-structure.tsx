@@ -68,7 +68,7 @@ export class FormStructure {
       const fieldController = this.fieldControllers[structureElement.element];
 
       if (fieldController.fieldType === 'text' || fieldController.fieldType === 'number')
-        return <form-input componentId={structureElement.id} componentClass={structureElement.class} language={this.language} {...fieldController} {...params} />;
+        return <form-input form={this.form} componentId={structureElement.id} componentClass={structureElement.class} language={this.language} {...fieldController} {...params} />;
 
       if (fieldController.fieldType === 'text-area')
         return <form-text-area componentId={structureElement.id} componentClass={structureElement.class} language={this.language} {...fieldController} {...params} />;

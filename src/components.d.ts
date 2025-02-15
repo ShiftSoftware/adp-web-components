@@ -9,16 +9,16 @@ import { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
 import { PartInformation } from "./global/types/part-information";
 import { DotNetObjectReference, MockJson } from "./global/types/components";
 import { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
-import { FormElementMapper, FormFieldParams, FormInputChanges, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
 import { FormHook } from "./global/lib/form-hook";
+import { FormElementMapper, FormFieldParams, FormInputChanges, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
 import { ActiveElement } from "./components/part-lookup/part-lookup";
 import { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
 export { PartInformation } from "./global/types/part-information";
 export { DotNetObjectReference, MockJson } from "./global/types/components";
 export { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
-export { FormElementMapper, FormFieldParams, FormInputChanges, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
 export { FormHook } from "./global/lib/form-hook";
+export { FormElementMapper, FormFieldParams, FormInputChanges, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
 export { ActiveElement } from "./components/part-lookup/part-lookup";
 export { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export namespace Components {
@@ -100,6 +100,7 @@ export namespace Components {
         "defaultValue"?: string;
         "disabled": boolean;
         "errorMessage": string;
+        "form": FormHook<any>;
         "formLocaleName": LocaleFormKeys;
         "inputChanges": FormInputChanges;
         "inputPreFix": string;
@@ -493,6 +494,7 @@ declare namespace LocalJSX {
         "defaultValue"?: string;
         "disabled"?: boolean;
         "errorMessage"?: string;
+        "form"?: FormHook<any>;
         "formLocaleName"?: LocaleFormKeys;
         "inputChanges"?: FormInputChanges;
         "inputPreFix"?: string;
