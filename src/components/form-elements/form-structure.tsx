@@ -71,7 +71,9 @@ export class FormStructure {
         return <form-input form={this.form} componentId={structureElement.id} componentClass={structureElement.class} language={this.language} {...fieldController} {...params} />;
 
       if (fieldController.fieldType === 'text-area')
-        return <form-text-area componentId={structureElement.id} componentClass={structureElement.class} language={this.language} {...fieldController} {...params} />;
+        return (
+          <form-text-area form={this.form} componentId={structureElement.id} componentClass={structureElement.class} language={this.language} {...fieldController} {...params} />
+        );
 
       if (fieldController.fieldType === 'select')
         return <form-select componentId={structureElement.id} componentClass={structureElement.class} language={this.language} {...fieldController} {...params} />;

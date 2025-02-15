@@ -150,8 +150,10 @@ export namespace Components {
     interface FormTextArea {
         "componentClass": string;
         "componentId": string;
+        "defaultValue"?: string;
         "disabled": boolean;
         "errorMessage": string;
+        "form": FormHook<any>;
         "formLocaleName": LocaleFormKeys;
         "inputChanges": FormInputChanges;
         "isError": boolean;
@@ -544,8 +546,10 @@ declare namespace LocalJSX {
     interface FormTextArea {
         "componentClass"?: string;
         "componentId"?: string;
+        "defaultValue"?: string;
         "disabled"?: boolean;
         "errorMessage"?: string;
+        "form"?: FormHook<any>;
         "formLocaleName"?: LocaleFormKeys;
         "inputChanges"?: FormInputChanges;
         "isError"?: boolean;

@@ -1,25 +1,28 @@
 import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import cn from '~lib/cn';
+import { FormHook } from '~lib/form-hook';
 import { getLocaleLanguage } from '~lib/get-local-language';
 
 import { LanguageKeys, Locale, localeSchema } from '~types/locales';
-import { FormInputChanges, LocaleFormKeys } from '~types/forms';
+import { FormElement, FormInputChanges, LocaleFormKeys } from '~types/forms';
 
 @Component({
   shadow: false,
   tag: 'form-text-area',
   styleUrl: 'form-text-area.css',
 })
-export class FormTextArea {
+export class FormTextArea implements FormElement {
   @Prop() name: string;
   @Prop() label: string;
   @Prop() isError: boolean;
   @Prop() disabled: boolean;
+  @Prop() form: FormHook<any>;
   @Prop() isRequired: boolean;
   @Prop() componentId: string;
   @Prop() placeholder: string;
   @Prop() errorMessage: string;
+  @Prop() defaultValue?: string;
   @Prop() componentClass: string;
   @Prop() language: LanguageKeys = 'en';
   @Prop() formLocaleName: LocaleFormKeys;
@@ -29,13 +32,30 @@ export class FormTextArea {
 
   @Element() el!: HTMLElement;
 
+  private inputRef: HTMLInputElement;
+
   async componentWillLoad() {
+    this.form.subscribe(this.name, this);
     await this.changeLanguage(this.language);
+  }
+
+  async componentDidLoad() {
+    this.inputRef = this.el.getElementsByClassName('form-textarea-' + this.name)[0] as HTMLInputElement;
   }
 
   @Watch('language')
   async changeLanguage(newLanguage: LanguageKeys) {
     this.locale = await getLocaleLanguage(newLanguage);
+  }
+
+  reset(newValue?: string) {
+    const value = newValue || this.defaultValue || '';
+
+    const target = { value } as HTMLInputElement;
+    const event = { target } as unknown as InputEvent;
+
+    this.inputChanges(event);
+    this.inputRef.value = value;
   }
 
   render() {
@@ -65,6 +85,7 @@ export class FormTextArea {
               placeholder={texts[placeholder] || texts[label] || placeholder || label}
               class={cn(
                 'border h-[200px] form-input resize-none disabled:bg-white flex-1 py-[6px] px-[12px] transition duration-300 rounded-md outline-none focus:border-slate-600 focus:shadow-[0_0_0_0.2rem_rgba(71,85,105,0.25)] w-full',
+                'form-textarea-' + name,
                 { '!border-red-500 focus:shadow-[0_0_0_0.2rem_rgba(239,68,68,0.25)]': isError },
               )}
             />
