@@ -117,7 +117,7 @@ export type VehicleSpecification = {
 export type SSC = {
   sscCode: string;
   description: string;
-  opCode: string;
+  labors: Labor[];
   repaired: boolean;
   repairDate: string;
   parts: Part[];
@@ -127,6 +127,12 @@ export type Part = {
   partNumber: string;
   partDescription: any;
   isAvailable: boolean;
+};
+
+export type Labor = {
+  laborCode: string;
+  laborDescription: string;
+  allowedTime: number;
 };
 
 export interface PaintThickness {
