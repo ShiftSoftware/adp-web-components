@@ -13,7 +13,7 @@ import Loader from '~assets/white-loader.svg';
 })
 export class FormSubmit {
   @Prop() isLoading: boolean;
-  @Prop() params: FormFieldParams;
+  @Prop() params: FormFieldParams = {};
   @Prop() structureElement: StructureObject;
 
   render() {

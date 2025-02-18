@@ -9,11 +9,10 @@ import { FormHook } from '~lib/form-hook';
 import { getLocaleLanguage } from '~lib/get-local-language';
 import { isValidStructure } from '~lib/validate-form-structure';
 
-import { formFieldParams } from './contact-us/params';
-import { formElementMapper } from './contact-us/mapper';
 import { ContactUs, contactUsSchema } from './contact-us/validations';
 
 import themes from './contact-us/themes.json';
+import { contactUsElements } from './contact-us/element-mapper';
 
 declare const grecaptcha: Grecaptcha;
 
@@ -130,9 +129,8 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
           language={this.language}
           isLoading={this.isLoading}
           errorMessage={this.errorMessage}
-          formFieldParams={formFieldParams}
           renderControl={this.renderControl}
-          formElementMapper={formElementMapper}
+          formElementMapper={contactUsElements}
           structureObject={this.structureObject}
         >
           <slot></slot>

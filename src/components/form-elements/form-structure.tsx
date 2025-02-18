@@ -4,7 +4,7 @@ import { FormHook } from '~lib/form-hook';
 import { getLocaleLanguage } from '~lib/get-local-language';
 
 import { LanguageKeys, Locale, localeSchema } from '~types/locales';
-import { FieldControllers, FormElementMapper, FormFieldParams, StructureObject } from '~types/forms';
+import { FormElementMapper, StructureObject } from '~types/forms';
 
 @Component({
   shadow: false,
@@ -17,23 +17,13 @@ export class FormStructure {
   @Prop() form: FormHook<any>;
   @Prop() errorMessage: string;
   @Prop() language: LanguageKeys = 'en';
-  @Prop() formFieldParams: FormFieldParams;
-  @Prop() formElementMapper: FormElementMapper;
   @Prop() structureObject: StructureObject = null;
+  @Prop() formElementMapper: FormElementMapper<any>;
 
-  @State() fieldControllers: FieldControllers;
   @State() locale: Locale = localeSchema.getDefault();
 
   async componentWillLoad() {
     await this.changeLanguage(this.language);
-
-    const tempFieldContext = {};
-
-    Object.entries(this.formElementMapper).forEach(([key, value]) => {
-      tempFieldContext[key] = this.form.newController(key, value);
-    });
-
-    this.fieldControllers = tempFieldContext;
   }
 
   @Watch('language')
@@ -53,31 +43,24 @@ export class FormStructure {
 
     if (structureElement.element === 'slot') return <slot />;
 
-    if (structureElement.element === 'button')
-      return (
-        <button type="button" id={structureElement.id}>
-          {structureElement.class}
-        </button>
-      );
+    if (this.formElementMapper[structureElement.element]) return this.formElementMapper[structureElement.element](this.form, this.isLoading, structureElement);
 
-    const params = this.formFieldParams[structureElement.element] ? this.formFieldParams[structureElement.element] : {};
+    // if (structureElement.element === 'submit') return <form-submit isLoading={this.isLoading} params={params} structureElement={structureElement} />;
 
-    if (structureElement.element === 'submit') return <form-submit isLoading={this.isLoading} params={params} structureElement={structureElement} />;
+    // if (this.fieldControllers[structureElement.element]) {
+    //   const fieldController = this.fieldControllers[structureElement.element];
 
-    if (this.fieldControllers[structureElement.element]) {
-      const fieldController = this.fieldControllers[structureElement.element];
+    //   if (fieldController.fieldType === 'text' || fieldController.fieldType === 'number')
+    //     return <form-input form={this.form} componentId={structureElement.id} componentClass={structureElement.class} language={this.language} {...fieldController} {...params} />;
 
-      if (fieldController.fieldType === 'text' || fieldController.fieldType === 'number')
-        return <form-input form={this.form} componentId={structureElement.id} componentClass={structureElement.class} language={this.language} {...fieldController} {...params} />;
+    //   if (fieldController.fieldType === 'text-area')
+    //     return (
+    //       <form-text-area form={this.form} componentId={structureElement.id} componentClass={structureElement.class} language={this.language} {...fieldController} {...params} />
+    //     );
 
-      if (fieldController.fieldType === 'text-area')
-        return (
-          <form-text-area form={this.form} componentId={structureElement.id} componentClass={structureElement.class} language={this.language} {...fieldController} {...params} />
-        );
-
-      if (fieldController.fieldType === 'select')
-        return <form-select form={this.form} componentId={structureElement.id} componentClass={structureElement.class} language={this.language} {...fieldController} {...params} />;
-    }
+    //   if (fieldController.fieldType === 'select')
+    //     return <form-select form={this.form} componentId={structureElement.id} componentClass={structureElement.class} language={this.language} {...fieldController} {...params} />;
+    // }
 
     return false;
   }

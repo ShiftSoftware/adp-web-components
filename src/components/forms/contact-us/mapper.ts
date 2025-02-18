@@ -1,6 +1,4 @@
-import { FormElementMapper } from '~types/forms';
-
-export const formElementMapper: FormElementMapper = {
+export const formElementMapper = {
   name: 'text',
   email: 'text',
   phone: 'text',

@@ -66,6 +66,10 @@ export interface FormElement {
 
 export type Subscribers = { name: string; context: FormElement }[];
 
+type FormElementMapperFunction = (form: FormHook<any>, isLoading: boolean, structuredElement: StructureObject) => JSX.Element;
+
 export type FormElementMapper<T> = {
-  [K in keyof T]: (form: FormHook<any>) => JSX.Element;
+  [K in keyof T]: FormElementMapperFunction;
+} & {
+  submit: FormElementMapperFunction;
 };

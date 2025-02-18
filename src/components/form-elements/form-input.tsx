@@ -5,7 +5,17 @@ import { FormHook } from '~lib/form-hook';
 import { getLocaleLanguage } from '~lib/get-local-language';
 
 import { LanguageKeys, Locale, localeSchema } from '~types/locales';
-import { FormElement, FormInputChanges, LocaleFormKeys } from '~types/forms';
+import { FormElement, LocaleFormKeys } from '~types/forms';
+
+export type InputParams = {
+  id?: string;
+  name: string;
+  type?: string;
+  disabled?: boolean;
+  placeholder: string;
+  defaultValue?: string;
+  onInput?: (event: InputEvent) => InputEvent;
+};
 
 @Component({
   shadow: false,
@@ -13,26 +23,19 @@ import { FormElement, FormInputChanges, LocaleFormKeys } from '~types/forms';
   styleUrl: 'form-input.css',
 })
 export class FormInput implements FormElement {
-  @Prop() name: string;
-  @Prop() type: string;
   @Prop() label: string;
   // this will be class = 'hydrate' and it will render last component render
   @Prop() class: string;
   @Prop() isError: boolean;
-  @Prop() disabled: boolean;
   @Prop() form: FormHook<any>;
-  @Prop() componentId: string;
   @Prop() inputPreFix: string;
   @Prop() isRequired: boolean;
-  @Prop() placeholder: string;
   @Prop() errorMessage: string;
-  @Prop() defaultValue?: string;
   @Prop() componentClass: string;
+  @Prop() inputParams: InputParams;
   @Prop() numberDirection?: boolean;
   @Prop() language: LanguageKeys = 'en';
   @Prop() formLocaleName: LocaleFormKeys;
-  @Prop() inputChanges: FormInputChanges;
-  @Prop() onChangeMiddleware?: (event: InputEvent) => InputEvent;
 
   @State() locale: Locale = localeSchema.getDefault();
 
@@ -41,16 +44,16 @@ export class FormInput implements FormElement {
   private inputRef: HTMLInputElement;
 
   async componentWillLoad() {
-    this.form.subscribe(this.name, this);
+    this.form.subscribe(this.inputParams.name, this);
     await this.changeLanguage(this.language);
   }
 
   async componentDidLoad() {
-    this.inputRef = this.el.getElementsByClassName('form-input-' + this.name)[0] as HTMLInputElement;
+    this.inputRef = this.el.getElementsByClassName('form-input-' + this.inputParams.name)[0] as HTMLInputElement;
   }
 
   async disconnectedCallback() {
-    this.form.unsubscribe(this.name);
+    this.form.unsubscribe(this.inputParams.name);
   }
 
   @Watch('language')
@@ -59,13 +62,13 @@ export class FormInput implements FormElement {
   }
 
   reset(newValue?: string) {
-    const value = newValue || this.defaultValue || '';
+    const value = newValue || this.inputParams?.defaultValue || '';
 
     this.inputRef.value = value;
   }
 
   render() {
-    const { class: inputClass, type, disabled, label, isError, name, errorMessage, placeholder, isRequired } = this;
+    const { class: inputClass, label, isError, errorMessage, isRequired } = this;
 
     const prefix = this.el.getElementsByClassName('prefix')[0];
 
@@ -75,26 +78,22 @@ export class FormInput implements FormElement {
 
     return (
       <Host>
-        <label id={this.componentId} class={cn('relative w-full inline-flex flex-col', this.componentClass)}>
+        <label class={cn('relative w-full inline-flex flex-col', this.componentClass)}>
           {label && (
             <div class="mb-[4px]">
               {texts[label] || label}
               {isRequired && <span class="ms-0.5 text-red-600">*</span>}
             </div>
           )}
-          <div dir={this.numberDirection ? 'ltr' : this.locale.direction} class={cn('relative', { 'opacity-75': disabled })}>
+          <div dir={this.numberDirection ? 'ltr' : this.locale.direction} class={cn('relative', { 'opacity-75': this.inputParams?.disabled })}>
             {this.inputPreFix && <div class="prefix absolute h-[38px] px-2 left-0 top-0 pointer-events-none items-center justify-center flex">{this.inputPreFix}</div>}
             <input
-              name={name}
-              type={type}
-              onInput={onInput}
-              disabled={disabled}
-              defaultValue={this.defaultValue}
+              {...this.inputParams}
               style={{ ...(prefixWidth ? { paddingLeft: `${prefixWidth}px` } : {}) }}
-              placeholder={texts[placeholder] || texts[label] || placeholder || label}
+              placeholder={texts[this.inputParams.placeholder] || this.inputParams.placeholder}
               class={cn(
                 'border appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none form-input disabled:bg-white flex-1 py-[6px] px-[12px] transition duration-300 rounded-md outline-none focus:border-slate-600 focus:shadow-[0_0_0_0.2rem_rgba(71,85,105,0.25)] w-full',
-                'form-input-' + name,
+                'form-input-' + this.inputParams.name,
                 { '!border-red-500 focus:shadow-[0_0_0_0.2rem_rgba(239,68,68,0.25)]': isError, 'rtl-form-input': this.locale.direction === 'rtl' && this.numberDirection },
                 inputClass,
               )}
