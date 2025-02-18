@@ -5,6 +5,7 @@
   "noData": "Данных нет.",
   "general": {
     "close": "Закрывать",
+    "submit": "подавать",
     "noSelectOptions": "Вариантов нет."
   },
   "errors": {

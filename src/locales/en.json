@@ -5,6 +5,7 @@
   "noData": "No data is available.",
   "general": {
     "close": "Close",
+    "submit": "Submit",
     "noSelectOptions": "There is no options."
   },
   "errors": {

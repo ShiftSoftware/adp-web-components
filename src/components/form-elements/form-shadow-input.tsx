@@ -14,12 +14,12 @@ export class FormInput {
 
   @Watch('name')
   async handleNameChange(newName: string) {
-    this.form.onChanges(newName, this.value);
+    this.form.validateInput(newName, this.value);
   }
 
   @Watch('value')
   async handleValueChange(newValue: string) {
-    this.form.onChanges(this.name, newValue);
+    this.form.validateInput(this.name, newValue);
   }
 
   render() {

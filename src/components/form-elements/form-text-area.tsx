@@ -4,8 +4,9 @@ import cn from '~lib/cn';
 import { FormHook } from '~lib/form-hook';
 import { getLocaleLanguage } from '~lib/get-local-language';
 
+import { InputParams } from '~types/general';
+import { FormElement, LocaleFormKeys } from '~types/forms';
 import { LanguageKeys, Locale, localeSchema } from '~types/locales';
-import { FormElement, FormInputChanges, LocaleFormKeys } from '~types/forms';
 
 @Component({
   shadow: false,
@@ -13,20 +14,16 @@ import { FormElement, FormInputChanges, LocaleFormKeys } from '~types/forms';
   styleUrl: 'form-text-area.css',
 })
 export class FormTextArea implements FormElement {
-  @Prop() name: string;
   @Prop() label: string;
   @Prop() isError: boolean;
-  @Prop() disabled: boolean;
   @Prop() form: FormHook<any>;
   @Prop() isRequired: boolean;
   @Prop() componentId: string;
-  @Prop() placeholder: string;
   @Prop() errorMessage: string;
-  @Prop() defaultValue?: string;
   @Prop() componentClass: string;
+  @Prop() inputParams: InputParams;
   @Prop() language: LanguageKeys = 'en';
   @Prop() formLocaleName: LocaleFormKeys;
-  @Prop() inputChanges: FormInputChanges;
 
   @State() locale: Locale = localeSchema.getDefault();
 
@@ -35,12 +32,12 @@ export class FormTextArea implements FormElement {
   private inputRef: HTMLInputElement;
 
   async componentWillLoad() {
-    this.form.subscribe(this.name, this);
+    this.form.subscribe(this.inputParams.name, this);
     await this.changeLanguage(this.language);
   }
 
   async componentDidLoad() {
-    this.inputRef = this.el.getElementsByClassName('form-textarea-' + this.name)[0] as HTMLInputElement;
+    this.inputRef = this.el.getElementsByClassName('form-textarea-' + this.inputParams.name)[0] as HTMLInputElement;
   }
 
   @Watch('language')
@@ -49,17 +46,13 @@ export class FormTextArea implements FormElement {
   }
 
   reset(newValue?: string) {
-    const value = newValue || this.defaultValue || '';
+    const value = newValue || this.inputParams.defaultValue || '';
 
-    const target = { value } as HTMLInputElement;
-    const event = { target } as unknown as InputEvent;
-
-    this.inputChanges(event);
     this.inputRef.value = value;
   }
 
   render() {
-    const { disabled, label, isError, name, errorMessage, placeholder, isRequired, inputChanges } = this;
+    const { label, isError, errorMessage, isRequired } = this;
 
     const prefix = this.el.getElementsByClassName('prefix')[0];
 
@@ -76,13 +69,10 @@ export class FormTextArea implements FormElement {
               {isRequired && <span class="ms-0.5 text-red-600">*</span>}
             </div>
           )}
-          <div class={cn('relative', { 'opacity-75': disabled })}>
+          <div class={cn('relative', { 'opacity-75': this.inputParams.disabled })}>
             <textarea
-              name={name}
-              disabled={disabled}
-              onInput={inputChanges}
               style={{ ...(prefixWidth ? { paddingLeft: `${prefixWidth}px` } : {}) }}
-              placeholder={texts[placeholder] || texts[label] || placeholder || label}
+              placeholder={texts[this.inputParams.placeholder] || this.inputParams.placeholder}
               class={cn(
                 'border h-[200px] form-input resize-none disabled:bg-white flex-1 py-[6px] px-[12px] transition duration-300 rounded-md outline-none focus:border-slate-600 focus:shadow-[0_0_0_0.2rem_rgba(71,85,105,0.25)] w-full',
                 'form-textarea-' + name,

@@ -4,18 +4,9 @@ import cn from '~lib/cn';
 import { FormHook } from '~lib/form-hook';
 import { getLocaleLanguage } from '~lib/get-local-language';
 
-import { LanguageKeys, Locale, localeSchema } from '~types/locales';
+import { InputParams } from '~types/general';
 import { FormElement, LocaleFormKeys } from '~types/forms';
-
-export type InputParams = {
-  id?: string;
-  name: string;
-  type?: string;
-  disabled?: boolean;
-  placeholder: string;
-  defaultValue?: string;
-  onInput?: (event: InputEvent) => InputEvent;
-};
+import { LanguageKeys, Locale, localeSchema } from '~types/locales';
 
 @Component({
   shadow: false,

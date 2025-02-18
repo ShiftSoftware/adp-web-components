@@ -20,9 +20,7 @@ export type FormSelectItem = {
   label: string;
 };
 
-export type FormInputChanges = (event: InputEvent | string) => void;
-
-export type FormSelectFetcher = (language: string, signal: AbortSignal) => FormSelectItem[];
+export type FormSelectFetcher = (language: string, signal: AbortSignal) => Promise<FormSelectItem[]>;
 
 export type ValidationType = 'onSubmit' | 'always';
 
@@ -66,7 +64,7 @@ export interface FormElement {
 
 export type Subscribers = { name: string; context: FormElement }[];
 
-type FormElementMapperFunction = (form: FormHook<any>, isLoading: boolean, structuredElement: StructureObject) => JSX.Element;
+type FormElementMapperFunction = (ElementContext: { form: FormHook<any>; isLoading: boolean; structureElement: StructureObject; language: LanguageKeys }) => JSX.Element;
 
 export type FormElementMapper<T> = {
   [K in keyof T]: FormElementMapperFunction;

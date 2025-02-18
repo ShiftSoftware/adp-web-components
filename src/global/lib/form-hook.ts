@@ -16,7 +16,7 @@ export class FormHook<T> {
   constructor(context: FormHookInterface<T>, schemaObject: AnyObjectSchema, formStateOptions?: FormStateOptions) {
     this.context = context;
     this.schemaObject = schemaObject;
-    this.formController = { onSubmit: this.onSubmit };
+    this.formController = { onSubmit: this.onSubmit, onInput: this.onInput };
     if (formStateOptions?.validationType) this.validationType = formStateOptions.validationType;
   }
 
@@ -38,6 +38,12 @@ export class FormHook<T> {
 
     this.context.renderControl = {};
   }
+
+  onInput = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+
+    this.validateInput(target.name, target.value);
+  };
 
   resetFormErrorMessage = () => (this.context.errorMessage = '');
 
@@ -80,6 +86,7 @@ export class FormHook<T> {
         this.signal({ isError: false, disabled: true });
         const formObject = this.getValues();
         const values = await this.schemaObject.validate(formObject, { abortEarly: false });
+
         await this.context.formSubmit(values);
       } catch (error) {
         if (error.name === 'ValidationError') {
@@ -113,13 +120,14 @@ export class FormHook<T> {
   newController = (name: string) => {
     const validationDescription = this.schemaObject.describe().fields[name] as SchemaDescription;
 
-    this.subscribedFields[name] = {
-      name,
-      isError: false,
-      disabled: false,
-      errorMessage: '',
-      isRequired: validationDescription?.tests.some(test => test.name === 'required'),
-    };
+    if (!this.subscribedFields[name])
+      this.subscribedFields[name] = {
+        name,
+        isError: false,
+        disabled: false,
+        errorMessage: '',
+        isRequired: validationDescription?.tests.some(test => test.name === 'required'),
+      };
 
     return this.subscribedFields[name];
   };
@@ -134,7 +142,7 @@ export class FormHook<T> {
     }
   };
 
-  onChanges = async (name: string, value: string) => {
+  validateInput = async (name: string, value: string) => {
     if (this.haltValidation) return;
     if (!this.isSubmitted && this.validationType !== 'always') return;
 

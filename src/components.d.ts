@@ -10,8 +10,8 @@ import { PartInformation } from "./global/types/part-information";
 import { DotNetObjectReference, MockJson } from "./global/types/components";
 import { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
 import { FormHook } from "./global/lib/form-hook";
-import { InputParams } from "./components/form-elements/form-input";
-import { FormElementMapper, FormFieldParams, FormInputChanges, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
+import { InputParams } from "./global/types/general";
+import { FormElementMapper, FormFieldParams, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
 import { ActiveElement } from "./components/part-lookup/part-lookup";
 import { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
@@ -19,8 +19,8 @@ export { PartInformation } from "./global/types/part-information";
 export { DotNetObjectReference, MockJson } from "./global/types/components";
 export { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
 export { FormHook } from "./global/lib/form-hook";
-export { InputParams } from "./components/form-elements/form-input";
-export { FormElementMapper, FormFieldParams, FormInputChanges, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
+export { InputParams } from "./global/types/general";
+export { FormElementMapper, FormFieldParams, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
 export { ActiveElement } from "./components/part-lookup/part-lookup";
 export { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export namespace Components {
@@ -117,7 +117,6 @@ export namespace Components {
         "fetcher": FormSelectFetcher;
         "form": FormHook<any>;
         "formLocaleName": string;
-        "inputChanges": FormInputChanges;
         "isError": boolean;
         "isRequired": boolean;
         "label": string;
@@ -144,24 +143,21 @@ export namespace Components {
     }
     interface FormSubmit {
         "isLoading": boolean;
+        "language": LanguageKeys;
         "params": FormFieldParams;
         "structureElement": StructureObject;
     }
     interface FormTextArea {
         "componentClass": string;
         "componentId": string;
-        "defaultValue"?: string;
-        "disabled": boolean;
         "errorMessage": string;
         "form": FormHook<any>;
         "formLocaleName": LocaleFormKeys;
-        "inputChanges": FormInputChanges;
+        "inputParams": InputParams;
         "isError": boolean;
         "isRequired": boolean;
         "label": string;
         "language": LanguageKeys;
-        "name": string;
-        "placeholder": string;
     }
     interface ManufacturerLookup {
         "baseUrl": string;
@@ -518,7 +514,6 @@ declare namespace LocalJSX {
         "fetcher"?: FormSelectFetcher;
         "form"?: FormHook<any>;
         "formLocaleName"?: string;
-        "inputChanges"?: FormInputChanges;
         "isError"?: boolean;
         "isRequired"?: boolean;
         "label"?: string;
@@ -545,24 +540,21 @@ declare namespace LocalJSX {
     }
     interface FormSubmit {
         "isLoading"?: boolean;
+        "language"?: LanguageKeys;
         "params"?: FormFieldParams;
         "structureElement"?: StructureObject;
     }
     interface FormTextArea {
         "componentClass"?: string;
         "componentId"?: string;
-        "defaultValue"?: string;
-        "disabled"?: boolean;
         "errorMessage"?: string;
         "form"?: FormHook<any>;
         "formLocaleName"?: LocaleFormKeys;
-        "inputChanges"?: FormInputChanges;
+        "inputParams"?: InputParams;
         "isError"?: boolean;
         "isRequired"?: boolean;
         "label"?: string;
         "language"?: LanguageKeys;
-        "name"?: string;
-        "placeholder"?: string;
     }
     interface ManufacturerLookup {
         "baseUrl"?: string;
