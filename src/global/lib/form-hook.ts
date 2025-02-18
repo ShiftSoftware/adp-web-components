@@ -1,5 +1,5 @@
 import { AnyObjectSchema, SchemaDescription } from 'yup';
-import { Field, FieldType, FormElement, FormHookInterface, FormStateOptions, Subscribers, ValidationType } from '~types/forms';
+import { Field, FormElement, FormHookInterface, FormStateOptions, Subscribers, ValidationType } from '~types/forms';
 
 export class FormHook<T> {
   private isSubmitted = false;
@@ -110,33 +110,16 @@ export class FormHook<T> {
     })();
   };
 
-  newController = (name: string, fieldType: FieldType) => {
+  newController = (name: string) => {
     const validationDescription = this.schemaObject.describe().fields[name] as SchemaDescription;
 
-    const sharedFields = {
+    this.subscribedFields[name] = {
       name,
-      fieldType,
       isError: false,
       disabled: false,
       errorMessage: '',
       isRequired: validationDescription?.tests.some(test => test.name === 'required'),
     };
-
-    if (fieldType === 'text' || fieldType === 'number' || fieldType === 'text-area')
-      this.subscribedFields[name] = {
-        ...sharedFields,
-        inputChanges: (event: InputEvent) => {
-          const value = (event.target as HTMLInputElement).value;
-          this.onChanges(name, value);
-        },
-      };
-    else if (fieldType === 'select')
-      this.subscribedFields[name] = {
-        ...sharedFields,
-        inputChanges: (value: string) => {
-          this.onChanges(name, value);
-        },
-      };
 
     return this.subscribedFields[name];
   };
@@ -151,7 +134,7 @@ export class FormHook<T> {
     }
   };
 
-  private onChanges = async (name: string, value: string) => {
+  onChanges = async (name: string, value: string) => {
     if (this.haltValidation) return;
     if (!this.isSubmitted && this.validationType !== 'always') return;
 

@@ -87,7 +87,15 @@ export class FormStructure {
 
     return (
       <Host>
-        <form dir={this.locale.direction} {...formController}>
+        <form
+          onInput={(event: Event) => {
+            const target = event.target as HTMLInputElement;
+
+            console.log('Form data updated:', target);
+          }}
+          dir={this.locale.direction}
+          {...formController}
+        >
           <form-dialog dialogClosed={resetFormErrorMessage} language={this.language} errorMessage={this.errorMessage} />
           {this.renderLoop(this.structureObject)}
         </form>

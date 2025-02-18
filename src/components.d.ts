@@ -130,6 +130,11 @@ export namespace Components {
         "name": string;
         "placeholder": string;
     }
+    interface FormShadowInput {
+        "form": FormHook<any>;
+        "name": string;
+        "value": string;
+    }
     interface FormStructure {
         "errorMessage": string;
         "form": FormHook<any>;
@@ -338,6 +343,12 @@ declare global {
         prototype: HTMLFormSelectElement;
         new (): HTMLFormSelectElement;
     };
+    interface HTMLFormShadowInputElement extends Components.FormShadowInput, HTMLStencilElement {
+    }
+    var HTMLFormShadowInputElement: {
+        prototype: HTMLFormShadowInputElement;
+        new (): HTMLFormShadowInputElement;
+    };
     interface HTMLFormStructureElement extends Components.FormStructure, HTMLStencilElement {
     }
     var HTMLFormStructureElement: {
@@ -419,6 +430,7 @@ declare global {
         "form-dialog": HTMLFormDialogElement;
         "form-input": HTMLFormInputElement;
         "form-select": HTMLFormSelectElement;
+        "form-shadow-input": HTMLFormShadowInputElement;
         "form-structure": HTMLFormStructureElement;
         "form-structure-error": HTMLFormStructureErrorElement;
         "form-submit": HTMLFormSubmitElement;
@@ -526,6 +538,11 @@ declare namespace LocalJSX {
         "language"?: LanguageKeys;
         "name"?: string;
         "placeholder"?: string;
+    }
+    interface FormShadowInput {
+        "form"?: FormHook<any>;
+        "name"?: string;
+        "value"?: string;
     }
     interface FormStructure {
         "errorMessage"?: string;
@@ -666,6 +683,7 @@ declare namespace LocalJSX {
         "form-dialog": FormDialog;
         "form-input": FormInput;
         "form-select": FormSelect;
+        "form-shadow-input": FormShadowInput;
         "form-structure": FormStructure;
         "form-structure-error": FormStructureError;
         "form-submit": FormSubmit;
@@ -692,6 +710,7 @@ declare module "@stencil/core" {
             "form-dialog": LocalJSX.FormDialog & JSXBase.HTMLAttributes<HTMLFormDialogElement>;
             "form-input": LocalJSX.FormInput & JSXBase.HTMLAttributes<HTMLFormInputElement>;
             "form-select": LocalJSX.FormSelect & JSXBase.HTMLAttributes<HTMLFormSelectElement>;
+            "form-shadow-input": LocalJSX.FormShadowInput & JSXBase.HTMLAttributes<HTMLFormShadowInputElement>;
             "form-structure": LocalJSX.FormStructure & JSXBase.HTMLAttributes<HTMLFormStructureElement>;
             "form-structure-error": LocalJSX.FormStructureError & JSXBase.HTMLAttributes<HTMLFormStructureErrorElement>;
             "form-submit": LocalJSX.FormSubmit & JSXBase.HTMLAttributes<HTMLFormSubmitElement>;

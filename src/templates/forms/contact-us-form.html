@@ -45,10 +45,10 @@
 
     <!-- recaptcha-key="" -->
     <!-- query-string="" -->
-    <!-- structure=''' -->
+    <!-- structure='' -->
     <contact-us-form
       theme="tiq"
-      language="ar"
+      language="en"
       brand-id="kWrKw"
       id="contact-us-form"
       base-url="https://tiq-tickets.azurewebsites.net/api/external/website/general-inquiry"
@@ -78,6 +78,7 @@
       errorCallback = error => {
         console.log(3, error);
       };
+
       function updateLang(newLang) {
         contactUsForm.language = newLang;
       }

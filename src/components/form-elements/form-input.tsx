@@ -59,27 +59,19 @@ export class FormInput implements FormElement {
   }
 
   reset(newValue?: string) {
-    const onInput = this.onChangeMiddleware ? event => this.inputChanges(this.onChangeMiddleware(event)) : this.inputChanges;
-
     const value = newValue || this.defaultValue || '';
 
-    const target = { value } as HTMLInputElement;
-    const event = { target } as unknown as InputEvent;
-
-    onInput(event);
     this.inputRef.value = value;
   }
 
   render() {
-    const { class: inputClass, type, disabled, label, isError, name, errorMessage, placeholder, isRequired, inputChanges } = this;
+    const { class: inputClass, type, disabled, label, isError, name, errorMessage, placeholder, isRequired } = this;
 
     const prefix = this.el.getElementsByClassName('prefix')[0];
 
     const prefixWidth = prefix ? prefix.getBoundingClientRect().width : 0;
 
     const texts = this.locale.forms[this.formLocaleName];
-
-    const onInput = this.onChangeMiddleware ? event => inputChanges(this.onChangeMiddleware(event)) : inputChanges;
 
     return (
       <Host>

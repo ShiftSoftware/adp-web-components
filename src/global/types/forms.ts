@@ -1,4 +1,7 @@
+import { JSX } from '@stencil/core/internal';
 import { LanguageKeys, Locale } from '~types/locales';
+
+import { FormHook } from '~lib/form-hook';
 
 export interface FormHookInterface<T> {
   locale: Locale;
@@ -21,10 +24,6 @@ export type FormInputChanges = (event: InputEvent | string) => void;
 
 export type FormSelectFetcher = (language: string, signal: AbortSignal) => FormSelectItem[];
 
-export type FieldType = 'text' | 'select' | 'number' | 'text-area';
-
-export type FormElementMapper = Record<string, FieldType>;
-
 export type ValidationType = 'onSubmit' | 'always';
 
 export interface Field {
@@ -32,9 +31,7 @@ export interface Field {
   isError: boolean;
   disabled: boolean;
   isRequired: boolean;
-  fieldType: FieldType;
   errorMessage: string;
-  inputChanges: FormInputChanges;
 }
 
 export type FieldControllers = Record<string, Field>;
@@ -68,3 +65,7 @@ export interface FormElement {
 }
 
 export type Subscribers = { name: string; context: FormElement }[];
+
+export type FormElementMapper<T> = {
+  [K in keyof T]: (form: FormHook<any>) => JSX.Element;
+};
