@@ -14,7 +14,7 @@ export const contactUsElements: FormElementMapper<ContactUs> = {
     return <form-submit {...formContext} />;
   },
 
-  name: ({ form, language }) => {
+  name: ({ form, language, structureElement }) => {
     const { disabled, errorMessage, isError, isRequired, name } = form.newController('name');
 
     const inputParams: InputParams = {
@@ -34,11 +34,13 @@ export const contactUsElements: FormElementMapper<ContactUs> = {
         inputParams={inputParams}
         formLocaleName="contactUs"
         errorMessage={errorMessage}
+        wrapperId={structureElement.id}
+        wrapperClass={structureElement.class}
       />
     );
   },
 
-  email: ({ form, language }) => {
+  email: ({ form, language, structureElement }) => {
     const { disabled, errorMessage, isError, isRequired, name } = form.newController('email');
 
     const inputParams: InputParams = {
@@ -58,11 +60,13 @@ export const contactUsElements: FormElementMapper<ContactUs> = {
         inputParams={inputParams}
         formLocaleName="contactUs"
         errorMessage={errorMessage}
+        wrapperId={structureElement.id}
+        wrapperClass={structureElement.class}
       />
     );
   },
 
-  phone: ({ form, language }) => {
+  phone: ({ form, language, structureElement }) => {
     const { disabled, errorMessage, isError, isRequired, name } = form.newController('phone');
 
     const inputParams: InputParams = {
@@ -90,11 +94,13 @@ export const contactUsElements: FormElementMapper<ContactUs> = {
         inputParams={inputParams}
         formLocaleName="contactUs"
         errorMessage={errorMessage}
+        wrapperId={structureElement.id}
+        wrapperClass={structureElement.class}
       />
     );
   },
 
-  message: ({ form, language }) => {
+  message: ({ form, language, structureElement }) => {
     const { disabled, errorMessage, isError, isRequired, name } = form.newController('message');
 
     const inputParams: InputParams = {
@@ -114,11 +120,13 @@ export const contactUsElements: FormElementMapper<ContactUs> = {
         inputParams={inputParams}
         formLocaleName="contactUs"
         errorMessage={errorMessage}
+        wrapperId={structureElement.id}
+        wrapperClass={structureElement.class}
       />
     );
   },
 
-  generalTicketType: ({ form, language }) => {
+  generalTicketType: ({ form, language, structureElement }) => {
     const { disabled, errorMessage, isError, isRequired, name } = form.newController('generalTicketType');
 
     const fetcher: FormSelectFetcher = async (language: LanguageKeys, _: AbortSignal): Promise<FormSelectItem[]> => {
@@ -151,11 +159,13 @@ export const contactUsElements: FormElementMapper<ContactUs> = {
         formLocaleName="contactUs"
         errorMessage={errorMessage}
         placeholder="selectInquiryType"
+        wrapperId={structureElement.id}
+        wrapperClass={structureElement.class}
       />
     );
   },
 
-  cityId: ({ form, language }) => {
+  cityId: ({ form, language, structureElement }) => {
     const { disabled, errorMessage, isError, isRequired, name } = form.newController('cityId');
 
     const fetcher: FormSelectFetcher = async (language: LanguageKeys, signal: AbortSignal): Promise<FormSelectItem[]> => {
@@ -181,6 +191,8 @@ export const contactUsElements: FormElementMapper<ContactUs> = {
         placeholder="selectCity"
         formLocaleName="contactUs"
         errorMessage={errorMessage}
+        wrapperId={structureElement.id}
+        wrapperClass={structureElement.class}
       />
     );
   },

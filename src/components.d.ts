@@ -97,7 +97,6 @@ export namespace Components {
     }
     interface FormInput {
         "class": string;
-        "componentClass": string;
         "errorMessage": string;
         "form": FormHook<any>;
         "formLocaleName": LocaleFormKeys;
@@ -108,10 +107,10 @@ export namespace Components {
         "label": string;
         "language": LanguageKeys;
         "numberDirection"?: boolean;
+        "wrapperClass": string;
+        "wrapperId": string;
     }
     interface FormSelect {
-        "componentClass": string;
-        "componentId": string;
         "disabled": boolean;
         "errorMessage": string;
         "fetcher": FormSelectFetcher;
@@ -123,6 +122,8 @@ export namespace Components {
         "language": LanguageKeys;
         "name": string;
         "placeholder": string;
+        "wrapperClass": string;
+        "wrapperId": string;
     }
     interface FormShadowInput {
         "form": FormHook<any>;
@@ -148,8 +149,6 @@ export namespace Components {
         "structureElement": StructureObject;
     }
     interface FormTextArea {
-        "componentClass": string;
-        "componentId": string;
         "errorMessage": string;
         "form": FormHook<any>;
         "formLocaleName": LocaleFormKeys;
@@ -158,6 +157,8 @@ export namespace Components {
         "isRequired": boolean;
         "label": string;
         "language": LanguageKeys;
+        "wrapperClass": string;
+        "wrapperId": string;
     }
     interface ManufacturerLookup {
         "baseUrl": string;
@@ -494,7 +495,6 @@ declare namespace LocalJSX {
     }
     interface FormInput {
         "class"?: string;
-        "componentClass"?: string;
         "errorMessage"?: string;
         "form"?: FormHook<any>;
         "formLocaleName"?: LocaleFormKeys;
@@ -505,10 +505,10 @@ declare namespace LocalJSX {
         "label"?: string;
         "language"?: LanguageKeys;
         "numberDirection"?: boolean;
+        "wrapperClass"?: string;
+        "wrapperId"?: string;
     }
     interface FormSelect {
-        "componentClass"?: string;
-        "componentId"?: string;
         "disabled"?: boolean;
         "errorMessage"?: string;
         "fetcher"?: FormSelectFetcher;
@@ -520,6 +520,8 @@ declare namespace LocalJSX {
         "language"?: LanguageKeys;
         "name"?: string;
         "placeholder"?: string;
+        "wrapperClass"?: string;
+        "wrapperId"?: string;
     }
     interface FormShadowInput {
         "form"?: FormHook<any>;
@@ -545,8 +547,6 @@ declare namespace LocalJSX {
         "structureElement"?: StructureObject;
     }
     interface FormTextArea {
-        "componentClass"?: string;
-        "componentId"?: string;
         "errorMessage"?: string;
         "form"?: FormHook<any>;
         "formLocaleName"?: LocaleFormKeys;
@@ -555,6 +555,8 @@ declare namespace LocalJSX {
         "isRequired"?: boolean;
         "label"?: string;
         "language"?: LanguageKeys;
+        "wrapperClass"?: string;
+        "wrapperId"?: string;
     }
     interface ManufacturerLookup {
         "baseUrl"?: string;

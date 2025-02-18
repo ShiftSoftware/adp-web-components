@@ -18,11 +18,12 @@ export class FormInput implements FormElement {
   // this will be class = 'hydrate' and it will render last component render
   @Prop() class: string;
   @Prop() isError: boolean;
+  @Prop() wrapperId: string;
   @Prop() form: FormHook<any>;
   @Prop() inputPreFix: string;
   @Prop() isRequired: boolean;
   @Prop() errorMessage: string;
-  @Prop() componentClass: string;
+  @Prop() wrapperClass: string;
   @Prop() inputParams: InputParams;
   @Prop() numberDirection?: boolean;
   @Prop() language: LanguageKeys = 'en';
@@ -69,7 +70,7 @@ export class FormInput implements FormElement {
 
     return (
       <Host>
-        <label class={cn('relative w-full inline-flex flex-col', this.componentClass)}>
+        <label id={this.wrapperId} class={cn('relative w-full inline-flex flex-col', this.wrapperClass)}>
           {label && (
             <div class="mb-[4px]">
               {texts[label] || label}

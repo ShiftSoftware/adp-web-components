@@ -18,12 +18,12 @@ export class FormSelect implements FormElement {
   @Prop() name: string;
   @Prop() label: string;
   @Prop() isError: boolean;
+  @Prop() wrapperId: string;
   @Prop() disabled: boolean;
-  @Prop() componentId: string;
   @Prop() form: FormHook<any>;
   @Prop() isRequired: boolean;
   @Prop() errorMessage: string;
-  @Prop() componentClass: string;
+  @Prop() wrapperClass: string;
   @Prop() formLocaleName: string;
   @Prop() fetcher: FormSelectFetcher;
   @Prop() language: LanguageKeys = 'en';
@@ -142,7 +142,7 @@ export class FormSelect implements FormElement {
 
     return (
       <Host>
-        <label id={this.componentId} class={cn('relative w-full inline-flex flex-col', this.componentClass)}>
+        <label id={this.wrapperId} class={cn('relative w-full inline-flex flex-col', this.wrapperClass)}>
           {this.label && (
             <div class="mb-[4px]">
               {texts[this.label] || this.label}

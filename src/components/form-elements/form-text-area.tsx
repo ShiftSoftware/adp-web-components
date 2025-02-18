@@ -16,11 +16,11 @@ import { LanguageKeys, Locale, localeSchema } from '~types/locales';
 export class FormTextArea implements FormElement {
   @Prop() label: string;
   @Prop() isError: boolean;
+  @Prop() wrapperId: string;
   @Prop() form: FormHook<any>;
   @Prop() isRequired: boolean;
-  @Prop() componentId: string;
+  @Prop() wrapperClass: string;
   @Prop() errorMessage: string;
-  @Prop() componentClass: string;
   @Prop() inputParams: InputParams;
   @Prop() language: LanguageKeys = 'en';
   @Prop() formLocaleName: LocaleFormKeys;
@@ -62,7 +62,7 @@ export class FormTextArea implements FormElement {
 
     return (
       <Host>
-        <label id={this.componentId} class={cn('relative w-full inline-flex flex-col', this.componentClass)}>
+        <label id={this.wrapperId} class={cn('relative w-full inline-flex flex-col', this.wrapperClass)}>
           {label && (
             <div class="mb-[4px]">
               {texts[label] || label}
@@ -71,6 +71,7 @@ export class FormTextArea implements FormElement {
           )}
           <div class={cn('relative', { 'opacity-75': this.inputParams.disabled })}>
             <textarea
+              {...this.inputParams}
               style={{ ...(prefixWidth ? { paddingLeft: `${prefixWidth}px` } : {}) }}
               placeholder={texts[this.inputParams.placeholder] || this.inputParams.placeholder}
               class={cn(
