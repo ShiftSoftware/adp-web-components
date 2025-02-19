@@ -2,9 +2,10 @@ import { Component, Fragment, Host, Prop, State, Watch, h } from '@stencil/core'
 
 import { FormHook } from '~lib/form-hook';
 import { getLocaleLanguage } from '~lib/get-local-language';
+import { isValidStructure } from '~lib/validate-form-structure';
 
-import { LanguageKeys, Locale, localeSchema } from '~types/locales';
 import { FormElementMapper, StructureObject } from '~types/forms';
+import { LanguageKeys, Locale, localeSchema } from '~types/locales';
 
 @Component({
   shadow: false,
@@ -12,18 +13,35 @@ import { FormElementMapper, StructureObject } from '~types/forms';
   styleUrl: 'form-structure.css',
 })
 export class FormStructure {
+  @Prop() theme: string;
+  @Prop() themes: any = {};
   @Prop() renderControl = {};
   @Prop() isLoading: boolean;
   @Prop() form: FormHook<any>;
   @Prop() errorMessage: string;
   @Prop() language: LanguageKeys = 'en';
-  @Prop() structureObject: StructureObject = null;
+  @Prop() structure: string = '["submit.Submit"]';
   @Prop() formElementMapper: FormElementMapper<any>;
 
+  @State() structureObject: StructureObject = null;
   @State() locale: Locale = localeSchema.getDefault();
 
   async componentWillLoad() {
-    await this.changeLanguage(this.language);
+    let structure;
+
+    if (this.theme && this.themes[this.theme]) structure = this.themes[this.theme];
+    else structure = this.structure;
+
+    await Promise.all([this.structureValidation(structure), this.changeLanguage(this.language)]);
+  }
+
+  @Watch('structure')
+  async onStructureChange(newStructure: string) {
+    await this.structureValidation(newStructure);
+  }
+
+  async structureValidation(structureString: string) {
+    this.structureObject = isValidStructure(structureString);
   }
 
   @Watch('language')
@@ -50,6 +68,8 @@ export class FormStructure {
   }
 
   render() {
+    if (this.structureObject === null) return <form-structure-error language={this.language} />;
+
     const { formController, resetFormErrorMessage } = this.form;
 
     return (

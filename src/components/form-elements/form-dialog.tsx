@@ -81,7 +81,7 @@ export class FormInput {
                 </svg>
               </button>
             </div>
-            <div class="text-justify">{this.locale.errors[this.internalMessage] || this.locale.errors.wildCard}</div>
+            <div class="text-justify">{this.locale.errors[this.internalMessage] || this.internalMessage}</div>
             <div class="flex justify-start">
               <button
                 type="button"

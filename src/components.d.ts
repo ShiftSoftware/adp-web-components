@@ -137,7 +137,9 @@ export namespace Components {
         "isLoading": boolean;
         "language": LanguageKeys;
         "renderControl": {};
-        "structureObject": StructureObject;
+        "structure": string;
+        "theme": string;
+        "themes": any;
     }
     interface FormStructureError {
         "language": LanguageKeys;
@@ -535,7 +537,9 @@ declare namespace LocalJSX {
         "isLoading"?: boolean;
         "language"?: LanguageKeys;
         "renderControl"?: {};
-        "structureObject"?: StructureObject;
+        "structure"?: string;
+        "theme"?: string;
+        "themes"?: any;
     }
     interface FormStructureError {
         "language"?: LanguageKeys;

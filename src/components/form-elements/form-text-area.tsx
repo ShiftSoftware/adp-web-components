@@ -76,7 +76,7 @@ export class FormTextArea implements FormElement {
               placeholder={texts[this.inputParams.placeholder] || this.inputParams.placeholder}
               class={cn(
                 'border h-[200px] form-input resize-none disabled:bg-white flex-1 py-[6px] px-[12px] transition duration-300 rounded-md outline-none focus:border-slate-600 focus:shadow-[0_0_0_0.2rem_rgba(71,85,105,0.25)] w-full',
-                'form-textarea-' + name,
+                'form-textarea-' + this.inputParams.name,
                 { '!border-red-500 focus:shadow-[0_0_0_0.2rem_rgba(239,68,68,0.25)]': isError },
               )}
             />
