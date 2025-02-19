@@ -33,7 +33,7 @@ export class FormStructure {
       this.showSuccess = true;
       setTimeout(() => {
         this.showSuccess = false;
-      }, 1500);
+      }, 4000);
     });
 
     let structure;
