@@ -6,7 +6,8 @@
   "general": {
     "close": "داخستن",
     "submit": "پێشکەشکردن",
-    "noSelectOptions": "هیچ بژاردەیەک نییە."
+    "noSelectOptions": "هیچ بژاردەیەک نییە.",
+    "formSubmittedSuccessfully": "فۆڕمەکە بە سەرکەوتوویی پێشکەش کراوە."
   },
   "errors": {
     "invalidVin": "ژمارەی شانسی نادروستە",

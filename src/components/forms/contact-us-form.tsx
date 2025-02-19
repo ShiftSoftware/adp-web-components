@@ -79,7 +79,10 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
 
       if (this.successCallback) this.successCallback(data);
 
-      this.form.reset();
+      this.form.successAnimation();
+      setTimeout(() => {
+        this.form.reset();
+      }, 1000);
     } catch (error) {
       console.error(error);
 

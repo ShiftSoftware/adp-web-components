@@ -2,6 +2,8 @@ import { AnyObjectSchema, SchemaDescription } from 'yup';
 import { Field, FormElement, FormHookInterface, FormStateOptions, Subscribers, ValidationType } from '~types/forms';
 
 export class FormHook<T> {
+  successAnimation = () => {};
+
   private isSubmitted = false;
   private subscribers: Subscribers = [];
   private context: FormHookInterface<T>;
@@ -19,6 +21,8 @@ export class FormHook<T> {
     this.formController = { onSubmit: this.onSubmit, onInput: this.onInput };
     if (formStateOptions?.validationType) this.validationType = formStateOptions.validationType;
   }
+
+  setSuccessAnimation = (newSuccessAnimation: typeof this.successAnimation) => (this.successAnimation = newSuccessAnimation);
 
   subscribe = (formName: string, formElement: FormElement) => this.subscribers.push({ name: formName, context: formElement });
 

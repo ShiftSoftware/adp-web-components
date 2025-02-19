@@ -6,7 +6,8 @@
   "general": {
     "close": "Закрывать",
     "submit": "подавать",
-    "noSelectOptions": "Вариантов нет."
+    "noSelectOptions": "Вариантов нет.",
+    "formSubmittedSuccessfully": "Форма успешно отправлена."
   },
   "errors": {
     "noBaseUrl": "Укажите базовый URL",

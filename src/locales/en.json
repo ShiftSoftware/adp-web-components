@@ -6,7 +6,8 @@
   "general": {
     "close": "Close",
     "submit": "Submit",
-    "noSelectOptions": "There is no options."
+    "noSelectOptions": "There is no options.",
+    "formSubmittedSuccessfully": "Form Submitted Successfully."
   },
   "errors": {
     "invalidVin": "Invalid VIN",
