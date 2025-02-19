@@ -1,19 +1,16 @@
-import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
+import { Component, Element, Host, Prop, State, h } from '@stencil/core';
 
 import { Grecaptcha } from '~types/general';
-import { FormHookInterface, StructureObject } from '~types/forms';
-import { LanguageKeys, Locale, localeSchema } from '~types/locales';
+import { LanguageKeys } from '~types/locales';
+import { FormHookInterface } from '~types/forms';
 
 import cn from '~lib/cn';
 import { FormHook } from '~lib/form-hook';
-import { getLocaleLanguage } from '~lib/get-local-language';
-import { isValidStructure } from '~lib/validate-form-structure';
 
-import { formFieldParams } from './contact-us/params';
-import { formElementMapper } from './contact-us/mapper';
 import { ContactUs, contactUsSchema } from './contact-us/validations';
 
 import themes from './contact-us/themes.json';
+import { contactUsElements } from './contact-us/element-mapper';
 
 declare const grecaptcha: Grecaptcha;
 
@@ -28,46 +25,23 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
   @Prop() brandId: string;
   @Prop() queryString: string = '';
   @Prop() language: LanguageKeys = 'en';
+
+  @Prop() structure: string = '["submit.Submit"]';
+  @Prop() recaptchaKey: string = '6Lehq6IpAAAAAETTDS2Zh60nHIT1a8oVkRtJ2WsA';
+
   @Prop() errorCallback: (error: any) => void;
   @Prop() successCallback: (values: any) => void;
-  @Prop() structure: string = '["submit.Submit"]';
   @Prop() loadingChanges: (loading: boolean) => void;
-  @Prop() recaptchaKey: string = '6Lehq6IpAAAAAETTDS2Zh60nHIT1a8oVkRtJ2WsA';
 
   @State() isLoading: boolean;
   @State() renderControl = {};
   @State() errorMessage: string;
-  @State() structureObject: StructureObject = null;
-  @State() locale: Locale = localeSchema.getDefault();
 
   recaptchaWidget: number | null = null;
 
   private form = new FormHook(this, contactUsSchema);
 
   @Element() el: HTMLElement;
-
-  async componentWillLoad() {
-    let structure;
-
-    if (this.theme && themes[this.theme]) structure = themes[this.theme];
-    else structure = this.structure;
-
-    await Promise.all([this.structureValidation(structure), this.changeLanguage(this.language)]);
-  }
-
-  @Watch('language')
-  async changeLanguage(newLanguage: LanguageKeys) {
-    this.locale = await getLocaleLanguage(newLanguage);
-  }
-
-  @Watch('structure')
-  async onStructureChange(newStructure: string) {
-    await this.structureValidation(newStructure);
-  }
-
-  async structureValidation(structureString: string) {
-    this.structureObject = isValidStructure(structureString);
-  }
 
   async componentDidLoad() {
     try {
@@ -105,7 +79,10 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
 
       if (this.successCallback) this.successCallback(data);
 
-      this.form.reset();
+      this.form.successAnimation();
+      setTimeout(() => {
+        this.form.reset();
+      }, 1000);
     } catch (error) {
       console.error(error);
 
@@ -117,8 +94,6 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
   }
 
   render() {
-    if (this.structureObject === null) return <form-structure-error language={this.language} />;
-
     return (
       <Host
         class={cn({
@@ -126,14 +101,14 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
         })}
       >
         <form-structure
+          themes={themes}
           form={this.form}
+          theme={this.theme}
           language={this.language}
           isLoading={this.isLoading}
           errorMessage={this.errorMessage}
-          formFieldParams={formFieldParams}
           renderControl={this.renderControl}
-          formElementMapper={formElementMapper}
-          structureObject={this.structureObject}
+          formElementMapper={contactUsElements}
         >
           <slot></slot>
         </form-structure>

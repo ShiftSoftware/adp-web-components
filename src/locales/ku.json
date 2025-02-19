@@ -5,7 +5,9 @@
   "noData": "هیچ داتایەک لەبەردەستدا نییە.",
   "general": {
     "close": "داخستن",
-    "noSelectOptions": "هیچ بژاردەیەک نییە."
+    "submit": "پێشکەشکردن",
+    "noSelectOptions": "هیچ بژاردەیەک نییە.",
+    "formSubmittedSuccessfully": "فۆڕمەکە بە سەرکەوتوویی پێشکەش کراوە."
   },
   "errors": {
     "invalidVin": "ژمارەی شانسی نادروستە",

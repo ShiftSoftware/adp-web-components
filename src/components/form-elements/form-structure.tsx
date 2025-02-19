@@ -1,10 +1,12 @@
 import { Component, Fragment, Host, Prop, State, Watch, h } from '@stencil/core';
 
+import cn from '~lib/cn';
 import { FormHook } from '~lib/form-hook';
 import { getLocaleLanguage } from '~lib/get-local-language';
+import { isValidStructure } from '~lib/validate-form-structure';
 
+import { FormElementMapper, StructureObject } from '~types/forms';
 import { LanguageKeys, Locale, localeSchema } from '~types/locales';
-import { FieldControllers, FormElementMapper, FormFieldParams, StructureObject } from '~types/forms';
 
 @Component({
   shadow: false,
@@ -12,28 +14,43 @@ import { FieldControllers, FormElementMapper, FormFieldParams, StructureObject }
   styleUrl: 'form-structure.css',
 })
 export class FormStructure {
+  @Prop() theme: string;
+  @Prop() themes: any = {};
   @Prop() renderControl = {};
   @Prop() isLoading: boolean;
   @Prop() form: FormHook<any>;
   @Prop() errorMessage: string;
   @Prop() language: LanguageKeys = 'en';
-  @Prop() formFieldParams: FormFieldParams;
-  @Prop() formElementMapper: FormElementMapper;
-  @Prop() structureObject: StructureObject = null;
+  @Prop() structure: string = '["submit.Submit"]';
+  @Prop() formElementMapper: FormElementMapper<any>;
 
-  @State() fieldControllers: FieldControllers;
+  @State() showSuccess: boolean = false;
+  @State() structureObject: StructureObject = null;
   @State() locale: Locale = localeSchema.getDefault();
 
   async componentWillLoad() {
-    await this.changeLanguage(this.language);
-
-    const tempFieldContext = {};
-
-    Object.entries(this.formElementMapper).forEach(([key, value]) => {
-      tempFieldContext[key] = this.form.newController(key, value);
+    this.form.setSuccessAnimation(() => {
+      this.showSuccess = true;
+      setTimeout(() => {
+        this.showSuccess = false;
+      }, 4000);
     });
 
-    this.fieldControllers = tempFieldContext;
+    let structure;
+
+    if (this.theme && this.themes[this.theme]) structure = this.themes[this.theme];
+    else structure = this.structure;
+
+    await Promise.all([this.structureValidation(structure), this.changeLanguage(this.language)]);
+  }
+
+  @Watch('structure')
+  async onStructureChange(newStructure: string) {
+    await this.structureValidation(newStructure);
+  }
+
+  async structureValidation(structureString: string) {
+    this.structureObject = isValidStructure(structureString);
   }
 
   @Watch('language')
@@ -53,43 +70,48 @@ export class FormStructure {
 
     if (structureElement.element === 'slot') return <slot />;
 
-    if (structureElement.element === 'button')
-      return (
-        <button type="button" id={structureElement.id}>
-          {structureElement.class}
-        </button>
-      );
-
-    const params = this.formFieldParams[structureElement.element] ? this.formFieldParams[structureElement.element] : {};
-
-    if (structureElement.element === 'submit') return <form-submit isLoading={this.isLoading} params={params} structureElement={structureElement} />;
-
-    if (this.fieldControllers[structureElement.element]) {
-      const fieldController = this.fieldControllers[structureElement.element];
-
-      if (fieldController.fieldType === 'text' || fieldController.fieldType === 'number')
-        return <form-input form={this.form} componentId={structureElement.id} componentClass={structureElement.class} language={this.language} {...fieldController} {...params} />;
-
-      if (fieldController.fieldType === 'text-area')
-        return (
-          <form-text-area form={this.form} componentId={structureElement.id} componentClass={structureElement.class} language={this.language} {...fieldController} {...params} />
-        );
-
-      if (fieldController.fieldType === 'select')
-        return <form-select form={this.form} componentId={structureElement.id} componentClass={structureElement.class} language={this.language} {...fieldController} {...params} />;
-    }
+    if (this.formElementMapper[structureElement.element])
+      return this.formElementMapper[structureElement.element]({ form: this.form, isLoading: this.isLoading, structureElement, language: this.language });
 
     return false;
   }
 
   render() {
+    if (this.structureObject === null) return <form-structure-error language={this.language} />;
+
     const { formController, resetFormErrorMessage } = this.form;
+
+    // @ts-ignore
+    window.ff = this.form;
 
     return (
       <Host>
-        <form dir={this.locale.direction} {...formController}>
+        <form class="relative overflow-hidden" dir={this.locale.direction} {...formController}>
+          <div
+            class={cn('absolute -translate-x-full transition duration-1000 flex items-center justify-center size-full opacity-0', {
+              'opacity-100 translate-x-0': this.showSuccess,
+            })}
+          >
+            <div class="flex flex-col gap-[16px] items-center">
+              <svg
+                fill="none"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                xmlns="http://www.w3.org/2000/svg"
+                class="size-[70px] stroke-green-700"
+              >
+                <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
+                <path d="m9 12 2 2 4-4" />
+              </svg>
+
+              <div class="text-[20px]">{this.locale.general.formSubmittedSuccessfully}</div>
+            </div>
+          </div>
           <form-dialog dialogClosed={resetFormErrorMessage} language={this.language} errorMessage={this.errorMessage} />
-          {this.renderLoop(this.structureObject)}
+          <div class={cn('transition duration-1000', { 'translate-x-full opacity-0': this.showSuccess })}>{this.renderLoop(this.structureObject)}</div>
         </form>
       </Host>
     );

@@ -10,7 +10,8 @@ import { PartInformation } from "./global/types/part-information";
 import { DotNetObjectReference, MockJson } from "./global/types/components";
 import { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
 import { FormHook } from "./global/lib/form-hook";
-import { FormElementMapper, FormFieldParams, FormInputChanges, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
+import { InputParams } from "./global/types/general";
+import { FormElementMapper, FormFieldParams, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
 import { ActiveElement } from "./components/part-lookup/part-lookup";
 import { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
@@ -18,7 +19,8 @@ export { PartInformation } from "./global/types/part-information";
 export { DotNetObjectReference, MockJson } from "./global/types/components";
 export { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
 export { FormHook } from "./global/lib/form-hook";
-export { FormElementMapper, FormFieldParams, FormInputChanges, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
+export { InputParams } from "./global/types/general";
+export { FormElementMapper, FormFieldParams, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
 export { ActiveElement } from "./components/part-lookup/part-lookup";
 export { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export namespace Components {
@@ -95,74 +97,70 @@ export namespace Components {
     }
     interface FormInput {
         "class": string;
-        "componentClass": string;
-        "componentId": string;
-        "defaultValue"?: string;
-        "disabled": boolean;
         "errorMessage": string;
         "form": FormHook<any>;
         "formLocaleName": LocaleFormKeys;
-        "inputChanges": FormInputChanges;
+        "inputParams": InputParams;
         "inputPreFix": string;
         "isError": boolean;
         "isRequired": boolean;
         "label": string;
         "language": LanguageKeys;
-        "name": string;
         "numberDirection"?: boolean;
-        "onChangeMiddleware"?: (event: InputEvent) => InputEvent;
-        "placeholder": string;
-        "type": string;
+        "wrapperClass": string;
+        "wrapperId": string;
     }
     interface FormSelect {
-        "componentClass": string;
-        "componentId": string;
         "disabled": boolean;
         "errorMessage": string;
         "fetcher": FormSelectFetcher;
         "form": FormHook<any>;
         "formLocaleName": string;
-        "inputChanges": FormInputChanges;
         "isError": boolean;
         "isRequired": boolean;
         "label": string;
         "language": LanguageKeys;
         "name": string;
         "placeholder": string;
+        "wrapperClass": string;
+        "wrapperId": string;
+    }
+    interface FormShadowInput {
+        "form": FormHook<any>;
+        "name": string;
+        "value": string;
     }
     interface FormStructure {
         "errorMessage": string;
         "form": FormHook<any>;
-        "formElementMapper": FormElementMapper;
-        "formFieldParams": FormFieldParams;
+        "formElementMapper": FormElementMapper<any>;
         "isLoading": boolean;
         "language": LanguageKeys;
         "renderControl": {};
-        "structureObject": StructureObject;
+        "structure": string;
+        "theme": string;
+        "themes": any;
     }
     interface FormStructureError {
         "language": LanguageKeys;
     }
     interface FormSubmit {
         "isLoading": boolean;
+        "language": LanguageKeys;
         "params": FormFieldParams;
         "structureElement": StructureObject;
     }
     interface FormTextArea {
-        "componentClass": string;
-        "componentId": string;
-        "defaultValue"?: string;
-        "disabled": boolean;
         "errorMessage": string;
         "form": FormHook<any>;
         "formLocaleName": LocaleFormKeys;
-        "inputChanges": FormInputChanges;
+        "inputParams": InputParams;
         "isError": boolean;
         "isRequired": boolean;
         "label": string;
         "language": LanguageKeys;
-        "name": string;
-        "placeholder": string;
+        "wrapperClass": string;
+        "wrapperId": string;
     }
     interface ManufacturerLookup {
         "baseUrl": string;
@@ -338,6 +336,12 @@ declare global {
         prototype: HTMLFormSelectElement;
         new (): HTMLFormSelectElement;
     };
+    interface HTMLFormShadowInputElement extends Components.FormShadowInput, HTMLStencilElement {
+    }
+    var HTMLFormShadowInputElement: {
+        prototype: HTMLFormShadowInputElement;
+        new (): HTMLFormShadowInputElement;
+    };
     interface HTMLFormStructureElement extends Components.FormStructure, HTMLStencilElement {
     }
     var HTMLFormStructureElement: {
@@ -419,6 +423,7 @@ declare global {
         "form-dialog": HTMLFormDialogElement;
         "form-input": HTMLFormInputElement;
         "form-select": HTMLFormSelectElement;
+        "form-shadow-input": HTMLFormShadowInputElement;
         "form-structure": HTMLFormStructureElement;
         "form-structure-error": HTMLFormStructureErrorElement;
         "form-submit": HTMLFormSubmitElement;
@@ -492,74 +497,70 @@ declare namespace LocalJSX {
     }
     interface FormInput {
         "class"?: string;
-        "componentClass"?: string;
-        "componentId"?: string;
-        "defaultValue"?: string;
-        "disabled"?: boolean;
         "errorMessage"?: string;
         "form"?: FormHook<any>;
         "formLocaleName"?: LocaleFormKeys;
-        "inputChanges"?: FormInputChanges;
+        "inputParams"?: InputParams;
         "inputPreFix"?: string;
         "isError"?: boolean;
         "isRequired"?: boolean;
         "label"?: string;
         "language"?: LanguageKeys;
-        "name"?: string;
         "numberDirection"?: boolean;
-        "onChangeMiddleware"?: (event: InputEvent) => InputEvent;
-        "placeholder"?: string;
-        "type"?: string;
+        "wrapperClass"?: string;
+        "wrapperId"?: string;
     }
     interface FormSelect {
-        "componentClass"?: string;
-        "componentId"?: string;
         "disabled"?: boolean;
         "errorMessage"?: string;
         "fetcher"?: FormSelectFetcher;
         "form"?: FormHook<any>;
         "formLocaleName"?: string;
-        "inputChanges"?: FormInputChanges;
         "isError"?: boolean;
         "isRequired"?: boolean;
         "label"?: string;
         "language"?: LanguageKeys;
         "name"?: string;
         "placeholder"?: string;
+        "wrapperClass"?: string;
+        "wrapperId"?: string;
+    }
+    interface FormShadowInput {
+        "form"?: FormHook<any>;
+        "name"?: string;
+        "value"?: string;
     }
     interface FormStructure {
         "errorMessage"?: string;
         "form"?: FormHook<any>;
-        "formElementMapper"?: FormElementMapper;
-        "formFieldParams"?: FormFieldParams;
+        "formElementMapper"?: FormElementMapper<any>;
         "isLoading"?: boolean;
         "language"?: LanguageKeys;
         "renderControl"?: {};
-        "structureObject"?: StructureObject;
+        "structure"?: string;
+        "theme"?: string;
+        "themes"?: any;
     }
     interface FormStructureError {
         "language"?: LanguageKeys;
     }
     interface FormSubmit {
         "isLoading"?: boolean;
+        "language"?: LanguageKeys;
         "params"?: FormFieldParams;
         "structureElement"?: StructureObject;
     }
     interface FormTextArea {
-        "componentClass"?: string;
-        "componentId"?: string;
-        "defaultValue"?: string;
-        "disabled"?: boolean;
         "errorMessage"?: string;
         "form"?: FormHook<any>;
         "formLocaleName"?: LocaleFormKeys;
-        "inputChanges"?: FormInputChanges;
+        "inputParams"?: InputParams;
         "isError"?: boolean;
         "isRequired"?: boolean;
         "label"?: string;
         "language"?: LanguageKeys;
-        "name"?: string;
-        "placeholder"?: string;
+        "wrapperClass"?: string;
+        "wrapperId"?: string;
     }
     interface ManufacturerLookup {
         "baseUrl"?: string;
@@ -666,6 +667,7 @@ declare namespace LocalJSX {
         "form-dialog": FormDialog;
         "form-input": FormInput;
         "form-select": FormSelect;
+        "form-shadow-input": FormShadowInput;
         "form-structure": FormStructure;
         "form-structure-error": FormStructureError;
         "form-submit": FormSubmit;
@@ -692,6 +694,7 @@ declare module "@stencil/core" {
             "form-dialog": LocalJSX.FormDialog & JSXBase.HTMLAttributes<HTMLFormDialogElement>;
             "form-input": LocalJSX.FormInput & JSXBase.HTMLAttributes<HTMLFormInputElement>;
             "form-select": LocalJSX.FormSelect & JSXBase.HTMLAttributes<HTMLFormSelectElement>;
+            "form-shadow-input": LocalJSX.FormShadowInput & JSXBase.HTMLAttributes<HTMLFormShadowInputElement>;
             "form-structure": LocalJSX.FormStructure & JSXBase.HTMLAttributes<HTMLFormStructureElement>;
             "form-structure-error": LocalJSX.FormStructureError & JSXBase.HTMLAttributes<HTMLFormStructureErrorElement>;
             "form-submit": LocalJSX.FormSubmit & JSXBase.HTMLAttributes<HTMLFormSubmitElement>;

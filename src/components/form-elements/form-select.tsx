@@ -5,7 +5,7 @@ import { FormHook } from '~lib/form-hook';
 import { getLocaleLanguage } from '~lib/get-local-language';
 
 import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/locales';
-import { FormElement, FormInputChanges, FormSelectFetcher, FormSelectItem } from '~types/forms';
+import { FormElement, FormSelectFetcher, FormSelectItem } from '~types/forms';
 
 import Loader from '~assets/loader.svg';
 
@@ -18,16 +18,15 @@ export class FormSelect implements FormElement {
   @Prop() name: string;
   @Prop() label: string;
   @Prop() isError: boolean;
+  @Prop() wrapperId: string;
   @Prop() disabled: boolean;
-  @Prop() componentId: string;
   @Prop() form: FormHook<any>;
   @Prop() isRequired: boolean;
   @Prop() errorMessage: string;
-  @Prop() componentClass: string;
+  @Prop() wrapperClass: string;
   @Prop() formLocaleName: string;
   @Prop() fetcher: FormSelectFetcher;
   @Prop() language: LanguageKeys = 'en';
-  @Prop() inputChanges: FormInputChanges;
   @Prop() placeholder: string = 'Select an option';
 
   @State() isLoading: boolean;
@@ -76,7 +75,6 @@ export class FormSelect implements FormElement {
 
   handleSelection(option: FormSelectItem) {
     this.selectedValue = option.value;
-    this.inputChanges(option.value);
     this.isOpen = false;
   }
 
@@ -139,13 +137,12 @@ export class FormSelect implements FormElement {
     const selectedItem = this.options.find(item => this.selectedValue === item.value);
 
     if (!selectedItem) {
-      this.inputChanges('');
       this.selectedValue = '';
     }
 
     return (
       <Host>
-        <label id={this.componentId} class={cn('relative w-full inline-flex flex-col', this.componentClass)}>
+        <label id={this.wrapperId} class={cn('relative w-full inline-flex flex-col', this.wrapperClass)}>
           {this.label && (
             <div class="mb-[4px]">
               {texts[this.label] || this.label}
@@ -153,7 +150,7 @@ export class FormSelect implements FormElement {
             </div>
           )}
 
-          <input name={this.name} type="string" hidden value={this.selectedValue} />
+          <form-shadow-input name={this.name} form={this.form} value={this.selectedValue} />
 
           <div class="relative">
             <button

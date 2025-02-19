@@ -1,7 +1,9 @@
 import { AnyObjectSchema, SchemaDescription } from 'yup';
-import { Field, FieldType, FormElement, FormHookInterface, FormStateOptions, Subscribers, ValidationType } from '~types/forms';
+import { Field, FormElement, FormHookInterface, FormStateOptions, Subscribers, ValidationType } from '~types/forms';
 
 export class FormHook<T> {
+  successAnimation = () => {};
+
   private isSubmitted = false;
   private subscribers: Subscribers = [];
   private context: FormHookInterface<T>;
@@ -16,9 +18,11 @@ export class FormHook<T> {
   constructor(context: FormHookInterface<T>, schemaObject: AnyObjectSchema, formStateOptions?: FormStateOptions) {
     this.context = context;
     this.schemaObject = schemaObject;
-    this.formController = { onSubmit: this.onSubmit };
+    this.formController = { onSubmit: this.onSubmit, onInput: this.onInput };
     if (formStateOptions?.validationType) this.validationType = formStateOptions.validationType;
   }
+
+  setSuccessAnimation = (newSuccessAnimation: typeof this.successAnimation) => (this.successAnimation = newSuccessAnimation);
 
   subscribe = (formName: string, formElement: FormElement) => this.subscribers.push({ name: formName, context: formElement });
 
@@ -38,6 +42,12 @@ export class FormHook<T> {
 
     this.context.renderControl = {};
   }
+
+  onInput = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+
+    this.validateInput(target.name, target.value);
+  };
 
   resetFormErrorMessage = () => (this.context.errorMessage = '');
 
@@ -80,6 +90,7 @@ export class FormHook<T> {
         this.signal({ isError: false, disabled: true });
         const formObject = this.getValues();
         const values = await this.schemaObject.validate(formObject, { abortEarly: false });
+
         await this.context.formSubmit(values);
       } catch (error) {
         if (error.name === 'ValidationError') {
@@ -110,32 +121,16 @@ export class FormHook<T> {
     })();
   };
 
-  newController = (name: string, fieldType: FieldType) => {
+  newController = (name: string) => {
     const validationDescription = this.schemaObject.describe().fields[name] as SchemaDescription;
 
-    const sharedFields = {
-      name,
-      fieldType,
-      isError: false,
-      disabled: false,
-      errorMessage: '',
-      isRequired: validationDescription?.tests.some(test => test.name === 'required'),
-    };
-
-    if (fieldType === 'text' || fieldType === 'number' || fieldType === 'text-area')
+    if (!this.subscribedFields[name])
       this.subscribedFields[name] = {
-        ...sharedFields,
-        inputChanges: (event: InputEvent) => {
-          const value = (event.target as HTMLInputElement).value;
-          this.onChanges(name, value);
-        },
-      };
-    else if (fieldType === 'select')
-      this.subscribedFields[name] = {
-        ...sharedFields,
-        inputChanges: (value: string) => {
-          this.onChanges(name, value);
-        },
+        name,
+        isError: false,
+        disabled: false,
+        errorMessage: '',
+        isRequired: validationDescription?.tests.some(test => test.name === 'required'),
       };
 
     return this.subscribedFields[name];
@@ -151,7 +146,7 @@ export class FormHook<T> {
     }
   };
 
-  private onChanges = async (name: string, value: string) => {
+  validateInput = async (name: string, value: string) => {
     if (this.haltValidation) return;
     if (!this.isSubmitted && this.validationType !== 'always') return;
 
