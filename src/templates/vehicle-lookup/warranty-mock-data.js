@@ -1764,7 +1764,9 @@ const mockData = {
       {
         sscCode: '23SD-024',
         description: '2nd Electircal Key',
-        opCode: 'YHG14A',
+        labors: [{
+          laborCode: 'ZGG79A'
+        }],
         repaired: true,
         repairDate: '2024-01-31',
         parts: [
@@ -1783,7 +1785,9 @@ const mockData = {
       {
         sscCode: '24SD-004',
         description: 'Automatic Transmission ECU reprogramming',
-        opCode: 'ZGG04A',
+        labors: [{
+          laborCode: 'ZGG79A'
+        }],
         repaired: true,
         repairDate: '2024-09-08',
         parts: [],
@@ -1791,7 +1795,9 @@ const mockData = {
       {
         sscCode: '24SD-095',
         description: 'Engine ECU Cooling Fan Reprogramming',
-        opCode: 'ZGG79A',
+        labors: [{
+          laborCode: 'ZGG79A'
+        }],
         repaired: true,
         repairDate: '2024-11-19',
         parts: [],
@@ -2427,7 +2433,9 @@ const mockData = {
       {
         sscCode: '23SD-024',
         description: '2nd Electircal Key',
-        opCode: 'YHG14A',
+        labors: [{
+          laborCode: 'ZGG79A'
+        }],
         repaired: true,
         repairDate: '2024-01-31',
         parts: [
@@ -2441,7 +2449,9 @@ const mockData = {
       {
         sscCode: '24SD-004',
         description: 'Automatic Transmission ECU reprogramming',
-        opCode: 'ZGG04A',
+        labors: [{
+          laborCode: 'ZGG79A'
+        }],
         repaired: true,
         repairDate: '2024-09-08',
         parts: [],
@@ -2449,7 +2459,9 @@ const mockData = {
       {
         sscCode: '24SD-095',
         description: 'Engine ECU Cooling Fan Reprogramming',
-        opCode: 'ZGG79A',
+        labors: [{
+          laborCode: 'ZGG79A'
+        }],
         repaired: true,
         repairDate: '2024-11-19',
         parts: [],
@@ -2866,7 +2878,9 @@ const mockData = {
       {
         sscCode: '23SD-024',
         description: '2nd Electircal Key',
-        opCode: 'YHG14A',
+        labors: [{
+          laborCode: 'ZGG79A'
+        }],
         repaired: true,
         repairDate: '2024-01-31',
         parts: [
@@ -2885,7 +2899,9 @@ const mockData = {
       {
         sscCode: '24SD-004',
         description: 'Automatic Transmission ECU reprogramming',
-        opCode: 'ZGG04A',
+        labors: [{
+          laborCode: 'ZGG79A'
+        }],
         repaired: true,
         repairDate: '2024-09-08',
         parts: [],
@@ -2893,7 +2909,9 @@ const mockData = {
       {
         sscCode: '24SD-095',
         description: 'Engine ECU Cooling Fan Reprogramming',
-        opCode: 'ZGG79A',
+        labors: [{
+          laborCode: 'ZGG79A'
+        }],
         repaired: true,
         repairDate: '2024-11-19',
         parts: [],

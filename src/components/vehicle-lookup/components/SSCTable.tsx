@@ -37,7 +37,17 @@ export default function SSCTable({ ssc, locale }: Props) {
                     <img class="table-status-icon" src={sscItem.repaired ? CheckIcon : XIcon} /> {sscItem?.repairDate}
                   </div>
                 </td>
-                <td>{sscItem.opCode}</td>
+                <td>
+                  <div class="table-cell-container table-cell-labors-container">
+                    {!!sscItem.labors.length
+                      ? sscItem.labors.map(labor => (
+                        <div key={labor.laborCode} class='success'>
+                          {labor.laborCode}
+                        </div>
+                      ))
+                      : '...'}
+                  </div>
+                </td>
                 <td>
                   <div class="table-cell-container table-cell-parts-container">
                     {!!sscItem.parts.length
