@@ -39,7 +39,7 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
 
   recaptchaWidget: number | null = null;
 
-  form = new FormHook(this, contactUsSchema);
+  private form = new FormHook(this, contactUsSchema);
 
   @Element() el: HTMLElement;
 
