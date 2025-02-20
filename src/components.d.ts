@@ -204,6 +204,18 @@ export namespace Components {
         "queryString": string;
         "setBlazorRef": (newBlazorRef: DotNetObjectReference) => Promise<void>;
     }
+    interface ServiceBookingForm {
+        "baseUrl": string;
+        "brandId": string;
+        "errorCallback": (error: any) => void;
+        "language": LanguageKeys;
+        "loadingChanges": (loading: boolean) => void;
+        "queryString": string;
+        "recaptchaKey": string;
+        "structure": string;
+        "successCallback": (values: any) => void;
+        "theme": string;
+    }
     interface ServiceHistory {
         "baseUrl": string;
         "errorCallback": (errorMessage: ErrorKeys) => void;
@@ -384,6 +396,12 @@ declare global {
         prototype: HTMLPartLookupElement;
         new (): HTMLPartLookupElement;
     };
+    interface HTMLServiceBookingFormElement extends Components.ServiceBookingForm, HTMLStencilElement {
+    }
+    var HTMLServiceBookingFormElement: {
+        prototype: HTMLServiceBookingFormElement;
+        new (): HTMLServiceBookingFormElement;
+    };
     interface HTMLServiceHistoryElement extends Components.ServiceHistory, HTMLStencilElement {
     }
     var HTMLServiceHistoryElement: {
@@ -431,6 +449,7 @@ declare global {
         "manufacturer-lookup": HTMLManufacturerLookupElement;
         "paint-thickness": HTMLPaintThicknessElement;
         "part-lookup": HTMLPartLookupElement;
+        "service-booking-form": HTMLServiceBookingFormElement;
         "service-history": HTMLServiceHistoryElement;
         "vehicle-accessories": HTMLVehicleAccessoriesElement;
         "vehicle-lookup": HTMLVehicleLookupElement;
@@ -594,6 +613,18 @@ declare namespace LocalJSX {
         "loadingStateChanged"?: (isLoading: boolean) => void;
         "queryString"?: string;
     }
+    interface ServiceBookingForm {
+        "baseUrl"?: string;
+        "brandId"?: string;
+        "errorCallback"?: (error: any) => void;
+        "language"?: LanguageKeys;
+        "loadingChanges"?: (loading: boolean) => void;
+        "queryString"?: string;
+        "recaptchaKey"?: string;
+        "structure"?: string;
+        "successCallback"?: (values: any) => void;
+        "theme"?: string;
+    }
     interface ServiceHistory {
         "baseUrl"?: string;
         "errorCallback"?: (errorMessage: ErrorKeys) => void;
@@ -675,6 +706,7 @@ declare namespace LocalJSX {
         "manufacturer-lookup": ManufacturerLookup;
         "paint-thickness": PaintThickness;
         "part-lookup": PartLookup;
+        "service-booking-form": ServiceBookingForm;
         "service-history": ServiceHistory;
         "vehicle-accessories": VehicleAccessories;
         "vehicle-lookup": VehicleLookup;
@@ -702,6 +734,7 @@ declare module "@stencil/core" {
             "manufacturer-lookup": LocalJSX.ManufacturerLookup & JSXBase.HTMLAttributes<HTMLManufacturerLookupElement>;
             "paint-thickness": LocalJSX.PaintThickness & JSXBase.HTMLAttributes<HTMLPaintThicknessElement>;
             "part-lookup": LocalJSX.PartLookup & JSXBase.HTMLAttributes<HTMLPartLookupElement>;
+            "service-booking-form": LocalJSX.ServiceBookingForm & JSXBase.HTMLAttributes<HTMLServiceBookingFormElement>;
             "service-history": LocalJSX.ServiceHistory & JSXBase.HTMLAttributes<HTMLServiceHistoryElement>;
             "vehicle-accessories": LocalJSX.VehicleAccessories & JSXBase.HTMLAttributes<HTMLVehicleAccessoriesElement>;
             "vehicle-lookup": LocalJSX.VehicleLookup & JSXBase.HTMLAttributes<HTMLVehicleLookupElement>;

@@ -7,17 +7,17 @@ import { FormHookInterface } from '~types/forms';
 import cn from '~lib/cn';
 import { FormHook } from '~lib/form-hook';
 
-import { ContactUs, contactUsSchema } from './contact-us/validations';
+import { ContactUs, contactUsSchema } from './service-booking/validations';
 
-import themes from './contact-us/themes.json';
-import { contactUsElements } from './contact-us/element-mapper';
+import themes from './service-booking/themes.json';
+import { contactUsElements } from './service-booking/element-mapper';
 
 declare const grecaptcha: Grecaptcha;
 
 @Component({
   shadow: false,
-  tag: 'contact-us-form',
-  styleUrl: 'contact-us/form.css',
+  tag: 'service-booking-form',
+  styleUrl: 'service-booking/form.css',
 })
 export class ContactUsForm implements FormHookInterface<ContactUs> {
   @Prop() theme: string;
