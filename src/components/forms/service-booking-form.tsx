@@ -94,8 +94,6 @@ export class ContactUsForm implements FormHookInterface<ContactUs> {
   }
 
   render() {
-    // @ts-ignore
-    window.kl = this.form;
     return (
       <Host
         class={cn({
