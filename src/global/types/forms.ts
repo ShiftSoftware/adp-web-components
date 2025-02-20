@@ -28,6 +28,7 @@ export interface Field {
   disabled: boolean;
   isRequired: boolean;
   errorMessage: string;
+  continuousValidation: boolean;
 }
 
 export type FieldControllers = Record<string, Field>;

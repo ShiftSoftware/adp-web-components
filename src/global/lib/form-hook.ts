@@ -5,10 +5,12 @@ export class FormHook<T> {
   successAnimation = () => {};
 
   private isSubmitted = false;
+  private cachedValues: Partial<T> = {};
   private subscribers: Subscribers = [];
   private context: FormHookInterface<T>;
   private schemaObject: AnyObjectSchema;
   private haltValidation: boolean = false;
+  private onValuesUpdate: (formValues: T) => void;
   private validationType: ValidationType = 'onSubmit';
   private subscribedFields: { [key: string]: Field } = {};
   formErrors: { [key: string]: string } = {};
@@ -46,12 +48,18 @@ export class FormHook<T> {
   onInput = (event: Event) => {
     const target = event.target as HTMLInputElement;
 
-    this.validateInput(target.name, target.value);
+    if (this.onValuesUpdate) this.onValuesUpdate({ ...this.getValues(), [target.name]: target.value } as T);
+
+    this.validateForm(target.name, target.value);
   };
 
   resetFormErrorMessage = () => (this.context.errorMessage = '');
 
   getFormErrors = () => this.formErrors;
+
+  setCachedValues = (newValues: Partial<T>) => {
+    this.cachedValues = newValues;
+  };
 
   getValues = () => {
     const formDom = this.context.el.shadowRoot || this.context.el;
@@ -60,7 +68,7 @@ export class FormHook<T> {
     const formData = new FormData(form);
     const formObject = Object.fromEntries(formData.entries() as Iterable<[string, FormDataEntryValue]>);
 
-    return formObject;
+    return { ...this.cachedValues, ...formObject };
   };
 
   private focusFirstInput = (errorFields: Partial<Field>[]) => {
@@ -88,7 +96,7 @@ export class FormHook<T> {
         this.isSubmitted = true;
         this.context.isLoading = true;
         this.signal({ isError: false, disabled: true });
-        const formObject = this.getValues();
+        const formObject = { ...this.cachedValues, ...this.getValues() };
         const values = await this.schemaObject.validate(formObject, { abortEarly: false });
 
         await this.context.formSubmit(values);
@@ -121,7 +129,7 @@ export class FormHook<T> {
     })();
   };
 
-  newController = (name: string) => {
+  getInputState = (name: string) => {
     const validationDescription = this.schemaObject.describe().fields[name] as SchemaDescription;
 
     if (!this.subscribedFields[name])
@@ -130,6 +138,7 @@ export class FormHook<T> {
         isError: false,
         disabled: false,
         errorMessage: '',
+        continuousValidation: false,
         isRequired: validationDescription?.tests.some(test => test.name === 'required'),
       };
 
@@ -146,9 +155,17 @@ export class FormHook<T> {
     }
   };
 
-  validateInput = async (name: string, value: string) => {
-    if (this.haltValidation) return;
-    if (!this.isSubmitted && this.validationType !== 'always') return;
+  validateInput = (name: string) => {
+    const value = (this.getValues()[name] || '') as string;
+
+    return this.validateForm(name, value, false);
+  };
+
+  validateForm = (name: string, value: string, strict = true) => {
+    if (strict) {
+      if (this.haltValidation) return;
+      if (!this.isSubmitted && this.validationType !== 'always' && !this.subscribedFields[name].continuousValidation) return;
+    }
 
     const wasError = this.subscribedFields[name].isError;
 
@@ -157,11 +174,15 @@ export class FormHook<T> {
       this.schemaObject.fields[name].validateSync(value);
       this.signal([{ name, isError: false }]);
       if (wasError !== false) this.context.renderControl = {};
+      return { isError: false, errorMessage: '' };
     } catch (error) {
       if (error.message) {
         this.signal([{ name, isError: true, errorMessage: error.message }]);
         this.context.renderControl = {};
+        return { isError: true, errorMessage: error.message };
       }
+    } finally {
+      this.subscribedFields[name].continuousValidation = true;
     }
   };
 }
