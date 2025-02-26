@@ -1,12 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url(../shared.css);
 
 :host {
   all: initial !important;
   display: block;
-}
-
-* {
-  font-family: Arial;
 }
