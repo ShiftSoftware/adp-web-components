@@ -121,6 +121,7 @@ export namespace Components {
         "label": string;
         "language": LanguageKeys;
         "name": string;
+        "onSelect"?: (newValue: string) => void;
         "placeholder": string;
         "wrapperClass": string;
         "wrapperId": string;
@@ -540,6 +541,7 @@ declare namespace LocalJSX {
         "label"?: string;
         "language"?: LanguageKeys;
         "name"?: string;
+        "onSelect"?: (newValue: string) => void;
         "placeholder"?: string;
         "wrapperClass"?: string;
         "wrapperId"?: string;

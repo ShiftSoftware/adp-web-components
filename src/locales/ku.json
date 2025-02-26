@@ -53,6 +53,10 @@
       "writeAMessage": "پەیامێک بنووسە",
       "leaveUsMessage": "پەیامێکمان بۆ بەجێبهێڵە",
       "messageIsRequired": "پەیام پێویستە."
+    },
+    "serviceBooking": {
+      "vehicle": "ئۆتۆمبێل",
+      "vehicleSelection": "ئۆتۆمبێلێک هەڵبژێرە"
     }
   },
   "vehicleLookup": {

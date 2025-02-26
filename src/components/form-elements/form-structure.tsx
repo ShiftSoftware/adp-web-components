@@ -81,12 +81,9 @@ export class FormStructure {
 
     const { formController, resetFormErrorMessage } = this.form;
 
-    // @ts-ignore
-    window.ff = this.form;
-
     return (
       <Host>
-        <form class="relative overflow-hidden" dir={this.locale.direction} {...formController}>
+        <form class="relative" dir={this.locale.direction} {...formController}>
           <div
             class={cn('absolute -translate-x-full transition duration-1000 flex items-center justify-center size-full opacity-0', {
               'opacity-100 translate-x-0': this.showSuccess,

@@ -27,6 +27,7 @@ export class FormSelect implements FormElement {
   @Prop() formLocaleName: string;
   @Prop() fetcher: FormSelectFetcher;
   @Prop() language: LanguageKeys = 'en';
+  @Prop() onSelect?: (newValue: string) => void;
   @Prop() placeholder: string = 'Select an option';
 
   @State() isLoading: boolean;
@@ -76,6 +77,7 @@ export class FormSelect implements FormElement {
   handleSelection(option: FormSelectItem) {
     this.selectedValue = option.value;
     this.isOpen = false;
+    if (this.onSelect) return this.onSelect(option.value);
   }
 
   handleKeyDown(event: KeyboardEvent) {

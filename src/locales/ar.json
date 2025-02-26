@@ -53,6 +53,10 @@
       "writeAMessage": "اكتب رسالة",
       "leaveUsMessage": "اترك لنا رسالة",
       "messageIsRequired": "الرسالة مطلوبة."
+    },
+    "serviceBooking": {
+      "vehicle": "سيارة",
+      "vehicleSelection": "حدد السيارة"
     }
   },
   "vehicleLookup": {

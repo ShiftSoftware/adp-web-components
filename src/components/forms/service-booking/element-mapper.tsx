@@ -1,199 +1,64 @@
 import { h } from '@stencil/core';
 
-import { InputParams } from '~types/general';
 import { LanguageKeys } from '~types/locales';
-import { FormElementMapper } from '~types/forms';
-import { FormSelectFetcher, FormSelectItem } from '~types/forms';
+import { FormElementMapper, FormSelectItem } from '~types/forms';
 
-import { ContactUs, phoneValidator } from './validations';
 import { getLocaleLanguage } from '~lib/get-local-language';
-import { CITY_ENDPOINT } from '~api/urls';
 
-export const contactUsElements: FormElementMapper<ContactUs> = {
+import { ServiceBooking } from './validations';
+import { TIQ_CAR_MODELS } from '~api/urls';
+
+let vehicles: { id: number; title: string; image: string }[] = [];
+
+export const serviceBookingElements: FormElementMapper<ServiceBooking> = {
   submit: formContext => {
     return <form-submit {...formContext} />;
   },
 
-  name: ({ form, language, structureElement }) => {
-    const { disabled, errorMessage, isError, isRequired, name } = form.getInputState('name');
+  vehicleId: ({ form, language, structureElement }) => {
+    const { disabled, errorMessage, isError, isRequired, name } = form.getInputState('vehicleId');
 
-    const inputParams: InputParams = {
-      name,
-      disabled,
-      type: 'text',
-      placeholder: 'fullName',
-    };
+    const fetcher = async (language: LanguageKeys, signal: AbortSignal): Promise<FormSelectItem[]> => {
+      const response = await fetch(TIQ_CAR_MODELS, { signal, headers: { 'Accept-Language': language } });
 
-    return (
-      <form-input
-        form={form}
-        label="fullName"
-        isError={isError}
-        language={language}
-        isRequired={isRequired}
-        inputParams={inputParams}
-        formLocaleName="contactUs"
-        errorMessage={errorMessage}
-        wrapperId={structureElement.id}
-        wrapperClass={structureElement.class}
-      />
-    );
-  },
+      const arrayRes = (await response.json()) as typeof vehicles;
+      vehicles = arrayRes;
 
-  email: ({ form, language, structureElement }) => {
-    const { disabled, errorMessage, isError, isRequired, name } = form.getInputState('email');
-
-    const inputParams: InputParams = {
-      name,
-      disabled,
-      type: 'email',
-      placeholder: 'emailAddress',
-    };
-
-    return (
-      <form-input
-        form={form}
-        isError={isError}
-        language={language}
-        label="emailAddress"
-        isRequired={isRequired}
-        inputParams={inputParams}
-        formLocaleName="contactUs"
-        errorMessage={errorMessage}
-        wrapperId={structureElement.id}
-        wrapperClass={structureElement.class}
-      />
-    );
-  },
-
-  phone: ({ form, language, structureElement }) => {
-    const { disabled, errorMessage, isError, isRequired, name } = form.getInputState('phone');
-
-    const inputParams: InputParams = {
-      name,
-      disabled,
-      type: 'text',
-      placeholder: 'phoneNumber',
-      defaultValue: phoneValidator.default,
-      onInput: (event: InputEvent) => {
-        const target = event.target as HTMLInputElement;
-
-        phoneValidator.reset();
-        target.value = phoneValidator.input(target.value as string);
-      },
-    };
-
-    return (
-      <form-input
-        form={form}
-        numberDirection
-        isError={isError}
-        language={language}
-        label="phoneNumber"
-        isRequired={isRequired}
-        inputParams={inputParams}
-        formLocaleName="contactUs"
-        errorMessage={errorMessage}
-        wrapperId={structureElement.id}
-        wrapperClass={structureElement.class}
-      />
-    );
-  },
-
-  message: ({ form, language, structureElement }) => {
-    const { disabled, errorMessage, isError, isRequired, name } = form.getInputState('message');
-
-    const inputParams: InputParams = {
-      name,
-      disabled,
-      type: 'email',
-      placeholder: 'leaveUsMessage',
-    };
-
-    return (
-      <form-text-area
-        form={form}
-        isError={isError}
-        language={language}
-        label="writeAMessage"
-        isRequired={isRequired}
-        inputParams={inputParams}
-        formLocaleName="contactUs"
-        errorMessage={errorMessage}
-        wrapperId={structureElement.id}
-        wrapperClass={structureElement.class}
-      />
-    );
-  },
-
-  generalTicketType: ({ form, language, structureElement }) => {
-    const { disabled, errorMessage, isError, isRequired, name } = form.getInputState('generalTicketType');
-
-    const fetcher: FormSelectFetcher = async (language: LanguageKeys, _: AbortSignal): Promise<FormSelectItem[]> => {
-      const ticketTypes = (await getLocaleLanguage(language)).generalTicketTypes;
-
-      const generalInquiryTypes: FormSelectItem[] = [
-        {
-          value: 'GeneralInquiry',
-          label: ticketTypes.GeneralInquiry,
-        },
-        {
-          value: 'Complaint',
-          label: ticketTypes.Complaint,
-        },
-      ];
-
-      return generalInquiryTypes;
-    };
-
-    return (
-      <form-select
-        name={name}
-        form={form}
-        fetcher={fetcher}
-        isError={isError}
-        disabled={disabled}
-        language={language}
-        label="inquiryType"
-        isRequired={isRequired}
-        formLocaleName="contactUs"
-        errorMessage={errorMessage}
-        placeholder="selectInquiryType"
-        wrapperId={structureElement.id}
-        wrapperClass={structureElement.class}
-      />
-    );
-  },
-
-  cityId: ({ form, language, structureElement }) => {
-    const { disabled, errorMessage, isError, isRequired, name } = form.getInputState('cityId');
-
-    const fetcher: FormSelectFetcher = async (language: LanguageKeys, signal: AbortSignal): Promise<FormSelectItem[]> => {
-      const response = await fetch(CITY_ENDPOINT, { signal, headers: { 'Accept-Language': language } });
-
-      const arrayRes = (await response.json()) as { Name: string; ID: string; IntegrationId: string }[];
-
-      const selectItems = arrayRes.map(item => ({ label: item.Name, value: item.ID })) as FormSelectItem[];
+      const selectItems = arrayRes.map(vehicle => ({ label: vehicle.title, value: vehicle.id.toString() })) as FormSelectItem[];
 
       return selectItems;
     };
 
+    const ComponentRerender = (newValue: string) => {
+      if (newValue) {
+        const numericValue = +newValue;
+      }
+      const selectedValue;
+      console.log(form.getFormElement().getElementsByClassName('vehicleImageElement'));
+    };
+
     return (
       <form-select
         name={name}
         form={form}
-        label="city"
+        label="vehicle"
         fetcher={fetcher}
         isError={isError}
         disabled={disabled}
         language={language}
+        class="vehicle-select"
         isRequired={isRequired}
-        placeholder="selectCity"
-        formLocaleName="contactUs"
         errorMessage={errorMessage}
+        onSelect={ComponentRerender}
+        placeholder="vehicleSelection"
+        formLocaleName="serviceBooking"
         wrapperId={structureElement.id}
         wrapperClass={structureElement.class}
       />
     );
+  },
+
+  vehicleImage: ({ structureElement }) => {
+    return <img id={structureElement.id} class={structureElement.class} />;
   },
 };

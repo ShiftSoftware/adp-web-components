@@ -53,6 +53,10 @@
       "writeAMessage": "Write a Message",
       "leaveUsMessage": "Leave us a Message",
       "messageIsRequired": "Message is required."
+    },
+    "serviceBooking": {
+      "vehicle": "Vehicle",
+      "vehicleSelection": "Select a Vehicle"
     }
   },
   "vehicleLookup": {

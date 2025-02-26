@@ -5,9 +5,11 @@ import { LanguageKeys } from '~types/locales';
 import { FormElementMapper } from '~types/forms';
 import { FormSelectFetcher, FormSelectItem } from '~types/forms';
 
-import { ContactUs, phoneValidator } from './validations';
 import { getLocaleLanguage } from '~lib/get-local-language';
+
 import { CITY_ENDPOINT } from '~api/urls';
+
+import { ContactUs, phoneValidator } from './validations';
 
 export const contactUsElements: FormElementMapper<ContactUs> = {
   submit: formContext => {

@@ -53,6 +53,10 @@
       "writeAMessage": "Написать сообщение",
       "leaveUsMessage": "Оставьте нам сообщение",
       "messageIsRequired": "Сообщение обязательно."
+    },
+    "serviceBooking": {
+      "vehicle": "Транспортное средство",
+      "vehicleSelection": "Выберите автомобиль"
     }
   },
   "vehicleLookup": {

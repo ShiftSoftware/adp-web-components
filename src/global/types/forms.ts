@@ -69,4 +69,5 @@ export type FormElementMapper<T> = {
   [K in keyof T]: FormElementMapperFunction;
 } & {
   submit: FormElementMapperFunction;
+  [key: string]: FormElementMapperFunction;
 };

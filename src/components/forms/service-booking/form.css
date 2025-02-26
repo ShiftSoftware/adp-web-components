@@ -7,14 +7,22 @@
   font-family: Arial;
 }
 
-.contact-us-tiq #container {
+.service-booking-tiq #container {
   @apply mx-auto max-w-[700px];
 }
 
-.contact-us-tiq #inputs_wrapper {
-  @apply flex flex-col gap-[24px] mb-[24px] sm:grid sm:grid-cols-2;
+.service-booking-tiq .vehicleContainer {
+  @apply flex  gap-[16px] flex-col sm:flex-row;
 }
 
-.contact-us-tiq #message {
-  @apply mb-[24px];
+.service-booking-tiq .vehicleImage {
+  @apply flex-1;
+}
+
+.service-booking-tiq .vehicleInputContainer {
+  @apply flex-1;
+}
+
+.service-booking-tiq #vehicleImageElement {
+  @apply hidden;
 }

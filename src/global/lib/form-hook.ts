@@ -42,7 +42,7 @@ export class FormHook<T> {
     this.isSubmitted = false;
     this.haltValidation = false;
 
-    this.context.renderControl = {};
+    this.rerender();
   }
 
   onInput = (event: Event) => {
@@ -61,14 +61,24 @@ export class FormHook<T> {
     this.cachedValues = newValues;
   };
 
-  getValues = () => {
+  getFormElement = (): HTMLFormElement | null => {
     const formDom = this.context.el.shadowRoot || this.context.el;
 
     const form = formDom.querySelector('form') as HTMLFormElement;
+
+    return form;
+  };
+
+  getValues = (): T => {
+    const form = this.getFormElement();
+
+    // TODO fix this for first render
+    if (!form) return {} as T;
+
     const formData = new FormData(form);
     const formObject = Object.fromEntries(formData.entries() as Iterable<[string, FormDataEntryValue]>);
 
-    return { ...this.cachedValues, ...formObject };
+    return { ...this.cachedValues, ...formObject } as T;
   };
 
   private focusFirstInput = (errorFields: Partial<Field>[]) => {
@@ -120,7 +130,7 @@ export class FormHook<T> {
 
           this.signal(errorFields);
           this.focusFirstInput(errorFields);
-          this.context.renderControl = {};
+          this.rerender();
         } else console.error('Unexpected Error:', error);
       } finally {
         this.signal({ disabled: false });
@@ -161,6 +171,10 @@ export class FormHook<T> {
     return this.validateForm(name, value, false);
   };
 
+  rerender = () => {
+    this.context.renderControl = {};
+  };
+
   validateForm = (name: string, value: string, strict = true) => {
     if (strict) {
       if (this.haltValidation) return;
@@ -173,12 +187,12 @@ export class FormHook<T> {
       // @ts-ignore
       this.schemaObject.fields[name].validateSync(value);
       this.signal([{ name, isError: false }]);
-      if (wasError !== false) this.context.renderControl = {};
+      if (wasError !== false) this.rerender();
       return { isError: false, errorMessage: '' };
     } catch (error) {
       if (error.message) {
         this.signal([{ name, isError: true, errorMessage: error.message }]);
-        this.context.renderControl = {};
+        this.rerender();
         return { isError: true, errorMessage: error.message };
       }
     } finally {
