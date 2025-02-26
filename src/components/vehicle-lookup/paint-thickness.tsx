@@ -7,7 +7,6 @@ import { getVehicleInformation } from '~api/vehicleInformation';
 import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/locales';
 
 import Eye from '~assets/eye.svg';
-import Loading from '../components/Loading';
 
 import { AppStates, MockJson } from '~types/components';
 import { VehicleInformation } from '~types/vehicle-information';
@@ -148,7 +147,7 @@ export class PaintThickness implements ImageViewerInterface {
       <Host>
         <div dir={this.locale.direction} class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
           <div>
-            <Loading isLoading={this.state.includes('loading')} />
+            <loading-spinner isLoading={this.state.includes('loading')} />
             <div class={cn('transition-all duration-700', { 'scale-0': this.state.includes('loading') || this.state === 'idle', 'opacity-0': this.state.includes('loading') })}>
               <div class={cn('text-center pt-[4px] text-[20px]', { 'text-red-600': !!this.errorMessage })}>{this.vehicleInformation?.vin}</div>
 

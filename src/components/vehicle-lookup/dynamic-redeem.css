@@ -1,3 +1,5 @@
+@import url(../shared.css);
+
 :host {
   all: initial !important;
   display: block;

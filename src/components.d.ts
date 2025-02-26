@@ -162,6 +162,9 @@ export namespace Components {
         "wrapperClass": string;
         "wrapperId": string;
     }
+    interface LoadingSpinner {
+        "isLoading": boolean;
+    }
     interface ManufacturerLookup {
         "baseUrl": string;
         "errorCallback": (errorMessage: string) => void;
@@ -378,6 +381,12 @@ declare global {
         prototype: HTMLFormTextAreaElement;
         new (): HTMLFormTextAreaElement;
     };
+    interface HTMLLoadingSpinnerElement extends Components.LoadingSpinner, HTMLStencilElement {
+    }
+    var HTMLLoadingSpinnerElement: {
+        prototype: HTMLLoadingSpinnerElement;
+        new (): HTMLLoadingSpinnerElement;
+    };
     interface HTMLManufacturerLookupElement extends Components.ManufacturerLookup, HTMLStencilElement {
     }
     var HTMLManufacturerLookupElement: {
@@ -446,6 +455,7 @@ declare global {
         "form-structure-error": HTMLFormStructureErrorElement;
         "form-submit": HTMLFormSubmitElement;
         "form-text-area": HTMLFormTextAreaElement;
+        "loading-spinner": HTMLLoadingSpinnerElement;
         "manufacturer-lookup": HTMLManufacturerLookupElement;
         "paint-thickness": HTMLPaintThicknessElement;
         "part-lookup": HTMLPartLookupElement;
@@ -581,6 +591,9 @@ declare namespace LocalJSX {
         "wrapperClass"?: string;
         "wrapperId"?: string;
     }
+    interface LoadingSpinner {
+        "isLoading"?: boolean;
+    }
     interface ManufacturerLookup {
         "baseUrl"?: string;
         "errorCallback"?: (errorMessage: string) => void;
@@ -703,6 +716,7 @@ declare namespace LocalJSX {
         "form-structure-error": FormStructureError;
         "form-submit": FormSubmit;
         "form-text-area": FormTextArea;
+        "loading-spinner": LoadingSpinner;
         "manufacturer-lookup": ManufacturerLookup;
         "paint-thickness": PaintThickness;
         "part-lookup": PartLookup;
@@ -731,6 +745,7 @@ declare module "@stencil/core" {
             "form-structure-error": LocalJSX.FormStructureError & JSXBase.HTMLAttributes<HTMLFormStructureErrorElement>;
             "form-submit": LocalJSX.FormSubmit & JSXBase.HTMLAttributes<HTMLFormSubmitElement>;
             "form-text-area": LocalJSX.FormTextArea & JSXBase.HTMLAttributes<HTMLFormTextAreaElement>;
+            "loading-spinner": LocalJSX.LoadingSpinner & JSXBase.HTMLAttributes<HTMLLoadingSpinnerElement>;
             "manufacturer-lookup": LocalJSX.ManufacturerLookup & JSXBase.HTMLAttributes<HTMLManufacturerLookupElement>;
             "paint-thickness": LocalJSX.PaintThickness & JSXBase.HTMLAttributes<HTMLPaintThicknessElement>;
             "part-lookup": LocalJSX.PartLookup & JSXBase.HTMLAttributes<HTMLPartLookupElement>;
