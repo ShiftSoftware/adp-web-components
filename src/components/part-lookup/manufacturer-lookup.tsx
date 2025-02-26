@@ -130,29 +130,29 @@ export class ManufacturerLookup implements PartInformationInterface {
 
     const manufacturerData = this.partInformation
       ? [
-          { label: texts.origin, key: 'origin', value: this.partInformation.origin },
-          {
-            label: texts.warrantyPrice,
-            key: 'warrantyPrice',
-            value: null,
-            values: this.partInformation.prices.map(price => {
-              return { header: price?.countryName, body: price?.warrantyPrice?.formattedValue };
-            }),
-          },
-          { label: texts.specialPrice, key: 'specialPrice', value: null },
-          { label: texts.wholesalesPrice, key: 'salesPrice', value: null },
-          { label: texts.pnc, key: 'pnc', value: this.partInformation.pnc },
-          { label: texts.pncName.replace('$', localName), key: 'pncLocalName', value: this.partInformation.pncLocalName },
-          { label: texts.binCode, key: 'binCode', value: this.partInformation.binCode },
-          { label: texts.dimension1, key: 'dimension1', value: this.partInformation.dimension1 },
-          { label: texts.dimension2, key: 'dimension2', value: this.partInformation.dimension2 },
-          { label: texts.dimension3, key: 'dimension3', value: this.partInformation.dimension3 },
-          { label: texts.netWeight, key: 'netWeight', value: this.partInformation.netWeight },
-          { label: texts.grossWeight, key: 'grossWeight', value: this.partInformation.grossWeight },
-          { label: texts.cubicMeasure, key: 'cubicMeasure', value: this.partInformation.cubicMeasure },
-          { label: texts.hsCode, key: 'hsCode', value: this.partInformation.hsCode },
-          { label: texts.uzHsCode, key: 'uzHsCode', value: this.partInformation.uzHsCode },
-        ]
+        { label: texts.origin, key: 'origin', value: this.partInformation.origin },
+        {
+          label: texts.warrantyPrice,
+          key: 'warrantyPrice',
+          value: null,
+          values: this.partInformation.prices.map(price => {
+            return { header: price?.countryName, body: price?.warrantyPrice?.formattedValue };
+          }),
+        },
+        { label: texts.specialPrice, key: 'specialPrice', value: null },
+        { label: texts.wholesalesPrice, key: 'salesPrice', value: null },
+        { label: texts.pnc, key: 'pnc', value: this.partInformation.pnc },
+        { label: texts.pncName.replace('$', localName), key: 'pncLocalName', value: this.partInformation.pncLocalName },
+        { label: texts.binCode, key: 'binCode', value: this.partInformation.binCode },
+        { label: texts.dimension1, key: 'dimension1', value: this.partInformation.dimension1 },
+        { label: texts.dimension2, key: 'dimension2', value: this.partInformation.dimension2 },
+        { label: texts.dimension3, key: 'dimension3', value: this.partInformation.dimension3 },
+        { label: texts.netWeight, key: 'netWeight', value: this.partInformation.netWeight },
+        { label: texts.grossWeight, key: 'grossWeight', value: this.partInformation.grossWeight },
+        { label: texts.cubicMeasure, key: 'cubicMeasure', value: this.partInformation.cubicMeasure },
+        { label: texts.hsCode, key: 'hsCode', value: this.partInformation.hsCode },
+        { label: texts.uzHsCode, key: 'uzHsCode', value: this.partInformation.uzHsCode },
+      ]
       : [];
 
     const displayedManufacturerData = manufacturerData.filter(part => !hiddenFields.includes(part.key));
@@ -183,7 +183,7 @@ export class ManufacturerLookup implements PartInformationInterface {
                             <strong class="py-[10px] px-0 border-b-[gray] border-b">{label}</strong>
                             {values ? (
                               <div>
-                                {values.map(x => (
+                                {values.filter(x => x.body).map(x => (
                                   <span
                                     key={x.header + x.body}
                                     class="inline-flex items-center bg-red-50 text-red-800 text-sm font-medium px-3 py-1 me-1 mt-2 rounded-lg border border-red-300"

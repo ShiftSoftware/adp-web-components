@@ -197,7 +197,7 @@ export class DistributorLookup implements PartInformationInterface {
                             <strong class="py-[10px] px-0 border-b-[gray] border-b">{label}</strong>
                             {values ? (
                               <div>
-                                {values.map(x => (
+                                {values.filter(x => x.body).map(x => (
                                   <span
                                     key={x.header + x.body}
                                     class="inline-flex items-center bg-red-50 text-red-800 text-sm font-medium px-3 py-1 me-1 mt-2 rounded-lg border border-red-300"

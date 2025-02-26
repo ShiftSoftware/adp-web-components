@@ -52,7 +52,7 @@ const mockData = {
           value: 2.4875,
           currecntySymbol: '$',
           cultureName: 'en-US',
-          formattedValue: '$2.249',
+          formattedValue: null,
         },
         fob: {
           value: 2.4875,
@@ -88,7 +88,7 @@ const mockData = {
           value: 2.4875,
           currecntySymbol: '$',
           cultureName: 'en-US',
-          formattedValue: '$23.49',
+          formattedValue: null,
         },
       },
     ],
