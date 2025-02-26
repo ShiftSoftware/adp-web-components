@@ -1,7 +1,6 @@
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import Loader from '~assets/loader.svg';
-import Loading from './components/Loading';
 import SSCTable from './components/SSCTable';
 import CardsContainer from './components/CardsContainer';
 
@@ -247,7 +246,7 @@ export class WarrantyDetails implements VehicleInformationInterface {
       <Host>
         <div dir={this.locale.direction} class="min-h-[100px] warranty">
           <div>
-            <Loading isLoading={this.state.includes('loading')} />
+            <loading-spinner isLoading={this.state.includes('loading')} />
             <div
               class="transition duration-700"
               style={{ transform: this.state.includes('loading') || this.state === 'idle' ? 'scale(0)' : 'scale(1)', opacity: this.state.includes('loading') ? '0' : '1' }}

@@ -9,8 +9,6 @@ import { getLocaleLanguage } from '~lib/get-local-language';
 
 import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicleInformation';
 
-import Loading from '../components/Loading';
-
 let mockData: MockJson<VehicleInformation> = {};
 
 @Component({
@@ -121,7 +119,7 @@ export class VehicleSpecification implements VehicleInformationInterface {
       <Host>
         <div dir={this.locale.direction} class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
           <div>
-            <Loading isLoading={this.state.includes('loading')} />
+            <loading-spinner isLoading={this.state.includes('loading')} />
             <div class={cn('transition-all duration-700', { 'scale-0': this.state.includes('loading') || this.state === 'idle', 'opacity-0': this.state.includes('loading') })}>
               <div class={cn('text-center pt-[4px] text-[20px]', { 'text-red-600': !!this.errorMessage })}>{this.vehicleInformation?.vin}</div>
 
