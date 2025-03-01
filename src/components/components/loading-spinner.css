@@ -9,6 +9,5 @@
 }
 
 .spin-slow {
-  background: red;
   animation: spin 2s linear infinite;
 }
