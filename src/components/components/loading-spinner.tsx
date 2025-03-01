@@ -5,7 +5,7 @@ import Loader from '~assets/loader.svg';
 import cn from '~lib/cn';
 
 @Component({
-  shadow: true,
+  shadow: false,
   tag: 'loading-spinner',
   styleUrl: 'loading-spinner.css',
 })
