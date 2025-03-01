@@ -248,7 +248,7 @@ export class WarrantyDetails implements VehicleInformationInterface {
           <div>
             <loading-spinner isLoading={this.state.includes('loading')} />
             <div
-              class="transition duration-700"
+              class="transition-all !duration-700"
               style={{ transform: this.state.includes('loading') || this.state === 'idle' ? 'scale(0)' : 'scale(1)', opacity: this.state.includes('loading') ? '0' : '1' }}
             >
               {(this.showSsc || this.showWarranty) && (

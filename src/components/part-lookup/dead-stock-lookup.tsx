@@ -146,7 +146,7 @@ export class DeadStockLookup implements PartInformationInterface {
         <div dir={this.locale.direction} class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
           <div>
             <loading-spinner isLoading={this.state.includes('loading')} />
-            <div class={cn('transition-all duration-700', { 'scale-0': this.state.includes('loading') || this.state === 'idle', 'opacity-0': this.state.includes('loading') })}>
+            <div class={cn('transition-all !duration-700', { 'scale-0': this.state.includes('loading') || this.state === 'idle', 'opacity-0': this.state.includes('loading') })}>
               {['error', 'error-loading'].includes(this.state) && (
                 <div class="py-[16px] min-h-[100px] flex items-center">
                   <div class="px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">
