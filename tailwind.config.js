@@ -13,6 +13,16 @@ module.exports = {
         'reject-bg': '#f7d7d8',
         'reject-border': '#f2aeb5',
       },
+      keyframes: {
+        spin: {
+          '0%': {
+            transform: 'rotate(0deg)',
+          },
+          '100%': {
+            transform: 'rotate(360deg)',
+          },
+        },
+      },
       animation: {
         'spin-2s': 'spin 2s linear infinite',
       },
