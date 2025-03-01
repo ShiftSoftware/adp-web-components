@@ -1,11 +1,10 @@
-@import url(../shared.css);
-
 :host {
   all: initial !important;
   display: block;
 }
 
 * {
+  font-family: Arial;
   margin: revert;
   padding: revert;
   box-sizing: content-box;

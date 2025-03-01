@@ -1,8 +1,10 @@
-@import url(../shared.css);
-
 :host {
   all: initial !important;
   display: block;
+}
+
+* {
+  font-family: Arial;
 }
 
 .rtl-form-input::placeholder {

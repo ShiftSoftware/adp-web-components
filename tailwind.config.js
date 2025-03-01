@@ -13,9 +13,6 @@ module.exports = {
         'reject-bg': '#f7d7d8',
         'reject-border': '#f2aeb5',
       },
-      animation: {
-        'spin-slow': 'spin 2s linear infinite',
-      },
     },
   },
   plugins: [

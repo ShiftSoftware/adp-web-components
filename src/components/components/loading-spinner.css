@@ -1,1 +1,14 @@
-@import url(../shared.css);
+* {
+  font-family: Arial;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-slow {
+  background: red;
+  animation: spin 2s linear infinite;
+}
