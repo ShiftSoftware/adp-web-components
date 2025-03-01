@@ -123,7 +123,7 @@ export class DistributorLookup implements PartInformationInterface {
 
     const localName = this.partInformation ? this.localizationName || 'russian' : 'russian';
 
-    const hiddenFields = this.partInformation ? this.hiddenFields.split(',').map(field => field.trim()) || [] : [];
+    const hiddenFields = this.partInformation ? this.hiddenFields.split(',')?.map(field => field.trim()) || [] : [];
 
     const partsInformation = this.partInformation
       ? [
@@ -138,7 +138,7 @@ export class DistributorLookup implements PartInformationInterface {
             label: texts.dealerPurchasePrice,
             key: 'fob',
             value: null,
-            values: this.partInformation.prices.map(price => {
+            values: this.partInformation.prices?.map(price => {
               return { header: price?.countryName, body: price?.fob?.formattedValue };
             }),
           },
@@ -146,7 +146,7 @@ export class DistributorLookup implements PartInformationInterface {
             label: texts.recommendedRetailPrice,
             key: 'price',
             value: null,
-            values: this.partInformation.prices.map(price => {
+            values: this.partInformation.prices?.map(price => {
               return { header: price?.countryName, body: price?.price?.formattedValue };
             }),
           },
@@ -154,7 +154,7 @@ export class DistributorLookup implements PartInformationInterface {
             label: texts.supersessions,
             key: 'supersededTo',
             value: null,
-            values: this.partInformation.supersededTo.map(part => {
+            values: this.partInformation.supersededTo?.map(part => {
               return { header: null, body: part };
             }),
           },
@@ -233,7 +233,7 @@ export class DistributorLookup implements PartInformationInterface {
                           </thead>
 
                           <tbody>
-                            {this.partInformation?.stockParts.map(stock => (
+                            {this.partInformation?.stockParts?.map(stock => (
                               <tr class="transition-colors duration-100 border-b border-[#d6d8dc] last:border-none hover:bg-slate-100" key={stock.locationID}>
                                 <td class={cn('px-[10px] py-[20px] text-center whitespace-nowrap')}>{stock.locationName}</td>
 
