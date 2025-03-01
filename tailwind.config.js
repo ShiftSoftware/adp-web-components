@@ -14,7 +14,7 @@ module.exports = {
         'reject-border': '#f2aeb5',
       },
       animation: {
-        'spin-2s': 'spin 2s linear infinite',
+        'spin-slow': 'spin 2s linear infinite',
       },
     },
   },

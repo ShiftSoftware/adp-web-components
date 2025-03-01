@@ -15,7 +15,7 @@ export class LoadingSpinner {
   render() {
     return (
       <div class={cn('size-full z-50 flex items-center justify-center pointer-events-none absolute ', { 'opacity-0': !this.isLoading })}>
-        <img class="animate-spin-2s size-[40px]" src={Loader} />
+        <img class="animate-spin-slow size-[40px]" src={Loader} />
       </div>
     );
   }
