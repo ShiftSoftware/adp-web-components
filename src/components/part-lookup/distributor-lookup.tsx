@@ -136,18 +136,18 @@ export class DistributorLookup implements PartInformationInterface {
           },
           {
             label: texts.dealerPurchasePrice,
-            key: 'fob',
+            key: 'purchasePrice',
             value: null,
             values: this.partInformation.prices?.map(price => {
-              return { header: price?.countryName, body: price?.fob?.formattedValue };
+              return { header: price?.countryName, body: price?.purchasePrice?.formattedValue };
             }),
           },
           {
             label: texts.recommendedRetailPrice,
-            key: 'price',
+            key: 'retailPrice',
             value: null,
             values: this.partInformation.prices?.map(price => {
-              return { header: price?.countryName, body: price?.price?.formattedValue };
+              return { header: price?.countryName, body: price?.retailPrice?.formattedValue };
             }),
           },
           {

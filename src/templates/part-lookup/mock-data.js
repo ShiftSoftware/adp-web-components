@@ -30,13 +30,13 @@ const mockData = {
           cultureName: 'en-US',
           formattedValue: '$12.49',
         },
-        fob: {
+        purchasePrice: {
           value: 2.4875,
           currecntySymbol: '$',
           cultureName: 'en-US',
           formattedValue: '$22.49',
         },
-        price: {
+        retailPrice: {
           value: 2.4875,
           currecntySymbol: '$',
           cultureName: 'en-US',
@@ -54,13 +54,13 @@ const mockData = {
           cultureName: 'en-US',
           formattedValue: null,
         },
-        fob: {
+        purchasePrice: {
           value: 2.4875,
           currecntySymbol: '$',
           cultureName: 'en-US',
           formattedValue: '$23.49',
         },
-        price: {
+        retailPrice: {
           value: 2.4875,
           currecntySymbol: '$',
           cultureName: 'en-US',
@@ -78,13 +78,13 @@ const mockData = {
           cultureName: 'en-US',
           formattedValue: '$23.49',
         },
-        fob: {
+        purchasePrice: {
           value: 2.4875,
           currecntySymbol: '$',
           cultureName: 'en-US',
           formattedValue: '$42.49',
         },
-        price: {
+        retailPrice: {
           value: 2.4875,
           currecntySymbol: '$',
           cultureName: 'en-US',
@@ -131,13 +131,13 @@ const mockData = {
           cultureName: 'en-US',
           formattedValue: '$24.49',
         },
-        fob: {
+        purchasePrice: {
           value: 2.4875,
           currecntySymbol: '$',
           cultureName: 'en-US',
           formattedValue: '$25.49',
         },
-        price: {
+        retailPrice: {
           value: 2.4875,
           currecntySymbol: '$',
           cultureName: 'en-US',
@@ -155,13 +155,13 @@ const mockData = {
           cultureName: 'en-US',
           formattedValue: '$25.49',
         },
-        fob: {
+        purchasePrice: {
           value: 2.4875,
           currecntySymbol: '$',
           cultureName: 'en-US',
           formattedValue: '$26.49',
         },
-        price: {
+        retailPrice: {
           value: 2.4875,
           currecntySymbol: '$',
           cultureName: 'en-US',
@@ -179,13 +179,13 @@ const mockData = {
           cultureName: 'en-US',
           formattedValue: '$26.49',
         },
-        fob: {
+        purchasePrice: {
           value: 2.4875,
           currecntySymbol: '$',
           cultureName: 'en-US',
           formattedValue: '$21.49',
         },
-        price: {
+        retailPrice: {
           value: 2.4875,
           currecntySymbol: '$',
           cultureName: 'en-US',
