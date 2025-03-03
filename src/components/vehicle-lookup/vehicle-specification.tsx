@@ -115,6 +115,21 @@ export class VehicleSpecification implements VehicleInformationInterface {
   render() {
     const texts = this.locale.vehicleLookup.specification;
 
+    let productionDate: string | null = null;
+
+    try {
+      if (this.vehicleInformation?.vehicleSpecification?.productionDate) {
+        const productionDateObj = new Date(this.vehicleInformation?.vehicleSpecification?.productionDate);
+
+        productionDate = productionDateObj.toLocaleDateString(this.locale.language, {
+          year: 'numeric',
+          month: 'long',
+        });
+      }
+    } catch (error) {
+      productionDate = null;
+    }
+
     return (
       <Host>
         <div dir={this.locale.direction} class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
@@ -145,6 +160,7 @@ export class VehicleSpecification implements VehicleInformationInterface {
                                 {texts[title]}
                               </th>
                             ))}
+                            {!!productionDate && <th class="px-[10px] py-[20px] text-center whitespace-nowrap border-b border-[#d6d8dc]">{texts.productionDate}</th>}
                           </tr>
                         </thead>
                         <tbody>
@@ -169,6 +185,7 @@ export class VehicleSpecification implements VehicleInformationInterface {
                                 </td>
                               );
                             })}
+                            {!!productionDate && <td class="px-[10px] py-[20px] text-center whitespace-nowrap">{productionDate}</td>}
                           </tr>
                         </tbody>
                       </table>

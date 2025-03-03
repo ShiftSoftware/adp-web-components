@@ -81,7 +81,8 @@
       "variant": "Вариант",
       "katashiki": "Каташики",
       "modelYear": "Модельный год",
-      "sfx": "звуковые эффекты"
+      "sfx": "звуковые эффекты",
+      "productionDate": "Год производства"
     },
     "accessories": {
       "vehicleAccessories": "Транспортные аксессуары",

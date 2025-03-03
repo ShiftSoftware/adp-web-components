@@ -112,6 +112,7 @@ export type VehicleSpecification = {
   fuelLiter: any;
   color: string;
   trim: string;
+  productionDate?: string;
 };
 
 export type SSC = {

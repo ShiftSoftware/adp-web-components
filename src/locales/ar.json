@@ -81,7 +81,8 @@
       "variant": "أنواع",
       "katashiki": "Katashiki",
       "modelYear": "سنة الموديل",
-      "sfx": "SFX"
+      "sfx": "SFX",
+      "productionDate": "سنة الإنتاج"
     },
     "accessories": {
       "vehicleAccessories": "إكسسوارات المركبات",

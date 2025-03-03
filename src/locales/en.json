@@ -81,7 +81,8 @@
       "variant": "Variant",
       "katashiki": "Katashiki",
       "modelYear": "Model Year",
-      "sfx": "SFX"
+      "sfx": "SFX",
+      "productionDate": "Production Year"
     },
     "accessories": {
       "vehicleAccessories": "Vehicle Accessories",
