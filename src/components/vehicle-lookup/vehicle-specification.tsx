@@ -130,6 +130,8 @@ export class VehicleSpecification implements VehicleInformationInterface {
       productionDate = null;
     }
 
+    const getProductionDate = () => <div class="px-[10px] py-[20px] text-center whitespace-nowrap">{productionDate}</div>;
+
     return (
       <Host>
         <div dir={this.locale.direction} class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
@@ -155,12 +157,11 @@ export class VehicleSpecification implements VehicleInformationInterface {
                       <table class="w-full overflow-auto relative border-collapse">
                         <thead class="top-0 font-bold sticky bg-white">
                           <tr>
-                            {['model', 'variant', 'katashiki', 'modelYear', 'sfx'].map(title => (
+                            {['model', 'variant', 'katashiki', 'modelYear', ...(!!productionDate ? ['productionDate'] : []), 'sfx'].map(title => (
                               <th key={title} class="px-[10px] py-[20px] text-center whitespace-nowrap border-b border-[#d6d8dc]">
                                 {texts[title]}
                               </th>
                             ))}
-                            {!!productionDate && <th class="px-[10px] py-[20px] text-center whitespace-nowrap border-b border-[#d6d8dc]">{texts.productionDate}</th>}
                           </tr>
                         </thead>
                         <tbody>
@@ -174,7 +175,9 @@ export class VehicleSpecification implements VehicleInformationInterface {
                               {this?.vehicleInformation?.identifiers?.variant || '...'} <br />
                               {this?.vehicleInformation?.vehicleSpecification?.variantDesc || '...'}
                             </td>
-                            {['identifiers.katashiki', 'vehicleVariantInfo.modelYear', 'vehicleVariantInfo.sfx'].map(infoPath => {
+                            {['identifiers.katashiki', 'vehicleVariantInfo.modelYear', ...(!!productionDate ? [getProductionDate] : []), 'vehicleVariantInfo.sfx'].map(infoPath => {
+                              if (typeof infoPath === 'function') return infoPath();
+
                               const [place, field] = infoPath.split('.');
                               const targetPlace = this?.vehicleInformation?.[place];
                               const cellValue = targetPlace && targetPlace[field] ? targetPlace[field].toString() : '';
@@ -185,7 +188,6 @@ export class VehicleSpecification implements VehicleInformationInterface {
                                 </td>
                               );
                             })}
-                            {!!productionDate && <td class="px-[10px] py-[20px] text-center whitespace-nowrap">{productionDate}</td>}
                           </tr>
                         </tbody>
                       </table>
