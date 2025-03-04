@@ -270,7 +270,7 @@ export class WarrantyDetails implements VehicleInformationInterface {
                   locale={this.locale}
                   isAuthorized={this.vehicleInformation?.isAuthorized}
                   unInvoicedByBrokerName={this.unInvoicedByBrokerName}
-                  warranty={this.vehicleInformation?.warranty as Warranty}
+                  vehicleInformation={this.vehicleInformation}
                 />
               )}
 

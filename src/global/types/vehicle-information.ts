@@ -31,14 +31,18 @@ export type Identifiers = {
 };
 
 export type SaleInformation = {
-  dealerIntegrationID: string;
-  dealerName: string;
+  companyIntegrationID: string;
+  companyName: string;
+  countryIntegrationID: string;
+  countryName: string;
   branchIntegrationID: string;
   branchName: string;
-  customerAccount: string;
+  regionIntegrationID: string,
+  customerAccountNumber: string;
   customerID: string;
   invoiceDate: string;
   invoiceNumber: number;
+  warrantyActivationDate: string,
   broker: Broker;
 };
 
