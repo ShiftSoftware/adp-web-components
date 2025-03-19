@@ -13,4 +13,8 @@ export const dynamicRedeemSchema = object({
   confirmSkipServices: string().required(),
   notInvoiced: string().required(),
   confirmNotInvoiced: string().required(),
+  enterServiceInfo: string().required(),
+  invoice: string().required(),
+  jobNumber: string().required(),
+  claim: string().required(),
 });

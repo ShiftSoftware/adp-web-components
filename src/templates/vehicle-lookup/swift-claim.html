@@ -35,7 +35,7 @@
     <a href="#" onclick="history.back()" style="color: blue; display: block; margin-bottom: 16px">Back</a>
 
     <h1>Swift Claim</h1>
-    <dynamic-claim language="ku" is-dev="true" base-url="http://localhost:7174/api/secure-vehicle-lookup-test/" query-string="" id="dynamic-claim"></dynamic-claim>
+    <dynamic-claim language="en" is-dev="true" base-url="http://localhost:7174/api/secure-vehicle-lookup-test/" query-string="" id="dynamic-claim"></dynamic-claim>
 
     <div class="button-container">
       <button class="sample-button" onclick="updateLang('en')">En</button>
@@ -88,7 +88,27 @@
           console.log('isLoading: ' + isLoading);
         };
 
-        dynamicClaim.loadedResponse = newResponse => console.log(newResponse);
+        dynamicClaim.loadedResponse = newResponse => {
+          console.log(newResponse);
+
+          const urlParams = new URLSearchParams(window.location.search);
+
+          const claimIndex = urlParams.get('claim');
+
+          if (claimIndex) {
+            var itemToClaim = newResponse['serviceItems'][claimIndex];
+
+            dynamicClaim.claim(itemToClaim);
+          }
+        };
+
+        const urlParams = new URLSearchParams(window.location.search);
+
+        const vin = urlParams.get('vin');
+
+        if (vin) {
+          vinLookup(vin);
+        }
       });
 
       function updateLang(newLang) {

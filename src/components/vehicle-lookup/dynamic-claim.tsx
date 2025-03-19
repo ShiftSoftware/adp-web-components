@@ -40,6 +40,7 @@ export class DynamicClaim implements VehicleInformationInterface {
   @Prop() errorCallback: (errorMessage: ErrorKeys) => void;
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
   @Prop() loadedResponse?: (response: VehicleInformation) => void;
+  @Prop() claimViaBarcodeScanner: boolean = true;
 
   @State() locale: Locale = localeSchema.getDefault();
 
@@ -278,6 +279,7 @@ export class DynamicClaim implements VehicleInformationInterface {
     this.vehicleInformation = JSON.parse(JSON.stringify(vehicleDataClone));
   }
 
+  @Method()
   claim(item: ServiceItem) {
     const serviceItems = this.vehicleInformation?.serviceItems || [];
 
@@ -358,6 +360,7 @@ export class DynamicClaim implements VehicleInformationInterface {
     this.dynamicRedeem.vin = vehicleInformation?.vin;
     this.dynamicRedeem.item = item;
     this.dynamicRedeem.canceledItems = oldItems;
+    this.dynamicRedeem.claimViaBarcodeScanner = this.claimViaBarcodeScanner;
 
     if (vehicleInformation?.saleInformation?.broker !== null && vehicleInformation?.saleInformation?.broker?.invoiceDate === null)
       this.dynamicRedeem.unInvoicedByBrokerName = vehicleInformation?.saleInformation?.broker?.brokerName;

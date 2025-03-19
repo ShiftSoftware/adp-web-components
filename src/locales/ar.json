@@ -139,7 +139,12 @@
       "skipServicesWarning": "الخدمات التالية لا تزال 'معلقة' وسيتم وضع علامة 'ملغاة' عليها.",
       "confirmSkipServices": "تأكيد وضع علامة 'ملغاة' على الخدمات المذكورة أعلاه.",
       "notInvoiced": "لم يتم إصدار فاتورة لهذه المركبة بعد من قبل شريك الأعمال الموثوق به التالي:",
-      "confirmNotInvoiced": "تأكيد المطالبة دون فاتورة شريك الأعمال الموثوق به"
+      "confirmNotInvoiced": "تأكيد المطالبة دون فاتورة شريك الأعمال الموثوق به",
+
+      "enterServiceInfo": "Enter Service Info",
+      "invoice": "Invoice",
+      "jobNumber": "Job Number",
+      "claim": "Claim"
     }
   },
   "partLookup": {

@@ -19,6 +19,7 @@ export class DynamicRedeem {
   @Prop() handleScanner?: (code: string, jobNumber: string) => void;
   @Prop() handleQrChanges?: (code: string) => void;
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
+  @Prop() claimViaBarcodeScanner: boolean = true;
 
   @State() locale: Locale = localeSchema.getDefault();
 
@@ -30,9 +31,11 @@ export class DynamicRedeem {
   @State() internalCanceledItem?: ServiceItem[] = null;
   @State() confirmUnInvoicedTBPVehicles: boolean = false;
 
+  @State() readyToClaim: boolean = false;
+
   @Element() el: HTMLElement;
 
-  input: HTMLInputElement;
+  invoiceInput: HTMLInputElement;
   dynamicClaimProcessor: HTMLElement;
 
   closeModalListenerRef: (event: KeyboardEvent) => void;
@@ -52,7 +55,8 @@ export class DynamicRedeem {
   }
 
   async componentDidLoad() {
-    this.input = this.el.shadowRoot.querySelector('.dynamic-claim-processor .qr-input');
+    this.invoiceInput = this.el.shadowRoot.querySelector('.dynamic-claim-processor #invoice-input');
+
     this.dynamicClaimProcessor = this.el.shadowRoot.querySelector('.dynamic-claim-processor');
 
     if (this.unInvoicedByBrokerName === null) {
@@ -62,11 +66,11 @@ export class DynamicRedeem {
     }
   }
 
-  private focusInput() {
-    setTimeout(() => {
-      this.input.focus();
-    }, 100);
-  }
+  //private focusInput() {
+  //  setTimeout(() => {
+  //    this.invoiceInput.focus();
+  //  }, 100);
+  //}
 
   @Watch('canceledItems')
   async changeInternalCanceledItem(newInternalCanceledItem) {
@@ -104,7 +108,7 @@ export class DynamicRedeem {
       window.addEventListener('keydown', this.closeModalListenerRef);
 
       await new Promise(r => setTimeout(r, 300));
-      this.input.focus();
+      this.invoiceInput.focus();
     } else {
       window.removeEventListener('keydown', this.closeModalListenerRef);
       this.quite();
@@ -117,9 +121,9 @@ export class DynamicRedeem {
     await new Promise(r => setTimeout(r, 500));
     this.canceledItems = [];
     this.unInvoicedByBrokerName = null;
-    this.input.value = '';
+    this.invoiceInput.value = '';
     this.isLoading = false;
-    this.input.readOnly = false;
+    this.invoiceInput.readOnly = false;
   };
 
   @Method()
@@ -129,22 +133,49 @@ export class DynamicRedeem {
 
   @Method()
   async getQrValue() {
-    return this.input.value;
+    return this.invoiceInput.value;
   }
 
-  qrCodeKeyDown = async (event: KeyboardEvent) => {
-    if (event.key === 'Enter') {
+  inputKeyDown = async (event: KeyboardEvent) => {
+
+    this.readyToClaim = false;
+
+    const invoice = this.invoiceInput.value;
+
+    const jobInput = this.el.shadowRoot.querySelector('.dynamic-claim-processor #job-input') as HTMLInputElement;
+
+    const job = jobInput?.value;
+
+    if (this.claimViaBarcodeScanner) {
+      if (invoice.trim().length > 0)
+        this.readyToClaim = true;
+    }
+    else {
+      if (invoice.trim().length > 0 && job.trim().length > 0)
+        this.readyToClaim = true;
+    }
+
+    if (event === null || event.key === 'Enter') {
       if (!this.confirmServiceCancellation || !this.confirmUnInvoicedTBPVehicles) return;
 
-      event.preventDefault();
+      if (event !== null)
+        event.preventDefault();
+
       if (!this?.handleScanner) return;
 
-      const inputValue = this.input.value;
-      this.input.value = '';
-      this.isLoading = true;
-      this.input.readOnly = true;
+      if (!this.readyToClaim) return;
 
-      this.handleScanner(inputValue, null);
+      this.invoiceInput.value = '';
+
+      if (jobInput) {
+        jobInput.value = '';
+        jobInput.readOnly = true;
+      }
+
+      this.isLoading = true;
+      this.invoiceInput.readOnly = true;
+
+      this.handleScanner(invoice, job);
     }
   };
 
@@ -159,7 +190,7 @@ export class DynamicRedeem {
     const texts = this.locale.vehicleLookup.dynamicRedeem;
     const disableInput = !this.confirmServiceCancellation || !this.confirmUnInvoicedTBPVehicles;
 
-    if (!disableInput) this.focusInput();
+    //if (!disableInput) this.focusInput();
     return (
       <Host>
         <div dir={this.locale.direction} class={cn('dynamic-claim-processor', this?.isOpened && 'active')}>
@@ -346,7 +377,7 @@ export class DynamicRedeem {
                           </g>
                         </g>
                       </svg>
-                      <div>{texts.scanTheInvoice}</div>
+                      <div>{this.claimViaBarcodeScanner ? texts.scanTheInvoice : texts.enterServiceInfo }</div>
                     </div>
                     <div style={{ position: 'absolute' }} class="loading-wrapper">
                       <div class={cn('lds-ripple', this.isLoading && 'active')}>
@@ -357,19 +388,53 @@ export class DynamicRedeem {
                     </div>
                   </div>
 
-                  <input
-                    dir="ltr"
-                    class="qr-input"
-                    spellcheck="false"
-                    onInput={this.onValueChanges}
-                    onKeyDown={this.qrCodeKeyDown}
-                    onBlur={() => this.input.focus()}
-                    autocomplete="off"
-                    disabled={disableInput}
-                    placeholder=""
-                    autofocus
-                    style={{ marginTop: '20px', padding: '10px 0px', fontSize: '16px' }}
-                  />
+                  <div style={{ display: 'flex', flexDirection: 'row', gap: '50px', padding: '0 75px' }}>
+                    <input
+                      id="invoice-input"
+                      dir="ltr"
+                      class="dynamic-redeem-input"
+                      spellcheck="false"
+                      onInput={this.onValueChanges}
+                      onKeyDown={this.inputKeyDown}
+                      onBlur={() => { if (this.claimViaBarcodeScanner) { this.invoiceInput.focus(); } }}
+                      autocomplete="off"
+                      disabled={disableInput}
+                      placeholder={texts.invoice}
+                      autofocus
+                      style={{ marginTop: '20px', padding: '10px 0px', fontSize: '16px' }}
+                    />
+
+                    {!this?.claimViaBarcodeScanner && (
+                      <input
+                        id="job-input"
+                        dir="ltr"
+                        class="dynamic-redeem-input"
+                        spellcheck="false"
+                        onInput={this.onValueChanges}
+                        onKeyDown={this.inputKeyDown}
+                        autocomplete="off"
+                        disabled={disableInput}
+                        placeholder={texts.jobNumber}
+                        style={{ marginTop: '20px', padding: '10px 0px', fontSize: '16px' }}
+                      />
+                    )}
+                  </div>
+
+                  <div style={{ marginTop: '55px' }}>
+                    {!this?.claimViaBarcodeScanner && (
+                      <button onClick={() => { if (this.readyToClaim) { this.inputKeyDown(null); } }} class={cn('claim-button', 'dynamic-claim-button', !this?.readyToClaim && 'disabled')}>
+                        <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <g stroke-width="0"></g>
+                          <g stroke-linecap="round" stroke-linejoin="round"></g>
+                          <g>
+                            <circle cx="12" cy="12" r="8" fill-opacity="0.24"></circle>
+                            <path d="M8.5 11L11.3939 13.8939C11.4525 13.9525 11.5475 13.9525 11.6061 13.8939L19.5 6" stroke-width="1.2"></path>
+                          </g>
+                        </svg>
+                        <span>{texts.claim}</span>
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
