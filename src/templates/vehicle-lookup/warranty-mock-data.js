@@ -26,13 +26,13 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51456604,
-        wipNumber: 13681,
+        jobNumber: 13681,
         laborLines: [
           {
             rtsCode: 'NOTES',
             menuCode: ' ',
             serviceCode: 'PMS',
-            description: 'FR WIPER RUBBER NEEDS TO R/P,',
+            description: 'FR jobNumberER RUBBER NEEDS TO R/P,',
           },
           {
             rtsCode: 'EXPMAIN',
@@ -85,7 +85,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51447340,
-        wipNumber: 52446,
+        jobNumber: 52446,
         laborLines: [
           {
             rtsCode: '02FUELLCUR',
@@ -138,7 +138,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51441539,
-        wipNumber: 41940,
+        jobNumber: 41940,
         laborLines: [
           {
             rtsCode: '0BLC15UR',
@@ -191,7 +191,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51431492,
-        wipNumber: 22296,
+        jobNumber: 22296,
         laborLines: [
           {
             rtsCode: '0BLC15UR',
@@ -262,13 +262,13 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51456604,
-        wipNumber: 13681,
+        jobNumber: 13681,
         laborLines: [
           {
             rtsCode: 'NOTES',
             menuCode: ' ',
             serviceCode: 'PMS',
-            description: 'FR WIPER RUBBER NEEDS TO R/P,',
+            description: 'FR jobNumberER RUBBER NEEDS TO R/P,',
           },
           {
             rtsCode: 'EXPMAIN',
@@ -321,7 +321,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51447340,
-        wipNumber: 52446,
+        jobNumber: 52446,
         laborLines: [
           {
             rtsCode: '02FUELLCUR',
@@ -374,7 +374,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51441539,
-        wipNumber: 41940,
+        jobNumber: 41940,
         laborLines: [
           {
             rtsCode: '0BLC15UR',
@@ -427,7 +427,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51431492,
-        wipNumber: 22296,
+        jobNumber: 22296,
         laborLines: [
           {
             rtsCode: '0BLC15UR',
@@ -515,7 +515,7 @@ const mockData = {
         branchId: 43,
         account: 'C00015',
         invoiceNumber: 53166219,
-        wipNumber: 16416,
+        jobNumber: 16416,
         laborLines: [
           {
             rtsCode: 'CWASH',
@@ -574,7 +574,7 @@ const mockData = {
         branchId: 43,
         account: 'C00015',
         invoiceNumber: 53165038,
-        wipNumber: 14587,
+        jobNumber: 14587,
         laborLines: [
           {
             rtsCode: 'CWASH',
@@ -627,7 +627,7 @@ const mockData = {
         branchId: 43,
         account: 'C00015',
         invoiceNumber: 53163666,
-        wipNumber: 12359,
+        jobNumber: 12359,
         laborLines: [
           {
             rtsCode: '0BHL65W4',
@@ -686,7 +686,7 @@ const mockData = {
         branchId: 43,
         account: 'C00015',
         invoiceNumber: 53162583,
-        wipNumber: 10672,
+        jobNumber: 10672,
         laborLines: [
           {
             rtsCode: 'CONS',
@@ -739,7 +739,7 @@ const mockData = {
         branchId: 43,
         account: 'S00058',
         invoiceNumber: 53161736,
-        wipNumber: 64345,
+        jobNumber: 64345,
         laborLines: [
           {
             rtsCode: 'PDRINSP',
@@ -804,7 +804,7 @@ const mockData = {
         branchId: 43,
         account: 'C00015',
         invoiceNumber: 53160685,
-        wipNumber: 62792,
+        jobNumber: 62792,
         laborLines: [
           {
             rtsCode: 'BGTEPR',
@@ -881,7 +881,7 @@ const mockData = {
         branchId: 43,
         account: 'C00015',
         invoiceNumber: 53159833,
-        wipNumber: 61274,
+        jobNumber: 61274,
         laborLines: [
           {
             rtsCode: 'CONS',
@@ -940,7 +940,7 @@ const mockData = {
         branchId: 43,
         account: 'C00015',
         invoiceNumber: 53158737,
-        wipNumber: 59536,
+        jobNumber: 59536,
         laborLines: [
           {
             rtsCode: 'BGTPFI',
@@ -1011,7 +1011,7 @@ const mockData = {
         branchId: 43,
         account: 'C00015',
         invoiceNumber: 53157673,
-        wipNumber: 57573,
+        jobNumber: 57573,
         laborLines: [
           {
             rtsCode: 'CONS',
@@ -1107,7 +1107,7 @@ const mockData = {
         countryName: 'Iraq',
         companyName: 'SAS',
         invoiceNumber: null,
-        wip: null,
+        jobNumber: null,
         maximumMileage: 1000,
         skipZeroTrust: true,
         activeFor: 3,
@@ -1134,7 +1134,7 @@ const mockData = {
         countryName: 'Iraq',
         companyName: 'SAS',
         invoiceNumber: '53153669',
-        wip: '50246',
+        jobNumber: '50246',
         maximumMileage: 5000,
         skipZeroTrust: false,
         activeFor: 3,
@@ -1161,7 +1161,7 @@ const mockData = {
         countryName: 'Iraq',
         companyName: null,
         invoiceNumber: null,
-        wip: null,
+        jobNumber: null,
         maximumMileage: 10000,
         skipZeroTrust: false,
         activeFor: 3,
@@ -1188,7 +1188,7 @@ const mockData = {
         countryName: 'Iraq',
         companyName: null,
         invoiceNumber: null,
-        wip: null,
+        jobNumber: null,
         maximumMileage: 15000,
         skipZeroTrust: false,
         activeFor: 3,
@@ -1215,7 +1215,7 @@ const mockData = {
         countryName: 'Iraq',
         companyName: null,
         invoiceNumber: null,
-        wip: null,
+        jobNumber: null,
         maximumMileage: 20000,
         skipZeroTrust: false,
         activeFor: 3,
@@ -1258,13 +1258,13 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51456604,
-        wipNumber: 13681,
+        jobNumber: 13681,
         laborLines: [
           {
             rtsCode: 'NOTES',
             menuCode: ' ',
             serviceCode: 'PMS',
-            description: 'FR WIPER RUBBER NEEDS TO R/P,',
+            description: 'FR jobNumberER RUBBER NEEDS TO R/P,',
           },
           {
             rtsCode: 'EXPMAIN',
@@ -1317,7 +1317,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51447340,
-        wipNumber: 52446,
+        jobNumber: 52446,
         laborLines: [
           {
             rtsCode: '02FUELLCUR',
@@ -1370,7 +1370,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51441539,
-        wipNumber: 41940,
+        jobNumber: 41940,
         laborLines: [
           {
             rtsCode: '0BLC15UR',
@@ -1423,7 +1423,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51431492,
-        wipNumber: 22296,
+        jobNumber: 22296,
         laborLines: [
           {
             rtsCode: '0BLC15UR',
@@ -1511,7 +1511,7 @@ const mockData = {
         branchId: 44,
         account: 'W00001',
         invoiceNumber: 54302844,
-        wipNumber: 32325,
+        jobNumber: 32325,
         laborLines: [
           {
             rtsCode: 'ZGG79A',
@@ -1533,7 +1533,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54175880,
-        wipNumber: 31762,
+        jobNumber: 31762,
         laborLines: [
           {
             rtsCode: '0BLCVJ05',
@@ -1580,7 +1580,7 @@ const mockData = {
         branchId: 44,
         account: 'W00001',
         invoiceNumber: 54302319,
-        wipNumber: 23978,
+        jobNumber: 23978,
         laborLines: [
           {
             rtsCode: 'ZGG04A',
@@ -1602,7 +1602,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54170870,
-        wipNumber: 23814,
+        jobNumber: 23814,
         laborLines: [
           {
             rtsCode: 'CONSU',
@@ -1661,7 +1661,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54162502,
-        wipNumber: 64883,
+        jobNumber: 64883,
         laborLines: [
           {
             rtsCode: '0BLCVJ05',
@@ -1714,7 +1714,7 @@ const mockData = {
         branchId: 44,
         account: 'W00001',
         invoiceNumber: 54301537,
-        wipNumber: 58888,
+        jobNumber: 58888,
         laborLines: [
           {
             rtsCode: 'YHG14A',
@@ -1743,7 +1743,7 @@ const mockData = {
         branchId: 44,
         account: 'S00031',
         invoiceNumber: 54158983,
-        wipNumber: 58782,
+        jobNumber: 58782,
         laborLines: [
           {
             rtsCode: '0BLCVJ05',
@@ -1784,7 +1784,7 @@ const mockData = {
         branchId: 44,
         account: 'Z00244',
         invoiceNumber: 54156124,
-        wipNumber: 54143,
+        jobNumber: 54143,
         laborLines: [
           {
             rtsCode: '0F1110',
@@ -1885,7 +1885,7 @@ const mockData = {
         countryName: 'Iraq',
         companyName: null,
         invoiceNumber: null,
-        wip: null,
+        jobNumber: null,
         maximumMileage: 1000,
         skipZeroTrust: true,
         activeFor: 3,
@@ -1912,7 +1912,7 @@ const mockData = {
         countryName: 'Iraq',
         companyName: 'SAS',
         invoiceNumber: '54158983',
-        wip: '58782',
+        jobNumber: '58782',
         maximumMileage: 5000,
         skipZeroTrust: false,
         activeFor: 3,
@@ -1948,7 +1948,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54175877,
-        wipNumber: 32299,
+        jobNumber: 32299,
         laborLines: [
           {
             rtsCode: '0BLC55GR',
@@ -1995,7 +1995,7 @@ const mockData = {
         branchId: 44,
         account: 'W00016',
         invoiceNumber: 54175876,
-        wipNumber: 32299,
+        jobNumber: 32299,
         laborLines: [
           {
             rtsCode: 'BGT44K',
@@ -2024,7 +2024,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54165039,
-        wipNumber: 13946,
+        jobNumber: 13946,
         laborLines: [
           {
             rtsCode: '002889Z',
@@ -2101,7 +2101,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54159267,
-        wipNumber: 59455,
+        jobNumber: 59455,
         laborLines: [
           {
             rtsCode: '0BLC05GR',
@@ -2195,7 +2195,7 @@ const mockData = {
         branchId: 44,
         account: 'W00001',
         invoiceNumber: 54302844,
-        wipNumber: 32325,
+        jobNumber: 32325,
         laborLines: [
           {
             rtsCode: 'ZGG79A',
@@ -2217,7 +2217,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54175880,
-        wipNumber: 31762,
+        jobNumber: 31762,
         laborLines: [
           {
             rtsCode: '0BLCVJ05',
@@ -2264,7 +2264,7 @@ const mockData = {
         branchId: 44,
         account: 'W00001',
         invoiceNumber: 54302319,
-        wipNumber: 23978,
+        jobNumber: 23978,
         laborLines: [
           {
             rtsCode: 'ZGG04A',
@@ -2286,7 +2286,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54170870,
-        wipNumber: 23814,
+        jobNumber: 23814,
         laborLines: [
           {
             rtsCode: 'CONSU',
@@ -2345,7 +2345,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54162502,
-        wipNumber: 64883,
+        jobNumber: 64883,
         laborLines: [
           {
             rtsCode: '0BLCVJ05',
@@ -2398,7 +2398,7 @@ const mockData = {
         branchId: 44,
         account: 'W00001',
         invoiceNumber: 54301537,
-        wipNumber: 58888,
+        jobNumber: 58888,
         laborLines: [
           {
             rtsCode: 'YHG14A',
@@ -2427,7 +2427,7 @@ const mockData = {
         branchId: 44,
         account: 'S00031',
         invoiceNumber: 54158983,
-        wipNumber: 58782,
+        jobNumber: 58782,
         laborLines: [
           {
             rtsCode: '0BLCVJ05',
@@ -2468,7 +2468,7 @@ const mockData = {
         branchId: 44,
         account: 'Z00244',
         invoiceNumber: 54156124,
-        wipNumber: 54143,
+        jobNumber: 54143,
         laborLines: [
           {
             rtsCode: '0F1110',
@@ -2564,7 +2564,7 @@ const mockData = {
         countryName: 'Iraq',
         companyName: null,
         invoiceNumber: null,
-        wip: null,
+        jobNumber: null,
         maximumMileage: 1000,
         skipZeroTrust: true,
         activeFor: 3,
@@ -2591,7 +2591,7 @@ const mockData = {
         countryName: 'Iraq',
         companyName: 'SAS',
         invoiceNumber: '54158983',
-        wip: '58782',
+        jobNumber: '58782',
         maximumMileage: 5000,
         skipZeroTrust: false,
         activeFor: 3,
@@ -2651,7 +2651,7 @@ const mockData = {
         branchId: 44,
         account: 'W00001',
         invoiceNumber: 54302844,
-        wipNumber: 32325,
+        jobNumber: 32325,
         laborLines: [
           {
             rtsCode: 'ZGG79A',
@@ -2673,7 +2673,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54175880,
-        wipNumber: 31762,
+        jobNumber: 31762,
         laborLines: [
           {
             rtsCode: '0BLCVJ05',
@@ -2720,7 +2720,7 @@ const mockData = {
         branchId: 44,
         account: 'W00001',
         invoiceNumber: 54302319,
-        wipNumber: 23978,
+        jobNumber: 23978,
         laborLines: [
           {
             rtsCode: 'ZGG04A',
@@ -2742,7 +2742,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54170870,
-        wipNumber: 23814,
+        jobNumber: 23814,
         laborLines: [
           {
             rtsCode: 'CONSU',
@@ -2801,7 +2801,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54162502,
-        wipNumber: 64883,
+        jobNumber: 64883,
         laborLines: [
           {
             rtsCode: '0BLCVJ05',
@@ -2854,7 +2854,7 @@ const mockData = {
         branchId: 44,
         account: 'W00001',
         invoiceNumber: 54301537,
-        wipNumber: 58888,
+        jobNumber: 58888,
         laborLines: [
           {
             rtsCode: 'YHG14A',
@@ -2883,7 +2883,7 @@ const mockData = {
         branchId: 44,
         account: 'S00031',
         invoiceNumber: 54158983,
-        wipNumber: 58782,
+        jobNumber: 58782,
         laborLines: [
           {
             rtsCode: '0BLCVJ05',
@@ -2924,7 +2924,7 @@ const mockData = {
         branchId: 44,
         account: 'Z00244',
         invoiceNumber: 54156124,
-        wipNumber: 54143,
+        jobNumber: 54143,
         laborLines: [
           {
             rtsCode: '0F1110',
@@ -3025,7 +3025,7 @@ const mockData = {
         countryName: 'Iraq',
         companyName: null,
         invoiceNumber: null,
-        wip: null,
+        jobNumber: null,
         maximumMileage: 1000,
         skipZeroTrust: true,
         activeFor: 3,
@@ -3052,7 +3052,7 @@ const mockData = {
         countryName: 'Iraq',
         companyName: 'SAS',
         invoiceNumber: '54158983',
-        wip: '58782',
+        jobNumber: '58782',
         maximumMileage: 5000,
         skipZeroTrust: false,
         activeFor: 3,

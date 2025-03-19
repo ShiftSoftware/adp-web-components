@@ -129,6 +129,8 @@ export class VehicleLookup {
 
     this.wrapperErrorState = '';
 
+    this.componentsList[componentTags.dynamicClaim].headers = headers;
+
     if (!activeElement) return;
 
     if (vin == '') return (this.wrapperErrorState = this.locale.errors.vinNumberRequired);

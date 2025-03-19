@@ -66,9 +66,11 @@ export namespace Components {
     }
     interface DynamicClaim {
         "baseUrl": string;
+        "claimEndPoint": string;
         "completeClaim": () => Promise<void>;
         "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
+        "headers": any;
         "isDev": boolean;
         "language": LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
@@ -82,7 +84,7 @@ export namespace Components {
         "canceledItems"?: ServiceItem[];
         "getQrValue": () => Promise<string>;
         "handleQrChanges"?: (code: string) => void;
-        "handleScanner"?: (code: string) => void;
+        "handleScanner"?: (code: string, jobNumber: string) => void;
         "item"?: ServiceItem;
         "language": LanguageKeys;
         "loadingStateChange"?: (isLoading: boolean) => void;
@@ -502,7 +504,9 @@ declare namespace LocalJSX {
     }
     interface DynamicClaim {
         "baseUrl"?: string;
+        "claimEndPoint"?: string;
         "errorCallback"?: (errorMessage: ErrorKeys) => void;
+        "headers"?: any;
         "isDev"?: boolean;
         "language"?: LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
@@ -512,7 +516,7 @@ declare namespace LocalJSX {
     interface DynamicRedeem {
         "canceledItems"?: ServiceItem[];
         "handleQrChanges"?: (code: string) => void;
-        "handleScanner"?: (code: string) => void;
+        "handleScanner"?: (code: string, jobNumber: string) => void;
         "item"?: ServiceItem;
         "language"?: LanguageKeys;
         "loadingStateChange"?: (isLoading: boolean) => void;

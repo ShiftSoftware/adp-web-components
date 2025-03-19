@@ -31,13 +31,13 @@ export type Identifiers = {
 };
 
 export type SaleInformation = {
-  companyIntegrationID: string;
+  companyID: string;
   companyName: string;
-  countryIntegrationID: string;
+  countryID: string;
   countryName: string;
-  branchIntegrationID: string;
+  branchID: string;
   branchName: string;
-  regionIntegrationID: string,
+  regionID: string,
   customerAccountNumber: string;
   customerID: string;
   invoiceDate: string;
@@ -73,7 +73,7 @@ export type ServiceHistory = {
   branchId: number;
   account: string;
   invoiceNumber: number;
-  wipNumber: number;
+  jobNumber: number;
   laborLines: LaborLine[];
   partLines: PartLine[];
 };
@@ -165,20 +165,20 @@ export interface PaintPart {
 export type ServiceItem = {
   name: string;
   type: string;
-  wip?: string;
+  jobNumber?: string;
   title: string;
   image: string;
   qrUri: string;
   typeEnum: number;
   expiresAt: string;
-  menuCode?: string;
+  packageCode?: string;
   campaignCode: any;
   activeFor: number;
   statusEnum: number;
   description: string;
   activatedAt: string;
   redeemDate?: string;
-  dealerName?: string;
+  companyName?: string;
   modelCostID?: number;
   invoiceNumber?: string;
   skipZeroTrust: boolean;

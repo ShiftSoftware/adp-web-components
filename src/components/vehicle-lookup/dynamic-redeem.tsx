@@ -16,7 +16,7 @@ export class DynamicRedeem {
   @Prop() language: LanguageKeys = 'en';
   @Prop() canceledItems?: ServiceItem[] = null;
   @Prop() unInvoicedByBrokerName?: string = null;
-  @Prop() handleScanner?: (code: string) => void;
+  @Prop() handleScanner?: (code: string, jobNumber: string) => void;
   @Prop() handleQrChanges?: (code: string) => void;
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
 
@@ -144,7 +144,7 @@ export class DynamicRedeem {
       this.isLoading = true;
       this.input.readOnly = true;
 
-      this.handleScanner(inputValue);
+      this.handleScanner(inputValue, null);
     }
   };
 
@@ -196,8 +196,8 @@ export class DynamicRedeem {
                   </tr>
 
                   <tr>
-                    <th>{texts.menuCode}</th>
-                    <td>{this?.internalItem?.menuCode}</td>
+                    <th>{texts.packageCode}</th>
+                    <td>{this?.internalItem?.packageCode}</td>
                   </tr>
                 </table>
               </div>

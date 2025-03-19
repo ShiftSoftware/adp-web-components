@@ -34,6 +34,8 @@ export class DynamicClaim implements VehicleInformationInterface {
   @Prop() baseUrl: string;
   @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
+  @Prop() claimEndPoint: string = 'api/vehicle/swift-claim';
+  @Prop() headers: any = {};
   @Prop() language: LanguageKeys = 'en';
   @Prop() errorCallback: (errorMessage: ErrorKeys) => void;
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
@@ -305,23 +307,25 @@ export class DynamicClaim implements VehicleInformationInterface {
         this.dynamicRedeem.handleScanner = null;
       };
     } else {
-      this.dynamicRedeem.handleScanner = async code => {
+      this.dynamicRedeem.handleScanner = async (code, jobNumber) => {
         try {
           const vehicleInformation = this.vehicleInformation as VehicleInformation;
-
+          
           const payload = {
             vin: vehicleInformation.vin,
             brandIntegrationID: vehicleInformation.identifiers.brandIntegrationID,
             invoice: code,
+            jobNumber: jobNumber,
             saleInformation: vehicleInformation.saleInformation,
             serviceItem: this.dynamicRedeem.item,
             cancelledServiceItems: this.dynamicRedeem.canceledItems,
           };
 
-          const response = await fetch('/api/vehicle/swift-claim', {
+          const response = await fetch(this.claimEndPoint, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
+              ...this.headers,
             },
             body: JSON.stringify(payload),
           });
@@ -397,7 +401,7 @@ export class DynamicClaim implements VehicleInformationInterface {
 
                 <tr>
                   <th>{texts.redeemingDealer}</th>
-                  <td>{item.dealerName}</td>
+                  <td>{item.companyName}</td>
                 </tr>
 
                 <tr>
@@ -406,13 +410,13 @@ export class DynamicClaim implements VehicleInformationInterface {
                 </tr>
 
                 <tr>
-                  <th>{texts.wip}</th>
-                  <td>{item.wip}</td>
+                  <th>{texts.jobNumber}</th>
+                  <td>{item.jobNumber}</td>
                 </tr>
 
                 <tr>
-                  <th>{texts.claim}</th>
-                  <td>{item.menuCode}</td>
+                  <th>{texts.packageCode}</th>
+                  <td>{item.packageCode}</td>
                 </tr>
               </tbody>
             </table>

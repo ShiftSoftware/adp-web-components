@@ -5,7 +5,7 @@ export const dynamicRedeemSchema = object({
   name: string().required(),
   activationDate: string().required(),
   expireDate: string().required(),
-  menuCode: string().required(),
+  packageCode: string().required(),
   scanTheInvoice: string().required(),
   processing: string().required(),
   warning: string().required(),
