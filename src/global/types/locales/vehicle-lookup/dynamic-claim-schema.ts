@@ -15,4 +15,7 @@ export const dynamicClaimSchema = object({
   cancelled: string().required(),
   pending: string().required(),
   warning: string().required(),
+  activateNow: string().required(),
+  activationRequired: string().required(),
+  warrantyAndServicesNotActivated: string().required(),
 });

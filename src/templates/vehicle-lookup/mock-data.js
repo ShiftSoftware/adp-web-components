@@ -4162,4 +4162,68 @@ const mockData = {
     ],
     basicModelCode: 'VJA300',
   },
+  '1G8ZY1275YZ188208': {
+    accessories: null,
+    paintThickness: {
+      parts: [],
+    },
+    vin: '1G8ZY1275YZ188208',
+    identifiers: {
+      vin: '1G8ZY1275YZ188208',
+      variant: null,
+      katashiki: null,
+      color: null,
+      trim: null,
+      brand: 0,
+      brandIntegrationID: null,
+    },
+    saleInformation: null,
+    isAuthorized: false,
+    warranty: null,
+    nextServiceDate: '2023-12-12',
+    serviceHistory: [
+      
+    ],
+    ssc: null,
+    vehicleVariantInfo: null,
+    vehicleSpecification: null,
+    serviceItems: [
+      {
+        name: '1,000 KM Free Service',
+        type: 'free',
+        activatedAt: '',
+        expiresAt: '',
+        status: 'activationRequired',
+      },
+      {
+        name: '5,000 KM Free Service',
+        type: 'free',
+        activatedAt: '',
+        expiresAt: '',
+        status: 'activationRequired',
+      },
+      {
+        name: '10,000 KM Free Service',
+        type: 'free',
+        activatedAt: '',
+        expiresAt: '',
+        status: 'activationRequired',
+      },
+      {
+        name: '15,000 KM Free Service',
+        type: 'free',
+        activatedAt: '',
+        expiresAt: '',
+        status: 'activationRequired'
+      },
+      {
+        name: '20,000 KM Free Service',
+        type: 'free',
+        activatedAt: '',
+        expiresAt: '',
+        status: 'activationRequired',
+      },
+    ],
+    basicModelCode: null,
+  },
 };

@@ -65,6 +65,7 @@ export namespace Components {
         "setMockData": (newMockData: MockJson<PartInformation>) => Promise<void>;
     }
     interface DynamicClaim {
+        "activate"?: (vehicleInformation: VehicleInformation) => void;
         "baseUrl": string;
         "claim": (item: ServiceItem) => Promise<void>;
         "claimEndPoint": string;
@@ -506,6 +507,7 @@ declare namespace LocalJSX {
         "queryString"?: string;
     }
     interface DynamicClaim {
+        "activate"?: (vehicleInformation: VehicleInformation) => void;
         "baseUrl"?: string;
         "claimEndPoint"?: string;
         "claimViaBarcodeScanner"?: boolean;

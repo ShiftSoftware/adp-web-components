@@ -125,7 +125,10 @@
       "expired": "منتهي الصلاحية",
       "cancelled": "تم الغاء",
       "pending": "قيد الانتظار",
-      "warning": "تحذير"
+      "warning": "تحذير",
+      "activateNow": "Activate Now",
+      "activationRequired": "Activation Required",
+      "warrantyAndServicesNotActivated": "Warranty & Services have not been activated for this vehicle."
     },
     "dynamicRedeem": {
       "serviceType": "نوع الخدمة",

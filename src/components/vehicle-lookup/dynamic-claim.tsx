@@ -3,6 +3,7 @@ import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stenci
 import cn from '~lib/cn';
 import { getLocaleLanguage } from '~lib/get-local-language';
 
+import activationRequiredIcon from './assets/activationRequired.svg';
 import expiredIcon from './assets/expired.svg';
 import pendingIcon from './assets/pending.svg';
 import cancelledIcon from './assets/cancelled.svg';
@@ -23,6 +24,7 @@ const icons = {
   pending: pendingIcon,
   processed: processedIcon,
   cancelled: cancelledIcon,
+  activationRequired: activationRequiredIcon
 };
 
 @Component({
@@ -41,6 +43,7 @@ export class DynamicClaim implements VehicleInformationInterface {
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
   @Prop() loadedResponse?: (response: VehicleInformation) => void;
   @Prop() claimViaBarcodeScanner: boolean = true;
+  @Prop() activate?: (vehicleInformation: VehicleInformation) => void;
 
   @State() locale: Locale = localeSchema.getDefault();
 
@@ -163,7 +166,7 @@ export class DynamicClaim implements VehicleInformationInterface {
     const serviceItems = this.vehicleInformation?.serviceItems || [];
 
     if (serviceItems.filter(x => x.status === 'pending').length === 0) {
-      if (serviceItems.length === 0) this.dynamicClaimProgressBar.style.width = '0%';
+      if (serviceItems.length === 0 || serviceItems.filter(x => x.status === 'activationRequired').length === serviceItems.length) this.dynamicClaimProgressBar.style.width = '0%';
       else this.dynamicClaimProgressBar.style.width = '100%';
       this.dynamicClaimBody.scrollTo({
         left: this.dynamicClaimBody.scrollWidth,
@@ -280,7 +283,7 @@ export class DynamicClaim implements VehicleInformationInterface {
   }
 
   @Method()
-  claim(item: ServiceItem) {
+  async claim(item: ServiceItem) {
     const serviceItems = this.vehicleInformation?.serviceItems || [];
 
     const vinDataClone = JSON.parse(JSON.stringify(serviceItems));
@@ -312,7 +315,7 @@ export class DynamicClaim implements VehicleInformationInterface {
       this.dynamicRedeem.handleScanner = async (code, jobNumber) => {
         try {
           const vehicleInformation = this.vehicleInformation as VehicleInformation;
-          
+
           const payload = {
             vin: vehicleInformation.vin,
             brandIntegrationID: vehicleInformation.identifiers.brandIntegrationID,
@@ -465,42 +468,66 @@ export class DynamicClaim implements VehicleInformationInterface {
           </div>
 
           <div class="dynamic-claim-body">
-            <div class="loading-lane">
-              <div class="dynamic-claim-loading-slider">
-                <div class="dynamic-claim-loading-slider-line"></div>
-                <div class="dynamic-claim-loading-slider-subline dynamic-claim-inc"></div>
-                <div class="dynamic-claim-loading-slider-subline dynamic-claim-dec"></div>
+            <div>
+              <div class="loading-lane">
+                <div class="dynamic-claim-loading-slider">
+                  <div class="dynamic-claim-loading-slider-line"></div>
+                  <div class="dynamic-claim-loading-slider-subline dynamic-claim-inc"></div>
+                  <div class="dynamic-claim-loading-slider-subline dynamic-claim-dec"></div>
+                </div>
+              </div>
+
+              <div class="dynamic-claim-progress-lane">
+                {serviceItems.map((item: ServiceItem, idx) => {
+                  let statusClass = '';
+
+                  if (item.status === 'pending') {
+                    if (serviceItems.findIndex(i => i.status === 'pending') === idx) statusClass = item.status;
+                  } else statusClass = item.status;
+
+                  return (
+                    <div key={item.name} class={cn('dynamic-claim-item', statusClass)} onMouseLeave={this.onMouseLeave}>
+                      <div
+                        onAnimationEnd={this.removeLoadAnimationClass}
+                        class="dynamic-claim-item-header load-animation"
+                        onMouseEnter={event => this.onMouseEnter(event.target as HTMLElement, idx)}
+                      >
+                        <img src={icons[item.status]} alt="status icon" />
+                        <span>{texts[item.status]}</span>
+                        {this.activePopupIndex === idx && this.createPopup(item)}
+                      </div>
+                      <div onAnimationEnd={this.removeLoadAnimationClass} class="dynamic-claim-item-circle load-animation"></div>
+                      <p onAnimationEnd={this.removeLoadAnimationClass} class="dynamic-claim-item-footer load-animation">
+                        {item.name}
+                      </p>
+                    </div>
+                  );
+                })}
+
+                <div class="dynamic-claim-progress-bar"></div>
               </div>
             </div>
 
-            <div class="dynamic-claim-progress-lane">
-              {serviceItems.map((item: ServiceItem, idx) => {
-                let statusClass = '';
 
-                if (item.status === 'pending') {
-                  if (serviceItems.findIndex(i => i.status === 'pending') === idx) statusClass = item.status;
-                } else statusClass = item.status;
+            <div class="mt-14">
+              <div class={cn('card warning-card span-entire-1st-row activation-panel', { loading: this.isLoading, visible: this.vehicleInformation && this.vehicleInformation.serviceItems.filter(x => x.status === 'activationRequired').length > 0 })}
+                onAnimationEnd={this.removeLoadAnimationClass}>
+                <p class="no-padding flex gap-2">
+                  <span class="font-semibold">{texts.warrantyAndServicesNotActivated}</span>
+                </p>
 
-                return (
-                  <div key={item.name} class={cn('dynamic-claim-item', statusClass)} onMouseLeave={this.onMouseLeave}>
-                    <div
-                      onAnimationEnd={this.removeLoadAnimationClass}
-                      class="dynamic-claim-item-header load-animation"
-                      onMouseEnter={event => this.onMouseEnter(event.target as HTMLElement, idx)}
-                    >
-                      <img src={icons[item.status]} alt="status icon" />
-                      <span>{texts[item.status]}</span>
-                      {this.activePopupIndex === idx && this.createPopup(item)}
-                    </div>
-                    <div onAnimationEnd={this.removeLoadAnimationClass} class="dynamic-claim-item-circle load-animation"></div>
-                    <p onAnimationEnd={this.removeLoadAnimationClass} class="dynamic-claim-item-footer load-animation">
-                      {item.name}
-                    </p>
-                  </div>
-                );
-              })}
-
-              <div class="dynamic-claim-progress-bar"></div>
+                <button onClick={() => { if (this.activate) { this.activate(this.vehicleInformation); } }} class="claim-button dynamic-claim-button">
+                  <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g stroke-width="0"></g>
+                    <g stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g>
+                      <circle cx="12" cy="12" r="8" fill-opacity="0.24"></circle>
+                      <path d="M8.5 11L11.3939 13.8939C11.4525 13.9525 11.5475 13.9525 11.6061 13.8939L19.5 6" stroke-width="1.2"></path>
+                    </g>
+                  </svg>
+                  <span>{texts.activateNow}</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -125,7 +125,10 @@
       "expired": "بەسەرچووە",
       "cancelled": "هەڵوەشایەوە",
       "pending": "لە چاوەڕوانیدایە",
-      "warning": "ئاگاداربە"
+      "warning": "ئاگاداربە",
+      "activateNow": "Activate Now",
+      "activationRequired": "Activation Required",
+      "warrantyAndServicesNotActivated": "Warranty & Services have not been activated for this vehicle."
     },
     "dynamicRedeem": {
       "serviceType": "جۆری خزمەتگوزاری",

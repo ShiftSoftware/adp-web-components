@@ -182,7 +182,7 @@ export type ServiceItem = {
   claimDate?: string;
   serviceItemID?: string;
   skipZeroTrust?: string;
-  status: 'processed' | 'expired' | 'cancelled' | 'pending';
+  status: 'processed' | 'expired' | 'cancelled' | 'pending' | 'activationRequired';
   statusEnum?: string;
   title?: string;
   type?: string;

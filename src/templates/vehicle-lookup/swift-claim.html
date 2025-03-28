@@ -56,6 +56,7 @@
       <button class="sample-button" onclick="vinLookup('JTMHU09J6E4100543')">Sample 8</button>
       <button class="sample-button" onclick="vinLookup('JTMABBBJ9P4099200')">Sample 9 (Realistic)</button>
       <button class="sample-button" onclick="vinLookup('JTMABBBJ9P4099201')">Sample 10 (Realistic at TBP Stock)</button>
+      <button class="sample-button" onclick="vinLookup('1G8ZY1275YZ188208')">Inactive Services</button>
     </div>
     <h3>offline Loads</h3>
     <div style="margin-top: 20px; border: 1px solid #e1e1e1; padding: 10px; display: flex; align-content: center; justify-content: center; gap: 10px">
@@ -70,6 +71,7 @@
       <button class="sample-button" onclick="setData('JTMHU09J6E4100543')">Sample 8</button>
       <button class="sample-button" onclick="setData('JTMABBBJ9P4099200')">Sample 9 (Realistic)</button>
       <button class="sample-button" onclick="setData('JTMABBBJ9P4099201')">Sample 10 (Realistic at TBP Stock)</button>
+      <button class="sample-button" onclick="setData('1G8ZY1275YZ188208')">Inactive Services</button>
     </div>
     <label
       >render
@@ -109,6 +111,12 @@
         if (vin) {
           vinLookup(vin);
         }
+
+        dynamicClaim.activate = vehicleInformation => {
+          console.log(vehicleInformation);
+
+          alert(JSON.stringify(vehicleInformation))
+        };
       });
 
       function updateLang(newLang) {

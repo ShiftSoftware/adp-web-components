@@ -125,7 +125,10 @@
       "expired": "Истекший",
       "cancelled": "Отменен",
       "pending": "В ожидании",
-      "warning": "Предупреждение"
+      "warning": "Предупреждение",
+      "activateNow": "Activate Now",
+      "activationRequired": "Activation Required",
+      "warrantyAndServicesNotActivated": "Warranty & Services have not been activated for this vehicle."
     },
     "dynamicRedeem": {
       "serviceType": "Тип обслуживания",
