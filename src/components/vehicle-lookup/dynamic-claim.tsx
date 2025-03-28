@@ -399,11 +399,11 @@ export class DynamicClaim implements VehicleInformationInterface {
 
                 <tr>
                   <th>{texts.claimAt}</th>
-                  <td>{item.redeemDate}</td>
+                  <td>{item.claimDate}</td>
                 </tr>
 
                 <tr>
-                  <th>{texts.redeemingDealer}</th>
+                  <th>{texts.claimingCompany}</th>
                   <td>{item.companyName}</td>
                 </tr>
 

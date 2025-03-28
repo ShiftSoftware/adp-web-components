@@ -116,7 +116,7 @@
       "activationDate": "Activation Date",
       "expireDate": "Expiry Date",
       "claimAt": "Claimed At",
-      "redeemingDealer": "Redeeming Dealer",
+      "claimingCompany": "Claiming Company",
       "invoiceNumber": "Invoice Number",
       "jobNumber": "Job Number",
       "packageCode": "Package Code",

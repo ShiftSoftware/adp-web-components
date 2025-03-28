@@ -116,7 +116,7 @@
       "activationDate": "Дата активации",
       "expireDate": "Дата истечения срока действия",
       "claimAt": "Заявлено в",
-      "redeemingDealer": "Выкупающий дилер",
+      "claimingCompany": "Claiming Company",
       "invoiceNumber": "Номер счета",
       "jobNumber": "НЗП",
       "packageCode": "Меню код",

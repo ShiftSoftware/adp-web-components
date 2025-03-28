@@ -116,7 +116,7 @@
       "activationDate": "تاريخ التفعيل",
       "expireDate": "تاريخ انتهاء الصلاحية",
       "claimAt": "المطالبة في",
-      "redeemingDealer": "استرداد التاجر",
+      "claimingCompany": "Claiming Company",
       "invoiceNumber": "رقم الفاتورة",
       "jobNumber": "Job Number",
       "packageCode": "كود القائمة",

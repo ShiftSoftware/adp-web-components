@@ -5,7 +5,7 @@ export const dynamicClaimSchema = object({
   activationDate: string().required(),
   expireDate: string().required(),
   claimAt: string().required(),
-  redeemingDealer: string().required(),
+  claimingCompany: string().required(),
   invoiceNumber: string().required(),
   jobNumber: string().required(),
   packageCode: string().required(),
