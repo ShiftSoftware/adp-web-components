@@ -14,6 +14,7 @@ import { InputParams } from "./global/types/general";
 import { FormElementMapper, FormFieldParams, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
 import { ActiveElement } from "./components/part-lookup/part-lookup";
 import { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
+import { VehicleInformation as VehicleInformation1 } from "./components";
 export { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
 export { PartInformation } from "./global/types/part-information";
 export { DotNetObjectReference, MockJson } from "./global/types/components";
@@ -23,6 +24,7 @@ export { InputParams } from "./global/types/general";
 export { FormElementMapper, FormFieldParams, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
 export { ActiveElement } from "./components/part-lookup/part-lookup";
 export { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
+export { VehicleInformation as VehicleInformation1 } from "./components";
 export namespace Components {
     interface ContactUsForm {
         "baseUrl": string;
@@ -254,9 +256,11 @@ export namespace Components {
     interface VehicleLookup {
         "activeElement"?: ActiveElement1;
         "baseUrl": string;
+        "blazorDynamicClaimActivate": string;
         "blazorErrorStateListener": string;
         "blazorOnLoadingStateChange": string;
         "childrenProps"?: string | Object;
+        "dynamicClaimActivate"?: (vehicleInformation: VehicleInformation1) => void;
         "errorStateListener"?: (newError: string) => void;
         "fetchVin": (vin: string, headers?: any) => Promise<string>;
         "isDev": boolean;
@@ -670,9 +674,11 @@ declare namespace LocalJSX {
     interface VehicleLookup {
         "activeElement"?: ActiveElement1;
         "baseUrl"?: string;
+        "blazorDynamicClaimActivate"?: string;
         "blazorErrorStateListener"?: string;
         "blazorOnLoadingStateChange"?: string;
         "childrenProps"?: string | Object;
+        "dynamicClaimActivate"?: (vehicleInformation: VehicleInformation1) => void;
         "errorStateListener"?: (newError: string) => void;
         "isDev"?: boolean;
         "language"?: LanguageKeys;
