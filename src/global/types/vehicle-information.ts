@@ -31,14 +31,18 @@ export type Identifiers = {
 };
 
 export type SaleInformation = {
-  dealerIntegrationID: string;
-  dealerName: string;
-  branchIntegrationID: string;
+  companyID: string;
+  companyName: string;
+  countryID: string;
+  countryName: string;
+  branchID: string;
   branchName: string;
-  customerAccount: string;
+  regionID: string,
+  customerAccountNumber: string;
   customerID: string;
   invoiceDate: string;
   invoiceNumber: number;
+  warrantyActivationDate: string,
   broker: Broker;
 };
 
@@ -69,7 +73,7 @@ export type ServiceHistory = {
   branchId: number;
   account: string;
   invoiceNumber: number;
-  wipNumber: number;
+  jobNumber: number;
   laborLines: LaborLine[];
   partLines: PartLine[];
 };
@@ -112,6 +116,7 @@ export type VehicleSpecification = {
   fuelLiter: any;
   color: string;
   trim: string;
+  productionDate?: string;
 };
 
 export type SSC = {
@@ -158,29 +163,28 @@ export interface PaintPart {
 }
 
 export type ServiceItem = {
-  name: string;
-  type: string;
-  wip?: string;
-  title: string;
-  image: string;
-  qrUri: string;
-  typeEnum: number;
-  expiresAt: string;
-  menuCode?: string;
-  campaignCode: any;
+  activatedAt?: string;
   activeFor: number;
-  statusEnum: number;
-  description: string;
-  activatedAt: string;
-  redeemDate?: string;
-  dealerName?: string;
-  modelCostID?: number;
-  invoiceNumber?: string;
-  skipZeroTrust: boolean;
   activeForInterval: string;
-  dealerIntegrationID?: string;
-  maximumMileage: number | null;
-  tlpPackageInvoiceTLPItemID: any;
-  toyotaLoyaltyProgramRedeemableItemID: number;
-  status: 'processed' | 'expired' | 'cancelled' | 'pending' | 'warning';
+  campaignCode?: string;
+  companyID?: string;
+  companyName?: string;
+  description?: string;
+  expiresAt?: string;
+  image?: string;
+  invoiceNumber?: string;
+  jobNumber?: string;
+  maximumMileage?: string;
+  modelCostID?: string;
+  name?: string;
+  packageCode?: string;
+  paidServiceInvoiceLineID?: string;
+  claimDate?: string;
+  serviceItemID?: string;
+  skipZeroTrust?: string;
+  status: 'processed' | 'expired' | 'cancelled' | 'pending' | 'activationRequired';
+  statusEnum?: string;
+  title?: string;
+  type?: string;
+  typeEnum?: string;
 };

@@ -1,7 +1,6 @@
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import Loader from '~assets/loader.svg';
-import Loading from './components/Loading';
 import SSCTable from './components/SSCTable';
 import CardsContainer from './components/CardsContainer';
 
@@ -10,7 +9,7 @@ import { getLocaleLanguage } from '~lib/get-local-language';
 
 import { Grecaptcha } from '~types/general';
 import { AppStates, MockJson } from '~types/components';
-import { VehicleInformation, Warranty } from '~types/vehicle-information';
+import { VehicleInformation } from '~types/vehicle-information';
 import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/locales';
 
 import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicleInformation';
@@ -247,9 +246,9 @@ export class WarrantyDetails implements VehicleInformationInterface {
       <Host>
         <div dir={this.locale.direction} class="min-h-[100px] warranty">
           <div>
-            <Loading isLoading={this.state.includes('loading')} />
+            <loading-spinner isLoading={this.state.includes('loading')} />
             <div
-              class="transition duration-700"
+              class="transition-all !duration-700"
               style={{ transform: this.state.includes('loading') || this.state === 'idle' ? 'scale(0)' : 'scale(1)', opacity: this.state.includes('loading') ? '0' : '1' }}
             >
               {(this.showSsc || this.showWarranty) && (
@@ -271,7 +270,7 @@ export class WarrantyDetails implements VehicleInformationInterface {
                   locale={this.locale}
                   isAuthorized={this.vehicleInformation?.isAuthorized}
                   unInvoicedByBrokerName={this.unInvoicedByBrokerName}
-                  warranty={this.vehicleInformation?.warranty as Warranty}
+                  vehicleInformation={this.vehicleInformation}
                 />
               )}
 

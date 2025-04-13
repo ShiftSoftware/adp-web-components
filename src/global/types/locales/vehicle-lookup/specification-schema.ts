@@ -8,4 +8,5 @@ export const specificationSchema = object({
   katashiki: string().required(),
   modelYear: string().required(),
   sfx: string().required(),
+  productionDate: string().required(),
 });

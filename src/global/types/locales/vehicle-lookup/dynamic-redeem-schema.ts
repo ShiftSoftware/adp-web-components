@@ -5,7 +5,7 @@ export const dynamicRedeemSchema = object({
   name: string().required(),
   activationDate: string().required(),
   expireDate: string().required(),
-  menuCode: string().required(),
+  packageCode: string().required(),
   scanTheInvoice: string().required(),
   processing: string().required(),
   warning: string().required(),
@@ -13,4 +13,8 @@ export const dynamicRedeemSchema = object({
   confirmSkipServices: string().required(),
   notInvoiced: string().required(),
   confirmNotInvoiced: string().required(),
+  enterServiceInfo: string().required(),
+  invoice: string().required(),
+  jobNumber: string().required(),
+  claim: string().required(),
 });

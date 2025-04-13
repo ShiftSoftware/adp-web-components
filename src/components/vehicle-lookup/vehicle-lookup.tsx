@@ -13,6 +13,7 @@ import { ServiceHistory } from './service-history';
 import { WarrantyDetails } from './warranty-details';
 import { VehicleAccessories } from './vehicle-accessories';
 import { VehicleSpecification } from './vehicle-specification';
+import { VehicleInformation } from '../../components';
 
 const componentTags = {
   dynamicClaim: 'dynamic-claim',
@@ -46,11 +47,16 @@ export class VehicleLookup {
   @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
   @Prop() language: LanguageKeys = 'en';
-  @Prop() blazorErrorStateListener = '';
   @Prop() childrenProps?: string | Object;
-  @Prop() blazorOnLoadingStateChange = '';
+
   @Prop() errorStateListener?: (newError: string) => void;
+  @Prop() blazorErrorStateListener = '';
+
   @Prop() loadingStateChanged?: (isLoading: boolean) => void;
+  @Prop() blazorOnLoadingStateChange = '';
+
+  @Prop() dynamicClaimActivate?: (vehicleInformation: VehicleInformation) => void;
+  @Prop() blazorDynamicClaimActivate = '';
 
   @State() wrapperErrorState = '';
   @State() blazorRef?: DotNetObjectReference;
@@ -93,6 +99,18 @@ export class VehicleLookup {
       element.loadingStateChange = this.loadingStateChangingMiddleware;
       element.loadedResponse = newResponse => this.handleLoadData(newResponse, element);
     });
+
+    if (vehicleClaim && this.dynamicClaimActivate) {
+      vehicleClaim.activate = this.dynamicClaimActivate;
+    }
+
+    if (vehicleClaim) {
+      vehicleClaim.activate = vehicleInformation => {
+        if (this.blazorRef && this.blazorDynamicClaimActivate) {
+          this.blazorRef.invokeMethodAsync(this.blazorDynamicClaimActivate, vehicleInformation);
+        }
+      };
+    }
   }
 
   private syncErrorAcrossComponents = (newErrorMessage: ErrorKeys) => {
@@ -128,6 +146,8 @@ export class VehicleLookup {
     const activeElement = this.componentsList[this.activeElement] || null;
 
     this.wrapperErrorState = '';
+
+    this.componentsList[componentTags.dynamicClaim].headers = headers;
 
     if (!activeElement) return;
 

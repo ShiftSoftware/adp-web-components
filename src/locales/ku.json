@@ -85,7 +85,8 @@
       "variant": "جۆر",
       "katashiki": "Katashiki",
       "modelYear": "ساڵی مۆدێل",
-      "sfx": "SFX"
+      "sfx": "SFX",
+      "productionDate": "ساڵی بەرهەمهێنان"
     },
     "accessories": {
       "vehicleAccessories": "ئیکسسواراتەکانی ئۆتۆمبێل",
@@ -119,30 +120,38 @@
       "activationDate": "بەرواری چالاککردن",
       "expireDate": "بەرواری بەسەرچوون",
       "claimAt": "چالاککراوە لە",
-      "redeemingDealer": "بازرگانی چالاککار",
+      "claimingCompany": "Claiming Company",
       "invoiceNumber": "ژمارەی فاتورە",
-      "wip": "WIP",
-      "menuCode": "کۆدی مینیو",
+      "jobNumber": "ژمارەی کارد",
+      "packageCode": "کۆدی مینیو",
       "claim": "چالاککردن",
       "processed": "پرۆسێس کراوە",
       "expired": "بەسەرچووە",
       "cancelled": "هەڵوەشایەوە",
       "pending": "لە چاوەڕوانیدایە",
-      "warning": "ئاگاداربە"
+      "warning": "ئاگاداربە",
+      "activateNow": "Activate Now",
+      "activationRequired": "Activation Required",
+      "warrantyAndServicesNotActivated": "Warranty & Services have not been activated for this vehicle."
     },
     "dynamicRedeem": {
       "serviceType": "جۆری خزمەتگوزاری",
       "name": "ناو",
       "activationDate": "بەرواری چالاککردن",
       "expireDate": "بەرواری بەسەرچوون",
-      "menuCode": "کۆدی مینیو",
+      "packageCode": "کۆدی مینیو",
       "scanTheInvoice": "فاتورەکە سکان بکە",
       "processing": "پرۆسێسکردن ...",
       "warning": "ئاگاداربە",
       "skipServicesWarning": "ئەم خزمەتگوزاریانەی خوارەوە هێشتا 'هەڵپەسێردراون' و بە 'هەڵوەشاوە' نیشانە دەکرێن.",
       "confirmSkipServices": "پشتڕاست بکەرەوە نیشانەکردنی خزمەتگوزارییەکانی سەرەوە وەک 'هەڵوەشاوە'.",
       "notInvoiced": "ئەم ئۆتۆمبێلە هێشتا لەلایەن ئەم هاوبەشە بازرگانییە متمانەپێکراوەی خوارەوە فاتورەی بۆ نەکراوە:",
-      "confirmNotInvoiced": "داواکاری پشتڕاست بکەرەوە بەبێ فاتورەی هاوبەشی بازرگانی متمانەپێکراو"
+      "confirmNotInvoiced": "داواکاری پشتڕاست بکەرەوە بەبێ فاتورەی هاوبەشی بازرگانی متمانەپێکراو",
+
+      "enterServiceInfo": "Enter Service Info",
+      "invoice": "Invoice",
+      "jobNumber": "Job Number",
+      "claim": "Claim"
     }
   },
   "partLookup": {

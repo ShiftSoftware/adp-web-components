@@ -14,6 +14,7 @@ import { InputParams } from "./global/types/general";
 import { FormElementMapper, FormFieldParams, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
 import { ActiveElement } from "./components/part-lookup/part-lookup";
 import { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
+import { VehicleInformation as VehicleInformation1 } from "./components";
 export { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
 export { PartInformation } from "./global/types/part-information";
 export { DotNetObjectReference, MockJson } from "./global/types/components";
@@ -23,6 +24,7 @@ export { InputParams } from "./global/types/general";
 export { FormElementMapper, FormFieldParams, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
 export { ActiveElement } from "./components/part-lookup/part-lookup";
 export { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
+export { VehicleInformation as VehicleInformation1 } from "./components";
 export namespace Components {
     interface ContactUsForm {
         "baseUrl": string;
@@ -65,10 +67,15 @@ export namespace Components {
         "setMockData": (newMockData: MockJson<PartInformation>) => Promise<void>;
     }
     interface DynamicClaim {
+        "activate"?: (vehicleInformation: VehicleInformation) => void;
         "baseUrl": string;
+        "claim": (item: ServiceItem) => Promise<void>;
+        "claimEndPoint": string;
+        "claimViaBarcodeScanner": boolean;
         "completeClaim": () => Promise<void>;
         "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
+        "headers": any;
         "isDev": boolean;
         "language": LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
@@ -80,9 +87,10 @@ export namespace Components {
     }
     interface DynamicRedeem {
         "canceledItems"?: ServiceItem[];
+        "claimViaBarcodeScanner": boolean;
         "getQrValue": () => Promise<string>;
         "handleQrChanges"?: (code: string) => void;
-        "handleScanner"?: (code: string) => void;
+        "handleScanner"?: (code: string, jobNumber: string) => void;
         "item"?: ServiceItem;
         "language": LanguageKeys;
         "loadingStateChange"?: (isLoading: boolean) => void;
@@ -162,6 +170,9 @@ export namespace Components {
         "language": LanguageKeys;
         "wrapperClass": string;
         "wrapperId": string;
+    }
+    interface LoadingSpinner {
+        "isLoading": boolean;
     }
     interface ManufacturerLookup {
         "baseUrl": string;
@@ -246,9 +257,11 @@ export namespace Components {
     interface VehicleLookup {
         "activeElement"?: ActiveElement1;
         "baseUrl": string;
+        "blazorDynamicClaimActivate": string;
         "blazorErrorStateListener": string;
         "blazorOnLoadingStateChange": string;
         "childrenProps"?: string | Object;
+        "dynamicClaimActivate"?: (vehicleInformation: VehicleInformation1) => void;
         "errorStateListener"?: (newError: string) => void;
         "fetchVin": (vin: string, headers?: any) => Promise<string>;
         "isDev": boolean;
@@ -379,6 +392,12 @@ declare global {
         prototype: HTMLFormTextAreaElement;
         new (): HTMLFormTextAreaElement;
     };
+    interface HTMLLoadingSpinnerElement extends Components.LoadingSpinner, HTMLStencilElement {
+    }
+    var HTMLLoadingSpinnerElement: {
+        prototype: HTMLLoadingSpinnerElement;
+        new (): HTMLLoadingSpinnerElement;
+    };
     interface HTMLManufacturerLookupElement extends Components.ManufacturerLookup, HTMLStencilElement {
     }
     var HTMLManufacturerLookupElement: {
@@ -447,6 +466,7 @@ declare global {
         "form-structure-error": HTMLFormStructureErrorElement;
         "form-submit": HTMLFormSubmitElement;
         "form-text-area": HTMLFormTextAreaElement;
+        "loading-spinner": HTMLLoadingSpinnerElement;
         "manufacturer-lookup": HTMLManufacturerLookupElement;
         "paint-thickness": HTMLPaintThicknessElement;
         "part-lookup": HTMLPartLookupElement;
@@ -492,8 +512,12 @@ declare namespace LocalJSX {
         "queryString"?: string;
     }
     interface DynamicClaim {
+        "activate"?: (vehicleInformation: VehicleInformation) => void;
         "baseUrl"?: string;
+        "claimEndPoint"?: string;
+        "claimViaBarcodeScanner"?: boolean;
         "errorCallback"?: (errorMessage: ErrorKeys) => void;
+        "headers"?: any;
         "isDev"?: boolean;
         "language"?: LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
@@ -502,8 +526,9 @@ declare namespace LocalJSX {
     }
     interface DynamicRedeem {
         "canceledItems"?: ServiceItem[];
+        "claimViaBarcodeScanner"?: boolean;
         "handleQrChanges"?: (code: string) => void;
-        "handleScanner"?: (code: string) => void;
+        "handleScanner"?: (code: string, jobNumber: string) => void;
         "item"?: ServiceItem;
         "language"?: LanguageKeys;
         "loadingStateChange"?: (isLoading: boolean) => void;
@@ -583,6 +608,9 @@ declare namespace LocalJSX {
         "wrapperClass"?: string;
         "wrapperId"?: string;
     }
+    interface LoadingSpinner {
+        "isLoading"?: boolean;
+    }
     interface ManufacturerLookup {
         "baseUrl"?: string;
         "errorCallback"?: (errorMessage: string) => void;
@@ -648,9 +676,11 @@ declare namespace LocalJSX {
     interface VehicleLookup {
         "activeElement"?: ActiveElement1;
         "baseUrl"?: string;
+        "blazorDynamicClaimActivate"?: string;
         "blazorErrorStateListener"?: string;
         "blazorOnLoadingStateChange"?: string;
         "childrenProps"?: string | Object;
+        "dynamicClaimActivate"?: (vehicleInformation: VehicleInformation1) => void;
         "errorStateListener"?: (newError: string) => void;
         "isDev"?: boolean;
         "language"?: LanguageKeys;
@@ -705,6 +735,7 @@ declare namespace LocalJSX {
         "form-structure-error": FormStructureError;
         "form-submit": FormSubmit;
         "form-text-area": FormTextArea;
+        "loading-spinner": LoadingSpinner;
         "manufacturer-lookup": ManufacturerLookup;
         "paint-thickness": PaintThickness;
         "part-lookup": PartLookup;
@@ -733,6 +764,7 @@ declare module "@stencil/core" {
             "form-structure-error": LocalJSX.FormStructureError & JSXBase.HTMLAttributes<HTMLFormStructureErrorElement>;
             "form-submit": LocalJSX.FormSubmit & JSXBase.HTMLAttributes<HTMLFormSubmitElement>;
             "form-text-area": LocalJSX.FormTextArea & JSXBase.HTMLAttributes<HTMLFormTextAreaElement>;
+            "loading-spinner": LocalJSX.LoadingSpinner & JSXBase.HTMLAttributes<HTMLLoadingSpinnerElement>;
             "manufacturer-lookup": LocalJSX.ManufacturerLookup & JSXBase.HTMLAttributes<HTMLManufacturerLookupElement>;
             "paint-thickness": LocalJSX.PaintThickness & JSXBase.HTMLAttributes<HTMLPaintThicknessElement>;
             "part-lookup": LocalJSX.PartLookup & JSXBase.HTMLAttributes<HTMLPartLookupElement>;

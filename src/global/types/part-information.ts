@@ -26,8 +26,8 @@ export type PartPrice = {
   countryName: string;
   regionIntegrationID: string;
   regionName: string;
-  fob: UnitData;
-  price: UnitData;
+  purchasePrice: UnitData;
+  retailPrice: UnitData;
   warrantyPrice: UnitData;
 };
 

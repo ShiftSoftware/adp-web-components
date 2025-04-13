@@ -85,7 +85,8 @@
       "variant": "أنواع",
       "katashiki": "Katashiki",
       "modelYear": "سنة الموديل",
-      "sfx": "SFX"
+      "sfx": "SFX",
+      "productionDate": "سنة الإنتاج"
     },
     "accessories": {
       "vehicleAccessories": "إكسسوارات المركبات",
@@ -119,30 +120,38 @@
       "activationDate": "تاريخ التفعيل",
       "expireDate": "تاريخ انتهاء الصلاحية",
       "claimAt": "المطالبة في",
-      "redeemingDealer": "استرداد التاجر",
+      "claimingCompany": "Claiming Company",
       "invoiceNumber": "رقم الفاتورة",
-      "wip": "WIP",
-      "menuCode": "كود القائمة",
+      "jobNumber": "Job Number",
+      "packageCode": "كود القائمة",
       "claim": "مطالبة",
       "processed": "تمت معالجته",
       "expired": "منتهي الصلاحية",
       "cancelled": "تم الغاء",
       "pending": "قيد الانتظار",
-      "warning": "تحذير"
+      "warning": "تحذير",
+      "activateNow": "Activate Now",
+      "activationRequired": "Activation Required",
+      "warrantyAndServicesNotActivated": "Warranty & Services have not been activated for this vehicle."
     },
     "dynamicRedeem": {
       "serviceType": "نوع الخدمة",
       "name": "اسم",
       "activationDate": "تاريخ التفعيل",
       "expireDate": "تاريخ انتهاء الصلاحية",
-      "menuCode": "كود القائمة",
+      "packageCode": "كود القائمة",
       "scanTheInvoice": "مسح الفاتورة",
       "processing": "يعالج ...",
       "warning": "تحذير",
       "skipServicesWarning": "الخدمات التالية لا تزال 'معلقة' وسيتم وضع علامة 'ملغاة' عليها.",
       "confirmSkipServices": "تأكيد وضع علامة 'ملغاة' على الخدمات المذكورة أعلاه.",
       "notInvoiced": "لم يتم إصدار فاتورة لهذه المركبة بعد من قبل شريك الأعمال الموثوق به التالي:",
-      "confirmNotInvoiced": "تأكيد المطالبة دون فاتورة شريك الأعمال الموثوق به"
+      "confirmNotInvoiced": "تأكيد المطالبة دون فاتورة شريك الأعمال الموثوق به",
+
+      "enterServiceInfo": "Enter Service Info",
+      "invoice": "Invoice",
+      "jobNumber": "Job Number",
+      "claim": "Claim"
     }
   },
   "partLookup": {

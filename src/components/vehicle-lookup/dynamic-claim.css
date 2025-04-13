@@ -43,11 +43,11 @@
 }
 
 .dynamic-claim-body {
-  /* 22px for inner lane height + 200px standard padding */
-  padding: 100px 30px;
+  padding: 120px 30px 20px 30px;
   overflow-x: scroll;
   display: flex;
   transition: scrollbar-color 0.5s ease;
+  flex-direction: column;
 }
 
 .idle .dynamic-claim-body,
@@ -80,10 +80,10 @@
   background: #c5c5c5;
   border-radius: 10px;
 }
-/* Handle on hover */
-.dynamic-claim-wrapper ::-webkit-scrollbar-thumb:hover {
-  background: #a1a1a1;
-}
+  /* Handle on hover */
+  .dynamic-claim-wrapper ::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+  }
 
 .loading-lane,
 .dynamic-claim-progress-lane {
@@ -153,6 +153,7 @@
   position: absolute;
   justify-content: center;
 }
+
 .popup-container {
   z-index: 100;
   position: fixed;
@@ -171,40 +172,40 @@
   visibility: hidden;
 }
 
-.dynamic-claim-item-popup-info.show,
-.dynamic-claim-item-popup-info-triangle.show {
-  opacity: 1;
-  visibility: visible;
-}
+  .dynamic-claim-item-popup-info.show,
+  .dynamic-claim-item-popup-info-triangle.show {
+    opacity: 1;
+    visibility: visible;
+  }
 
-.dynamic-claim-item-popup-info table {
-  width: 100%;
-  border-collapse: collapse;
-}
+  .dynamic-claim-item-popup-info table {
+    width: 100%;
+    border-collapse: collapse;
+  }
 
-.dynamic-claim-item-popup-info table th {
-  border-bottom: 1px solid #ddd;
-  padding: 10px;
-  padding-inline-end: 50px;
-  text-align: start;
-  white-space: nowrap;
-}
+    .dynamic-claim-item-popup-info table th {
+      border-bottom: 1px solid #ddd;
+      padding: 10px;
+      padding-inline-end: 50px;
+      text-align: start;
+      white-space: nowrap;
+    }
 
-.dynamic-claim-item-popup-info table td {
-  border-bottom: 1px solid #ddd;
-  padding: 10px;
-  padding-inline-end: 50px;
-  text-align: start;
-  white-space: nowrap;
-  font-weight: normal;
-}
+    .dynamic-claim-item-popup-info table td {
+      border-bottom: 1px solid #ddd;
+      padding: 10px;
+      padding-inline-end: 50px;
+      text-align: start;
+      white-space: nowrap;
+      font-weight: normal;
+    }
 
-.dynamic-claim-item-popup-info .claim-button {
-  margin: auto;
-  margin-top: 15px;
-  width: 80%;
-  justify-content: center;
-}
+  .dynamic-claim-item-popup-info .claim-button {
+    margin: auto;
+    margin-top: 15px;
+    width: 80%;
+    justify-content: center;
+  }
 
 .dynamic-claim-item-popup-info-triangle {
   opacity: 0;
@@ -249,15 +250,16 @@
   cursor: pointer;
 }
 
-.dynamic-claim-item-header.load-animation {
-  animation: item-header-fade-in 0.65s ease forwards;
-}
+  .dynamic-claim-item-header.load-animation {
+    animation: item-header-fade-in 0.65s ease forwards;
+  }
 
 @keyframes item-header-fade-in {
   0% {
     opacity: 0;
     transform: translateY(-5px) scale(70%);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0) scale(100%);
@@ -296,9 +298,9 @@
   margin: 0;
 }
 
-.dynamic-claim-item-footer.load-animation {
-  animation: item-footer-fade-in 0.65s ease forwards;
-}
+  .dynamic-claim-item-footer.load-animation {
+    animation: item-footer-fade-in 0.65s ease forwards;
+  }
 
 @keyframes item-footer-fade-in {
   0% {
@@ -306,6 +308,7 @@
     visibility: hidden;
     transform: translateY(5px) scale(70%);
   }
+
   100% {
     opacity: 1;
     visibility: visible;
@@ -330,9 +333,9 @@
   z-index: 1;
 }
 
-.dynamic-claim-item-circle.load-animation {
-  animation: item-circle-fade-in 0.65s ease forwards;
-}
+  .dynamic-claim-item-circle.load-animation {
+    animation: item-circle-fade-in 0.65s ease forwards;
+  }
 
 @keyframes item-circle-fade-in {
   0% {
@@ -385,6 +388,10 @@
 
 .dynamic-claim-item.pending .dynamic-claim-item-header {
   color: #00a300;
+}
+
+.dynamic-claim-item.activationRequired .dynamic-claim-item-header {
+  color: #9E9E9E;
 }
 
 .dynamic-claim-loading-slider {
@@ -460,9 +467,9 @@
   gap: 3px;
 }
 
-.dynamic-claim-button svg {
-  transition: 0.2s;
-}
+  .dynamic-claim-button svg {
+    transition: 0.2s;
+  }
 
 .claim-button {
   border: 1px solid #27ae60;
@@ -472,28 +479,28 @@
   fill: #27ae60;
 }
 
-.claim-button circle {
-  fill: #2ecc71;
-}
+  .claim-button circle {
+    fill: #2ecc71;
+  }
 
-.claim-button:hover {
-  color: white;
-  background-color: #2ecc71;
-  stroke: white;
-  fill: white;
-}
+  .claim-button:hover {
+    color: white;
+    background-color: #2ecc71;
+    stroke: white;
+    fill: white;
+  }
 
-.claim-button:hover circle {
-  fill: white;
-}
+    .claim-button:hover circle {
+      fill: white;
+    }
 
-.claim-button:active {
-  background-color: #27ae60;
-}
+  .claim-button:active {
+    background-color: #27ae60;
+  }
 
-.claim-button:active svg {
-  transform: scale(125%);
-}
+    .claim-button:active svg {
+      transform: scale(125%);
+    }
 
 .cancel-button {
   border: 1px solid #c0392b;
@@ -503,18 +510,93 @@
   fill: #c0392b;
 }
 
-.cancel-button circle {
-  fill: #c0392b;
-  transition: 0.1s;
+  .cancel-button circle {
+    fill: #c0392b;
+    transition: 0.1s;
+  }
+
+  .cancel-button:hover {
+    color: white;
+    background-color: #e74c3c;
+    stroke: white;
+    fill: white;
+  }
+
+    .cancel-button:hover circle {
+      fill: white;
+    }
+
+.card {
+  gap: 8px;
+  display: flex;
+  flex-shrink: 0;
+  padding: 8px 12px;
+  border: 1px solid;
+  align-items: center;
+  border-radius: 6px;
 }
 
-.cancel-button:hover {
-  color: white;
-  background-color: #e74c3c;
-  stroke: white;
-  fill: white;
+  .card p {
+    margin: 0px;
+    height: 25px;
+    flex: 1 1 0%;
+    display: flex;
+    font-size: 16px;
+    padding-left: 50px;
+    align-items: center;
+  }
+
+    .card p.no-padding {
+      padding-left: 4px;
+    }
+
+  .card img {
+    width: 25px;
+    height: 25px;
+  }
+
+.warning-card {
+  color: #8a6d3b;
+  background: #fcf8e3;
+  border-color: #faebcc !important;
 }
 
-.cancel-button:hover circle {
-  fill: white;
+.activation-panel {
+    opacity:0;
+}
+
+  .activation-panel.visible {
+    animation: activation-panel-fade-in 0.75s ease forwards;
+  }
+
+  .activation-panel.visible.loading {
+    animation: activation-panel-fade-out 0.75s ease forwards;
+  }
+
+@keyframes activation-panel-fade-in {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-5px) scale(70%);
+  }
+
+  100% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(100%);
+  }
+}
+
+@keyframes activation-panel-fade-out {
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-5px) scale(70%);
+  }
+
+  0% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(100%);
+  }
 }

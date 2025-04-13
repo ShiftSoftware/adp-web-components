@@ -9,8 +9,6 @@ import { getLocaleLanguage } from '~lib/get-local-language';
 
 import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicleInformation';
 
-import Loading from '../components/Loading';
-
 let mockData: MockJson<VehicleInformation> = {};
 
 @Component({
@@ -117,12 +115,29 @@ export class VehicleSpecification implements VehicleInformationInterface {
   render() {
     const texts = this.locale.vehicleLookup.specification;
 
+    let productionDate: string | null = null;
+
+    try {
+      if (this.vehicleInformation?.vehicleSpecification?.productionDate) {
+        const productionDateObj = new Date(this.vehicleInformation?.vehicleSpecification?.productionDate);
+
+        productionDate = productionDateObj.toLocaleDateString(this.locale.language, {
+          year: 'numeric',
+          month: 'long',
+        });
+      }
+    } catch (error) {
+      productionDate = null;
+    }
+
+    const getProductionDate = () => <div class="px-[10px] py-[20px] text-center whitespace-nowrap">{productionDate}</div>;
+
     return (
       <Host>
         <div dir={this.locale.direction} class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
           <div>
-            <Loading isLoading={this.state.includes('loading')} />
-            <div class={cn('transition-all duration-700', { 'scale-0': this.state.includes('loading') || this.state === 'idle', 'opacity-0': this.state.includes('loading') })}>
+            <loading-spinner isLoading={this.state.includes('loading')} />
+            <div class={cn('transition-all !duration-700', { 'scale-0': this.state.includes('loading') || this.state === 'idle', 'opacity-0': this.state.includes('loading') })}>
               <div class={cn('text-center pt-[4px] text-[20px]', { 'text-red-600': !!this.errorMessage })}>{this.vehicleInformation?.vin}</div>
 
               {['error', 'error-loading'].includes(this.state) && (
@@ -142,7 +157,7 @@ export class VehicleSpecification implements VehicleInformationInterface {
                       <table class="w-full overflow-auto relative border-collapse">
                         <thead class="top-0 font-bold sticky bg-white">
                           <tr>
-                            {['model', 'variant', 'katashiki', 'modelYear', 'sfx'].map(title => (
+                            {['model', 'variant', 'katashiki', 'modelYear', ...(!!productionDate ? ['productionDate'] : []), 'sfx'].map(title => (
                               <th key={title} class="px-[10px] py-[20px] text-center whitespace-nowrap border-b border-[#d6d8dc]">
                                 {texts[title]}
                               </th>
@@ -160,7 +175,9 @@ export class VehicleSpecification implements VehicleInformationInterface {
                               {this?.vehicleInformation?.identifiers?.variant || '...'} <br />
                               {this?.vehicleInformation?.vehicleSpecification?.variantDesc || '...'}
                             </td>
-                            {['identifiers.katashiki', 'vehicleVariantInfo.modelYear', 'vehicleVariantInfo.sfx'].map(infoPath => {
+                            {['identifiers.katashiki', 'vehicleVariantInfo.modelYear', ...(!!productionDate ? [getProductionDate] : []), 'vehicleVariantInfo.sfx'].map(infoPath => {
+                              if (typeof infoPath === 'function') return infoPath();
+
                               const [place, field] = infoPath.split('.');
                               const targetPlace = this?.vehicleInformation?.[place];
                               const cellValue = targetPlace && targetPlace[field] ? targetPlace[field].toString() : '';

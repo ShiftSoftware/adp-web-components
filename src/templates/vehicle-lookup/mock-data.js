@@ -32,7 +32,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51456604,
-        wipNumber: 13681,
+        jobNumber: 13681,
         laborLines: [
           {
             rtsCode: 'NOTES',
@@ -90,7 +90,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51447340,
-        wipNumber: 52446,
+        jobNumber: 52446,
         laborLines: [
           {
             rtsCode: '02FUELLCUR',
@@ -142,7 +142,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51441539,
-        wipNumber: 41940,
+        jobNumber: 41940,
         laborLines: [
           {
             rtsCode: '0BLC15UR',
@@ -194,7 +194,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51431492,
-        wipNumber: 22296,
+        jobNumber: 22296,
         laborLines: [
           {
             rtsCode: '0BLC15UR',
@@ -259,7 +259,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51456604,
-        wipNumber: 13681,
+        jobNumber: 13681,
         laborLines: [
           {
             rtsCode: 'NOTES',
@@ -317,7 +317,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51447340,
-        wipNumber: 52446,
+        jobNumber: 52446,
         laborLines: [
           {
             rtsCode: '02FUELLCUR',
@@ -369,7 +369,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51441539,
-        wipNumber: 41940,
+        jobNumber: 41940,
         laborLines: [
           {
             rtsCode: '0BLC15UR',
@@ -421,7 +421,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51431492,
-        wipNumber: 22296,
+        jobNumber: 22296,
         laborLines: [
           {
             rtsCode: '0BLC15UR',
@@ -488,7 +488,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51456604,
-        wipNumber: 13681,
+        jobNumber: 13681,
         laborLines: [
           {
             rtsCode: 'NOTES',
@@ -546,7 +546,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51447340,
-        wipNumber: 52446,
+        jobNumber: 52446,
         laborLines: [
           {
             rtsCode: '02FUELLCUR',
@@ -598,7 +598,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51441539,
-        wipNumber: 41940,
+        jobNumber: 41940,
         laborLines: [
           {
             rtsCode: '0BLC15UR',
@@ -650,7 +650,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51431492,
-        wipNumber: 22296,
+        jobNumber: 22296,
         laborLines: [
           {
             rtsCode: '0BLC15UR',
@@ -691,10 +691,10 @@ const mockData = {
         activatedAt: 'Activation Date',
         expiresAt: 'Expiry Date',
         status: 'processed',
-        redeemDate: 'Redeem Date',
-        redeemingDealer: 'Claim Dealer',
+        claimDate: 'Redeem Date',
+        claimingCompany: 'Claim Dealer',
         invoiceNumber: 'Invoice Number',
-        wipNumber: 'WIP Number',
+        jobNumber: 'Job Number',
         menuCode: 'SER1239KH',
       },
       {
@@ -773,7 +773,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51456604,
-        wipNumber: 13681,
+        jobNumber: 13681,
         laborLines: [
           {
             rtsCode: 'NOTES',
@@ -831,7 +831,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51447340,
-        wipNumber: 52446,
+        jobNumber: 52446,
         laborLines: [
           {
             rtsCode: '02FUELLCUR',
@@ -883,7 +883,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51441539,
-        wipNumber: 41940,
+        jobNumber: 41940,
         laborLines: [
           {
             rtsCode: '0BLC15UR',
@@ -935,7 +935,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51431492,
-        wipNumber: 22296,
+        jobNumber: 22296,
         laborLines: [
           {
             rtsCode: '0BLC15UR',
@@ -976,7 +976,7 @@ const mockData = {
         activatedAt: '2023-01-08',
         expiresAt: '2023-04-08',
         status: 'processed',
-        redeemDate: '2023-01-19',
+        claimDate: '2023-01-19',
       },
       {
         name: '5,000 KM Free Service',
@@ -1105,11 +1105,11 @@ const mockData = {
       brandIntegrationID: 'TYT',
     },
     saleInformation: {
-      dealerIntegrationID: '1',
-      dealerName: 'SAS',
+      companyIntegrationID: '1',
+      companyName: 'SAS',
       branchIntegrationID: '43',
       branchName: 'SAS - Showroom | Duhok',
-      customerAccount: 'R01447',
+      customerAccountNumber: 'R01447',
       customerID: '89437',
       invoiceDate: '2023-05-11',
       invoiceNumber: 11155049,
@@ -1142,7 +1142,7 @@ const mockData = {
         branchId: 43,
         account: 'C00015',
         invoiceNumber: 53166219,
-        wipNumber: 16416,
+        jobNumber: 16416,
         laborLines: [
           {
             rtsCode: 'CWASH',
@@ -1200,7 +1200,7 @@ const mockData = {
         branchId: 43,
         account: 'C00015',
         invoiceNumber: 53165038,
-        wipNumber: 14587,
+        jobNumber: 14587,
         laborLines: [
           {
             rtsCode: 'CWASH',
@@ -1252,7 +1252,7 @@ const mockData = {
         branchId: 43,
         account: 'C00015',
         invoiceNumber: 53163666,
-        wipNumber: 12359,
+        jobNumber: 12359,
         laborLines: [
           {
             rtsCode: '0BHL65W4',
@@ -1310,7 +1310,7 @@ const mockData = {
         branchId: 43,
         account: 'C00015',
         invoiceNumber: 53162583,
-        wipNumber: 10672,
+        jobNumber: 10672,
         laborLines: [
           {
             rtsCode: 'CONS',
@@ -1362,7 +1362,7 @@ const mockData = {
         branchId: 43,
         account: 'S00058',
         invoiceNumber: 53161736,
-        wipNumber: 64345,
+        jobNumber: 64345,
         laborLines: [
           {
             rtsCode: 'PDRINSP',
@@ -1426,7 +1426,7 @@ const mockData = {
         branchId: 43,
         account: 'C00015',
         invoiceNumber: 53160685,
-        wipNumber: 62792,
+        jobNumber: 62792,
         laborLines: [
           {
             rtsCode: 'BGTEPR',
@@ -1502,7 +1502,7 @@ const mockData = {
         branchId: 43,
         account: 'C00015',
         invoiceNumber: 53159833,
-        wipNumber: 61274,
+        jobNumber: 61274,
         laborLines: [
           {
             rtsCode: 'CONS',
@@ -1560,7 +1560,7 @@ const mockData = {
         branchId: 43,
         account: 'C00015',
         invoiceNumber: 53158737,
-        wipNumber: 59536,
+        jobNumber: 59536,
         laborLines: [
           {
             rtsCode: 'BGTPFI',
@@ -1630,7 +1630,7 @@ const mockData = {
         branchId: 43,
         account: 'C00015',
         invoiceNumber: 53157673,
-        wipNumber: 57573,
+        jobNumber: 57573,
         laborLines: [
           {
             rtsCode: 'CONS',
@@ -1686,6 +1686,7 @@ const mockData = {
       variantDesc: '2.7L/DC/4x4/AT/High/ADD',
       class: 'C',
       bodyType: ' ',
+      productionDate: '2025-12-01T00:00:00',
       engine: ' 2700 ',
       cylinders: ' 0 ',
       lightHeavy: ' ',
@@ -1707,7 +1708,7 @@ const mockData = {
         activatedAt: '2023-01-08',
         expiresAt: '2023-04-08',
         status: 'processed',
-        redeemDate: '2023-01-19',
+        claimDate: '2023-01-19',
       },
       {
         name: '5,000 KM Free Service',
@@ -1847,7 +1848,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51456604,
-        wipNumber: 13681,
+        jobNumber: 13681,
         laborLines: [
           {
             rtsCode: 'NOTES',
@@ -1905,7 +1906,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51447340,
-        wipNumber: 52446,
+        jobNumber: 52446,
         laborLines: [
           {
             rtsCode: '02FUELLCUR',
@@ -1957,7 +1958,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51441539,
-        wipNumber: 41940,
+        jobNumber: 41940,
         laborLines: [
           {
             rtsCode: '0BLC15UR',
@@ -2009,7 +2010,7 @@ const mockData = {
         branchId: 14,
         account: 'CS00022',
         invoiceNumber: 51431492,
-        wipNumber: 22296,
+        jobNumber: 22296,
         laborLines: [
           {
             rtsCode: '0BLC15UR',
@@ -2050,7 +2051,7 @@ const mockData = {
         activatedAt: '2023-01-08',
         expiresAt: '2023-04-08',
         status: 'processed',
-        redeemDate: '2023-01-19',
+        claimDate: '2023-01-19',
       },
       {
         name: '5,000 KM Free Service',
@@ -2133,11 +2134,11 @@ const mockData = {
       brandIntegrationID: 'TYT',
     },
     saleInformation: {
-      dealerIntegrationID: '1',
-      dealerName: 'SAS',
+      companyIntegrationID: '1',
+      companyName: 'SAS',
       branchIntegrationID: '44',
       branchName: 'SAS - Showroom | Basra',
-      customerAccount: 'R01954',
+      customerAccountNumber: 'R01954',
       customerID: '97120',
       invoiceDate: '2023-09-18',
       invoiceNumber: 11160168,
@@ -2170,7 +2171,7 @@ const mockData = {
         branchId: 44,
         account: 'W00001',
         invoiceNumber: 54302844,
-        wipNumber: 32325,
+        jobNumber: 32325,
         laborLines: [
           {
             rtsCode: 'ZGG79A',
@@ -2191,7 +2192,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54175880,
-        wipNumber: 31762,
+        jobNumber: 31762,
         laborLines: [
           {
             rtsCode: '0BLCVJ05',
@@ -2237,7 +2238,7 @@ const mockData = {
         branchId: 44,
         account: 'W00001',
         invoiceNumber: 54302319,
-        wipNumber: 23978,
+        jobNumber: 23978,
         laborLines: [
           {
             rtsCode: 'ZGG04A',
@@ -2258,7 +2259,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54170870,
-        wipNumber: 23814,
+        jobNumber: 23814,
         laborLines: [
           {
             rtsCode: 'CONSU',
@@ -2316,7 +2317,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54162502,
-        wipNumber: 64883,
+        jobNumber: 64883,
         laborLines: [
           {
             rtsCode: '0BLCVJ05',
@@ -2368,7 +2369,7 @@ const mockData = {
         branchId: 44,
         account: 'W00001',
         invoiceNumber: 54301537,
-        wipNumber: 58888,
+        jobNumber: 58888,
         laborLines: [
           {
             rtsCode: 'YHG14A',
@@ -2396,7 +2397,7 @@ const mockData = {
         branchId: 44,
         account: 'S00031',
         invoiceNumber: 54158983,
-        wipNumber: 58782,
+        jobNumber: 58782,
         laborLines: [
           {
             rtsCode: '0BLCVJ05',
@@ -2436,7 +2437,7 @@ const mockData = {
         branchId: 44,
         account: 'Z00244',
         invoiceNumber: 54156124,
-        wipNumber: 54143,
+        jobNumber: 54143,
         laborLines: [
           {
             rtsCode: '0F1110',
@@ -2452,9 +2453,11 @@ const mockData = {
       {
         sscCode: '23SD-024',
         description: '2nd Electircal Key',
-        labors: [{
-          laborCode: 'YHG14A'
-        }],
+        labors: [
+          {
+            laborCode: 'YHG14A',
+          },
+        ],
         repaired: true,
         repairDate: '2024-01-31',
         parts: [
@@ -2473,9 +2476,11 @@ const mockData = {
       {
         sscCode: '24SD-004',
         description: 'Automatic Transmission ECU reprogramming',
-        labors: [{
-          laborCode: 'ZGG04A'
-        }],
+        labors: [
+          {
+            laborCode: 'ZGG04A',
+          },
+        ],
         repaired: true,
         repairDate: '2024-09-08',
         parts: [],
@@ -2483,9 +2488,11 @@ const mockData = {
       {
         sscCode: '24SD-095',
         description: 'Engine ECU Cooling Fan Reprogramming',
-        labors: [{
-          laborCode: 'ZGG79A'
-        }],
+        labors: [
+          {
+            laborCode: 'ZGG79A',
+          },
+        ],
         repaired: true,
         repairDate: '2024-11-19',
         parts: [],
@@ -2522,7 +2529,7 @@ const mockData = {
         activatedAt: '2023-01-08',
         expiresAt: '2023-04-08',
         status: 'processed',
-        redeemDate: '2023-01-19',
+        claimDate: '2023-01-19',
       },
       {
         name: '5,000 KM Free Service',
@@ -2745,7 +2752,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54175877,
-        wipNumber: 32299,
+        jobNumber: 32299,
         laborLines: [
           {
             rtsCode: '0BLC55GR',
@@ -2791,7 +2798,7 @@ const mockData = {
         branchId: 44,
         account: 'W00016',
         invoiceNumber: 54175876,
-        wipNumber: 32299,
+        jobNumber: 32299,
         laborLines: [
           {
             rtsCode: 'BGT44K',
@@ -2819,7 +2826,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54165039,
-        wipNumber: 13946,
+        jobNumber: 13946,
         laborLines: [
           {
             rtsCode: '002889Z',
@@ -2895,7 +2902,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54159267,
-        wipNumber: 59455,
+        jobNumber: 59455,
         laborLines: [
           {
             rtsCode: '0BLC05GR',
@@ -2942,7 +2949,7 @@ const mockData = {
         activatedAt: '2023-01-08',
         expiresAt: '2023-04-08',
         status: 'processed',
-        redeemDate: '2023-01-19',
+        claimDate: '2023-01-19',
       },
       {
         name: '5,000 KM Free Service',
@@ -3151,11 +3158,11 @@ const mockData = {
       brandIntegrationID: 'TYT',
     },
     saleInformation: {
-      dealerIntegrationID: '1',
-      dealerName: 'SAS',
+      companyIntegrationID: '1',
+      companyName: 'SAS',
       branchIntegrationID: '44',
       branchName: 'SAS - Showroom | Basra',
-      customerAccount: 'R01954',
+      customerAccountNumber: 'R01954',
       customerID: '97120',
       invoiceDate: '2023-09-18',
       invoiceNumber: 11160168,
@@ -3188,7 +3195,7 @@ const mockData = {
         branchId: 44,
         account: 'W00001',
         invoiceNumber: 54302844,
-        wipNumber: 32325,
+        jobNumber: 32325,
         laborLines: [
           {
             rtsCode: 'ZGG79A',
@@ -3209,7 +3216,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54175880,
-        wipNumber: 31762,
+        jobNumber: 31762,
         laborLines: [
           {
             rtsCode: '0BLCVJ05',
@@ -3255,7 +3262,7 @@ const mockData = {
         branchId: 44,
         account: 'W00001',
         invoiceNumber: 54302319,
-        wipNumber: 23978,
+        jobNumber: 23978,
         laborLines: [
           {
             rtsCode: 'ZGG04A',
@@ -3276,7 +3283,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54170870,
-        wipNumber: 23814,
+        jobNumber: 23814,
         laborLines: [
           {
             rtsCode: 'CONSU',
@@ -3334,7 +3341,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54162502,
-        wipNumber: 64883,
+        jobNumber: 64883,
         laborLines: [
           {
             rtsCode: '0BLCVJ05',
@@ -3386,7 +3393,7 @@ const mockData = {
         branchId: 44,
         account: 'W00001',
         invoiceNumber: 54301537,
-        wipNumber: 58888,
+        jobNumber: 58888,
         laborLines: [
           {
             rtsCode: 'YHG14A',
@@ -3414,7 +3421,7 @@ const mockData = {
         branchId: 44,
         account: 'S00031',
         invoiceNumber: 54158983,
-        wipNumber: 58782,
+        jobNumber: 58782,
         laborLines: [
           {
             rtsCode: '0BLCVJ05',
@@ -3454,7 +3461,7 @@ const mockData = {
         branchId: 44,
         account: 'Z00244',
         invoiceNumber: 54156124,
-        wipNumber: 54143,
+        jobNumber: 54143,
         laborLines: [
           {
             rtsCode: '0F1110',
@@ -3470,9 +3477,11 @@ const mockData = {
       {
         sscCode: '23SD-024',
         description: '2nd Electircal Key',
-        labors: [{
-          laborCode: 'YHG14A'
-        }],
+        labors: [
+          {
+            laborCode: 'YHG14A',
+          },
+        ],
         repaired: true,
         repairDate: '2024-01-31',
         parts: [
@@ -3486,9 +3495,11 @@ const mockData = {
       {
         sscCode: '24SD-004',
         description: 'Automatic Transmission ECU reprogramming',
-        labors: [{
-          laborCode: 'ZGG04A'
-        }],
+        labors: [
+          {
+            laborCode: 'ZGG04A',
+          },
+        ],
         repaired: true,
         repairDate: '2024-09-08',
         parts: [],
@@ -3496,9 +3507,11 @@ const mockData = {
       {
         sscCode: '24SD-095',
         description: 'Engine ECU Cooling Fan Reprogramming',
-        labors: [{
-          laborCode: 'ZGG79A'
-        }],
+        labors: [
+          {
+            laborCode: 'ZGG79A',
+          },
+        ],
         repaired: true,
         repairDate: '2024-11-19',
         parts: [],
@@ -3535,10 +3548,10 @@ const mockData = {
         activatedAt: '2024-01-01',
         expiresAt: '2024-05-01',
         status: 'processed',
-        redeemDate: '2024-04-20',
-        redeemingDealer: 'SAS - Erbil',
+        claimDate: '2024-04-20',
+        claimingCompany: 'SAS - Erbil',
         invoiceNumber: '10384455',
-        wipNumber: '48914',
+        jobNumber: '48914',
         menuCode: 'NABDSERCMAS 05KS3',
       },
       {
@@ -3547,10 +3560,10 @@ const mockData = {
         activatedAt: '2024-05-01',
         expiresAt: '2024-08-01',
         status: 'processed',
-        redeemDate: '2024-07-29',
-        redeemingDealer: 'Cihan - Erbil Makhmoor',
+        claimDate: '2024-07-29',
+        claimingCompany: 'Cihan - Erbil Makhmoor',
         invoiceNumber: '492824',
-        wipNumber: '198274',
+        jobNumber: '198274',
         menuCode: 'NABDSERCMAS 10KS3',
       },
       {
@@ -3690,11 +3703,11 @@ const mockData = {
       brandIntegrationID: 'TYT',
     },
     saleInformation: {
-      dealerIntegrationID: '1',
-      dealerName: 'SAS',
+      companyIntegrationID: '1',
+      companyName: 'SAS',
       branchIntegrationID: '44',
       branchName: 'SAS - Showroom | Basra',
-      customerAccount: 'R01954',
+      customerAccountNumber: 'R01954',
       customerID: '97120',
       invoiceDate: '2023-09-18',
       invoiceNumber: 11160168,
@@ -3727,7 +3740,7 @@ const mockData = {
         branchId: 44,
         account: 'W00001',
         invoiceNumber: 54302844,
-        wipNumber: 32325,
+        jobNumber: 32325,
         laborLines: [
           {
             rtsCode: 'ZGG79A',
@@ -3748,7 +3761,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54175880,
-        wipNumber: 31762,
+        jobNumber: 31762,
         laborLines: [
           {
             rtsCode: '0BLCVJ05',
@@ -3794,7 +3807,7 @@ const mockData = {
         branchId: 44,
         account: 'W00001',
         invoiceNumber: 54302319,
-        wipNumber: 23978,
+        jobNumber: 23978,
         laborLines: [
           {
             rtsCode: 'ZGG04A',
@@ -3815,7 +3828,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54170870,
-        wipNumber: 23814,
+        jobNumber: 23814,
         laborLines: [
           {
             rtsCode: 'CONSU',
@@ -3873,7 +3886,7 @@ const mockData = {
         branchId: 44,
         account: 'C00017',
         invoiceNumber: 54162502,
-        wipNumber: 64883,
+        jobNumber: 64883,
         laborLines: [
           {
             rtsCode: '0BLCVJ05',
@@ -3925,7 +3938,7 @@ const mockData = {
         branchId: 44,
         account: 'W00001',
         invoiceNumber: 54301537,
-        wipNumber: 58888,
+        jobNumber: 58888,
         laborLines: [
           {
             rtsCode: 'YHG14A',
@@ -3953,7 +3966,7 @@ const mockData = {
         branchId: 44,
         account: 'S00031',
         invoiceNumber: 54158983,
-        wipNumber: 58782,
+        jobNumber: 58782,
         laborLines: [
           {
             rtsCode: '0BLCVJ05',
@@ -3993,7 +4006,7 @@ const mockData = {
         branchId: 44,
         account: 'Z00244',
         invoiceNumber: 54156124,
-        wipNumber: 54143,
+        jobNumber: 54143,
         laborLines: [
           {
             rtsCode: '0F1110',
@@ -4009,9 +4022,11 @@ const mockData = {
       {
         sscCode: '23SD-024',
         description: '2nd Electircal Key',
-        labors: [{
-          laborCode: 'YHG14A'
-        }],
+        labors: [
+          {
+            laborCode: 'YHG14A',
+          },
+        ],
         repaired: true,
         repairDate: '2024-01-31',
         parts: [
@@ -4025,9 +4040,11 @@ const mockData = {
       {
         sscCode: '24SD-004',
         description: 'Automatic Transmission ECU reprogramming',
-        labors: [{
-          laborCode: 'ZGG04A'
-        }],
+        labors: [
+          {
+            laborCode: 'ZGG04A',
+          },
+        ],
         repaired: true,
         repairDate: '2024-09-08',
         parts: [],
@@ -4035,9 +4052,11 @@ const mockData = {
       {
         sscCode: '24SD-095',
         description: 'Engine ECU Cooling Fan Reprogramming',
-        labors: [{
-          laborCode: 'ZGG79A'
-        }],
+        labors: [
+          {
+            laborCode: 'ZGG79A',
+          },
+        ],
         repaired: true,
         repairDate: '2024-11-19',
         parts: [],
@@ -4074,10 +4093,10 @@ const mockData = {
         activatedAt: '2024-01-01',
         expiresAt: '2024-05-01',
         status: 'processed',
-        redeemDate: '2024-04-20',
-        redeemingDealer: 'SAS - Erbil',
+        claimDate: '2024-04-20',
+        claimingCompany: 'SAS - Erbil',
         invoiceNumber: '10384455',
-        wipNumber: '48914',
+        jobNumber: '48914',
         menuCode: 'NABDSERCMAS 05KS3',
       },
       {
@@ -4086,10 +4105,10 @@ const mockData = {
         activatedAt: '2024-05-01',
         expiresAt: '2024-08-01',
         status: 'processed',
-        redeemDate: '2024-07-29',
-        redeemingDealer: 'Cihan - Erbil Makhmoor',
+        claimDate: '2024-07-29',
+        claimingCompany: 'Cihan - Erbil Makhmoor',
         invoiceNumber: '492824',
-        wipNumber: '198274',
+        jobNumber: '198274',
         menuCode: 'NABDSERCMAS 10KS3',
       },
       {
@@ -4142,5 +4161,69 @@ const mockData = {
       },
     ],
     basicModelCode: 'VJA300',
+  },
+  '1G8ZY1275YZ188208': {
+    accessories: null,
+    paintThickness: {
+      parts: [],
+    },
+    vin: '1G8ZY1275YZ188208',
+    identifiers: {
+      vin: '1G8ZY1275YZ188208',
+      variant: null,
+      katashiki: null,
+      color: null,
+      trim: null,
+      brand: 0,
+      brandIntegrationID: null,
+    },
+    saleInformation: null,
+    isAuthorized: false,
+    warranty: null,
+    nextServiceDate: '2023-12-12',
+    serviceHistory: [
+      
+    ],
+    ssc: null,
+    vehicleVariantInfo: null,
+    vehicleSpecification: null,
+    serviceItems: [
+      {
+        name: '1,000 KM Free Service',
+        type: 'free',
+        activatedAt: '',
+        expiresAt: '',
+        status: 'activationRequired',
+      },
+      {
+        name: '5,000 KM Free Service',
+        type: 'free',
+        activatedAt: '',
+        expiresAt: '',
+        status: 'activationRequired',
+      },
+      {
+        name: '10,000 KM Free Service',
+        type: 'free',
+        activatedAt: '',
+        expiresAt: '',
+        status: 'activationRequired',
+      },
+      {
+        name: '15,000 KM Free Service',
+        type: 'free',
+        activatedAt: '',
+        expiresAt: '',
+        status: 'activationRequired'
+      },
+      {
+        name: '20,000 KM Free Service',
+        type: 'free',
+        activatedAt: '',
+        expiresAt: '',
+        status: 'activationRequired',
+      },
+    ],
+    basicModelCode: null,
   },
 };

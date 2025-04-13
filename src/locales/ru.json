@@ -85,7 +85,8 @@
       "variant": "Вариант",
       "katashiki": "Каташики",
       "modelYear": "Модельный год",
-      "sfx": "звуковые эффекты"
+      "sfx": "звуковые эффекты",
+      "productionDate": "Год производства"
     },
     "accessories": {
       "vehicleAccessories": "Транспортные аксессуары",
@@ -119,30 +120,38 @@
       "activationDate": "Дата активации",
       "expireDate": "Дата истечения срока действия",
       "claimAt": "Заявлено в",
-      "redeemingDealer": "Выкупающий дилер",
+      "claimingCompany": "Claiming Company",
       "invoiceNumber": "Номер счета",
-      "wip": "НЗП",
-      "menuCode": "Меню код",
+      "jobNumber": "НЗП",
+      "packageCode": "Меню код",
       "claim": "Требовать",
       "processed": "Обработано",
       "expired": "Истекший",
       "cancelled": "Отменен",
       "pending": "В ожидании",
-      "warning": "Предупреждение"
+      "warning": "Предупреждение",
+      "activateNow": "Activate Now",
+      "activationRequired": "Activation Required",
+      "warrantyAndServicesNotActivated": "Warranty & Services have not been activated for this vehicle."
     },
     "dynamicRedeem": {
       "serviceType": "Тип обслуживания",
       "name": "Имя",
       "activationDate": "Дата активации",
       "expireDate": "Дата истечения срока действия",
-      "menuCode": "Код меню",
+      "packageCode": "Код меню",
       "scanTheInvoice": "Сканируйте счет",
       "processing": "Обработка ...",
       "warning": "Предупреждение",
       "skipServicesWarning": "Следующие услуги все еще «ожидают», и они будут помечены как «отменены».",
       "confirmSkipServices": "Подтвердите маркировку вышеуказанных услуг как «отменено».",
       "notInvoiced": "Этот автомобиль еще не выставлен в счет следующего надежного делового партнера:",
-      "confirmNotInvoiced": "Подтвердите заявку без счета-фактуры доверенного делового партнера"
+      "confirmNotInvoiced": "Подтвердите заявку без счета-фактуры доверенного делового партнера",
+
+      "enterServiceInfo": "Enter Service Info",
+      "invoice": "Invoice",
+      "jobNumber": "Job Number",
+      "claim": "Claim"
     }
   },
   "partLookup": {

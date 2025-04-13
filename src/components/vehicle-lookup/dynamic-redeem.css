@@ -4,6 +4,7 @@
 }
 
 * {
+  font-family: Arial;
   margin: revert;
   padding: revert;
   box-sizing: content-box;
@@ -45,7 +46,7 @@
   overflow: auto;
 }
 
-.dynamic-claim-processor .qr-input {
+.dynamic-claim-processor .dynamic-redeem-input {
   border: none;
   background: none;
   outline: none;
@@ -55,7 +56,13 @@
   text-align: center;
   padding: 7px;
   font-size: 14px;
+  transition: 0.35s;
 }
+
+  .dynamic-claim-processor .dynamic-redeem-input:focus {
+    border-bottom-color: #3071a9;
+    transform: scale(1.1) translateY(-10px);
+  }
 
 .dynamic-claim-processor-info-box {
   padding: 0px;
@@ -266,3 +273,69 @@
 .warning-ul {
   padding-inline-start: 2.5rem;
 }
+
+
+.dynamic-claim-button {
+  outline: none;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: bold;
+  padding: 0 10px;
+  padding-left: 0;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+
+  width:350px;
+  justify-self:center;
+  justify-content:center;
+}
+
+  .dynamic-claim-button.disabled {
+    border-color: #d5d5d5;
+    color: #d5d5d5 !important;
+    stroke: #d5d5d5 !important;
+    pointer-events:none;
+  }
+
+    .dynamic-claim-button.disabled circle {
+      fill: #d5d5d5 !important;
+    }
+
+.dynamic-claim-button svg {
+  transition: 0.2s;
+}
+
+.claim-button {
+  border: 1px solid #27ae60;
+  color: #27ae60;
+  background-color: transparent;
+  stroke: #27ae60;
+  fill: #27ae60;
+}
+
+  .claim-button circle {
+    fill: #2ecc71;
+  }
+
+  .claim-button:hover {
+    color: white;
+    background-color: #2ecc71;
+    stroke: white;
+    fill: white;
+  }
+
+    .claim-button:hover circle {
+      fill: white;
+    }
+
+  .claim-button:active {
+    background-color: #27ae60;
+  }
+
+    .claim-button:active svg {
+      transform: scale(125%);
+    }
