@@ -51,7 +51,7 @@ export class FormSubmit {
         </div>
 
         <div class={cn('absolute flex justify-center items-center top-0 left-0 size-full transition !duration-1000 -translate-y-full', { 'translate-y-0': this.isLoading })}>
-          <img class="animate-spin-2s size-[22px]" src={Loader} />
+          <img class="spin-slow size-[22px]" src={Loader} />
         </div>
       </button>
     );

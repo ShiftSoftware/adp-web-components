@@ -217,7 +217,7 @@ export class FormSelect implements FormElement {
               {!this.options.length && (
                 <div class={cn('select-empty-container h-[100px] flex items-center justify-center', { 'text-red-500': this.fetchingErrorMessage })}>
                   {this.fetchingErrorMessage && (this.locale.errors[this.fetchingErrorMessage] || this.locale.errors.wildCard)}
-                  {!this.fetchingErrorMessage && (this.isLoading ? <img class="animate-spin-2s size-[22px]" src={Loader} /> : this.locale.general.noSelectOptions)}
+                  {!this.fetchingErrorMessage && (this.isLoading ? <img class="spin-slow size-[22px]" src={Loader} /> : this.locale.general.noSelectOptions)}
                 </div>
               )}
             </div>

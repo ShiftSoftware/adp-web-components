@@ -11,3 +11,13 @@
   direction: rtl;
   text-align: right;
 }
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-slow {
+  animation: spin 2s linear infinite;
+}
