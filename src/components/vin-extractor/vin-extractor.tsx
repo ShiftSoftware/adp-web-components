@@ -41,7 +41,7 @@ export class VinExtractor {
   }
 
   @Method()
-  async setBlazorRef(newBlazorRef: DotNetObjectReference) {
+  setBlazorRef(newBlazorRef: DotNetObjectReference) {
     this.blazorRef = newBlazorRef;
   }
 
@@ -60,7 +60,7 @@ export class VinExtractor {
     this.triggerCallback(this.onExtract, vin);
   };
 
-  captureFrame = async () => {
+  captureFrame = () => {
     if (!this.isOpen) return;
 
     console.log('captureFrame');
@@ -165,10 +165,25 @@ export class VinExtractor {
   };
 
   @Watch('isOpen')
-  async isOpenHandler(newValue: any) {
+  isOpenHandler(newValue: any) {
     if (newValue) this.openScanner();
     else this.closeScanner();
   }
+
+  switchCamera = () => {
+    if (this.videoInputs.length > 1) {
+      const currentIndex = this.videoInputs.findIndex(device => device.deviceId === this.activeCameraId);
+
+      const newCameraIndex = (currentIndex + 1) % this.videoInputs.length;
+
+      this.activeCameraId = this.videoInputs[newCameraIndex].deviceId;
+
+      localStorage.setItem(ACTIVE_CAMERA_ID_KEY, this.activeCameraId);
+
+      this.stopCamera();
+      this.startCamera();
+    }
+  };
 
   render() {
     const open = this.isOpen && this.isCameraReady && (this.useOcr || this.readQrcode || this.readBarcode);
@@ -186,8 +201,9 @@ export class VinExtractor {
           <button onClick={() => this.handleExtract('kodoooooo')}>extract</button>
           <br />
           <button onClick={() => this.handleError('kodoooooo')}>error</button>
-
-          <video autoPlay playsInline class="video-player min-w-full min-h-full object-cover object-center"></video>
+          <br />
+          <button onClick={this.switchCamera}>switch camera</button>
+          <video autoPlay playsInline class="video-player bg-black min-w-full min-h-full object-cover object-center"></video>
         </div>
       </Host>
     );
