@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+    <title>Vin Extractor</title>
+    <script nomodule src="/build/shift-components.js"></script>
+    <script type="module" src="/build/shift-components.esm.js"></script>
+  </head>
+  <body>
+    <a href="#" onclick="history.back()" style="color: blue; display: block; margin-bottom: 16px">Back</a>
+
+    <h1 style="font-weight: 700; margin: 16px 8px; font-size: 30px">Vin Extractor Demo</h1>
+
+    <ol>
+      <li>
+        <div>Interval 2000ms</div>
+        <button id="case-1-button" onclick="openExtractor('case-1')" type="button">open</button>
+        <vin-extractor on-extract="onExtract" use-ocr="true" is-open="false" on-error="onError" id="case-1-element"></vin-extractor>
+      </li>
+    </ol>
+  </body>
+
+  <script>
+    function getBlazorRef(target) {
+      const blazor = {};
+
+      blazor.invokeMethodAsync = function (methodName, ...args) {
+        if (methodName === 'onError') {
+          closeExtractor(target);
+          onError(...args);
+        } else if (methodName === 'onExtract') {
+          closeExtractor(target);
+          onExtract(...args);
+        }
+      };
+
+      return blazor;
+    }
+
+    function getTargetElements(target) {
+      const vinExtractor = document.getElementById(`${target}-element`);
+      const button = document.getElementById(`${target}-button`);
+      return { vinExtractor, button };
+    }
+
+    function onError(error) {
+      console.error('Error:', error);
+    }
+
+    function onExtract(data) {
+      console.log('Extracted data:', data);
+    }
+
+    function openExtractor(target) {
+      const { vinExtractor, button } = getTargetElements(target);
+
+      vinExtractor.setBlazorRef(getBlazorRef(target));
+
+      button.innerHTML = 'Loading...';
+      button.setAttribute('disabled', true);
+
+      vinExtractor.isOpen = true;
+    }
+
+    function closeExtractor(target) {
+      const { vinExtractor, button } = getTargetElements(target);
+
+      button.innerHTML = 'open';
+      button.removeAttribute('disabled');
+
+      vinExtractor.isOpen = false;
+    }
+  </script>
+</html>
