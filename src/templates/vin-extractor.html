@@ -16,9 +16,27 @@
       <li>
         <div>Interval 2000ms</div>
         <button id="case-1-button" onclick="openExtractor('case-1')" type="button">open</button>
-        <vin-extractor on-extract="onExtract" title="OCR-2000ms" use-ocr="true" on-open-change="openChanged" on-error="onError" id="case-1-element"></vin-extractor>
+        <vin-extractor
+          use-ocr="true"
+          title="OCR-2000ms"
+          on-error="onError"
+          id="case-1-element"
+          on-extract="onExtract"
+          on-open-change="openChanged"
+          ocr-endpoint="https://tiq-vehicles-functions-staging.azurewebsites.net/api/vehicle-lookup/ocr"
+        ></vin-extractor>
+      </li>
+      <li>
+        <div>sticker 2000ms</div>
+        <button id="case-2-button" onclick="openExtractor('case-2')" type="button">open</button>
+        <vin-extractor read-sticker="true" title="sticker-2000ms" on-error="onError" id="case-2-element" on-extract="onExtract" on-open-change="openChanged"></vin-extractor>
       </li>
     </ol>
+
+    <h2>
+      Vin:
+      <span id="vin">N/A</span>
+    </h2>
   </body>
 
   <script>
@@ -58,6 +76,15 @@
 
     function onExtract(data) {
       console.log('Extracted data:', data);
+      document.getElementById('vin').innerHTML = data;
+
+      const scanners = Array.from(document.getElementsByTagName('vin-extractor'));
+
+      scanners.forEach(scanner => {
+        console.log(scanner);
+
+        scanner.close();
+      });
     }
 
     function openExtractor(target) {
@@ -77,9 +104,5 @@
       button.innerHTML = 'open';
       button.removeAttribute('disabled');
     }
-
-    setTimeout(() => {
-      openExtractor('case-1');
-    }, 200);
   </script>
 </html>

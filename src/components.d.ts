@@ -286,12 +286,12 @@ export namespace Components {
         "captureInterval": number;
         "close": () => Promise<void>;
         "isOpen": boolean;
+        "ocrEndpoint": string;
         "onError"?: ((newError: Error) => void) | string;
         "onExtract"?: ((vin: string) => void) | string;
         "onOpenChange"?: ((newError: boolean) => void) | string;
         "open": () => Promise<void>;
-        "readBarcode": boolean;
-        "readQrcode": boolean;
+        "readSticker": boolean;
         "setBlazorRef": (newBlazorRef: DotNetObjectReference) => Promise<void>;
         "title": string;
         "useOcr": boolean;
@@ -718,11 +718,11 @@ declare namespace LocalJSX {
     interface VinExtractor {
         "captureInterval"?: number;
         "isOpen"?: boolean;
+        "ocrEndpoint"?: string;
         "onError"?: ((newError: Error) => void) | string;
         "onExtract"?: ((vin: string) => void) | string;
         "onOpenChange"?: ((newError: boolean) => void) | string;
-        "readBarcode"?: boolean;
-        "readQrcode"?: boolean;
+        "readSticker"?: boolean;
         "title"?: string;
         "useOcr"?: boolean;
     }

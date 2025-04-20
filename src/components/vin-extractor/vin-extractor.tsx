@@ -1,5 +1,6 @@
 import { Component, Prop, State, Watch, h, Host, Method, Element } from '@stencil/core';
 import cn from '~lib/cn';
+import validateVin from '~lib/validate-vin';
 import { DotNetObjectReference } from '~types/components';
 
 const CAPTURE_INTERVAL = 2000;
@@ -11,19 +12,20 @@ const ACTIVE_CAMERA_ID_KEY = 'activeCameraId';
   styleUrl: 'vin-extractor.css',
 })
 export class VinExtractor {
-  @Prop() isOpen: boolean = false;
-
   @Prop() title: string = '';
-  @Prop() useOcr: boolean = false;
-  @Prop() readQrcode: boolean = false;
-  @Prop() readBarcode: boolean = false;
-
+  @Prop() isOpen: boolean = false;
   @Prop() captureInterval: number = CAPTURE_INTERVAL;
+
+  @Prop() useOcr: boolean = false;
+  @Prop() readSticker: boolean = false;
+
+  @Prop() ocrEndpoint: string;
 
   @Prop() onExtract?: ((vin: string) => void) | string;
   @Prop() onError?: ((newError: Error) => void) | string;
   @Prop() onOpenChange?: ((newError: boolean) => void) | string;
 
+  @State() streamRef: MediaStream;
   @State() isAnimating: boolean = false;
   @State() isCameraReady: boolean = false;
   @State() switchRotateDegree: number = 0;
@@ -34,13 +36,32 @@ export class VinExtractor {
 
   @Element() el: HTMLElement;
 
-  @State() streamRef: MediaStream;
+  private codeReader: any;
   private videoPlayer: HTMLVideoElement;
+  private videoCanvas: HTMLCanvasElement;
   private abortController: AbortController;
-  private firstCaptureTimeoutRef: ReturnType<typeof setTimeout>;
+  private frameCaptureTimeoutRef: ReturnType<typeof setTimeout>;
 
   async componentDidLoad() {
     this.videoPlayer = this.el.shadowRoot.querySelector('.video-player');
+    this.videoCanvas = this.el.shadowRoot.querySelector('.video-canvas');
+
+    if (this.readSticker) {
+      const ZXingSrc = 'https://unpkg.com/@zxing/library@0.21.3/umd/index.min.js';
+
+      const alreadyLoaded = Array.from(document.scripts).some(script => script.src === ZXingSrc);
+
+      if (!alreadyLoaded) {
+        const script = document.createElement('script');
+        script.src = ZXingSrc;
+        script.defer = true;
+        document.head.appendChild(script);
+        script.onload = () => {
+          // @ts-ignore
+          if (ZXing) this.codeReader = new ZXing.BrowserMultiFormatReader();
+        };
+      }
+    }
   }
 
   @Method()
@@ -63,10 +84,61 @@ export class VinExtractor {
     this.triggerCallback(this.onExtract, vin);
   };
 
-  captureFrame = () => {
+  captureFrame = async () => {
     if (!this.isOpen) return;
 
-    console.log('captureFrame');
+    if (!this.videoPlayer || !this.videoCanvas) return this.componentDidLoad();
+
+    const ctx = this.videoCanvas.getContext('2d');
+
+    if (!ctx) return;
+
+    this.videoCanvas.width = this.videoPlayer.videoWidth;
+    this.videoCanvas.height = this.videoPlayer.videoHeight;
+
+    ctx.drawImage(this.videoPlayer, 0, 0, this.videoCanvas.width, this.videoCanvas.height);
+
+    const imageDataUrl = this.videoCanvas.toDataURL('image/png');
+
+    if (this.useOcr && this.ocrEndpoint) await this.ocrHandler(imageDataUrl);
+
+    if (this.readSticker) this.stickerHandler(imageDataUrl);
+
+    this.frameCaptureTimeoutRef = setTimeout(this.captureFrame, this.captureInterval);
+  };
+
+  ocrHandler = async (imageDataUrl: string) => {
+    try {
+      const response = await fetch(this.ocrEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        signal: this.abortController.signal,
+        body: JSON.stringify({ image: imageDataUrl.split(',')[1] }),
+      });
+
+      if (!response.ok) throw new Error('Failed to fetch OCR result');
+
+      const data: string = await response.json();
+
+      if (!!data.trim() && validateVin(data)) this.handleExtract(data);
+    } catch (error) {
+      this.handleError(error as Error);
+    }
+  };
+
+  stickerHandler = async (imageDataUrl: string) => {
+    try {
+      const result = await this.codeReader.decodeFromImage(undefined, imageDataUrl);
+      const text = result.getText();
+
+      const vin = text.replace(/[qo]/g, '0').replace(/i/g, '1').replace(/ /g, '');
+
+      if (vin.length === 17 && validateVin(vin)) this.handleExtract(vin);
+    } catch (error) {
+      // this.handleError(error as Error);
+    }
   };
 
   openScanner = async () => {
@@ -121,7 +193,7 @@ export class VinExtractor {
 
       await this.startCamera();
 
-      this.firstCaptureTimeoutRef = setTimeout(() => this.captureFrame(), this.captureInterval + 500);
+      this.frameCaptureTimeoutRef = setTimeout(this.captureFrame, this.captureInterval + 300);
 
       if (document) document.body.style.overflow = 'hidden';
 
@@ -166,7 +238,8 @@ export class VinExtractor {
   closeScanner = () => {
     this.isCameraReady = false;
     this.abortController.abort();
-    clearTimeout(this.firstCaptureTimeoutRef);
+    clearTimeout(this.frameCaptureTimeoutRef);
+    if (this.codeReader) this.codeReader.reset();
     if (document) document.body.style.overflow = 'auto';
     this.containerAnimation = 'hide-container';
   };
@@ -184,6 +257,11 @@ export class VinExtractor {
     else this.closeScanner();
 
     this.triggerCallback(this.onOpenChange, newValue);
+  }
+
+  @Watch('readSticker')
+  QRChanged(newValue: boolean) {
+    if (newValue) this.componentDidLoad();
   }
 
   switchCamera = () => {
@@ -207,7 +285,7 @@ export class VinExtractor {
     if (!newValue && !this.isOpen) this.stopCamera();
   }
   render() {
-    const ariaExpanded = this.isOpen && this.isCameraReady && (this.useOcr || this.readQrcode || this.readBarcode);
+    const ariaExpanded = this.isOpen && this.isCameraReady && (this.useOcr || this.readSticker);
 
     return (
       <Host>
@@ -222,7 +300,7 @@ export class VinExtractor {
             onAnimationEnd={() => (this.isAnimating = false)}
             onAnimationStart={() => (this.isAnimating = true)}
             class={cn(
-              'vin-extractor-container md:w-[600px] md:rounded-lg md:overflow-hidden opacity-0 md:h-auto pointer-events-auto w-full h-full relative transition-all duration-500',
+              'vin-extractor-container md:w-[600px] md:rounded-lg md:overflow-hidden opacity-0 md:h-auto aria-expanded:pointer-events-auto w-full h-full relative transition-all duration-500',
               this.containerAnimation,
             )}
           >
@@ -276,7 +354,8 @@ export class VinExtractor {
                 </svg>
               </button>
             </div>
-            <video autoPlay playsInline class="video-player md:aspect-auto bg-black min-w-full min-h-full object-cover object-center"></video>
+            <video id="video" autoPlay playsInline class="video-player md:aspect-auto bg-black min-w-full min-h-full object-cover object-center"></video>
+            <canvas class="video-canvas hidden"></canvas>
           </div>
         </div>
       </Host>
