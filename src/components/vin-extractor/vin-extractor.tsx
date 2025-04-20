@@ -1,7 +1,5 @@
 import { Component, Prop, State, Watch, h, Host, Method, Element } from '@stencil/core';
-import { log } from 'console';
 import cn from '~lib/cn';
-
 import { DotNetObjectReference } from '~types/components';
 
 const CAPTURE_INTERVAL = 2000;
@@ -15,6 +13,7 @@ const ACTIVE_CAMERA_ID_KEY = 'activeCameraId';
 export class VinExtractor {
   @Prop() isOpen: boolean = false;
 
+  @Prop() title: string = '';
   @Prop() useOcr: boolean = false;
   @Prop() readQrcode: boolean = false;
   @Prop() readBarcode: boolean = false;
@@ -23,8 +22,12 @@ export class VinExtractor {
 
   @Prop() onExtract?: ((vin: string) => void) | string;
   @Prop() onError?: ((newError: Error) => void) | string;
+  @Prop() onOpenChange?: ((newError: boolean) => void) | string;
 
+  @State() isAnimating: boolean = false;
   @State() isCameraReady: boolean = false;
+  @State() switchRotateDegree: number = 0;
+  @State() containerAnimation: string = '';
   @State() blazorRef?: DotNetObjectReference;
   @State() videoInputs: MediaDeviceInfo[] = [];
   @State() activeCameraId: string = localStorage.getItem(ACTIVE_CAMERA_ID_KEY) || '';
@@ -118,15 +121,27 @@ export class VinExtractor {
 
       await this.startCamera();
 
-      this.firstCaptureTimeoutRef = setTimeout(() => this.captureFrame(), this.captureInterval + 300);
+      this.firstCaptureTimeoutRef = setTimeout(() => this.captureFrame(), this.captureInterval + 500);
 
       if (document) document.body.style.overflow = 'hidden';
 
       this.isCameraReady = true;
+
+      this.containerAnimation = 'show-container';
     } catch (error) {
       this.handleError(error);
     }
   };
+
+  @Method()
+  open() {
+    this.isOpen = true;
+  }
+
+  @Method()
+  async close() {
+    this.isOpen = false;
+  }
 
   startCamera = async () => {
     try {
@@ -153,8 +168,7 @@ export class VinExtractor {
     this.abortController.abort();
     clearTimeout(this.firstCaptureTimeoutRef);
     if (document) document.body.style.overflow = 'auto';
-    // 300ms delay for animation to be done
-    setTimeout(this.stopCamera, 300);
+    this.containerAnimation = 'hide-container';
   };
 
   stopCamera = () => {
@@ -165,9 +179,11 @@ export class VinExtractor {
   };
 
   @Watch('isOpen')
-  isOpenHandler(newValue: any) {
+  isOpenHandler(newValue: boolean) {
     if (newValue) this.openScanner();
     else this.closeScanner();
+
+    this.triggerCallback(this.onOpenChange, newValue);
   }
 
   switchCamera = () => {
@@ -182,28 +198,86 @@ export class VinExtractor {
 
       this.stopCamera();
       this.startCamera();
+      this.switchRotateDegree += 90;
     }
   };
 
+  @Watch('isAnimating')
+  animationHandler(newValue: boolean) {
+    if (!newValue && !this.isOpen) this.stopCamera();
+  }
   render() {
-    const open = this.isOpen && this.isCameraReady && (this.useOcr || this.readQrcode || this.readBarcode);
-    // @ts-ignore
-    document.jj = this;
+    const ariaExpanded = this.isOpen && this.isCameraReady && (this.useOcr || this.readQrcode || this.readBarcode);
+
     return (
       <Host>
-        <div class={cn({ 'opacity-0': !open })}>
-          <h1>hiiiiii</h1>
-          <br />
-          {this.onError}
-          <br />
-          {this.onExtract}
-          <br />
-          <button onClick={() => this.handleExtract('kodoooooo')}>extract</button>
-          <br />
-          <button onClick={() => this.handleError('kodoooooo')}>error</button>
-          <br />
-          <button onClick={this.switchCamera}>switch camera</button>
-          <video autoPlay playsInline class="video-player bg-black min-w-full min-h-full object-cover object-center"></video>
+        <div
+          onClick={() => (this.isOpen = false)}
+          aria-expanded={ariaExpanded.toString()}
+          class="vin-extractor-background md:aria-expanded:bg-black/40 md:transition-all md:duration-300 fixed flex items-center justify-center w-[100dvw] h-[100dvh] top-0 left-0 z-[9999]"
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            aria-expanded={ariaExpanded.toString()}
+            onAnimationEnd={() => (this.isAnimating = false)}
+            onAnimationStart={() => (this.isAnimating = true)}
+            class={cn(
+              'vin-extractor-container md:w-[600px] md:rounded-lg md:overflow-hidden opacity-0 md:h-auto pointer-events-auto w-full h-full relative transition-all duration-500',
+              this.containerAnimation,
+            )}
+          >
+            <div class="vin-extractor-heading items-center md:py-[8px] w-full md:!opacity-100 md:!translate-x-0 p-[16px] md:bg-white bg-black/30 shadow-md z-10 md:relative absolute top-0 left-0 flex justify-between">
+              {this.videoInputs.length > 1 ? (
+                <button
+                  type="button"
+                  onClick={this.switchCamera}
+                  class="size-[32px] md:border-none md:bg-white md:hover:bg-slate-100 bg-slate-100 rounded-lg p-1 hover:text-slate-700 border transition-colors duration-300 hover:bg-slate-300 border-slate-600 text-slate-600 hover:border-slate-700"
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    fill="none"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="size-full transition-all duration-300"
+                    style={{ rotate: `${this.switchRotateDegree}deg` }}
+                  >
+                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                    <path d="M21 3v5h-5" />
+                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+                    <path d="M8 16H3v5" />
+                  </svg>
+                </button>
+              ) : (
+                <div class="size-8" />
+              )}
+              <h1 class="text-center md:text-3xl md:text-black text-slate-100 text-xl">{this.title}</h1>
+              <button
+                type="button"
+                onClick={() => (this.isOpen = false)}
+                class="size-[32px] md:border-none md:bg-white md:hover:bg-slate-100 bg-slate-100 rounded-lg p-1 hover:text-slate-700 border transition-colors duration-300 hover:bg-slate-300 border-slate-600 text-slate-600 hover:border-slate-700"
+              >
+                <svg
+                  fill="none"
+                  stroke-width="2"
+                  class="size-full"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M18 6 6 18" />
+                  <path d="m6 6 12 12" />
+                </svg>
+              </button>
+            </div>
+            <video autoPlay playsInline class="video-player md:aspect-auto bg-black min-w-full min-h-full object-cover object-center"></video>
+          </div>
         </div>
       </Host>
     );

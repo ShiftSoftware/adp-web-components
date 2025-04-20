@@ -16,7 +16,7 @@
       <li>
         <div>Interval 2000ms</div>
         <button id="case-1-button" onclick="openExtractor('case-1')" type="button">open</button>
-        <vin-extractor on-extract="onExtract" use-ocr="true" is-open="false" on-error="onError" id="case-1-element"></vin-extractor>
+        <vin-extractor on-extract="onExtract" title="OCR-2000ms" use-ocr="true" on-open-change="openChanged" on-error="onError" id="case-1-element"></vin-extractor>
       </li>
     </ol>
   </body>
@@ -32,10 +32,18 @@
         } else if (methodName === 'onExtract') {
           closeExtractor(target);
           onExtract(...args);
+        } else if (methodName === 'openChanged') {
+          openChanged(target, ...args);
         }
       };
 
       return blazor;
+    }
+
+    function openChanged(target, isOpen) {
+      if (!isOpen) {
+        closeExtractor(target);
+      }
     }
 
     function getTargetElements(target) {
@@ -60,7 +68,7 @@
       button.innerHTML = 'Loading...';
       button.setAttribute('disabled', true);
 
-      vinExtractor.isOpen = true;
+      vinExtractor.open();
     }
 
     function closeExtractor(target) {
@@ -68,8 +76,10 @@
 
       button.innerHTML = 'open';
       button.removeAttribute('disabled');
-
-      vinExtractor.isOpen = false;
     }
+
+    setTimeout(() => {
+      openExtractor('case-1');
+    }, 200);
   </script>
 </html>
