@@ -286,15 +286,20 @@ export namespace Components {
         "captureInterval": number;
         "close": () => Promise<void>;
         "isOpen": boolean;
+        "manualCapture": boolean;
         "ocrEndpoint": string;
         "onError"?: ((newError: Error) => void) | string;
         "onExtract"?: ((vin: string) => void) | string;
         "onOpenChange"?: ((newError: boolean) => void) | string;
+        "onProcessing"?: ((vin: string) => void) | string;
         "open": () => Promise<void>;
         "readSticker": boolean;
         "setBlazorRef": (newBlazorRef: DotNetObjectReference) => Promise<void>;
+        "skipValidation": boolean;
         "title": string;
+        "uploaderButtonId": string;
         "useOcr": boolean;
+        "verbose": boolean;
     }
     interface WarrantyDetails {
         "baseUrl": string;
@@ -718,13 +723,18 @@ declare namespace LocalJSX {
     interface VinExtractor {
         "captureInterval"?: number;
         "isOpen"?: boolean;
+        "manualCapture"?: boolean;
         "ocrEndpoint"?: string;
         "onError"?: ((newError: Error) => void) | string;
         "onExtract"?: ((vin: string) => void) | string;
         "onOpenChange"?: ((newError: boolean) => void) | string;
+        "onProcessing"?: ((vin: string) => void) | string;
         "readSticker"?: boolean;
+        "skipValidation"?: boolean;
         "title"?: string;
+        "uploaderButtonId"?: string;
         "useOcr"?: boolean;
+        "verbose"?: boolean;
     }
     interface WarrantyDetails {
         "baseUrl"?: string;
