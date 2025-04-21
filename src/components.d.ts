@@ -283,6 +283,7 @@ export namespace Components {
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
     }
     interface VinExtractor {
+        "captureEnvironment": boolean;
         "captureInterval": number;
         "close": () => Promise<void>;
         "isOpen": boolean;
@@ -721,6 +722,7 @@ declare namespace LocalJSX {
         "queryString"?: string;
     }
     interface VinExtractor {
+        "captureEnvironment"?: boolean;
         "captureInterval"?: number;
         "isOpen"?: boolean;
         "manualCapture"?: boolean;

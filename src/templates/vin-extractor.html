@@ -127,6 +127,21 @@
           <button id="vin-extractor-button3" type="button">upload</button>
         </vin-extractor>
       </li>
+      <li>
+        <div>sticker file upload capture environment</div>
+
+        <vin-extractor
+          file-upload="true"
+          read-sticker="true"
+          id="case-9-element"
+          skip-validation="true"
+          capture-environment="true"
+          on-processing="onProcessing"
+          uploader-button-id="vin-extractor-button4"
+        >
+          <button id="vin-extractor-button4" type="button">upload</button>
+        </vin-extractor>
+      </li>
     </ol>
 
     <h2>
@@ -140,8 +155,10 @@
       const vinExtractor = document.getElementById('case-6-element');
       const vinExtractor2 = document.getElementById('case-7-element');
       const vinExtractor3 = document.getElementById('case-8-element');
+      const vinExtractor4 = document.getElementById('case-9-element');
 
-      [vinExtractor, vinExtractor2, vinExtractor3].forEach(vinExt => {
+      [vinExtractor, vinExtractor2, vinExtractor3, vinExtractor4].forEach(vinExt => {
+        if (!vinExt) return;
         vinExt.onError = onError;
         vinExt.onExtract = onExtract;
         vinExt.onProcessing = onProcessing;

@@ -22,6 +22,10 @@ export class VinExtractor {
   @Prop() readSticker: boolean = false;
 
   @Prop() uploaderButtonId: string;
+
+  // to explicitly opening camera instead of letting choose from files or new image from camera
+  @Prop() captureEnvironment: boolean = false;
+
   @Prop() manualCapture: boolean = false;
   @Prop() skipValidation: boolean = false;
 
@@ -403,7 +407,7 @@ export class VinExtractor {
     return (
       <Host>
         <slot />
-        <input class="vin-extractor-input" type="file" accept="image/*" capture="environment" hidden />
+        <input class="vin-extractor-input" type="file" accept="image/*" {...(this.captureEnvironment ? { capture: 'environment' } : {})} hidden />
         <canvas class="video-canvas hidden"></canvas>
         {!this.uploaderButtonId && (
           <div
