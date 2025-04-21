@@ -223,7 +223,7 @@ export class VinExtractor {
 
       if (this.verbose) console.log(response);
 
-      const data: string = await response.json();
+      const data: string = await response.text();
 
       if (this.skipValidation || (!!data.trim() && validateVin(data))) this.handleExtract(data);
     } catch (error) {
