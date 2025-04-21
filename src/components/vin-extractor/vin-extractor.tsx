@@ -128,13 +128,7 @@ export class VinExtractor {
     img.onload = async () => {
       this.handleOnProcessing(true);
 
-      const ctx = this.videoCanvas.getContext('2d');
-      this.videoCanvas.width = img.width;
-      this.videoCanvas.height = img.height;
-      ctx?.drawImage(img, 0, 0);
-
-      const imageDataUrl = this.videoCanvas.toDataURL('image/png');
-
+      const imageDataUrl = await this.processCanvasFromSource(img, this.videoCanvas);
       await this.handleImage(imageDataUrl);
 
       this.handleOnProcessing(false);
@@ -172,10 +166,6 @@ export class VinExtractor {
 
     if (!this.videoPlayer || !this.videoCanvas) return this.componentDidLoad();
 
-    const ctx = this.videoCanvas.getContext('2d');
-
-    if (!ctx) return;
-
     this.handleOnProcessing(true);
 
     if (manualCapture) {
@@ -183,12 +173,7 @@ export class VinExtractor {
       this.manualCaptureLoading = true;
     }
 
-    this.videoCanvas.width = this.videoPlayer.videoWidth;
-    this.videoCanvas.height = this.videoPlayer.videoHeight;
-
-    ctx.drawImage(this.videoPlayer, 0, 0, this.videoCanvas.width, this.videoCanvas.height);
-
-    const imageDataUrl = this.videoCanvas.toDataURL('image/png');
+    const imageDataUrl = await this.processCanvasFromSource(this.videoPlayer, this.videoCanvas);
 
     this.handleImage(imageDataUrl);
 
@@ -205,6 +190,38 @@ export class VinExtractor {
       }, 1000);
     }
   };
+
+  async processCanvasFromSource(source: HTMLImageElement | HTMLVideoElement, canvas: HTMLCanvasElement, maxSize: number = 400): Promise<string> {
+    try {
+      console.log('compress');
+
+      const isImage = source instanceof HTMLImageElement;
+
+      const naturalWidth = isImage ? source.width : source.videoWidth;
+      const naturalHeight = isImage ? source.height : source.videoHeight;
+
+      let targetWidth = naturalWidth;
+      let targetHeight = naturalHeight;
+
+      if (Math.max(naturalWidth, naturalHeight) > maxSize) {
+        const scale = maxSize / Math.max(naturalWidth, naturalHeight);
+        targetWidth = Math.round(naturalWidth * scale);
+        targetHeight = Math.round(naturalHeight * scale);
+      }
+
+      canvas.width = targetWidth;
+      canvas.height = targetHeight;
+
+      const ctx = canvas.getContext('2d');
+
+      ctx.drawImage(source, 0, 0, targetWidth, targetHeight);
+
+      return canvas.toDataURL('image/png');
+    } catch (error) {
+      this.handleError(error as Error);
+      return '';
+    }
+  }
 
   handleImage = async (imageDataUrl: string) => {
     if (this.readSticker) await this.stickerHandler(imageDataUrl);
