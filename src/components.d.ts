@@ -282,6 +282,25 @@ export namespace Components {
         "setErrorMessage": (message: ErrorKeys) => Promise<void>;
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
     }
+    interface VinExtractor {
+        "captureInterval": number;
+        "close": () => Promise<void>;
+        "isOpen": boolean;
+        "manualCapture": boolean;
+        "ocrEndpoint": string;
+        "onError"?: ((newError: Error) => void) | string;
+        "onExtract"?: ((vin: string) => void) | string;
+        "onOpenChange"?: ((newError: boolean) => void) | string;
+        "onProcessing"?: ((vin: string) => void) | string;
+        "open": () => Promise<void>;
+        "readSticker": boolean;
+        "setBlazorRef": (newBlazorRef: DotNetObjectReference) => Promise<void>;
+        "skipValidation": boolean;
+        "title": string;
+        "uploaderButtonId": string;
+        "useOcr": boolean;
+        "verbose": boolean;
+    }
     interface WarrantyDetails {
         "baseUrl": string;
         "brandIntegrationId": string;
@@ -445,6 +464,12 @@ declare global {
         prototype: HTMLVehicleSpecificationElement;
         new (): HTMLVehicleSpecificationElement;
     };
+    interface HTMLVinExtractorElement extends Components.VinExtractor, HTMLStencilElement {
+    }
+    var HTMLVinExtractorElement: {
+        prototype: HTMLVinExtractorElement;
+        new (): HTMLVinExtractorElement;
+    };
     interface HTMLWarrantyDetailsElement extends Components.WarrantyDetails, HTMLStencilElement {
     }
     var HTMLWarrantyDetailsElement: {
@@ -474,6 +499,7 @@ declare global {
         "vehicle-accessories": HTMLVehicleAccessoriesElement;
         "vehicle-lookup": HTMLVehicleLookupElement;
         "vehicle-specification": HTMLVehicleSpecificationElement;
+        "vin-extractor": HTMLVinExtractorElement;
         "warranty-details": HTMLWarrantyDetailsElement;
     }
 }
@@ -694,6 +720,22 @@ declare namespace LocalJSX {
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString"?: string;
     }
+    interface VinExtractor {
+        "captureInterval"?: number;
+        "isOpen"?: boolean;
+        "manualCapture"?: boolean;
+        "ocrEndpoint"?: string;
+        "onError"?: ((newError: Error) => void) | string;
+        "onExtract"?: ((vin: string) => void) | string;
+        "onOpenChange"?: ((newError: boolean) => void) | string;
+        "onProcessing"?: ((vin: string) => void) | string;
+        "readSticker"?: boolean;
+        "skipValidation"?: boolean;
+        "title"?: string;
+        "uploaderButtonId"?: string;
+        "useOcr"?: boolean;
+        "verbose"?: boolean;
+    }
     interface WarrantyDetails {
         "baseUrl"?: string;
         "brandIntegrationId"?: string;
@@ -742,6 +784,7 @@ declare namespace LocalJSX {
         "vehicle-accessories": VehicleAccessories;
         "vehicle-lookup": VehicleLookup;
         "vehicle-specification": VehicleSpecification;
+        "vin-extractor": VinExtractor;
         "warranty-details": WarrantyDetails;
     }
 }
@@ -771,6 +814,7 @@ declare module "@stencil/core" {
             "vehicle-accessories": LocalJSX.VehicleAccessories & JSXBase.HTMLAttributes<HTMLVehicleAccessoriesElement>;
             "vehicle-lookup": LocalJSX.VehicleLookup & JSXBase.HTMLAttributes<HTMLVehicleLookupElement>;
             "vehicle-specification": LocalJSX.VehicleSpecification & JSXBase.HTMLAttributes<HTMLVehicleSpecificationElement>;
+            "vin-extractor": LocalJSX.VinExtractor & JSXBase.HTMLAttributes<HTMLVinExtractorElement>;
             "warranty-details": LocalJSX.WarrantyDetails & JSXBase.HTMLAttributes<HTMLWarrantyDetailsElement>;
         }
     }
