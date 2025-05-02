@@ -187,4 +187,5 @@ export type ServiceItem = {
   title?: string;
   type?: string;
   typeEnum?: string;
+  claimingMethodEnum?: number;
 };
