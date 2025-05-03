@@ -283,7 +283,6 @@ export namespace Components {
         "captureEnvironment": boolean;
         "captureInterval": number;
         "close": () => Promise<void>;
-        "isOpen": boolean;
         "manualCapture": boolean;
         "ocrEndpoint": string;
         "onError"?: ((newError: Error) => void) | string;
@@ -718,7 +717,6 @@ declare namespace LocalJSX {
     interface VinExtractor {
         "captureEnvironment"?: boolean;
         "captureInterval"?: number;
-        "isOpen"?: boolean;
         "manualCapture"?: boolean;
         "ocrEndpoint"?: string;
         "onError"?: ((newError: Error) => void) | string;

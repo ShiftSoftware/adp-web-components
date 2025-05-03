@@ -13,7 +13,6 @@ const ACTIVE_CAMERA_ID_KEY = 'activeCameraId';
 })
 export class VinExtractor {
   @Prop() title: string = '';
-  @Prop() isOpen: boolean = false;
   @Prop() captureInterval: number = CAPTURE_INTERVAL;
 
   @Prop() verbose: boolean = false;
@@ -37,6 +36,7 @@ export class VinExtractor {
   @Prop() onOpenChange?: ((newError: boolean) => void) | string;
 
   @State() streamRef: MediaStream;
+  @State() isOpen: boolean = false;
   @State() isAnimating: boolean = false;
   @State() isCameraReady: boolean = false;
   @State() switchRotateDegree: number = 0;
