@@ -71,7 +71,6 @@ export namespace Components {
         "baseUrl": string;
         "claim": (item: ServiceItem) => Promise<void>;
         "claimEndPoint": string;
-        "claimViaBarcodeScanner": boolean;
         "completeClaim": () => Promise<void>;
         "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
@@ -87,9 +86,7 @@ export namespace Components {
     }
     interface DynamicRedeem {
         "canceledItems"?: ServiceItem[];
-        "claimViaBarcodeScanner": boolean;
         "getQrValue": () => Promise<string>;
-        "handleQrChanges"?: (code: string) => void;
         "handleScanner"?: (code: string, jobNumber: string) => void;
         "item"?: ServiceItem;
         "language": LanguageKeys;
@@ -541,7 +538,6 @@ declare namespace LocalJSX {
         "activate"?: (vehicleInformation: VehicleInformation) => void;
         "baseUrl"?: string;
         "claimEndPoint"?: string;
-        "claimViaBarcodeScanner"?: boolean;
         "errorCallback"?: (errorMessage: ErrorKeys) => void;
         "headers"?: any;
         "isDev"?: boolean;
@@ -552,8 +548,6 @@ declare namespace LocalJSX {
     }
     interface DynamicRedeem {
         "canceledItems"?: ServiceItem[];
-        "claimViaBarcodeScanner"?: boolean;
-        "handleQrChanges"?: (code: string) => void;
         "handleScanner"?: (code: string, jobNumber: string) => void;
         "item"?: ServiceItem;
         "language"?: LanguageKeys;
