@@ -193,8 +193,6 @@ export class VinExtractor {
 
   async processCanvasFromSource(source: HTMLImageElement | HTMLVideoElement, canvas: HTMLCanvasElement, maxSize: number = 400): Promise<string> {
     try {
-      console.log('compress');
-
       const isImage = source instanceof HTMLImageElement;
 
       const naturalWidth = isImage ? source.width : source.videoWidth;
