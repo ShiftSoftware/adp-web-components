@@ -430,7 +430,7 @@ export class VinExtractor {
           <div
             onClick={() => (this.isOpen = false)}
             aria-expanded={ariaExpanded.toString()}
-            class="vin-extractor-background md:aria-expanded:bg-black/40 md:transition-all md:duration-300 fixed flex items-center justify-center w-[100dvw] h-[100dvh] top-0 left-0 z-[9999]"
+            class="vin-extractor-background md:transition-all md:duration-300 fixed flex items-center justify-center w-[100dvw] h-[100dvh] top-0 left-0 z-[9999]"
           >
             <div
               onClick={e => e.stopPropagation()}
@@ -438,7 +438,7 @@ export class VinExtractor {
               onAnimationEnd={() => (this.isAnimating = false)}
               onAnimationStart={() => (this.isAnimating = true)}
               class={cn(
-                'vin-extractor-container md:w-[600px] md:rounded-lg md:overflow-hidden opacity-0 md:h-auto aria-expanded:pointer-events-auto w-full h-full relative transition-all duration-500',
+                'vin-extractor-container md:w-[600px] md:rounded-lg md:overflow-hidden opacity-0 md:h-auto w-full h-full relative transition-all duration-500',
                 this.containerAnimation,
               )}
             >
