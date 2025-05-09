@@ -425,7 +425,7 @@ export class DynamicClaim implements VehicleInformationInterface {
               </tbody>
             </table>
 
-            {item.status === 'pending' && (
+            {item.claimable && (
               <button onClick={() => this.claim(item)} class="claim-button dynamic-claim-button">
                 <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g stroke-width="0"></g>

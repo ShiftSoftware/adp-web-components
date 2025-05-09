@@ -20,5 +20,175 @@
     "noServiceAvailable": "هیچ خزمەتگوزارییەک بەردەست نییە",
     "wildCard": "کێشەیەکی چاوەڕواننەکراو ڕویدا تکایە دواتر هەوڵبدەوە.",
     "requestFailedPleaseTryAgainLater": "داواکارییەکە شکستی هێنا تکایە دواتر هەوڵبدەرەوە"
+  },
+  "generalTicketTypes": {
+    "TLP": "TLP",
+    "Complaint": "سکاڵا",
+    "PartInquiry": "PartInquiry",
+    "SalesCampaign": "SalesCampaign",
+    "GeneralInquiry": "پرسیاری گشتی",
+    "ServiceCampaign": "ServiceCampaign",
+    "InstallmentPayment": "InstallmentPayment",
+    "ServicePriceInquiry": "ServicePriceInquiry"
+  },
+  "forms": {
+    "reCaptchaIsRequired": "پێویستە کاپچا",
+    "inputValueIsIncorrect": "تکایە بەهای باشتر دابین بکەن",
+
+    "contactUs": {
+      "fullName": "ناوی تەواو",
+      "fullNameIsRequired": "ناوی تەواو پێویستە.",
+      "fullNameMinimum": "ناوی تەواو دەبێت ٣ پیت یان زیاتر بێت.",
+      "emailAddress": "ناونیشانی ئیمەیڵ",
+      "emailAddressNotValid": "تکایە ناونیشانی ئیمەیڵێکی دروست دابنێ.",
+      "city": "شار",
+      "selectCity": "شارێک هەڵبژێرە.",
+      "cityIsRequired": "شار پێویستە.",
+      "phoneNumber": "ژمارەی مۆبایل",
+      "phoneNumberIsRequired": "ژمارەی مۆبایل پێویستە.",
+      "phoneNumberFormatInvalid": "فۆرماتی ژمارەی تەلەفۆن نادروستە.",
+      "inquiryType": "جۆری پرسیار",
+      "selectInquiryType": "جۆری پرسیار هەڵبژێرە",
+      "inquiryTypeIsRequired": "جۆری پرسیار پێویستە.",
+      "writeAMessage": "پەیامێک بنووسە",
+      "leaveUsMessage": "پەیامێکمان بۆ بەجێبهێڵە",
+      "messageIsRequired": "پەیام پێویستە."
+    }
+  },
+  "vehicleLookup": {
+    "warranty": {
+      "authorized": "ڕێگەپێدراو",
+      "unauthorized": "بێ مۆڵەت",
+      "activeWarranty": "گەرەنتی چالاکی هەیە",
+      "notActiveWarranty": "گەرەنتی چالاکی نییە",
+      "notInvoiced": "گەرەنتی چالاک نییە چونکە ئەم ئۆتۆمبێلە لەلایەن ئەم هاوبەشە بازرگانییە متمانەپێکراوەی خوارەوە فاتورەی بۆ نەکراوە: ",
+      "from": "لە",
+      "to": "بۆ",
+      "pendingSSC": "ئەم ئۆتۆمبێلە هەڵمەتێکی خزمەتگوزاری تایبەتی چاوەڕوانکراوی هەیە",
+      "noPendingSSC": "هیچ هەڵمەتێکی خزمەتگوزاری تایبەتی چاوەڕوانکراو نییە",
+      "checkingTMC": "پشکنینی TMC",
+      "sscCampings": "هەڵمەتەکانی خزمەتگوزاری تایبەت",
+      "sscTableCode": "کۆد",
+      "sscTableDescription": "وەسف",
+      "sscTableRepairStatus": "دۆخی چاککردنەوە",
+      "sscTableOPCode": "OP-کۆدەکان",
+      "sscTablePartNumber": "ژمارەی پارچە"
+    },
+    "specification": {
+      "vehicleSpecification": "تایبەتمەندیەکانی ئۆتۆمبێل",
+      "noData": "هیچ داتایەک لەبەردەستدا نییە.",
+      "model": "مۆدێل",
+      "variant": "جۆر",
+      "katashiki": "Katashiki",
+      "modelYear": "ساڵی مۆدێل",
+      "sfx": "SFX",
+      "productionDate": "ساڵی بەرهەمهێنان"
+    },
+    "accessories": {
+      "vehicleAccessories": "ئیکسسواراتەکانی ئۆتۆمبێل",
+      "noData": "هیچ داتایەک لەبەردەستدا نییە.",
+      "partNumber": "ژمارەی پارچە",
+      "description": "وەسف",
+      "image": "وێنە",
+      "expand": "فراوانکردن"
+    },
+    "serviceHistory": {
+      "serviceHistory": "مێژووی خزمەتگوزاری",
+      "noData": "هیچ داتایەک لەبەردەستدا نییە.",
+      "branch": "لق",
+      "dealer": "بریکار",
+      "invoiceNumber": "ژمارەی فاتورە",
+      "date": "ڕێکەوت",
+      "serviceType": "جۆری خزمەتگوزاری",
+      "odometer": "ئۆدۆمێتەر"
+    },
+    "paintThickness": {
+      "paintThickness": "ئەستووری بۆیاخ",
+      "noData": "هیچ داتایەک لەبەردەستدا نییە.",
+      "part": "بەش",
+      "left": "چەپ",
+      "right": "ڕاست",
+      "noImageGroups": "هیچ گروپێکی وێنە لەبەردەستدا نییە.",
+      "expand": "فراوانکردن"
+    },
+    "dynamicClaim": {
+      "serviceType": "جۆری خزمەتگوزاری",
+      "activationDate": "بەرواری چالاککردن",
+      "expireDate": "بەرواری بەسەرچوون",
+      "claimAt": "چالاککراوە لە",
+      "claimingCompany": "Claiming Company",
+      "invoiceNumber": "ژمارەی فاتورە",
+      "jobNumber": "ژمارەی کارد",
+      "packageCode": "کۆدی مینیو",
+      "claim": "چالاککردن",
+      "processed": "پرۆسێس کراوە",
+      "expired": "بەسەرچووە",
+      "cancelled": "هەڵوەشایەوە",
+      "pending": "لە چاوەڕوانیدایە",
+      "warning": "ئاگاداربە",
+      "activateNow": "Activate Now",
+      "activationRequired": "Activation Required",
+      "warrantyAndServicesNotActivated": "Warranty & Services have not been activated for this vehicle."
+    },
+    "dynamicRedeem": {
+      "serviceType": "جۆری خزمەتگوزاری",
+      "name": "ناو",
+      "activationDate": "بەرواری چالاککردن",
+      "expireDate": "بەرواری بەسەرچوون",
+      "packageCode": "کۆدی مینیو",
+      "scanTheVoucher": "Scan the Voucher",
+      "qrCode": "QR Code",
+      "processing": "پرۆسێسکردن ...",
+      "warning": "ئاگاداربە",
+      "skipServicesWarning": "ئەم خزمەتگوزاریانەی خوارەوە هێشتا 'هەڵپەسێردراون' و بە 'هەڵوەشاوە' نیشانە دەکرێن.",
+      "confirmSkipServices": "پشتڕاست بکەرەوە نیشانەکردنی خزمەتگوزارییەکانی سەرەوە وەک 'هەڵوەشاوە'.",
+      "notInvoiced": "ئەم ئۆتۆمبێلە هێشتا لەلایەن ئەم هاوبەشە بازرگانییە متمانەپێکراوەی خوارەوە فاتورەی بۆ نەکراوە:",
+      "confirmNotInvoiced": "داواکاری پشتڕاست بکەرەوە بەبێ فاتورەی هاوبەشی بازرگانی متمانەپێکراو",
+
+      "enterServiceInfo": "Enter Service Info",
+      "invoice": "Invoice",
+      "jobNumber": "Job Number",
+      "claim": "Claim"
+    }
+  },
+  "partLookup": {
+    "deadStock": {
+      "deadStock": "ستۆکی مردوو",
+      "branch": "لق",
+      "availableQuantity": "بڕی بەردەست"
+    },
+    "distributor": {
+      "info": "زانیاری",
+      "distributorStock": "کۆگا",
+      "availability": "بەردەست بوون",
+      "notAvailable": "بەردەست نییە",
+      "partiallyAvailable": "بەشێکی بەردەستە",
+      "available": "بەردەستە",
+      "location": "شوێن",
+      "description": "وەسف",
+      "productGroup": "گروپی کاڵا",
+      "localDescription": "وەسفی $",
+      "dealerPurchasePrice": "نرخی کڕین لای بریکار",
+      "recommendedRetailPrice": "نرخی پێشنیارکراوی فرۆشتنی تاکەکەسی",
+      "supersededFrom": "گۆڕدراوە لە",
+      "supersessions": "پارچەی هاوشێوە"
+    },
+    "manufacturer": {
+      "origin": "ڕەسەن",
+      "warrantyPrice": "نرخی گەرەنتی",
+      "specialPrice": "نرخی تایبەت",
+      "wholesalesPrice": "نرخی جوملە",
+      "pnc": "PNC",
+      "pncName": "PNC ناوی $",
+      "binCode": "کۆدی بین",
+      "dimension1": "ڕەهەندی 1",
+      "dimension2": "ڕەهەندی 2",
+      "dimension3": "ڕەهەندی 3",
+      "netWeight": "کێشی پاک",
+      "grossWeight": "کێشی گشتی",
+      "cubicMeasure": "پێوانە سێجا",
+      "hsCode": "کۆدی HS",
+      "uzHsCode": "کۆدی UZ HS"
+    }
   }
 }
