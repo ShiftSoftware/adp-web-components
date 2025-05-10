@@ -308,15 +308,13 @@ export class DynamicClaim implements VehicleInformationInterface {
       this.dynamicRedeem.handleClaiming = async (payload: ClaimPayload) => {
         await new Promise(r => setTimeout(r, 500));
 
-        //alert(JSON.stringify(
-        //  {
-        //    ...payload,
-        //    vin: this.vehicleInformation.vin,
-        //    saleInformation: this.vehicleInformation.saleInformation,
-        //    serviceItem: this.dynamicRedeem.item,
-        //    cancelledServiceItems: this.dynamicRedeem.canceledItems,
-        //  }
-        //));
+        console.log({
+          ...payload,
+          vin: this.vehicleInformation.vin,
+          saleInformation: this.vehicleInformation.saleInformation,
+          serviceItem: this.dynamicRedeem.item,
+          cancelledServiceItems: this.dynamicRedeem.canceledItems,
+        });
 
         this.dynamicRedeem.quite();
         this.completeClaim();
