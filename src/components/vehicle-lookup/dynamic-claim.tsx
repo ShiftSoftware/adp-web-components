@@ -471,49 +471,46 @@ export class DynamicClaim implements VehicleInformationInterface {
             </strong>
           </div>
 
-          <div class="dynamic-claim-body">
-            <div>
-              <div class="loading-lane">
-                <div class="dynamic-claim-loading-slider">
-                  <div class="dynamic-claim-loading-slider-line"></div>
-                  <div class="dynamic-claim-loading-slider-subline dynamic-claim-inc"></div>
-                  <div class="dynamic-claim-loading-slider-subline dynamic-claim-dec"></div>
-                </div>
-              </div>
-
-              <div class="dynamic-claim-progress-lane">
-                {serviceItems.map((item: ServiceItem, idx) => {
-                  let statusClass = '';
-
-                  if (item.status === 'pending') {
-                    if (serviceItems.findIndex(i => i.status === 'pending') === idx) statusClass = item.status;
-                  } else statusClass = item.status;
-
-                  return (
-                    <div key={item.name} class={cn('dynamic-claim-item', statusClass)} onMouseLeave={this.onMouseLeave}>
-                      <div
-                        onAnimationEnd={this.removeLoadAnimationClass}
-                        class="dynamic-claim-item-header load-animation"
-                        onMouseEnter={event => this.onMouseEnter(event.target as HTMLElement, idx)}
-                      >
-                        <img src={icons[item.status]} alt="status icon" />
-                        <span>{texts[item.status]}</span>
-                        {this.activePopupIndex === idx && this.createPopup(item)}
-                      </div>
-                      <div onAnimationEnd={this.removeLoadAnimationClass} class="dynamic-claim-item-circle load-animation"></div>
-                      <p onAnimationEnd={this.removeLoadAnimationClass} class="dynamic-claim-item-footer load-animation">
-                        {item.name}
-                      </p>
-                    </div>
-                  );
-                })}
-
-                <div class="dynamic-claim-progress-bar"></div>
+          <div class={cn('dynamic-claim-body', { 'has-activation-box': this.vehicleInformation && this.vehicleInformation.serviceItems.filter(x => x.status === 'activationRequired').length > 0  })}>
+            <div class="loading-lane">
+              <div class="dynamic-claim-loading-slider">
+                <div class="dynamic-claim-loading-slider-line"></div>
+                <div class="dynamic-claim-loading-slider-subline dynamic-claim-inc"></div>
+                <div class="dynamic-claim-loading-slider-subline dynamic-claim-dec"></div>
               </div>
             </div>
 
+            <div class="dynamic-claim-progress-lane">
+              {serviceItems.map((item: ServiceItem, idx) => {
+                let statusClass = '';
 
-            <div class="mt-14">
+                if (item.status === 'pending') {
+                  if (serviceItems.findIndex(i => i.status === 'pending') === idx) statusClass = item.status;
+                } else statusClass = item.status;
+
+                return (
+                  <div key={item.name} class={cn('dynamic-claim-item', statusClass)} onMouseLeave={this.onMouseLeave}>
+                    <div
+                      onAnimationEnd={this.removeLoadAnimationClass}
+                      class="dynamic-claim-item-header load-animation"
+                      onMouseEnter={event => this.onMouseEnter(event.target as HTMLElement, idx)}
+                    >
+                      <img src={icons[item.status]} alt="status icon" />
+                      <span>{texts[item.status]}</span>
+                      {this.activePopupIndex === idx && this.createPopup(item)}
+                    </div>
+                    <div onAnimationEnd={this.removeLoadAnimationClass} class="dynamic-claim-item-circle load-animation"></div>
+                    <p onAnimationEnd={this.removeLoadAnimationClass} class="dynamic-claim-item-footer load-animation">
+                      {item.name}
+                    </p>
+                  </div>
+                );
+              })}
+
+              <div class="dynamic-claim-progress-bar"></div>
+            </div>
+
+            <div class="dynamic-claim-activation-box">
               <div class={cn('card warning-card span-entire-1st-row activation-panel', { loading: this.isLoading, visible: this.vehicleInformation && this.vehicleInformation.serviceItems.filter(x => x.status === 'activationRequired').length > 0 })}
                 onAnimationEnd={this.removeLoadAnimationClass}>
                 <p class="no-padding flex gap-2">
@@ -533,6 +530,8 @@ export class DynamicClaim implements VehicleInformationInterface {
                 </button>
               </div>
             </div>
+
+
           </div>
         </div>
       </Host>

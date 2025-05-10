@@ -43,12 +43,25 @@
 }
 
 .dynamic-claim-body {
-  padding: 120px 30px 20px 30px;
+
+  padding: 125px 30px 125px 30px;
   overflow-x: scroll;
   display: flex;
-  transition: scrollbar-color 0.5s ease;
-  flex-direction: column;
+  transition: 0.5s ease;
+  flex-direction: row;
 }
+
+  .dynamic-claim-body.has-activation-box {
+    padding: 100px 30px 150px 30px;
+  }
+
+  .dynamic-claim-activation-box {
+    position: absolute;
+    width: 90%;
+    left: 50%;
+    margin-left: -45%;
+    bottom: 40px;
+  }
 
 .idle .dynamic-claim-body,
 .loading .dynamic-claim-body {
