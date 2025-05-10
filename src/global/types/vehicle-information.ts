@@ -190,3 +190,14 @@ export type ServiceItem = {
   typeEnum?: string;
   claimingMethodEnum?: number;
 };
+
+
+export type ClaimPayload = {
+  vin: string,
+  invoice?: string,
+  jobNumber?: string,
+  qrCode?: string,
+  saleInformation: SaleInformation,
+  serviceItem: ServiceItem,
+  cancelledServiceItems: ServiceItem[],
+}

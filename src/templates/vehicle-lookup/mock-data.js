@@ -688,6 +688,8 @@ const mockData = {
       {
         name: '1,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: 'Activation Date',
         expiresAt: 'Expiry Date',
         status: 'processed',
@@ -700,6 +702,8 @@ const mockData = {
       {
         name: '5,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2023-04-08',
         expiresAt: '2023-07-08',
         status: 'expired',
@@ -707,6 +711,8 @@ const mockData = {
       {
         name: '10,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2023-07-08',
         expiresAt: '2023-10-08',
         status: 'cancelled',
@@ -714,16 +720,20 @@ const mockData = {
       {
         name: '15,000 KM Free Service',
         type: 'free',
+        claimable: true,
+        claimingMethodEnum: 2,
         activatedAt: '2023-10-08',
         expiresAt: '2024-01-08',
         status: 'pending',
-        menuCode: 'SER1384KJ',
+        menuCode: 'SER1384KJ'
       },
       {
         name: '20,000 KM Free Service',
         type: 'free',
-        activatedAt: '2024-01-08',
-        expiresAt: '2024-03-08',
+        claimable: false,
+        claimingMethodEnum: 2,
+        activatedAt: '2924-01-08',
+        expiresAt: '2924-03-08',
         status: 'pending',
       },
     ],
@@ -973,6 +983,8 @@ const mockData = {
       {
         name: '1,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2023-01-08',
         expiresAt: '2023-04-08',
         status: 'processed',
@@ -981,6 +993,8 @@ const mockData = {
       {
         name: '5,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2023-04-08',
         expiresAt: '2023-07-08',
         status: 'expired',
@@ -988,6 +1002,8 @@ const mockData = {
       {
         name: '10,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2023-07-08',
         expiresAt: '2023-10-08',
         status: 'cancelled',
@@ -995,6 +1011,8 @@ const mockData = {
       {
         name: '15,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2023-10-08',
         expiresAt: '2024-01-08',
         status: 'processed',
@@ -1002,6 +1020,8 @@ const mockData = {
       {
         name: '20,000 KM Free Service',
         type: 'free',
+        claimable: true,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'pending',
@@ -1705,6 +1725,8 @@ const mockData = {
       {
         name: '1,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2023-01-08',
         expiresAt: '2023-04-08',
         status: 'processed',
@@ -1713,6 +1735,8 @@ const mockData = {
       {
         name: '5,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2023-04-08',
         expiresAt: '2023-07-08',
         status: 'expired',
@@ -1720,6 +1744,8 @@ const mockData = {
       {
         name: '10,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2023-07-08',
         expiresAt: '2023-10-08',
         status: 'cancelled',
@@ -1727,6 +1753,8 @@ const mockData = {
       {
         name: '15,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2023-10-08',
         expiresAt: '2024-01-08',
         status: 'processed',
@@ -1734,6 +1762,8 @@ const mockData = {
       {
         name: '20,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -2048,6 +2078,8 @@ const mockData = {
       {
         name: '1,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2023-01-08',
         expiresAt: '2023-04-08',
         status: 'processed',
@@ -2056,6 +2088,8 @@ const mockData = {
       {
         name: '5,000 KM Free Service',
         type: 'free',
+        claimable: true,
+        claimingMethodEnum: 2,
         activatedAt: '2023-04-08',
         expiresAt: '2023-07-08',
         status: 'pending',
@@ -2526,6 +2560,8 @@ const mockData = {
       {
         name: '1,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2023-01-08',
         expiresAt: '2023-04-08',
         status: 'processed',
@@ -2534,6 +2570,8 @@ const mockData = {
       {
         name: '5,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2023-04-08',
         expiresAt: '2023-07-08',
         status: 'processed',
@@ -2541,6 +2579,8 @@ const mockData = {
       {
         name: '10,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2023-07-08',
         expiresAt: '2023-10-08',
         status: 'processed',
@@ -2548,6 +2588,8 @@ const mockData = {
       {
         name: '15,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2023-10-08',
         expiresAt: '2024-01-08',
         status: 'processed',
@@ -2555,6 +2597,8 @@ const mockData = {
       {
         name: '20,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -2562,6 +2606,8 @@ const mockData = {
       {
         name: '25,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -2569,6 +2615,8 @@ const mockData = {
       {
         name: '30,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -2576,6 +2624,8 @@ const mockData = {
       {
         name: '35,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -2583,6 +2633,8 @@ const mockData = {
       {
         name: '40,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -2590,6 +2642,8 @@ const mockData = {
       {
         name: '45,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -2597,6 +2651,8 @@ const mockData = {
       {
         name: '50,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -2604,6 +2660,8 @@ const mockData = {
       {
         name: '55,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -2611,6 +2669,8 @@ const mockData = {
       {
         name: '60,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -2618,6 +2678,8 @@ const mockData = {
       {
         name: '65,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -2625,6 +2687,8 @@ const mockData = {
       {
         name: '70,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -2632,6 +2696,8 @@ const mockData = {
       {
         name: '75,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -2639,6 +2705,8 @@ const mockData = {
       {
         name: '80,000 KM Free Service',
         type: 'free',
+        claimable: true,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'pending',
@@ -2646,6 +2714,8 @@ const mockData = {
       {
         name: '85,000 KM Free Service',
         type: 'free',
+        claimable: true,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'pending',
@@ -2653,6 +2723,8 @@ const mockData = {
       {
         name: '90,000 KM Free Service',
         type: 'free',
+        claimable: true,
+        claimingMethodEnum: 1,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'pending',
@@ -2660,6 +2732,8 @@ const mockData = {
       {
         name: '95,000 KM Free Service',
         type: 'free',
+        claimable: true,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'pending',
@@ -2667,6 +2741,8 @@ const mockData = {
       {
         name: '100,000 KM Free Service',
         type: 'free',
+        claimable: true,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'pending',
@@ -2946,6 +3022,8 @@ const mockData = {
       {
         name: '1,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2023-01-08',
         expiresAt: '2023-04-08',
         status: 'processed',
@@ -2954,6 +3032,8 @@ const mockData = {
       {
         name: '5,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2023-04-08',
         expiresAt: '2023-07-08',
         status: 'processed',
@@ -2961,6 +3041,8 @@ const mockData = {
       {
         name: '10,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2023-07-08',
         expiresAt: '2023-10-08',
         status: 'processed',
@@ -2968,6 +3050,8 @@ const mockData = {
       {
         name: '15,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2023-10-08',
         expiresAt: '2024-01-08',
         status: 'processed',
@@ -2975,6 +3059,8 @@ const mockData = {
       {
         name: '20,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -2982,6 +3068,8 @@ const mockData = {
       {
         name: '25,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -2989,6 +3077,8 @@ const mockData = {
       {
         name: '30,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -2996,6 +3086,8 @@ const mockData = {
       {
         name: '35,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -3003,6 +3095,8 @@ const mockData = {
       {
         name: '40,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -3010,6 +3104,8 @@ const mockData = {
       {
         name: '45,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -3017,6 +3113,8 @@ const mockData = {
       {
         name: '50,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -3024,6 +3122,8 @@ const mockData = {
       {
         name: '55,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -3031,6 +3131,8 @@ const mockData = {
       {
         name: '60,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -3038,6 +3140,8 @@ const mockData = {
       {
         name: '65,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -3045,6 +3149,8 @@ const mockData = {
       {
         name: '70,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -3052,6 +3158,8 @@ const mockData = {
       {
         name: '75,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -3059,6 +3167,8 @@ const mockData = {
       {
         name: '80,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -3066,6 +3176,8 @@ const mockData = {
       {
         name: '85,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -3073,6 +3185,8 @@ const mockData = {
       {
         name: '90,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -3080,6 +3194,8 @@ const mockData = {
       {
         name: '95,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -3087,6 +3203,8 @@ const mockData = {
       {
         name: '100,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
         status: 'processed',
@@ -3545,6 +3663,8 @@ const mockData = {
       {
         name: '5,000 KM Free Service Package',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-01',
         expiresAt: '2024-05-01',
         status: 'processed',
@@ -3557,6 +3677,8 @@ const mockData = {
       {
         name: '10,000 KM Free Service Package',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-05-01',
         expiresAt: '2024-08-01',
         status: 'processed',
@@ -3569,6 +3691,8 @@ const mockData = {
       {
         name: '15,000 KM Free Service Package',
         type: 'free',
+        claimable: true,
+        claimingMethodEnum: 2,
         activatedAt: '2024-08-01',
         expiresAt: '2024-11-01',
         status: 'pending',
@@ -3577,6 +3701,8 @@ const mockData = {
       {
         name: '20,000 KM Free Service Package',
         type: 'free',
+        claimable: true,
+        claimingMethodEnum: 2,
         activatedAt: '2024-11-01',
         expiresAt: '2025-02-01',
         status: 'pending',
@@ -3585,6 +3711,8 @@ const mockData = {
       {
         name: '25,000 KM Free Service Package',
         type: 'free',
+        claimable: true,
+        claimingMethodEnum: 2,
         activatedAt: '2025-02-01',
         expiresAt: '2025-05-01',
         status: 'pending',
@@ -3593,6 +3721,8 @@ const mockData = {
       {
         name: '30,000 KM Free Service Package',
         type: 'free',
+        claimable: true,
+        claimingMethodEnum: 2,
         activatedAt: '2025-05-01',
         expiresAt: '2025-08-01',
         status: 'pending',
@@ -3601,6 +3731,8 @@ const mockData = {
       {
         name: '35,000 KM Free Service Package',
         type: 'free',
+        claimable: true,
+        claimingMethodEnum: 2,
         activatedAt: '2025-08-01',
         expiresAt: '2025-11-01',
         status: 'pending',
@@ -3609,6 +3741,8 @@ const mockData = {
       {
         name: '40,000 KM Free Service Package',
         type: 'free',
+        claimable: true,
+        claimingMethodEnum: 2,
         activatedAt: '2025-11-01',
         expiresAt: '2026-02-01',
         status: 'pending',
@@ -4090,6 +4224,8 @@ const mockData = {
       {
         name: '5,000 KM Free Service Package',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-01-01',
         expiresAt: '2024-05-01',
         status: 'processed',
@@ -4102,6 +4238,8 @@ const mockData = {
       {
         name: '10,000 KM Free Service Package',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '2024-05-01',
         expiresAt: '2024-08-01',
         status: 'processed',
@@ -4114,6 +4252,8 @@ const mockData = {
       {
         name: '15,000 KM Free Service Package',
         type: 'free',
+        claimable: true,
+        claimingMethodEnum: 2,
         activatedAt: '2024-08-01',
         expiresAt: '2024-11-01',
         status: 'pending',
@@ -4122,6 +4262,8 @@ const mockData = {
       {
         name: '20,000 KM Free Service Package',
         type: 'free',
+        claimable: true,
+        claimingMethodEnum: 2,
         activatedAt: '2024-11-01',
         expiresAt: '2025-02-01',
         status: 'pending',
@@ -4130,6 +4272,8 @@ const mockData = {
       {
         name: '25,000 KM Free Service Package',
         type: 'free',
+        claimable: true,
+        claimingMethodEnum: 2,
         activatedAt: '2025-02-01',
         expiresAt: '2025-05-01',
         status: 'pending',
@@ -4138,6 +4282,8 @@ const mockData = {
       {
         name: '30,000 KM Free Service Package',
         type: 'free',
+        claimable: true,
+        claimingMethodEnum: 2,
         activatedAt: '2025-05-01',
         expiresAt: '2025-08-01',
         status: 'pending',
@@ -4146,6 +4292,8 @@ const mockData = {
       {
         name: '35,000 KM Free Service Package',
         type: 'free',
+        claimable: true,
+        claimingMethodEnum: 2,
         activatedAt: '2025-08-01',
         expiresAt: '2025-11-01',
         status: 'pending',
@@ -4154,6 +4302,8 @@ const mockData = {
       {
         name: '40,000 KM Free Service Package',
         type: 'free',
+        claimable: true,
+        claimingMethodEnum: 2,
         activatedAt: '2025-11-01',
         expiresAt: '2026-02-01',
         status: 'pending',
@@ -4182,7 +4332,7 @@ const mockData = {
     warranty: null,
     nextServiceDate: '2023-12-12',
     serviceHistory: [
-      
+
     ],
     ssc: null,
     vehicleVariantInfo: null,
@@ -4191,6 +4341,8 @@ const mockData = {
       {
         name: '1,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '',
         expiresAt: '',
         status: 'activationRequired',
@@ -4198,6 +4350,8 @@ const mockData = {
       {
         name: '5,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '',
         expiresAt: '',
         status: 'activationRequired',
@@ -4205,6 +4359,8 @@ const mockData = {
       {
         name: '10,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '',
         expiresAt: '',
         status: 'activationRequired',
@@ -4212,6 +4368,8 @@ const mockData = {
       {
         name: '15,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '',
         expiresAt: '',
         status: 'activationRequired'
@@ -4219,6 +4377,8 @@ const mockData = {
       {
         name: '20,000 KM Free Service',
         type: 'free',
+        claimable: false,
+        claimingMethodEnum: 2,
         activatedAt: '',
         expiresAt: '',
         status: 'activationRequired',

@@ -8,7 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
 import { PartInformation } from "./global/types/part-information";
 import { DotNetObjectReference, MockJson } from "./global/types/components";
-import { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
+import { ClaimPayload, ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
 import { FormHook } from "./global/lib/form-hook";
 import { InputParams } from "./global/types/general";
 import { FormElementMapper, FormFieldParams, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
@@ -18,7 +18,7 @@ import { VehicleInformation as VehicleInformation1 } from "./components";
 export { ErrorKeys, LanguageKeys } from "./global/types/locales/index";
 export { PartInformation } from "./global/types/part-information";
 export { DotNetObjectReference, MockJson } from "./global/types/components";
-export { ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
+export { ClaimPayload, ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
 export { FormHook } from "./global/lib/form-hook";
 export { InputParams } from "./global/types/general";
 export { FormElementMapper, FormFieldParams, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
@@ -87,7 +87,7 @@ export namespace Components {
     interface DynamicRedeem {
         "canceledItems"?: ServiceItem[];
         "getQrValue": () => Promise<string>;
-        "handleScanner"?: (code: string, jobNumber: string) => void;
+        "handleClaiming"?: (payload: ClaimPayload) => void;
         "item"?: ServiceItem;
         "language": LanguageKeys;
         "loadingStateChange"?: (isLoading: boolean) => void;
@@ -547,7 +547,7 @@ declare namespace LocalJSX {
     }
     interface DynamicRedeem {
         "canceledItems"?: ServiceItem[];
-        "handleScanner"?: (code: string, jobNumber: string) => void;
+        "handleClaiming"?: (payload: ClaimPayload) => void;
         "item"?: ServiceItem;
         "language"?: LanguageKeys;
         "loadingStateChange"?: (isLoading: boolean) => void;

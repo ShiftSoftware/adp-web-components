@@ -10,7 +10,7 @@ import cancelledIcon from './assets/cancelled.svg';
 import processedIcon from './assets/processed.svg';
 
 import { MockJson } from '~types/components';
-import { ServiceItem, VehicleInformation } from '~types/vehicle-information';
+import { ClaimPayload, ServiceItem, VehicleInformation } from '~types/vehicle-information';
 import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/locales';
 
 import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicleInformation';
@@ -268,6 +268,7 @@ export class DynamicClaim implements VehicleInformationInterface {
     const index = serviceItems.indexOf(item);
     const pendingItemsBefore = serviceDataClone.slice(0, index).filter(x => x.status === 'pending');
 
+    serviceDataClone[index].claimable = false;
     serviceDataClone[index].status = 'processed';
 
     pendingItemsBefore.forEach(function (otherItem) {
@@ -302,36 +303,41 @@ export class DynamicClaim implements VehicleInformationInterface {
     this.openRedeem(item, pendingItemsBefore);
   }
 
-  private async handleRedeemScanner() {
+  private async handleClaiming() {
     if (this.isDev) {
-      this.dynamicRedeem.handleScanner = async _ => {
+      this.dynamicRedeem.handleClaiming = async (payload: ClaimPayload) => {
         await new Promise(r => setTimeout(r, 500));
+
+        //alert(JSON.stringify(
+        //  {
+        //    ...payload,
+        //    vin: this.vehicleInformation.vin,
+        //    saleInformation: this.vehicleInformation.saleInformation,
+        //    serviceItem: this.dynamicRedeem.item,
+        //    cancelledServiceItems: this.dynamicRedeem.canceledItems,
+        //  }
+        //));
+
         this.dynamicRedeem.quite();
         this.completeClaim();
-        this.dynamicRedeem.handleScanner = null;
+        this.dynamicRedeem.handleClaiming = null;
       };
     } else {
-      this.dynamicRedeem.handleScanner = async (code, jobNumber) => {
+      this.dynamicRedeem.handleClaiming = async (payload: ClaimPayload) => {
         try {
-          const vehicleInformation = this.vehicleInformation as VehicleInformation;
-
-          const payload = {
-            vin: vehicleInformation.vin,
-            brandIntegrationID: vehicleInformation.identifiers.brandIntegrationID,
-            invoice: code,
-            jobNumber: jobNumber,
-            saleInformation: vehicleInformation.saleInformation,
-            serviceItem: this.dynamicRedeem.item,
-            cancelledServiceItems: this.dynamicRedeem.canceledItems,
-          };
-
           const response = await fetch(this.claimEndPoint, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
               ...this.headers,
             },
-            body: JSON.stringify(payload),
+            body: JSON.stringify({
+              ...payload,
+              vin: this.vehicleInformation.vin,
+              saleInformation: this.vehicleInformation.saleInformation,
+              serviceItem: this.dynamicRedeem.item,
+              cancelledServiceItems: this.dynamicRedeem.canceledItems,
+            }),
           });
 
           const data = await response.json();
@@ -339,18 +345,18 @@ export class DynamicClaim implements VehicleInformationInterface {
           if (!data.Success) {
             alert(data.Message);
             this.dynamicRedeem.quite();
-            this.dynamicRedeem.handleScanner = null;
+            this.dynamicRedeem.handleClaiming = null;
             return;
           }
 
           this.dynamicRedeem.quite();
           this.completeClaim();
-          this.dynamicRedeem.handleScanner = null;
+          this.dynamicRedeem.handleClaiming = null;
         } catch (error) {
           console.error(error);
           alert(this.locale.errors.requestFailedPleaseTryAgainLater);
           this.dynamicRedeem.quite();
-          this.dynamicRedeem.handleScanner = null;
+          this.dynamicRedeem.handleClaiming = null;
         }
       };
     }
@@ -367,7 +373,7 @@ export class DynamicClaim implements VehicleInformationInterface {
       this.dynamicRedeem.unInvoicedByBrokerName = vehicleInformation?.saleInformation?.broker?.brokerName;
     else this.dynamicRedeem.unInvoicedByBrokerName = null;
 
-    this.handleRedeemScanner();
+    this.handleClaiming();
   }
 
   createPopup(item: ServiceItem) {
