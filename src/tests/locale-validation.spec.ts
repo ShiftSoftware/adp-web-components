@@ -65,27 +65,7 @@ describe('Localization files dynamic validation', () => {
         expect(fs.existsSync(filePath)).toBe(true);
 
         it(`should validate ${filePath}`, async () => {
-          try {
-            console.log(1999999999999);
-
-            const json = (await import(filePath)).default as InferType<typeof schema>;
-
-            console.log(json);
-
-            await schema.validate(json, { abortEarly: false });
-
-            expect(`${path.basename(filePath)} schema validation Passed`).toBe(`${path.basename(filePath)} schema validation Passed`);
-          } catch (error) {
-            if (error instanceof ValidationError) {
-              error.inner.forEach(err => {
-                console.log(`File => ${filePath}, Field => ${err.path}, Message => ${err.message}`);
-              });
-            } else {
-              console.log(`Unexpected error at ${filePath}:`, error);
-            }
-
-            expect(`${path.basename(filePath)} schema validation Failed`).toBe(`${path.basename(filePath)} schema validation Passed`);
-          }
+          await validateJsonFile(filePath, schema);
         });
       }
     });
