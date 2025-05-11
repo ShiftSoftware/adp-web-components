@@ -22,15 +22,12 @@ function getAllTypeFolders(baseDir: string): string[] {
   }
 
   walk(baseDir);
-
   return result;
 }
 
 async function validateJsonFile(filePath: string, schema: any) {
   try {
     const json = (await import(filePath)).default as InferType<typeof schema>;
-
-    console.log(json);
 
     await schema.validate(json, { abortEarly: false });
 
@@ -48,26 +45,31 @@ async function validateJsonFile(filePath: string, schema: any) {
   }
 }
 
-describe('Localization files dynamic validation', () => {
-  const folders = getAllTypeFolders(path.resolve(__dirname, '../locales'));
+const folders = getAllTypeFolders(path.resolve(__dirname, '../locales'));
 
-  folders.forEach(async folder => {
+if (folders.length === 0) {
+  it('should find at least one valid types.ts folder', () => {
+    throw new Error('No folders with types.ts and required JSON files found!');
+  });
+} else {
+  for (const folder of folders) {
     const relativeFolder = path.relative(path.resolve(__dirname, '../'), folder);
-
     const typesPath = path.join(folder, TYPE_FILE);
 
-    const schema = (await import(typesPath)).default as ReturnType<typeof yupTypeMapper>;
-
     describe(`Validating folder: ${relativeFolder}`, () => {
+      let schemaPromise: Promise<ReturnType<typeof yupTypeMapper>> | undefined;
+
       for (const file of REQUIRED_JSON_FILES) {
         const filePath = path.join(folder, file);
-
-        expect(fs.existsSync(filePath)).toBe(true);
-
         it(`should validate ${filePath}`, async () => {
+          expect(fs.existsSync(filePath)).toBe(true);
+
+          if (!schemaPromise) schemaPromise = import(typesPath).then(mod => mod.default);
+
+          const schema = await schemaPromise;
           await validateJsonFile(filePath, schema);
         });
       }
     });
-  });
-});
+  }
+}

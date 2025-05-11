@@ -1,0 +1,190 @@
+{
+  "general": {
+    "close": "Закрывать",
+    "submit": "подавать",
+    "noSelectOptions": "Вариантов нет.",
+    "formSubmittedSuccessfully": "Форма успешно отправлена."
+  },
+  "errors": {
+    "noBaseUrl": "Укажите базовый URL",
+    "noPartsFound": "Детали не найдены",
+    "invalidVin": "Недействительный Вин",
+    "vinNumberRequired": "требуется вин-код",
+    "noServiceAvailable": "Нет доступных услуг",
+    "partNumberRequired": "Требуется номер детали",
+    "wrongResponseFormat": "Неправильный формат ответа",
+    "wrongFormStructure": "Структура формы недействительна.",
+    "wildCard": "Произошла неожиданная ошибка, пожалуйста, попробуйте еще раз позже.",
+    "requestFailedPleaseTryAgainLater": "Запрос не удался, попробуйте еще раз позже"
+  },
+  "generalTicketTypes": {
+    "TLP": "TLP",
+    "Complaint": "Жалоба",
+    "PartInquiry": "PartInquiry",
+    "SalesCampaign": "SalesCampaign",
+    "GeneralInquiry": "Общий запрос",
+    "ServiceCampaign": "ServiceCampaign",
+    "InstallmentPayment": "InstallmentPayment",
+    "ServicePriceInquiry": "ServicePriceInquiry"
+  },
+  "forms": {
+    "reCaptchaIsRequired": "Требуется капча",
+    "inputValueIsIncorrect": "Значение поля неверно.",
+
+    "contactUs": {
+      "fullName": "Полное имя",
+      "fullNameIsRequired": "Необходимо указать полное имя.",
+      "fullNameMinimum": "Полное имя должно содержать не менее 3 символов.",
+      "emailAddress": "Адрес электронной почты",
+      "emailAddressNotValid": "Пожалуйста, введите действительный адрес электронной почты.",
+      "city": "город",
+      "selectCity": "Выберите город.",
+      "cityIsRequired": "Город обязателен.",
+      "phoneNumber": "Номер телефона",
+      "phoneNumberIsRequired": "Номер телефона обязателен.",
+      "phoneNumberFormatInvalid": "Неверный формат номера телефона.",
+      "inquiryType": "Тип запроса",
+      "selectInquiryType": "Выберите тип запроса",
+      "inquiryTypeIsRequired": "Требуется указать тип запроса.",
+      "writeAMessage": "Написать сообщение",
+      "leaveUsMessage": "Оставьте нам сообщение",
+      "messageIsRequired": "Сообщение обязательно."
+    }
+  },
+  "vehicleLookup": {
+    "warranty": {
+      "authorized": "Авторизованный",
+      "unauthorized": "Несанкционированный",
+      "activeWarranty": "Имеет активную гарантию",
+      "notActiveWarranty": "Не имеет действующей гарантии",
+      "notInvoiced": "Гарантия недействительна, поскольку счет за этот автомобиль не выставлен следующим доверенным деловым партнером: ",
+      "from": "Форма",
+      "to": "К",
+      "pendingSSC": "У этого транспортного средства ожидается SSC",
+      "noPendingSSC": "Нет ожидания SSC",
+      "checkingTMC": "Проверка TMC",
+      "sscCampings": "SSC Campings",
+      "sscTableCode": "Код",
+      "sscTableDescription": "Описание",
+      "sscTableRepairStatus": "Статус ремонта",
+      "sscTableOPCode": "OP-коды",
+      "sscTablePartNumber": "Номер части"
+    },
+    "specification": {
+      "vehicleSpecification": "Технические характеристики автомобиля",
+      "noData": "Данных нет.",
+      "model": "Модель",
+      "variant": "Вариант",
+      "katashiki": "Каташики",
+      "modelYear": "Модельный год",
+      "sfx": "звуковые эффекты",
+      "productionDate": "Год производства"
+    },
+    "accessories": {
+      "vehicleAccessories": "Транспортные аксессуары",
+      "noData": "Данных нет.",
+      "partNumber": "Номер детали",
+      "description": "Описание",
+      "image": "Изображение",
+      "expand": "Расширять"
+    },
+    "serviceHistory": {
+      "serviceHistory": "История обслуживания",
+      "noData": "Данных нет.",
+      "branch": "Ветвь",
+      "dealer": "Дилер",
+      "invoiceNumber": "Счет.",
+      "date": "Дата",
+      "serviceType": "Тип услуги",
+      "odometer": "Одометр"
+    },
+    "paintThickness": {
+      "paintThickness": "Толщина краски",
+      "noData": "Данных нет.",
+      "part": "Часть",
+      "left": "Левый",
+      "right": "Верно",
+      "noImageGroups": "Группы изображений недоступны.",
+      "expand": "Расширять"
+    },
+    "dynamicClaim": {
+      "serviceType": "Тип услуги",
+      "activationDate": "Дата активации",
+      "expireDate": "Дата истечения срока действия",
+      "claimAt": "Заявлено в",
+      "claimingCompany": "Claiming Company",
+      "invoiceNumber": "Номер счета",
+      "jobNumber": "НЗП",
+      "packageCode": "Меню код",
+      "claim": "Требовать",
+      "processed": "Обработано",
+      "expired": "Истекший",
+      "cancelled": "Отменен",
+      "pending": "В ожидании",
+      "warning": "Предупреждение",
+      "activateNow": "Activate Now",
+      "activationRequired": "Activation Required",
+      "warrantyAndServicesNotActivated": "Warranty & Services have not been activated for this vehicle."
+    },
+    "dynamicRedeem": {
+      "serviceType": "Тип обслуживания",
+      "name": "Имя",
+      "activationDate": "Дата активации",
+      "expireDate": "Дата истечения срока действия",
+      "packageCode": "Код меню",
+      "scanTheVoucher": "Scan the Voucher",
+      "qrCode": "QR Code",
+      "processing": "Обработка ...",
+      "warning": "Предупреждение",
+      "skipServicesWarning": "Следующие услуги все еще «ожидают», и они будут помечены как «отменены».",
+      "confirmSkipServices": "Подтвердите маркировку вышеуказанных услуг как «отменено».",
+      "notInvoiced": "Этот автомобиль еще не выставлен в счет следующего надежного делового партнера:",
+      "confirmNotInvoiced": "Подтвердите заявку без счета-фактуры доверенного делового партнера",
+
+      "enterServiceInfo": "Enter Service Info",
+      "invoice": "Invoice",
+      "jobNumber": "Job Number",
+      "claim": "Claim"
+    }
+  },
+  "partLookup": {
+    "deadStock": {
+      "deadStock": "Мертвый запас",
+      "branch": "Ветвь",
+      "availableQuantity": "Доступен QTY"
+    },
+    "distributor": {
+      "info": "Информация",
+      "distributorStock": "Дистрибьютор",
+      "availability": "Доступность",
+      "notAvailable": "Нет в наличии",
+      "partiallyAvailable": "Частично доступно",
+      "available": "Доступный",
+      "location": "Расположение",
+      "description": "Описание",
+      "productGroup": "Группа продукта",
+      "localDescription": "$ Описание",
+      "dealerPurchasePrice": "Цена покупки дилера",
+      "recommendedRetailPrice": "Рекомендуемая розничная цена",
+      "supersededFrom": "Заменен от",
+      "supersessions": "замены"
+    },
+    "manufacturer": {
+      "origin": "Источник",
+      "warrantyPrice": "Гарантийная цена",
+      "specialPrice": "Специальная цена",
+      "wholesalesPrice": "Оптовая цена",
+      "pnc": "PNC",
+      "pncName": "PNC $ Имя",
+      "binCode": "Бин-код",
+      "dimension1": "Измерение 1",
+      "dimension2": "Размер 2",
+      "dimension3": "Измерение 3",
+      "netWeight": "Вес нетто",
+      "grossWeight": "Вес брутто",
+      "cubicMeasure": "Кубическая мера",
+      "hsCode": "HS -код",
+      "uzHsCode": "UZ HS CODE"
+    }
+  }
+}
