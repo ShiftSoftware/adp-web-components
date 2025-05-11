@@ -1,63 +1,93 @@
+import fs from 'fs';
 import path from 'path';
-import * as fs from 'fs';
-import { ValidationError } from 'yup';
+import { InferType, ValidationError } from 'yup';
+import yupTypeMapper from '~lib/yup-type-mapper';
 
-import { ARABIC_JSON_FILE, ENGLISH_JSON_FILE, KURDISH_JSON_FILE, Locale, localeSchema, RUSSIAN_JSON_FILE } from '~types/locales';
+const TYPE_FILE = 'type.ts';
+const REQUIRED_JSON_FILES = ['en.json', 'ku.json', 'ar.json', 'ru.json'];
 
-function getFilePath(fileName: string): string {
-  const filePath = path.join(__dirname, `../locales/${fileName}`);
+function getAllTypeFolders(baseDir: string): string[] {
+  const result: string[] = [];
 
-  return filePath;
+  function walk(currentPath: string) {
+    const entries = fs.readdirSync(currentPath, { withFileTypes: true });
+
+    const hasTypesFile = entries.some(entry => entry.isFile() && entry.name === TYPE_FILE);
+
+    if (hasTypesFile) result.push(currentPath);
+
+    for (const entry of entries) {
+      if (entry.isDirectory()) walk(path.join(currentPath, entry.name));
+    }
+  }
+
+  walk(baseDir);
+
+  return result;
 }
 
-function isFileExists(fileName: string) {
-  const filePath = getFilePath(fileName);
-
-  const fileExists = fs.existsSync(filePath);
-
-  expect(fileExists).toBe(true);
-}
-
-async function isValidSchema(fileName: string) {
+async function validateJsonFile(filePath: string, schema: any) {
   try {
-    const englishJson = (await import(getFilePath(fileName))).default as Locale;
+    const json = (await import(filePath)).default as InferType<typeof schema>;
 
-    await localeSchema.validate(englishJson, { abortEarly: false });
+    console.log(json);
 
-    expect(`${fileName} schema validation Passed`).toBe(`${fileName} schema validation Passed`);
+    await schema.validate(json, { abortEarly: false });
+
+    expect(`${path.basename(filePath)} schema validation Passed`).toBe(`${path.basename(filePath)} schema validation Passed`);
   } catch (error) {
     if (error instanceof ValidationError) {
       error.inner.forEach(err => {
-        console.log(`File => ${fileName}, Field => ${err.path}, Message => ${err.message}`);
+        console.log(`File => ${filePath}, Field => ${err.path}, Message => ${err.message}`);
       });
-    } else console.log(`At file: ${fileName}, Unexpected error:`, error);
+    } else {
+      console.log(`Unexpected error at ${filePath}:`, error);
+    }
 
-    expect(`${fileName} schema validation Failed`).toBe(`${fileName} schema validation Passed`);
+    expect(`${path.basename(filePath)} schema validation Failed`).toBe(`${path.basename(filePath)} schema validation Passed`);
   }
 }
 
-describe('Localization files', () => {
-  it('English Localization', async () => {
-    isFileExists(ENGLISH_JSON_FILE);
+describe('Localization files dynamic validation', () => {
+  const folders = getAllTypeFolders(path.resolve(__dirname, '../locales'));
 
-    await isValidSchema(ENGLISH_JSON_FILE);
-  });
+  folders.forEach(async folder => {
+    const relativeFolder = path.relative(path.resolve(__dirname, '../'), folder);
 
-  it('Arabic Localization', async () => {
-    isFileExists(ARABIC_JSON_FILE);
+    const typesPath = path.join(folder, TYPE_FILE);
 
-    await isValidSchema(ARABIC_JSON_FILE);
-  });
+    const schema = (await import(typesPath)).default as ReturnType<typeof yupTypeMapper>;
 
-  it('Kurdish Localization', async () => {
-    isFileExists(KURDISH_JSON_FILE);
+    describe(`Validating folder: ${relativeFolder}`, () => {
+      for (const file of REQUIRED_JSON_FILES) {
+        const filePath = path.join(folder, file);
 
-    await isValidSchema(KURDISH_JSON_FILE);
-  });
+        expect(fs.existsSync(filePath)).toBe(true);
 
-  it('Russian Localization', async () => {
-    isFileExists(RUSSIAN_JSON_FILE);
+        it(`should validate ${filePath}`, async () => {
+          try {
+            console.log(1999999999999);
 
-    await isValidSchema(RUSSIAN_JSON_FILE);
+            const json = (await import(filePath)).default as InferType<typeof schema>;
+
+            console.log(json);
+
+            await schema.validate(json, { abortEarly: false });
+
+            expect(`${path.basename(filePath)} schema validation Passed`).toBe(`${path.basename(filePath)} schema validation Passed`);
+          } catch (error) {
+            if (error instanceof ValidationError) {
+              error.inner.forEach(err => {
+                console.log(`File => ${filePath}, Field => ${err.path}, Message => ${err.message}`);
+              });
+            } else {
+              console.log(`Unexpected error at ${filePath}:`, error);
+            }
+
+            expect(`${path.basename(filePath)} schema validation Failed`).toBe(`${path.basename(filePath)} schema validation Passed`);
+          }
+        });
+      }
+    });
   });
 });
