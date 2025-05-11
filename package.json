@@ -34,6 +34,7 @@
     "loader/"
   ],
   "scripts": {
+    "generate-locale-mapper": "node generate-locale-mapper.mjs",
     "build": "stencil build -- --prod",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec",
