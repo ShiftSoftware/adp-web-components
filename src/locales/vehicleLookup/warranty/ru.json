@@ -1,0 +1,18 @@
+{
+  "authorized": "Авторизованный",
+  "unauthorized": "Несанкционированный",
+  "activeWarranty": "Имеет активную гарантию",
+  "notActiveWarranty": "Не имеет действующей гарантии",
+  "notInvoiced": "Гарантия недействительна, поскольку счет за этот автомобиль не выставлен следующим доверенным деловым партнером: ",
+  "from": "Форма",
+  "to": "К",
+  "pendingSSC": "У этого транспортного средства ожидается SSC",
+  "noPendingSSC": "Нет ожидания SSC",
+  "checkingTMC": "Проверка TMC",
+  "sscCampings": "SSC Campings",
+  "sscTableCode": "Код",
+  "sscTableDescription": "Описание",
+  "sscTableRepairStatus": "Статус ремонта",
+  "sscTableOPCode": "OP-коды",
+  "sscTablePartNumber": "Номер части"
+}

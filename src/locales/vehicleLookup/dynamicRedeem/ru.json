@@ -1,0 +1,20 @@
+{
+  "serviceType": "Тип обслуживания",
+  "name": "Имя",
+  "activationDate": "Дата активации",
+  "expireDate": "Дата истечения срока действия",
+  "packageCode": "Код меню",
+  "scanTheVoucher": "Scan the Voucher",
+  "qrCode": "QR Code",
+  "processing": "Обработка ...",
+  "warning": "Предупреждение",
+  "skipServicesWarning": "Следующие услуги все еще «ожидают», и они будут помечены как «отменены».",
+  "confirmSkipServices": "Подтвердите маркировку вышеуказанных услуг как «отменено».",
+  "notInvoiced": "Этот автомобиль еще не выставлен в счет следующего надежного делового партнера:",
+  "confirmNotInvoiced": "Подтвердите заявку без счета-фактуры доверенного делового партнера",
+
+  "enterServiceInfo": "Enter Service Info",
+  "invoice": "Invoice",
+  "jobNumber": "Job Number",
+  "claim": "Claim"
+}

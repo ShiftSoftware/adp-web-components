@@ -1,0 +1,19 @@
+{
+  "serviceType": "Service Type",
+  "activationDate": "Activation Date",
+  "expireDate": "Expiry Date",
+  "claimAt": "Claimed At",
+  "claimingCompany": "Claiming Company",
+  "invoiceNumber": "Invoice Number",
+  "jobNumber": "Job Number",
+  "packageCode": "Package Code",
+  "claim": "Claim",
+  "processed": "Processed",
+  "expired": "Expired",
+  "cancelled": "Cancelled",
+  "pending": "Pending",
+  "warning": "Warning",
+  "activateNow": "Activate Now",
+  "activationRequired": "Activation Required",
+  "warrantyAndServicesNotActivated": "Warranty & Services have not been activated for this vehicle."
+}

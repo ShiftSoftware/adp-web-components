@@ -1,0 +1,19 @@
+{
+  "serviceType": "جۆری خزمەتگوزاری",
+  "activationDate": "بەرواری چالاککردن",
+  "expireDate": "بەرواری بەسەرچوون",
+  "claimAt": "چالاککراوە لە",
+  "claimingCompany": "Claiming Company",
+  "invoiceNumber": "ژمارەی فاتورە",
+  "jobNumber": "ژمارەی کارد",
+  "packageCode": "کۆدی مینیو",
+  "claim": "چالاککردن",
+  "processed": "پرۆسێس کراوە",
+  "expired": "بەسەرچووە",
+  "cancelled": "هەڵوەشایەوە",
+  "pending": "لە چاوەڕوانیدایە",
+  "warning": "ئاگاداربە",
+  "activateNow": "Activate Now",
+  "activationRequired": "Activation Required",
+  "warrantyAndServicesNotActivated": "Warranty & Services have not been activated for this vehicle."
+}

@@ -1,0 +1,19 @@
+{
+  "serviceType": "Тип услуги",
+  "activationDate": "Дата активации",
+  "expireDate": "Дата истечения срока действия",
+  "claimAt": "Заявлено в",
+  "claimingCompany": "Claiming Company",
+  "invoiceNumber": "Номер счета",
+  "jobNumber": "НЗП",
+  "packageCode": "Меню код",
+  "claim": "Требовать",
+  "processed": "Обработано",
+  "expired": "Истекший",
+  "cancelled": "Отменен",
+  "pending": "В ожидании",
+  "warning": "Предупреждение",
+  "activateNow": "Activate Now",
+  "activationRequired": "Activation Required",
+  "warrantyAndServicesNotActivated": "Warranty & Services have not been activated for this vehicle."
+}

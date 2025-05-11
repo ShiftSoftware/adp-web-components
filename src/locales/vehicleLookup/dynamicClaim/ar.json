@@ -1,0 +1,19 @@
+{
+  "serviceType": "نوع الخدمة",
+  "activationDate": "تاريخ التفعيل",
+  "expireDate": "تاريخ انتهاء الصلاحية",
+  "claimAt": "المطالبة في",
+  "claimingCompany": "Claiming Company",
+  "invoiceNumber": "رقم الفاتورة",
+  "jobNumber": "Job Number",
+  "packageCode": "كود القائمة",
+  "claim": "مطالبة",
+  "processed": "تمت معالجته",
+  "expired": "منتهي الصلاحية",
+  "cancelled": "تم الغاء",
+  "pending": "قيد الانتظار",
+  "warning": "تحذير",
+  "activateNow": "Activate Now",
+  "activationRequired": "Activation Required",
+  "warrantyAndServicesNotActivated": "Warranty & Services have not been activated for this vehicle."
+}

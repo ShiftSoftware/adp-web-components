@@ -1,0 +1,16 @@
+{
+  "info": "Информация",
+  "distributorStock": "Дистрибьютор",
+  "availability": "Доступность",
+  "notAvailable": "Нет в наличии",
+  "partiallyAvailable": "Частично доступно",
+  "available": "Доступный",
+  "location": "Расположение",
+  "description": "Описание",
+  "productGroup": "Группа продукта",
+  "localDescription": "$ Описание",
+  "dealerPurchasePrice": "Цена покупки дилера",
+  "recommendedRetailPrice": "Рекомендуемая розничная цена",
+  "supersededFrom": "Заменен от",
+  "supersessions": "замены"
+}
