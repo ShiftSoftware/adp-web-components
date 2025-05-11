@@ -1,6 +1,7 @@
 import { Build } from '@stencil/core';
 import { version } from '../../../package.json';
 import { languageMapper, Locale } from '~types/locales';
+// import localeNetwrokMapper from '../../locale-mapper.json';
 
 const cachedLocales = {};
 
