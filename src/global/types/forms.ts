@@ -1,7 +1,7 @@
 import { JSX } from '@stencil/core/internal';
-import { LanguageKeys } from '~types/a';
 
 import { FormHook } from '~lib/form-hook';
+import { LanguageKeys } from './locale';
 
 export interface FormHookInterface<T> {
   el: HTMLElement;
