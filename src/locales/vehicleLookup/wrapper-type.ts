@@ -7,7 +7,7 @@ import specificationSchema from './specification/type';
 import paintThicknessSchema from './paintThickness/type';
 import ServiceHistorySchema from './serviceHistory/type';
 
-const vehicleLookupSchema = object({
+const vehicleLookupWrapperSchema = object({
   accessories: accessoriesSchema,
   dynamicClaim: dynamicClaimSchema,
   dynamicRedeem: dynamicRedeemSchema,
@@ -17,4 +17,4 @@ const vehicleLookupSchema = object({
   warranty: warrantySchema,
 });
 
-export default vehicleLookupSchema;
+export default vehicleLookupWrapperSchema;

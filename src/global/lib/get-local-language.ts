@@ -1,36 +1,96 @@
 import { Build } from '@stencil/core';
+import { InferType, object, ObjectSchema } from 'yup';
+
 import { version } from '../../../package.json';
 import localeNetworkMapper from '../../locale-mapper';
-import { Locale } from '~types/a';
+
 import { LanguageKeys, languageMapper } from '~types/locale';
 
-const fileMapper = {
-  ...localeNetworkMapper.parents,
-  ...localeNetworkMapper.targetFolders,
-};
+import globalSchema from '~locales/type';
+import errorsSchema from '~locales/errors/type';
 
-type LocaleParentKeys = keyof typeof localeNetworkMapper.parents;
-type LocaleTargetFolderKeys = keyof typeof localeNetworkMapper.targetFolders;
+type LocaleKeyEntries = keyof typeof localeNetworkMapper;
+
+export type ErrorKeys = keyof InferType<typeof errorsSchema>;
+
+export const sharedLocalesSchema = object({
+  errors: errorsSchema,
+}).concat(globalSchema);
+
+export type SharedLocales = InferType<typeof sharedLocalesSchema>;
 
 const cachedLocales = {};
 
-// Overloads
-export function getLocaleLanguage(component: LocaleParentKeys, fileKey: LanguageKeys): string;
-export function getLocaleLanguage(component: LocaleTargetFolderKeys, fileKey: LanguageKeys): number;
-export function getLocaleLanguage(component: LocaleParentKeys | LocaleTargetFolderKeys, fileKey: LanguageKeys): string | number {
-  const languageFile = languageMapper[fileKey] || languageMapper.en;
+export async function getSharedLocal(languageKey: LanguageKeys): Promise<SharedLocales> {
+  const [errors, globalKeys] = await Promise.all([getLocaleLanguage(languageKey, 'errors', errorsSchema), getLocaleLanguage(languageKey, '-', globalSchema)]);
 
-  // if (cachedLocales[languageFile]) return await cachedLocales[languageFile];
-
-  // let localeResponse;
-
-  // if (Build.isDev) localeResponse = fetch('../../locales/' + languageFile).then(res => res.json() as Locale);
-  // else localeResponse = fetch(`https://cdn.jsdelivr.net/npm/adp-web-components@${version}/dist/locales/${languageFile}`).then(res => res.json() as Locale);
-
-  // cachedLocales[languageFile] = localeResponse;
-
-  // return await localeResponse;
-  return 99;
+  return { errors, ...globalKeys };
 }
 
-const gg = getLocaleLanguage('partLookup', 'en');
+export async function getLocaleLanguage<T extends ObjectSchema<any>>(languageKey: LanguageKeys, component: LocaleKeyEntries, schema: T): Promise<InferType<T>> {
+  const languageFile = languageMapper[languageKey] || languageMapper.en;
+
+  const localeFiles = localeNetworkMapper[component];
+
+  if (!localeFiles || !localeFiles.length) throw new Error(`Locale file not found for component: ${component}`);
+
+  if (localeFiles.length === 1) {
+    const localeFile = localeFiles[0] + languageFile;
+    return requestLocaleFile(localeFile);
+  } else {
+    const localeFilePromises = localeFiles.map(localeFile => requestLocaleFile(localeFile + languageFile));
+    const localeFilesResponses = await Promise.all(localeFilePromises);
+
+    const responseBluePrint = schema.getDefault();
+
+    const parsedResponseMapper = {};
+
+    recursiveParser(component, responseBluePrint, parsedResponseMapper, languageFile);
+
+    return localeFilesResponses;
+  }
+}
+
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function recursiveParser(parents: string, bluePrint: object, parsedResponseMapper: object, languageFile: string) {
+  let mappedSelf = false;
+
+  Object.entries(bluePrint).forEach(([key, value]) => {
+    if (typeof value === 'string' && !mappedSelf) {
+      if (localeNetworkMapper[parents]) {
+        const cacheKey = localeNetworkMapper[parents][0] + languageFile;
+        if (cachedLocales[cacheKey]) Object.assign(parsedResponseMapper, cachedLocales[cacheKey]);
+      }
+      mappedSelf = true;
+    } else if (isPlainObject(value)) {
+      const childMapperKey = parents + '.' + key;
+
+      const isNestedObject = Object.entries(value).some(([_, nestedValue]) => isPlainObject(nestedValue));
+
+      if (isNestedObject) {
+        parsedResponseMapper[key] = {};
+        recursiveParser(childMapperKey, value, parsedResponseMapper[key], languageFile);
+      } else if (localeNetworkMapper[childMapperKey] && !!localeNetworkMapper[childMapperKey].length) {
+        const cacheKey = localeNetworkMapper[childMapperKey][0] + languageFile;
+
+        if (cachedLocales[cacheKey]) parsedResponseMapper[key] = cachedLocales[cacheKey];
+      }
+    }
+  });
+}
+
+async function requestLocaleFile(localeFile: string) {
+  if (cachedLocales[localeFile]) return cachedLocales[localeFile];
+
+  let localeResponse;
+
+  if (!Build.isDev) localeResponse = fetch('../../' + localeFile).then(res => res.json());
+  else localeResponse = fetch(`https://cdn.jsdelivr.net/npm/adp-web-components@${version}/dist/${localeFile}`).then(res => res.json());
+
+  cachedLocales[localeFile] = await localeResponse;
+
+  return cachedLocales[localeFile];
+}
