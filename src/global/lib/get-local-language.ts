@@ -57,7 +57,7 @@ export async function getLocaleLanguage<T extends ObjectSchema<any>>(languageKey
     recursiveParser(component, responseBluePrint, parsedResponseMapper, languageFile);
 
     try {
-      schema.validateSync(localeFilesResponses, { strict: true, abortEarly: false });
+      schema.validateSync(parsedResponseMapper, { strict: true, abortEarly: false });
     } catch (error) {
       console.error(`Failed to parse locale file component: ${component}`);
       console.error(error);

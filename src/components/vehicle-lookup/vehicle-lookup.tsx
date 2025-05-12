@@ -2,10 +2,12 @@ import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stenci
 
 import cn from '~lib/cn';
 import validateVin from '~lib/validate-vin';
-import { getLocaleLanguage } from '~lib/get-local-language';
+import { ErrorKeys, getLocaleLanguage, getSharedLocal, SharedLocales, sharedLocalesSchema } from '~lib/get-local-language';
 
+import { LanguageKeys } from '~types/locale';
 import { DotNetObjectReference } from '~types/components';
-import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/a';
+
+import vehicleLookupWrapperSchema from '~locales/vehicleLookup/wrapper-type';
 
 import { DynamicClaim } from './dynamic-claim';
 import { PaintThickness } from './paint-thickness';
@@ -60,7 +62,8 @@ export class VehicleLookup {
 
   @State() wrapperErrorState = '';
   @State() blazorRef?: DotNetObjectReference;
-  @State() locale: Locale = localeSchema.getDefault();
+
+  @State() sharedLocales: SharedLocales = sharedLocalesSchema.getDefault();
 
   @Element() el: HTMLElement;
 
@@ -72,7 +75,8 @@ export class VehicleLookup {
 
   @Watch('language')
   async changeLanguage(newLanguage: LanguageKeys) {
-    this.locale = await getLocaleLanguage(newLanguage);
+    const localeResponses = await Promise.all([getLocaleLanguage(newLanguage, 'vehicleLookup', vehicleLookupWrapperSchema), getSharedLocal(newLanguage)]);
+    this.sharedLocales = localeResponses[1];
   }
 
   async componentDidLoad() {
@@ -151,9 +155,9 @@ export class VehicleLookup {
 
     if (!activeElement) return;
 
-    if (vin == '') return (this.wrapperErrorState = this.locale.errors.vinNumberRequired);
+    if (vin == '') return (this.wrapperErrorState = this.sharedLocales.errors.vinNumberRequired);
 
-    if (!validateVin(vin)) return (this.wrapperErrorState = this.locale.errors.invalidVin);
+    if (!validateVin(vin)) return (this.wrapperErrorState = this.sharedLocales.errors.invalidVin);
 
     activeElement.fetchData(vin, headers);
   }
