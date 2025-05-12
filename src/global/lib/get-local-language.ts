@@ -87,7 +87,7 @@ async function requestLocaleFile(localeFile: string) {
 
   let localeResponse;
 
-  if (!Build.isDev) localeResponse = fetch('../../' + localeFile).then(res => res.json());
+  if (Build.isDev) localeResponse = fetch('../../' + localeFile).then(res => res.json());
   else localeResponse = fetch(`https://cdn.jsdelivr.net/npm/adp-web-components@${version}/dist/${localeFile}`).then(res => res.json());
 
   cachedLocales[localeFile] = await localeResponse;
