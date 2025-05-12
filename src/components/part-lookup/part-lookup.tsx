@@ -1,14 +1,15 @@
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
+import { LanguageKeys } from '~types/locale';
 import { DotNetObjectReference } from '~types/components';
-import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/a';
 
 import { DeadStockLookup } from './dead-stock-lookup';
 import { DistributorLookup } from './distributor-lookup';
 import { ManufacturerLookup } from './manufacturer-lookup';
 
 import cn from '~lib/cn';
-import { getLocaleLanguage } from '~lib/get-local-language';
+import { ErrorKeys, getLocaleLanguage, getSharedLocal, SharedLocales, sharedLocalesSchema } from '~lib/get-local-language';
+import partLookupWrapperSchema from '~locales/partLookup/wrapper-type';
 
 const componentTags = {
   deadStock: 'dead-stock-lookup',
@@ -42,7 +43,8 @@ export class PartLookup {
 
   @State() wrapperErrorState = '';
   @State() blazorRef?: DotNetObjectReference;
-  @State() locale: Locale = localeSchema.getDefault();
+
+  @State() sharedLocales: SharedLocales = sharedLocalesSchema.getDefault();
 
   @Element() el: HTMLElement;
 
@@ -54,7 +56,8 @@ export class PartLookup {
 
   @Watch('language')
   async changeLanguage(newLanguage: LanguageKeys) {
-    this.locale = await getLocaleLanguage(newLanguage);
+    const localeResponses = await Promise.all([getLocaleLanguage(newLanguage, 'partLookup', partLookupWrapperSchema), getSharedLocal(newLanguage)]);
+    this.sharedLocales = localeResponses[1];
   }
 
   async componentDidLoad() {
@@ -112,7 +115,7 @@ export class PartLookup {
 
     if (!activeElement) return;
 
-    if (partNumber == '') return (this.wrapperErrorState = this.locale.errors.partNumberRequired);
+    if (partNumber == '') return (this.wrapperErrorState = this.sharedLocales.errors.partNumberRequired);
 
     const searchingText = quantity.trim() || quantity.trim() === '0' ? `${partNumber.trim()}/${quantity.trim()}` : partNumber.trim();
 
