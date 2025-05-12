@@ -1,6 +1,6 @@
 import yupTypeMapper from '~lib/yup-type-mapper';
 
-export default yupTypeMapper([
+const manufacturerSchema = yupTypeMapper([
   'origin',
   'warrantyPrice',
   'specialPrice',
@@ -17,3 +17,5 @@ export default yupTypeMapper([
   'hsCode',
   'uzHsCode',
 ]);
+
+export default manufacturerSchema;

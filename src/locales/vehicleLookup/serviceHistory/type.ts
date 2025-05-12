@@ -1,3 +1,5 @@
 import yupTypeMapper from '~lib/yup-type-mapper';
 
-export default yupTypeMapper(['serviceHistory', 'noData', 'branch', 'dealer', 'invoiceNumber', 'date', 'serviceType', 'odometer']);
+const ServiceHistorySchema = yupTypeMapper(['serviceHistory', 'noData', 'branch', 'dealer', 'invoiceNumber', 'date', 'serviceType', 'odometer']);
+
+export default ServiceHistorySchema;

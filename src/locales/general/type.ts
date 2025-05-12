@@ -1,3 +1,5 @@
 import yupTypeMapper from '~lib/yup-type-mapper';
 
-export default yupTypeMapper(['close', 'submit', 'noSelectOptions', 'formSubmittedSuccessfully']);
+const generalLocalSchema = yupTypeMapper(['close', 'submit', 'noSelectOptions', 'formSubmittedSuccessfully']);
+
+export default generalLocalSchema;

@@ -1,6 +1,6 @@
 import yupTypeMapper from '~lib/yup-type-mapper';
 
-export default yupTypeMapper([
+const warrantySchema = yupTypeMapper([
   'authorized',
   'unauthorized',
   'activeWarranty',
@@ -18,3 +18,5 @@ export default yupTypeMapper([
   'sscTableOPCode',
   'sscTablePartNumber',
 ]);
+
+export default warrantySchema;

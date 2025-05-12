@@ -1,3 +1,5 @@
 import yupTypeMapper from '~lib/yup-type-mapper';
 
-export default yupTypeMapper(['lang', 'direction', 'language', 'noData']);
+const globalSchema = yupTypeMapper(['lang', 'direction', 'language', 'noData']);
+
+export default globalSchema;

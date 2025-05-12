@@ -1,6 +1,6 @@
 import yupTypeMapper from '~lib/yup-type-mapper';
 
-export default yupTypeMapper([
+const errorsSchema = yupTypeMapper([
   'noBaseUrl',
   'invalidVin',
   'vinNumberRequired',
@@ -12,3 +12,5 @@ export default yupTypeMapper([
   'wildCard',
   'requestFailedPleaseTryAgainLater',
 ]);
+
+export default errorsSchema;

@@ -1,6 +1,6 @@
 import yupTypeMapper from '~lib/yup-type-mapper';
 
-export default yupTypeMapper([
+const distributerSchema = yupTypeMapper([
   'info',
   'distributorStock',
   'availability',
@@ -16,3 +16,5 @@ export default yupTypeMapper([
   'supersededFrom',
   'supersessions',
 ]);
+
+export default distributerSchema;

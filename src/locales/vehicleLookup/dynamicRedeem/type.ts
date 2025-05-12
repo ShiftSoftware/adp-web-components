@@ -1,6 +1,6 @@
 import yupTypeMapper from '~lib/yup-type-mapper';
 
-export default yupTypeMapper([
+const dynamicRedeemSchema = yupTypeMapper([
   'serviceType',
   'name',
   'activationDate',
@@ -19,3 +19,5 @@ export default yupTypeMapper([
   'jobNumber',
   'claim',
 ]);
+
+export default dynamicRedeemSchema;

@@ -1,6 +1,6 @@
 import yupTypeMapper from '~lib/yup-type-mapper';
 
-export default yupTypeMapper([
+const dynamicClaimSchema = yupTypeMapper([
   'serviceType',
   'activationDate',
   'expireDate',
@@ -19,3 +19,5 @@ export default yupTypeMapper([
   'activationRequired',
   'warrantyAndServicesNotActivated',
 ]);
+
+export default dynamicClaimSchema;

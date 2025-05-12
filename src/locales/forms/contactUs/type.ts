@@ -1,6 +1,6 @@
 import yupTypeMapper from '~lib/yup-type-mapper';
 
-export default yupTypeMapper([
+const contactUsSchema = yupTypeMapper([
   'fullName',
   'fullNameIsRequired',
   'fullNameMinimum',
@@ -19,3 +19,5 @@ export default yupTypeMapper([
   'leaveUsMessage',
   'messageIsRequired',
 ]);
+
+export default contactUsSchema;
