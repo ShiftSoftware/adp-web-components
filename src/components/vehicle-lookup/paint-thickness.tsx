@@ -1,16 +1,19 @@
+import { InferType } from 'yup';
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import cn from '~lib/cn';
-import { getLocaleLanguage } from '~lib/get-local-language';
+import { closeImageViewer, ImageViewerInterface, openImageViewer } from '~lib/image-expansion';
+import { ErrorKeys, getLocaleLanguage, getSharedLocal, SharedLocales, sharedLocalesSchema } from '~lib/get-local-language';
 
 import { getVehicleInformation } from '~api/vehicleInformation';
-import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/a';
+
+import { LanguageKeys } from '~types/locale';
+import { AppStates, MockJson } from '~types/components';
+import { VehicleInformation } from '~types/vehicle-information';
 
 import Eye from '~assets/eye.svg';
 
-import { AppStates, MockJson } from '~types/components';
-import { VehicleInformation } from '~types/vehicle-information';
-import { closeImageViewer, ImageViewerInterface, openImageViewer } from '~lib/image-expansion';
+import paintThicknessSchema from '~locales/vehicleLookup/paintThickness/type';
 
 let mockData: MockJson<VehicleInformation> = {};
 
@@ -28,7 +31,8 @@ export class PaintThickness implements ImageViewerInterface {
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
   @Prop() loadedResponse?: (response: VehicleInformation) => void;
 
-  @State() locale: Locale = localeSchema.getDefault();
+  @State() sharedLocales: SharedLocales = sharedLocalesSchema.getDefault();
+  @State() locale: InferType<typeof paintThicknessSchema> = paintThicknessSchema.getDefault();
 
   @State() state: AppStates = 'idle';
   @State() externalVin?: string = null;
@@ -49,7 +53,9 @@ export class PaintThickness implements ImageViewerInterface {
 
   @Watch('language')
   async changeLanguage(newLanguage: LanguageKeys) {
-    this.locale = await getLocaleLanguage(newLanguage);
+    const localeResponses = await Promise.all([getLocaleLanguage(newLanguage, 'vehicleLookup.paintThickness', paintThicknessSchema), getSharedLocal(newLanguage)]);
+    this.locale = localeResponses[0];
+    this.sharedLocales = localeResponses[1];
   }
 
   private handleSettingData(response: VehicleInformation) {
@@ -140,12 +146,12 @@ export class PaintThickness implements ImageViewerInterface {
   };
 
   render() {
-    const texts = this.locale.vehicleLookup.paintThickness;
+    const texts = this.locale;
     const { imageGroups, parts } = this?.vehicleInformation ? this?.vehicleInformation?.paintThickness : { imageGroups: [], parts: [] };
 
     return (
       <Host>
-        <div dir={this.locale.direction} class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
+        <div dir={this.sharedLocales.direction} class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
           <div>
             <loading-spinner isLoading={this.state.includes('loading')} />
             <div class={cn('transition-all !duration-700', { 'scale-0': this.state.includes('loading') || this.state === 'idle', 'opacity-0': this.state.includes('loading') })}>
@@ -154,7 +160,7 @@ export class PaintThickness implements ImageViewerInterface {
               {['error', 'error-loading'].includes(this.state) && (
                 <div class="py-[16px] min-h-[100px] flex items-center">
                   <div class="px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">
-                    {this.locale.errors[this.errorMessage] || this.locale.errors.wildCard}
+                    {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
                   </div>
                 </div>
               )}

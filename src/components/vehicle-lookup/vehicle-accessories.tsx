@@ -31,8 +31,8 @@ export class VehicleAccessories implements ImageViewerInterface {
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
   @Prop() loadedResponse?: (response: VehicleInformation) => void;
 
-  @State() locale: InferType<typeof accessoriesSchema> = accessoriesSchema.getDefault();
   @State() sharedLocales: SharedLocales = sharedLocalesSchema.getDefault();
+  @State() locale: InferType<typeof accessoriesSchema> = accessoriesSchema.getDefault();
 
   @State() state: AppStates = 'idle';
   @State() externalVin?: string = null;
