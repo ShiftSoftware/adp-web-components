@@ -1,5 +1,5 @@
 import { JSX } from '@stencil/core/internal';
-import { LanguageKeys } from '~types/locales';
+import { LanguageKeys } from '~types/a';
 
 import { FormHook } from '~lib/form-hook';
 

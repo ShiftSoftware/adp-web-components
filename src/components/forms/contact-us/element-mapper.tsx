@@ -1,7 +1,7 @@
 import { h } from '@stencil/core';
 
 import { InputParams } from '~types/general';
-import { LanguageKeys } from '~types/locales';
+import { LanguageKeys } from '~types/a';
 import { FormElementMapper } from '~types/forms';
 import { FormSelectFetcher, FormSelectItem } from '~types/forms';
 

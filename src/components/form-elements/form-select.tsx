@@ -4,7 +4,7 @@ import cn from '~lib/cn';
 import { FormHook } from '~lib/form-hook';
 import { getLocaleLanguage } from '~lib/get-local-language';
 
-import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/locales';
+import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/a';
 import { FormElement, FormSelectFetcher, FormSelectItem } from '~types/forms';
 
 import Loader from '~assets/loader.svg';

@@ -5,7 +5,7 @@ import validateVin from '~lib/validate-vin';
 import { getLocaleLanguage } from '~lib/get-local-language';
 
 import { DotNetObjectReference } from '~types/components';
-import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/locales';
+import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/a';
 
 import { DynamicClaim } from './dynamic-claim';
 import { PaintThickness } from './paint-thickness';

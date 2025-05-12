@@ -1,7 +1,7 @@
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { DotNetObjectReference } from '~types/components';
-import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/locales';
+import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/a';
 
 import { DeadStockLookup } from './dead-stock-lookup';
 import { DistributorLookup } from './distributor-lookup';

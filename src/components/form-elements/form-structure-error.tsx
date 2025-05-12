@@ -2,7 +2,7 @@ import { Component, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getLocaleLanguage } from '~lib/get-local-language';
 
-import { LanguageKeys, Locale, localeSchema } from '~types/locales';
+import { LanguageKeys, Locale, localeSchema } from '~types/a';
 
 @Component({
   shadow: false,

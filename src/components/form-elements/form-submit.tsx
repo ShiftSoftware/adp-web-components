@@ -3,7 +3,7 @@ import { Component, Prop, State, Watch, h } from '@stencil/core';
 import cn from '~lib/cn';
 import { getLocaleLanguage } from '~lib/get-local-language';
 
-import { LanguageKeys, Locale, localeSchema } from '~types/locales';
+import { LanguageKeys, Locale, localeSchema } from '~types/a';
 import { FormFieldParams, StructureObject } from '~types/forms';
 
 import Loader from '~assets/white-loader.svg';

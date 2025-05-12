@@ -1,4 +1,4 @@
-import { LanguageKeys } from '~types/locales';
+import { LanguageKeys } from '~types/a';
 
 export type Grecaptcha = {
   getResponse(): string;

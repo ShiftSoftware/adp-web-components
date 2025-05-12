@@ -1,7 +1,7 @@
 import { Component, Element, Host, Prop, State, h } from '@stencil/core';
 
 import { Grecaptcha } from '~types/general';
-import { LanguageKeys } from '~types/locales';
+import { LanguageKeys } from '~types/a';
 import { FormHookInterface } from '~types/forms';
 
 import cn from '~lib/cn';

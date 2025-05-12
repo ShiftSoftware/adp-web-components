@@ -11,7 +11,7 @@ import processedIcon from './assets/processed.svg';
 
 import { MockJson } from '~types/components';
 import { ClaimPayload, ServiceItem, VehicleInformation } from '~types/vehicle-information';
-import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/locales';
+import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/a';
 
 import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicleInformation';
 
@@ -24,7 +24,7 @@ const icons = {
   pending: pendingIcon,
   processed: processedIcon,
   cancelled: cancelledIcon,
-  activationRequired: activationRequiredIcon
+  activationRequired: activationRequiredIcon,
 };
 
 @Component({
@@ -366,7 +366,7 @@ export class DynamicClaim implements VehicleInformationInterface {
     this.dynamicRedeem.vin = vehicleInformation?.vin;
     this.dynamicRedeem.item = item;
     this.dynamicRedeem.canceledItems = oldItems;
-    
+
     if (vehicleInformation?.saleInformation?.broker !== null && vehicleInformation?.saleInformation?.broker?.invoiceDate === null)
       this.dynamicRedeem.unInvoicedByBrokerName = vehicleInformation?.saleInformation?.broker?.brokerName;
     else this.dynamicRedeem.unInvoicedByBrokerName = null;
@@ -469,7 +469,11 @@ export class DynamicClaim implements VehicleInformationInterface {
             </strong>
           </div>
 
-          <div class={cn('dynamic-claim-body', { 'has-activation-box': this.vehicleInformation && this.vehicleInformation.serviceItems.filter(x => x.status === 'activationRequired').length > 0  })}>
+          <div
+            class={cn('dynamic-claim-body', {
+              'has-activation-box': this.vehicleInformation && this.vehicleInformation.serviceItems.filter(x => x.status === 'activationRequired').length > 0,
+            })}
+          >
             <div class="loading-lane">
               <div class="dynamic-claim-loading-slider">
                 <div class="dynamic-claim-loading-slider-line"></div>
@@ -509,13 +513,25 @@ export class DynamicClaim implements VehicleInformationInterface {
             </div>
 
             <div class="dynamic-claim-activation-box">
-              <div class={cn('card warning-card span-entire-1st-row activation-panel', { loading: this.isLoading, visible: this.vehicleInformation && this.vehicleInformation.serviceItems.filter(x => x.status === 'activationRequired').length > 0 })}
-                onAnimationEnd={this.removeLoadAnimationClass}>
+              <div
+                class={cn('card warning-card span-entire-1st-row activation-panel', {
+                  loading: this.isLoading,
+                  visible: this.vehicleInformation && this.vehicleInformation.serviceItems.filter(x => x.status === 'activationRequired').length > 0,
+                })}
+                onAnimationEnd={this.removeLoadAnimationClass}
+              >
                 <p class="no-padding flex gap-2">
                   <span class="font-semibold">{texts.warrantyAndServicesNotActivated}</span>
                 </p>
 
-                <button onClick={() => { if (this.activate) { this.activate(this.vehicleInformation); } }} class="claim-button dynamic-claim-button">
+                <button
+                  onClick={() => {
+                    if (this.activate) {
+                      this.activate(this.vehicleInformation);
+                    }
+                  }}
+                  class="claim-button dynamic-claim-button"
+                >
                   <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g stroke-width="0"></g>
                     <g stroke-linecap="round" stroke-linejoin="round"></g>
@@ -528,8 +544,6 @@ export class DynamicClaim implements VehicleInformationInterface {
                 </button>
               </div>
             </div>
-
-
           </div>
         </div>
       </Host>

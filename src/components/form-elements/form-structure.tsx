@@ -6,7 +6,7 @@ import { getLocaleLanguage } from '~lib/get-local-language';
 import { isValidStructure } from '~lib/validate-form-structure';
 
 import { FormElementMapper, StructureObject } from '~types/forms';
-import { LanguageKeys, Locale, localeSchema } from '~types/locales';
+import { LanguageKeys, Locale, localeSchema } from '~types/a';
 
 @Component({
   shadow: false,

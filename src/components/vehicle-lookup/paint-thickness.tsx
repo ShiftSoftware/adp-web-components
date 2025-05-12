@@ -4,7 +4,7 @@ import cn from '~lib/cn';
 import { getLocaleLanguage } from '~lib/get-local-language';
 
 import { getVehicleInformation } from '~api/vehicleInformation';
-import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/locales';
+import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/a';
 
 import Eye from '~assets/eye.svg';
 

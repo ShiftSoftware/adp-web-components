@@ -5,7 +5,7 @@ import { getLocaleLanguage } from '~lib/get-local-language';
 
 import { AppStates, MockJson } from '~types/components';
 import { PartInformation } from '~types/part-information';
-import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/locales';
+import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/a';
 
 import { getPartInformation, PartInformationInterface } from '~api/partInformation';
 

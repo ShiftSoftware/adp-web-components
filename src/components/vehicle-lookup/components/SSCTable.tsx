@@ -3,7 +3,7 @@ import { h } from '@stencil/core';
 import XIcon from '../assets/x-mark.svg';
 import CheckIcon from '../assets/check.svg';
 
-import { Locale } from '~types/locales';
+import { Locale } from '~types/a';
 import { SSC } from '~types/vehicle-information';
 
 type Props = {
@@ -41,10 +41,10 @@ export default function SSCTable({ ssc, locale }: Props) {
                   <div class="table-cell-container table-cell-labors-container">
                     {!!sscItem.labors.length
                       ? sscItem.labors.map(labor => (
-                        <div key={labor.laborCode} class='success'>
-                          {labor.laborCode}
-                        </div>
-                      ))
+                          <div key={labor.laborCode} class="success">
+                            {labor.laborCode}
+                          </div>
+                        ))
                       : '...'}
                   </div>
                 </td>
