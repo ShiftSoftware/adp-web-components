@@ -5,14 +5,16 @@ import SSCTable from './components/SSCTable';
 import CardsContainer from './components/CardsContainer';
 
 import cn from '~lib/cn';
-import { getLocaleLanguage } from '~lib/get-local-language';
+import { ErrorKeys, getLocaleLanguage, getSharedLocal, SharedLocales, sharedLocalesSchema } from '~lib/get-local-language';
 
 import { Grecaptcha } from '~types/general';
 import { AppStates, MockJson } from '~types/components';
 import { VehicleInformation } from '~types/vehicle-information';
-import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/a';
 
 import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicleInformation';
+import { LanguageKeys } from '~types/locale';
+import warrantySchema from '~locales/vehicleLookup/warranty/type';
+import { InferType } from 'yup';
 
 let mockData: MockJson<VehicleInformation> = {};
 
@@ -61,7 +63,8 @@ export class WarrantyDetails implements VehicleInformationInterface {
   @State() recaptchaRes: { hasSSC: boolean; message: 'noPendingSSC' | 'pendingSSC' } | null = null;
   @State() headers: any = {};
 
-  @State() locale: Locale = localeSchema.getDefault();
+  @State() sharedLocales: SharedLocales = sharedLocalesSchema.getDefault();
+  @State() locale: InferType<typeof warrantySchema> = warrantySchema.getDefault();
 
   abortController: AbortController;
   networkTimeoutRef: ReturnType<typeof setTimeout>;
@@ -75,7 +78,9 @@ export class WarrantyDetails implements VehicleInformationInterface {
 
   @Watch('language')
   async changeLanguage(newLanguage: LanguageKeys) {
-    this.locale = await getLocaleLanguage(newLanguage);
+    const localeResponses = await Promise.all([getLocaleLanguage(newLanguage, 'vehicleLookup.warranty', warrantySchema), getSharedLocal(newLanguage)]);
+    this.locale = localeResponses[0];
+    this.sharedLocales = localeResponses[1];
   }
 
   private handleSettingData(response: VehicleInformation) {
@@ -244,7 +249,7 @@ export class WarrantyDetails implements VehicleInformationInterface {
   render() {
     return (
       <Host>
-        <div dir={this.locale.direction} class="min-h-[100px] warranty">
+        <div dir={this.sharedLocales.direction} class="min-h-[100px] warranty">
           <div>
             <loading-spinner isLoading={this.state.includes('loading')} />
             <div
@@ -260,14 +265,14 @@ export class WarrantyDetails implements VehicleInformationInterface {
               {['error', 'error-loading'].includes(this.state) && (
                 <div class="py-[16px] min-h-[100px] flex items-center">
                   <div class="px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">
-                    {this.locale.errors[this.errorMessage] || this.locale.errors.wildCard}
+                    {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
                   </div>
                 </div>
               )}
 
               {this.showWarranty && ['data', 'data-loading'].includes(this.state) && (
                 <CardsContainer
-                  locale={this.locale}
+                  warrantyLocale={this.locale}
                   isAuthorized={this.vehicleInformation?.isAuthorized}
                   unInvoicedByBrokerName={this.unInvoicedByBrokerName}
                   vehicleInformation={this.vehicleInformation}
@@ -279,22 +284,20 @@ export class WarrantyDetails implements VehicleInformationInterface {
               </div>
 
               {['data', 'data-loading'].includes(this.state) && this.recaptchaRes && (
-                <div class={cn('recaptcha-response', !this.recaptchaRes.hasSSC ? 'success-card' : 'reject-card ')}>
-                  {this.locale.vehicleLookup.warranty[this.recaptchaRes.message]}
-                </div>
+                <div class={cn('recaptcha-response', !this.recaptchaRes.hasSSC ? 'success-card' : 'reject-card ')}>{this.locale[this.recaptchaRes.message]}</div>
               )}
 
               {this.checkingUnauthorizedSSC && (
                 <div class="loading-spinner" style={{ marginTop: '20px', flexDirection: 'column' }}>
                   <div>
-                    <strong>{this.locale.vehicleLookup.warranty.checkingTMC}</strong>
+                    <strong>{this.locale.checkingTMC}</strong>
                   </div>
                   <img class="spin" src={Loader} />
                 </div>
               )}
 
               {this.showSsc && ['data', 'data-loading'].includes(this.state) && this.vehicleInformation?.ssc !== null && !!this.vehicleInformation?.ssc.length && (
-                <SSCTable locale={this.locale} ssc={this.vehicleInformation.ssc} />
+                <SSCTable warrantyLocale={this.locale} ssc={this.vehicleInformation.ssc} />
               )}
             </div>
           </div>

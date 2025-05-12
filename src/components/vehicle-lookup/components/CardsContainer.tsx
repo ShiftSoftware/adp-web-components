@@ -1,19 +1,20 @@
+import { InferType } from 'yup';
 import { h } from '@stencil/core';
 
-import { Locale } from '~types/a';
 import { VehicleInformation } from '~types/vehicle-information';
 
 import StatusCard from './StatusCard';
 
+import warrantySchema from '~locales/vehicleLookup/warranty/type';
+
 type Props = {
-  locale: Locale;
+  warrantyLocale: InferType<typeof warrantySchema>;
   vehicleInformation: VehicleInformation;
   isAuthorized: boolean;
   unInvoicedByBrokerName?: string;
 };
 
-export default function CardsContainer({ vehicleInformation, isAuthorized, unInvoicedByBrokerName, locale }: Props) {
-  const warrantyLocale = locale.vehicleLookup.warranty;
+export default function CardsContainer({ vehicleInformation, isAuthorized, unInvoicedByBrokerName, warrantyLocale }: Props) {
   return (
     <div class="warranty-tags mx-auto pt-3">
       <div class="card warning-card span-entire-1st-row">

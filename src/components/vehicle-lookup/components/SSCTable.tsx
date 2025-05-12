@@ -1,18 +1,17 @@
+import { InferType } from 'yup';
 import { h } from '@stencil/core';
 
 import XIcon from '../assets/x-mark.svg';
 import CheckIcon from '../assets/check.svg';
 
-import { Locale } from '~types/a';
 import { SSC } from '~types/vehicle-information';
+import warrantySchema from '~locales/vehicleLookup/warranty/type';
 
 type Props = {
   ssc: SSC[];
-  locale: Locale;
+  warrantyLocale: InferType<typeof warrantySchema>;
 };
-export default function SSCTable({ ssc, locale }: Props) {
-  const warrantyLocale = locale.vehicleLookup.warranty;
-
+export default function SSCTable({ ssc, warrantyLocale }: Props) {
   return (
     <div class="wrapper-table">
       <div class="header">{warrantyLocale.sscCampings}</div>
