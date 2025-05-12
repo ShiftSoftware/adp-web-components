@@ -1,10 +1,14 @@
+import { InferType } from 'yup';
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import cn from '~lib/cn';
-import { getLocaleLanguage } from '~lib/get-local-language';
-
+import { LanguageKeys } from '~types/locale';
 import { ClaimPayload, ServiceItem } from '~types/vehicle-information';
-import { LanguageKeys, Locale, localeSchema } from '~types/a';
+
+import cn from '~lib/cn';
+import { getLocaleLanguage, getSharedLocal, SharedLocales, sharedLocalesSchema } from '~lib/get-local-language';
+
+import dynamicRedeemSchema from '~locales/vehicleLookup/dynamicRedeem/type';
+
 @Component({
   shadow: true,
   tag: 'dynamic-redeem',
@@ -21,7 +25,8 @@ export class DynamicRedeem {
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
   @State() claimViaBarcodeScanner: boolean = true;
 
-  @State() locale: Locale = localeSchema.getDefault();
+  @State() sharedLocales: SharedLocales = sharedLocalesSchema.getDefault();
+  @State() locale: InferType<typeof dynamicRedeemSchema> = dynamicRedeemSchema.getDefault();
 
   @State() isLoading: boolean = false;
   @State() internalVin?: string = '';
@@ -51,7 +56,9 @@ export class DynamicRedeem {
 
   @Watch('language')
   async changeLanguage(newLanguage: LanguageKeys) {
-    this.locale = await getLocaleLanguage(newLanguage);
+    const localeResponses = await Promise.all([getLocaleLanguage(newLanguage, 'vehicleLookup.dynamicRedeem', dynamicRedeemSchema), getSharedLocal(newLanguage)]);
+    this.locale = localeResponses[0];
+    this.sharedLocales = localeResponses[1];
   }
 
   @Watch('isLoading')
@@ -201,13 +208,13 @@ export class DynamicRedeem {
   }
 
   render() {
-    const texts = this.locale.vehicleLookup.dynamicRedeem;
+    const texts = this.locale;
     const disableInput = !this.confirmServiceCancellation || !this.confirmUnInvoicedTBPVehicles;
 
     //if (!disableInput) this.focusInput();
     return (
       <Host>
-        <div dir={this.locale.direction} class={cn('dynamic-claim-processor', this?.isOpened && 'active')}>
+        <div dir={this.sharedLocales.direction} class={cn('dynamic-claim-processor', this?.isOpened && 'active')}>
           <svg id="dynamic-claim-processor-close-icon" onClick={this.closeModal} viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>

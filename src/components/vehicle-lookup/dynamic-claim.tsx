@@ -1,21 +1,23 @@
+import { InferType } from 'yup';
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import cn from '~lib/cn';
-import { getLocaleLanguage } from '~lib/get-local-language';
+import { ErrorKeys, getLocaleLanguage, getSharedLocal, SharedLocales, sharedLocalesSchema } from '~lib/get-local-language';
 
-import activationRequiredIcon from './assets/activationRequired.svg';
+import { LanguageKeys } from '~types/locale';
+import { MockJson } from '~types/components';
+import { ClaimPayload, ServiceItem, VehicleInformation } from '~types/vehicle-information';
+
 import expiredIcon from './assets/expired.svg';
 import pendingIcon from './assets/pending.svg';
 import cancelledIcon from './assets/cancelled.svg';
 import processedIcon from './assets/processed.svg';
-
-import { MockJson } from '~types/components';
-import { ClaimPayload, ServiceItem, VehicleInformation } from '~types/vehicle-information';
-import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/a';
+import activationRequiredIcon from './assets/activationRequired.svg';
 
 import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicleInformation';
 
 import { DynamicRedeem } from './dynamic-redeem';
+import dynamicClaimSchema from '~locales/vehicleLookup/dynamicClaim/type';
 
 let mockData: MockJson<VehicleInformation> = {};
 
@@ -44,7 +46,8 @@ export class DynamicClaim implements VehicleInformationInterface {
   @Prop() loadedResponse?: (response: VehicleInformation) => void;
   @Prop() activate?: (vehicleInformation: VehicleInformation) => void;
 
-  @State() locale: Locale = localeSchema.getDefault();
+  @State() sharedLocales: SharedLocales = sharedLocalesSchema.getDefault();
+  @State() locale: InferType<typeof dynamicClaimSchema> = dynamicClaimSchema.getDefault();
 
   @State() isIdle: boolean = true;
   @State() popupClasses: string = '';
@@ -76,7 +79,9 @@ export class DynamicClaim implements VehicleInformationInterface {
 
   @Watch('language')
   async changeLanguage(newLanguage: LanguageKeys) {
-    this.locale = await getLocaleLanguage(newLanguage);
+    const localeResponses = await Promise.all([getLocaleLanguage(newLanguage, 'vehicleLookup.dynamicClaim', dynamicClaimSchema), getSharedLocal(newLanguage)]);
+    this.locale = localeResponses[0];
+    this.sharedLocales = localeResponses[1];
   }
 
   async componentDidLoad() {
@@ -352,7 +357,7 @@ export class DynamicClaim implements VehicleInformationInterface {
           this.dynamicRedeem.handleClaiming = null;
         } catch (error) {
           console.error(error);
-          alert(this.locale.errors.requestFailedPleaseTryAgainLater);
+          alert(this.sharedLocales.errors.requestFailedPleaseTryAgainLater);
           this.dynamicRedeem.quite();
           this.dynamicRedeem.handleClaiming = null;
         }
@@ -375,10 +380,10 @@ export class DynamicClaim implements VehicleInformationInterface {
   }
 
   createPopup(item: ServiceItem) {
-    const texts = this.locale.vehicleLookup.dynamicClaim;
+    const texts = this.locale;
 
     return (
-      <div dir={this.locale.direction} class="popup-position-ref">
+      <div dir={this.sharedLocales.direction} class="popup-position-ref">
         <div class="popup-container">
           <div class={cn('dynamic-claim-item-popup-info-triangle', this.popupClasses)}>
             <div class="dynamic-claim-item-popup-info-triangle-up"></div>
@@ -450,7 +455,7 @@ export class DynamicClaim implements VehicleInformationInterface {
 
   render() {
     const serviceItems = this.vehicleInformation?.serviceItems || [];
-    const texts = this.locale.vehicleLookup.dynamicClaim;
+    const texts = this.locale;
 
     console.log(this.errorMessage);
 
@@ -461,8 +466,8 @@ export class DynamicClaim implements VehicleInformationInterface {
           <div class="dynamic-claim-header">
             <strong onAnimationEnd={this.removeLoadAnimationClass} class="dynamic-claim-header-vin load-animation">
               {this.errorMessage && (
-                <span dir={this.locale.direction} style={{ color: 'red' }}>
-                  {this.locale.errors[this.errorMessage] || this.locale.errors.wildCard}
+                <span dir={this.sharedLocales.direction} style={{ color: 'red' }}>
+                  {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
                 </span>
               )}
               {!this.errorMessage && this.vehicleInformation?.vin}
