@@ -1,13 +1,16 @@
+import { InferType } from 'yup';
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import cn from '~lib/cn';
-import { getLocaleLanguage } from '~lib/get-local-language';
+import { ErrorKeys, getLocaleLanguage, getSharedLocal, SharedLocales, sharedLocalesSchema } from '~lib/get-local-language';
 
+import { LanguageKeys } from '~types/locale';
 import { AppStates, MockJson } from '~types/components';
 import { VehicleInformation } from '~types/vehicle-information';
-import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/a';
 
 import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicleInformation';
+
+import ServiceHistorySchema from '~locales/vehicleLookup/serviceHistory/type';
 
 let mockData: MockJson<VehicleInformation> = {};
 
@@ -25,7 +28,8 @@ export class ServiceHistory implements VehicleInformationInterface {
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
   @Prop() loadedResponse?: (response: VehicleInformation) => void;
 
-  @State() locale: Locale = localeSchema.getDefault();
+  @State() sharedLocales: SharedLocales = sharedLocalesSchema.getDefault();
+  @State() locale: InferType<typeof ServiceHistorySchema> = ServiceHistorySchema.getDefault();
 
   @State() state: AppStates = 'idle';
   @State() externalVin?: string = null;
@@ -43,7 +47,9 @@ export class ServiceHistory implements VehicleInformationInterface {
 
   @Watch('language')
   async changeLanguage(newLanguage: LanguageKeys) {
-    this.locale = await getLocaleLanguage(newLanguage);
+    const localeResponses = await Promise.all([getLocaleLanguage(newLanguage, 'vehicleLookup.serviceHistory', ServiceHistorySchema), getSharedLocal(newLanguage)]);
+    this.locale = localeResponses[0];
+    this.sharedLocales = localeResponses[1];
   }
 
   private handleSettingData(response: VehicleInformation) {
@@ -119,11 +125,11 @@ export class ServiceHistory implements VehicleInformationInterface {
   }
 
   render() {
-    const texts = this.locale.vehicleLookup.serviceHistory;
+    const texts = this.locale;
 
     return (
       <Host>
-        <div dir={this.locale.direction} class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
+        <div dir={this.sharedLocales.direction} class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
           <div>
             <loading-spinner isLoading={this.state.includes('loading')} />
             <div class={cn('transition-all !duration-700', { 'scale-0': this.state.includes('loading') || this.state === 'idle', 'opacity-0': this.state.includes('loading') })}>
@@ -132,7 +138,7 @@ export class ServiceHistory implements VehicleInformationInterface {
               {['error', 'error-loading'].includes(this.state) && (
                 <div class="py-[16px] min-h-[100px] flex items-center">
                   <div class="px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">
-                    {this.locale.errors[this.errorMessage] || this.locale.errors.wildCard}
+                    {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
                   </div>
                 </div>
               )}

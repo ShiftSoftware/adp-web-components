@@ -36,7 +36,16 @@ export async function getLocaleLanguage<T extends ObjectSchema<any>>(languageKey
 
   if (localeFiles.length === 1) {
     const localeFile = localeFiles[0] + languageFile;
-    return requestLocaleFile(localeFile);
+    const response = await requestLocaleFile(localeFile);
+
+    try {
+      schema.validateSync(response, { strict: true, abortEarly: false });
+    } catch (error) {
+      console.error(`Failed to parse locale file: ${localeFile}`);
+      console.error(error);
+    }
+
+    return response;
   } else {
     const localeFilePromises = localeFiles.map(localeFile => requestLocaleFile(localeFile + languageFile));
     const localeFilesResponses = await Promise.all(localeFilePromises);
@@ -46,6 +55,13 @@ export async function getLocaleLanguage<T extends ObjectSchema<any>>(languageKey
     const parsedResponseMapper = {};
 
     recursiveParser(component, responseBluePrint, parsedResponseMapper, languageFile);
+
+    try {
+      schema.validateSync(localeFilesResponses, { strict: true, abortEarly: false });
+    } catch (error) {
+      console.error(`Failed to parse locale file component: ${component}`);
+      console.error(error);
+    }
 
     return localeFilesResponses;
   }
