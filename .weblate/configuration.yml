@@ -1,0 +1,29 @@
+version: '1'
+components:
+  - name: Errors
+    source_file: locales/errors/en.json
+    file_format: json
+    monolingual: true
+    base_language: en
+    file_filter: locales/errors/%lang%.json
+
+  - name: ContactUs
+    source_file: locales/forms/contactUs/en.json
+    file_format: json
+    monolingual: true
+    base_language: en
+    file_filter: locales/forms/contactUs/%lang%.json
+
+  - name: GeneralForms
+    source_file: locales/forms/general/en.json
+    file_format: json
+    monolingual: true
+    base_language: en
+    file_filter: locales/forms/general/%lang%.json
+
+  - name: RootTranslations
+    source_file: locales/en.json
+    file_format: json
+    monolingual: true
+    base_language: en
+    file_filter: locales/%lang%.json
