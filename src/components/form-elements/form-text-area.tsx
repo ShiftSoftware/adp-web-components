@@ -1,12 +1,16 @@
+import { InferType, ObjectSchema } from 'yup';
 import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import cn from '~lib/cn';
 import { FormHook } from '~lib/form-hook';
-import { getLocaleLanguage } from '~lib/get-local-language';
+import { getLocaleLanguage, LocaleKeyEntries } from '~lib/get-local-language';
 
 import { InputParams } from '~types/general';
+import { LanguageKeys } from '~types/locale';
 import { FormElement, LocaleFormKeys } from '~types/forms';
-import { LanguageKeys, Locale, localeSchema } from '~types/a';
+
+import formsSchema from '~locales/forms/type';
+import formWrapperSchema from '~locales/forms/wrapper-type';
 
 @Component({
   shadow: false,
@@ -25,7 +29,7 @@ export class FormTextArea implements FormElement {
   @Prop() language: LanguageKeys = 'en';
   @Prop() formLocaleName: LocaleFormKeys;
 
-  @State() locale: Locale = localeSchema.getDefault();
+  @State() locale: InferType<typeof formWrapperSchema> = formWrapperSchema.getDefault();
 
   @Element() el!: HTMLElement;
 
@@ -42,7 +46,14 @@ export class FormTextArea implements FormElement {
 
   @Watch('language')
   async changeLanguage(newLanguage: LanguageKeys) {
-    this.locale = await getLocaleLanguage(newLanguage);
+    const currentFormSchema = formWrapperSchema.fields[this.formLocaleName] as ObjectSchema<InferType<any>>;
+
+    const localeResponses = await Promise.all([
+      getLocaleLanguage(newLanguage, 'forms*', formsSchema),
+      getLocaleLanguage(newLanguage, ('forms.' + this.formLocaleName) as LocaleKeyEntries, currentFormSchema),
+    ]);
+    Object.assign(this.locale, localeResponses[0]);
+    Object.assign(this.locale[this.formLocaleName], localeResponses[1]);
   }
 
   reset(newValue?: string) {
@@ -58,7 +69,7 @@ export class FormTextArea implements FormElement {
 
     const prefixWidth = prefix ? prefix.getBoundingClientRect().width : 0;
 
-    const texts = this.locale.forms[this.formLocaleName];
+    const texts = this.locale[this.formLocaleName];
 
     return (
       <Host>
@@ -87,7 +98,7 @@ export class FormTextArea implements FormElement {
               'translate-y-[calc(100%-5px)] error-message opacity-100': isError,
             })}
           >
-            {texts[errorMessage] || this.locale.forms.inputValueIsIncorrect || errorMessage}
+            {texts[errorMessage] || this.locale.inputValueIsIncorrect || errorMessage}
           </div>
         </label>
       </Host>

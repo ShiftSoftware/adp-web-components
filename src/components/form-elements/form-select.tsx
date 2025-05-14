@@ -1,13 +1,18 @@
+import { InferType, ObjectSchema } from 'yup';
 import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import cn from '~lib/cn';
 import { FormHook } from '~lib/form-hook';
-import { getLocaleLanguage } from '~lib/get-local-language';
+import { ErrorKeys, getLocaleLanguage, getSharedLocal, LocaleKeyEntries, SharedLocales, sharedLocalesSchema } from '~lib/get-local-language';
 
-import { ErrorKeys, LanguageKeys, Locale, localeSchema } from '~types/a';
-import { FormElement, FormSelectFetcher, FormSelectItem } from '~types/forms';
+import { LanguageKeys } from '~types/locale';
+import { FormElement, FormSelectFetcher, FormSelectItem, LocaleFormKeys } from '~types/forms';
 
 import Loader from '~assets/loader.svg';
+
+import formsSchema from '~locales/forms/type';
+import generalSchema from '~locales/general/type';
+import formWrapperSchema from '~locales/forms/wrapper-type';
 
 @Component({
   shadow: false,
@@ -24,9 +29,9 @@ export class FormSelect implements FormElement {
   @Prop() isRequired: boolean;
   @Prop() errorMessage: string;
   @Prop() wrapperClass: string;
-  @Prop() formLocaleName: string;
   @Prop() fetcher: FormSelectFetcher;
   @Prop() language: LanguageKeys = 'en';
+  @Prop() formLocaleName: LocaleFormKeys;
   @Prop() placeholder: string = 'Select an option';
 
   @State() isLoading: boolean;
@@ -35,14 +40,28 @@ export class FormSelect implements FormElement {
   @State() openUpwards: boolean = false;
   @State() options: FormSelectItem[] = [];
   @State() fetchingErrorMessage?: ErrorKeys = null;
-  @State() locale: Locale = localeSchema.getDefault();
+
+  @State() sharedLocales: SharedLocales = sharedLocalesSchema.getDefault();
+  @State() locale: InferType<typeof formWrapperSchema> = formWrapperSchema.getDefault();
+  @State() generalLocales: InferType<typeof generalSchema> = generalSchema.getDefault();
 
   @Element() el!: HTMLElement;
   private abortController: AbortController;
 
   @Watch('language')
   async changeLanguage(newLanguage: LanguageKeys) {
-    this.locale = await getLocaleLanguage(newLanguage);
+    const currentFormSchema = formWrapperSchema.fields[this.formLocaleName] as ObjectSchema<InferType<any>>;
+
+    const localeResponses = await Promise.all([
+      getLocaleLanguage(newLanguage, 'forms*', formsSchema),
+      getSharedLocal(newLanguage),
+      getLocaleLanguage(newLanguage, ('forms.' + this.formLocaleName) as LocaleKeyEntries, currentFormSchema),
+      getLocaleLanguage(newLanguage, 'general', generalSchema),
+    ]);
+    Object.assign(this.locale, localeResponses[0]);
+    Object.assign(this.locale[this.formLocaleName], localeResponses[2]);
+    this.sharedLocales = localeResponses[1];
+    this.generalLocales = localeResponses[3];
     this.fetch();
   }
 
@@ -132,7 +151,7 @@ export class FormSelect implements FormElement {
   }
 
   render() {
-    const texts = this.locale.forms[this.formLocaleName];
+    const texts = this.locale[this.formLocaleName];
 
     const selectedItem = this.options.find(item => this.selectedValue === item.value);
 
@@ -216,8 +235,8 @@ export class FormSelect implements FormElement {
                 ))}
               {!this.options.length && (
                 <div class={cn('select-empty-container h-[100px] flex items-center justify-center', { 'text-red-500': this.fetchingErrorMessage })}>
-                  {this.fetchingErrorMessage && (this.locale.errors[this.fetchingErrorMessage] || this.locale.errors.wildCard)}
-                  {!this.fetchingErrorMessage && (this.isLoading ? <img class="spin-slow size-[22px]" src={Loader} /> : this.locale.general.noSelectOptions)}
+                  {this.fetchingErrorMessage && (this.sharedLocales.errors[this.fetchingErrorMessage] || this.sharedLocales.errors.wildCard)}
+                  {!this.fetchingErrorMessage && (this.isLoading ? <img class="spin-slow size-[22px]" src={Loader} /> : this.generalLocales.noSelectOptions)}
                 </div>
               )}
             </div>
@@ -228,7 +247,7 @@ export class FormSelect implements FormElement {
               'translate-y-full error-message opacity-100': this.isError,
             })}
           >
-            {texts[this.errorMessage] || this.locale.forms.inputValueIsIncorrect || this.errorMessage}
+            {texts[this.errorMessage] || this.locale.inputValueIsIncorrect || this.errorMessage}
           </div>
         </label>
       </Host>

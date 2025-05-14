@@ -2,11 +2,13 @@ import { Component, Fragment, Host, Prop, State, Watch, h } from '@stencil/core'
 
 import cn from '~lib/cn';
 import { FormHook } from '~lib/form-hook';
-import { getLocaleLanguage } from '~lib/get-local-language';
+import { getLocaleLanguage, getSharedLocal, SharedLocales, sharedLocalesSchema } from '~lib/get-local-language';
 import { isValidStructure } from '~lib/validate-form-structure';
 
+import { LanguageKeys } from '~types/locale';
 import { FormElementMapper, StructureObject } from '~types/forms';
-import { LanguageKeys, Locale, localeSchema } from '~types/a';
+import generalSchema from '~locales/general/type';
+import { InferType } from 'yup';
 
 @Component({
   shadow: false,
@@ -26,7 +28,9 @@ export class FormStructure {
 
   @State() showSuccess: boolean = false;
   @State() structureObject: StructureObject = null;
-  @State() locale: Locale = localeSchema.getDefault();
+
+  @State() sharedLocales: SharedLocales = sharedLocalesSchema.getDefault();
+  @State() generalLocale: InferType<typeof generalSchema> = generalSchema.getDefault();
 
   async componentWillLoad() {
     this.form.setSuccessAnimation(() => {
@@ -55,7 +59,9 @@ export class FormStructure {
 
   @Watch('language')
   async changeLanguage(newLanguage: LanguageKeys) {
-    this.locale = await getLocaleLanguage(newLanguage);
+    const localeResponses = await Promise.all([getLocaleLanguage(newLanguage, 'general', generalSchema), getSharedLocal(newLanguage)]);
+    this.generalLocale = localeResponses[0];
+    this.sharedLocales = localeResponses[1];
   }
 
   private renderLoop(structureElement: StructureObject) {
@@ -81,12 +87,9 @@ export class FormStructure {
 
     const { formController, resetFormErrorMessage } = this.form;
 
-    // @ts-ignore
-    window.ff = this.form;
-
     return (
       <Host>
-        <form class="relative overflow-hidden" dir={this.locale.direction} {...formController}>
+        <form class="relative overflow-hidden" dir={this.sharedLocales.direction} {...formController}>
           <div
             class={cn('absolute -translate-x-full transition duration-1000 flex items-center justify-center size-full opacity-0', {
               'opacity-100 translate-x-0': this.showSuccess,
@@ -107,7 +110,7 @@ export class FormStructure {
                 <path d="m9 12 2 2 4-4" />
               </svg>
 
-              <div class="text-[20px]">{this.locale.general.formSubmittedSuccessfully}</div>
+              <div class="text-[20px]">{this.generalLocale.formSubmittedSuccessfully}</div>
             </div>
           </div>
           <form-dialog dialogClosed={resetFormErrorMessage} language={this.language} errorMessage={this.errorMessage} />

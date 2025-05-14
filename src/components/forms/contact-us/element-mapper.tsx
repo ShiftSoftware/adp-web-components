@@ -1,13 +1,14 @@
 import { h } from '@stencil/core';
 
 import { InputParams } from '~types/general';
-import { LanguageKeys } from '~types/a';
+import { LanguageKeys } from '~types/locale';
 import { FormElementMapper } from '~types/forms';
 import { FormSelectFetcher, FormSelectItem } from '~types/forms';
 
 import { ContactUs, phoneValidator } from './validations';
 import { getLocaleLanguage } from '~lib/get-local-language';
 import { CITY_ENDPOINT } from '~api/urls';
+import generalTicketTypesSchema from '~locales/generalTicketTypes/type';
 
 export const contactUsElements: FormElementMapper<ContactUs> = {
   submit: formContext => {
@@ -130,7 +131,7 @@ export const contactUsElements: FormElementMapper<ContactUs> = {
     const { disabled, errorMessage, isError, isRequired, name } = form.getInputState('generalTicketType');
 
     const fetcher: FormSelectFetcher = async (language: LanguageKeys, _: AbortSignal): Promise<FormSelectItem[]> => {
-      const ticketTypes = (await getLocaleLanguage(language)).generalTicketTypes;
+      const ticketTypes = await getLocaleLanguage(language, 'generalTicketTypes', generalTicketTypesSchema);
 
       const generalInquiryTypes: FormSelectItem[] = [
         {

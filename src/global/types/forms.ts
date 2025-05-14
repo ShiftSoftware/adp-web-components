@@ -2,6 +2,7 @@ import { JSX } from '@stencil/core/internal';
 
 import { FormHook } from '~lib/form-hook';
 import { LanguageKeys } from './locale';
+import formWrapperSchema from '~locales/forms/wrapper-type';
 
 export interface FormHookInterface<T> {
   el: HTMLElement;
@@ -48,7 +49,7 @@ export type StructureArray = (string | StructureArray)[];
 
 export type StructureObject = FormElementStructure | null;
 
-export type LocaleFormKeys = 'contactUs';
+export type LocaleFormKeys = keyof typeof formWrapperSchema.fields;
 
 export type Params = {
   [key: string]: any;

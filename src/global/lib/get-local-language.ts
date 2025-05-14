@@ -9,7 +9,7 @@ import { LanguageKeys, languageMapper } from '~types/locale';
 import globalSchema from '~locales/type';
 import errorsSchema from '~locales/errors/type';
 
-type LocaleKeyEntries = keyof typeof localeNetworkMapper;
+export type LocaleKeyEntries = keyof typeof localeNetworkMapper;
 
 export type ErrorKeys = keyof InferType<typeof errorsSchema>;
 
@@ -99,14 +99,16 @@ function recursiveParser(parents: string, bluePrint: object, parsedResponseMappe
 }
 
 async function requestLocaleFile(localeFile: string) {
-  if (cachedLocales[localeFile]) return cachedLocales[localeFile];
+  if (cachedLocales[localeFile]) return await cachedLocales[localeFile];
 
-  let localeResponse;
+  const fetchPromise = (Build.isDev ? fetch('../../' + localeFile) : fetch(`https://cdn.jsdelivr.net/npm/adp-web-components@${version}/dist/${localeFile}`)).then(res =>
+    res.json(),
+  );
 
-  if (Build.isDev) localeResponse = fetch('../../' + localeFile).then(res => res.json());
-  else localeResponse = fetch(`https://cdn.jsdelivr.net/npm/adp-web-components@${version}/dist/${localeFile}`).then(res => res.json());
+  cachedLocales[localeFile] = fetchPromise;
 
-  cachedLocales[localeFile] = await localeResponse;
+  const result = await fetchPromise;
+  cachedLocales[localeFile] = result;
 
-  return cachedLocales[localeFile];
+  return result;
 }

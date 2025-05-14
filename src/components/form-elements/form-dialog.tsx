@@ -1,9 +1,12 @@
+import { InferType } from 'yup';
 import { Component, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import cn from '~lib/cn';
-import { getLocaleLanguage } from '~lib/get-local-language';
+import { getLocaleLanguage, getSharedLocal, SharedLocales, sharedLocalesSchema } from '~lib/get-local-language';
 
-import { LanguageKeys, Locale, localeSchema } from '~types/a';
+import { LanguageKeys } from '~types/locale';
+
+import generalSchema from '~locales/general/type';
 
 @Component({
   shadow: false,
@@ -18,7 +21,8 @@ export class FormInput {
   @State() internalMessage: string;
   @State() isOpened: boolean = false;
 
-  @State() locale: Locale = localeSchema.getDefault();
+  @State() sharedLocales: SharedLocales = sharedLocalesSchema.getDefault();
+  @State() generalLocale: InferType<typeof generalSchema> = generalSchema.getDefault();
 
   async componentWillLoad() {
     if (this.internalMessage) {
@@ -30,7 +34,9 @@ export class FormInput {
 
   @Watch('language')
   async changeLanguage(newLanguage: LanguageKeys) {
-    this.locale = await getLocaleLanguage(newLanguage);
+    const localeResponses = await Promise.all([getLocaleLanguage(newLanguage, 'general', generalSchema), getSharedLocal(newLanguage)]);
+    this.generalLocale = localeResponses[0];
+    this.sharedLocales = localeResponses[1];
   }
 
   @Watch('errorMessage')
@@ -53,7 +59,7 @@ export class FormInput {
     return (
       <Host>
         <div
-          dir={this.locale.direction}
+          dir={this.sharedLocales.direction}
           class={cn('fixed pointer-events-none flex items-center justify-center top-0 left-0 z-[9999999999] w-[100dvw] h-[100dvh] transition duration-300', {
             'bg-black/50 dialog-blur pointer-events-auto': this.isOpened,
           })}
@@ -81,14 +87,14 @@ export class FormInput {
                 </svg>
               </button>
             </div>
-            <div class="text-justify">{this.locale.errors[this.internalMessage] || this.internalMessage}</div>
+            <div class="text-justify">{this.sharedLocales.errors[this.internalMessage] || this.internalMessage}</div>
             <div class="flex justify-start">
               <button
                 type="button"
                 onClick={closeDialog}
                 class="h-[32px] text-white relative overflow-hidden px-[14px] hover:bg-red-400 transition-colors duration-300 bg-red-500 active:bg-red-700 rounded flex items-center"
               >
-                {this.locale.general.close}
+                {this.generalLocale.close}
               </button>
             </div>
           </div>

@@ -65,6 +65,9 @@ const localeMapper = {
   ],
   "vehicleLookup.warranty": [
     "locales/vehicleLookup/warranty/"
+  ],
+  "forms*": [
+    "locales/forms/"
   ]
 } as const;
 

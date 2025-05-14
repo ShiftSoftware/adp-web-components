@@ -1,12 +1,15 @@
+import { InferType } from 'yup';
 import { Component, Prop, State, Watch, h } from '@stencil/core';
 
 import cn from '~lib/cn';
 import { getLocaleLanguage } from '~lib/get-local-language';
 
-import { LanguageKeys, Locale, localeSchema } from '~types/a';
+import { LanguageKeys } from '~types/locale';
 import { FormFieldParams, StructureObject } from '~types/forms';
 
 import Loader from '~assets/white-loader.svg';
+
+import generalSchema from '~locales/general/type';
 
 @Component({
   shadow: false,
@@ -19,7 +22,7 @@ export class FormSubmit {
   @Prop() language: LanguageKeys = 'en';
   @Prop() structureElement: StructureObject;
 
-  @State() locale: Locale = localeSchema.getDefault();
+  @State() generalLocale: InferType<typeof generalSchema> = generalSchema.getDefault();
 
   async componentWillLoad() {
     await this.changeLanguage(this.language);
@@ -27,7 +30,7 @@ export class FormSubmit {
 
   @Watch('language')
   async changeLanguage(newLanguage: LanguageKeys) {
-    this.locale = await getLocaleLanguage(newLanguage);
+    this.generalLocale = await getLocaleLanguage(newLanguage, 'general', generalSchema);
   }
 
   render() {
@@ -45,9 +48,9 @@ export class FormSubmit {
           },
         )}
       >
-        <div class="opacity-0">{this.locale.general[this.structureElement.class?.toLowerCase()] || this.structureElement.class}</div>
+        <div class="opacity-0">{this.generalLocale[this.structureElement.class?.toLowerCase()] || this.structureElement.class}</div>
         <div class={cn('absolute size-full top-0 left-0 flex items-center justify-center transition !duration-1000', { 'translate-y-full': this.isLoading })}>
-          {this.locale.general[this.structureElement.class?.toLowerCase()] || this.structureElement.class}
+          {this.generalLocale[this.structureElement.class?.toLowerCase()] || this.structureElement.class}
         </div>
 
         <div class={cn('absolute flex justify-center items-center top-0 left-0 size-full transition !duration-1000 -translate-y-full', { 'translate-y-0': this.isLoading })}>

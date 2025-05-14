@@ -41,6 +41,14 @@ function generateLocaleMap() {
     walk(folder.name, [], map, preFixPath, BASE_DIR);
   });
 
+  Object.entries(map).forEach(([key, value]) => {
+    if (value.length > 1) {
+      const shortestPath = value.reduce((a, b) => (a.length <= b.length ? a : b));
+
+      if (shortestPath.endsWith(key + '/')) map[key + '*'] = [shortestPath];
+    }
+  });
+
   const tsContent =
     `// This file is auto-generated. Do not edit it manually.\n` +
     '// Use command: yarn generate-locale-mapper\n' +
