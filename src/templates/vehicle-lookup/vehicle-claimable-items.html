@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Swift Claim</title>
+    <title>vehicle-claimable-items</title>
 
     <script src="./mock-data.js"></script>
 
@@ -34,8 +34,8 @@
   <body>
     <a href="#" onclick="history.back()" style="color: blue; display: block; margin-bottom: 16px">Back</a>
 
-    <h1>Swift Claim</h1>
-    <dynamic-claim language="en" is-dev="true" base-url="http://localhost:7174/api/secure-vehicle-lookup-test/" query-string="" id="dynamic-claim"></dynamic-claim>
+    <h1>Vehicle Claimable Items</h1>
+    <vehicle-claimable-items language="en" id="vehicle-claimable-items" query-string="" base-url=""></vehicle-claimable-items>
 
     <div class="button-container">
       <button class="sample-button" onclick="updateLang('en')">En</button>
@@ -82,7 +82,7 @@
       let dynamicClaim;
 
       document.addEventListener('DOMContentLoaded', function () {
-        dynamicClaim = document.getElementById('dynamic-claim');
+        dynamicClaim = document.getElementById('vehicle-claimable-items');
 
         dynamicClaim.setMockData(mockData);
 
@@ -115,7 +115,7 @@
         dynamicClaim.activate = vehicleInformation => {
           console.log(vehicleInformation);
 
-          alert(JSON.stringify(vehicleInformation))
+          alert(JSON.stringify(vehicleInformation));
         };
       });
 
@@ -134,7 +134,7 @@
       function toggleCheckbox(e) {
         const container = document.getElementById('container');
         if (e.checked) {
-          const newElement = document.createElement('dynamic-claim');
+          const newElement = document.createElement('vehicle-claimable-items');
 
           newElement.id = 'toggle-item';
           newElement.setAttribute('is-dev', 'true');

@@ -41,14 +41,14 @@ const localeMapper = {
   ],
   "vehicleLookup": [
     "locales/vehicleLookup/accessories/",
-    "locales/vehicleLookup/dynamicClaim/",
+    "locales/vehicleLookup/claimableItems/",
     "locales/vehicleLookup/paintThickness/",
     "locales/vehicleLookup/serviceHistory/",
     "locales/vehicleLookup/specification/",
     "locales/vehicleLookup/warranty/"
   ],
-  "vehicleLookup.dynamicClaim": [
-    "locales/vehicleLookup/dynamicClaim/"
+  "vehicleLookup.claimableItems": [
+    "locales/vehicleLookup/claimableItems/"
   ],
   "vehicleLookup.paintThickness": [
     "locales/vehicleLookup/paintThickness/"

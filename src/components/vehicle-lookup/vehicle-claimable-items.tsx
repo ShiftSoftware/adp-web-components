@@ -16,8 +16,8 @@ import activationRequiredIcon from './assets/activationRequired.svg';
 
 import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicleInformation';
 
-import { DynamicRedeem } from './dynamic-redeem';
-import dynamicClaimSchema from '~locales/vehicleLookup/dynamicClaim/type';
+import dynamicClaimSchema from '~locales/vehicleLookup/claimableItems/type';
+import { VehicleItemClaimForm } from './vehicle-item-claim-form';
 
 let mockData: MockJson<VehicleInformation> = {};
 
@@ -31,10 +31,10 @@ const icons = {
 
 @Component({
   shadow: true,
-  tag: 'dynamic-claim',
-  styleUrl: 'dynamic-claim.css',
+  tag: 'vehicle-claimable-items',
+  styleUrl: 'vehicle-claimable-items.css',
 })
-export class DynamicClaim implements VehicleInformationInterface {
+export class VehicleClaimableItems implements VehicleInformationInterface {
   @Prop() baseUrl: string;
   @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
@@ -68,9 +68,9 @@ export class DynamicClaim implements VehicleInformationInterface {
 
   cachedClaimItem: ServiceItem;
 
-  dynamicRedeem: DynamicRedeem;
   dynamicClaimBody: HTMLElement;
   popupPositionRef: HTMLElement;
+  dynamicRedeem: VehicleItemClaimForm;
   dynamicClaimProgressBar: HTMLElement;
 
   async componentWillLoad() {
@@ -79,14 +79,14 @@ export class DynamicClaim implements VehicleInformationInterface {
 
   @Watch('language')
   async changeLanguage(newLanguage: LanguageKeys) {
-    const localeResponses = await Promise.all([getLocaleLanguage(newLanguage, 'vehicleLookup.dynamicClaim', dynamicClaimSchema), getSharedLocal(newLanguage)]);
+    const localeResponses = await Promise.all([getLocaleLanguage(newLanguage, 'vehicleLookup.claimableItems', dynamicClaimSchema), getSharedLocal(newLanguage)]);
     this.locale = localeResponses[0];
     this.sharedLocales = localeResponses[1];
   }
 
   async componentDidLoad() {
     this.dynamicClaimBody = this.el.shadowRoot.querySelector('.dynamic-claim-body');
-    this.dynamicRedeem = this.el.shadowRoot.getElementById('dynamic-redeem') as unknown as DynamicRedeem;
+    this.dynamicRedeem = this.el.shadowRoot.getElementById('dynamic-redeem') as unknown as VehicleItemClaimForm;
     this.dynamicClaimProgressBar = this.el.shadowRoot.querySelector('.dynamic-claim-progress-bar');
   }
 
@@ -461,7 +461,7 @@ export class DynamicClaim implements VehicleInformationInterface {
 
     return (
       <Host>
-        <dynamic-redeem locale={texts.dynamicRedeem} language={this.language} id="dynamic-redeem"></dynamic-redeem>
+        <vehicle-item-claim-form locale={texts.claimForm} language={this.language} id="dynamic-redeem"></vehicle-item-claim-form>
         <div class={cn('dynamic-claim-wrapper', { loading: this.isLoading, idle: this.isIdle })}>
           <div class="dynamic-claim-header">
             <strong onAnimationEnd={this.removeLoadAnimationClass} class="dynamic-claim-header-vin load-animation">

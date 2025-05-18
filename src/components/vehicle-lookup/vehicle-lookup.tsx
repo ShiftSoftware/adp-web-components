@@ -9,7 +9,7 @@ import { DotNetObjectReference } from '~types/components';
 
 import vehicleLookupWrapperSchema from '~locales/vehicleLookup/wrapper-type';
 
-import { DynamicClaim } from './dynamic-claim';
+import { VehicleClaimableItems } from './vehicle-claimable-items';
 import { PaintThickness } from './paint-thickness';
 import { ServiceHistory } from './service-history';
 import { WarrantyDetails } from './warranty-details';
@@ -18,21 +18,21 @@ import { VehicleSpecification } from './vehicle-specification';
 import { VehicleInformation } from '../../components';
 
 const componentTags = {
-  dynamicClaim: 'dynamic-claim',
   paintThickness: 'paint-thickness',
   serviceHistory: 'service-history',
   warrantyDetails: 'warranty-details',
   vehicleAccessories: 'vehicle-accessories',
   vehicleSpecification: 'vehicle-specification',
+  vehicleClaimableItems: 'vehicle-claimable-items',
 } as const;
 
 export type ComponentMap = {
-  [componentTags.dynamicClaim]: DynamicClaim;
   [componentTags.paintThickness]: PaintThickness;
   [componentTags.serviceHistory]: ServiceHistory;
   [componentTags.warrantyDetails]: WarrantyDetails;
   [componentTags.vehicleAccessories]: VehicleAccessories;
   [componentTags.vehicleSpecification]: VehicleSpecification;
+  [componentTags.vehicleClaimableItems]: VehicleClaimableItems;
 };
 
 export type ActiveElement = (typeof componentTags)[keyof typeof componentTags] | '';
@@ -80,18 +80,18 @@ export class VehicleLookup {
   }
 
   async componentDidLoad() {
-    const vehicleClaim = this.el.getElementsByTagName('dynamic-claim')[0] as unknown as DynamicClaim;
     const vehicleHistory = this.el.getElementsByTagName('service-history')[0] as unknown as ServiceHistory;
     const vehicleThickness = this.el.getElementsByTagName('paint-thickness')[0] as unknown as PaintThickness;
     const vehicleDetails = this.el.getElementsByTagName('warranty-details')[0] as unknown as WarrantyDetails;
     const vehicleAccessories = this.el.getElementsByTagName('vehicle-accessories')[0] as unknown as VehicleAccessories;
+    const vehicleClaim = this.el.getElementsByTagName('vehicle-claimable-items')[0] as unknown as VehicleClaimableItems;
     const vehicleSpecification = this.el.getElementsByTagName('vehicle-specification')[0] as unknown as VehicleSpecification;
 
     this.componentsList = {
-      [componentTags.dynamicClaim]: vehicleClaim,
       [componentTags.serviceHistory]: vehicleHistory,
       [componentTags.warrantyDetails]: vehicleDetails,
       [componentTags.paintThickness]: vehicleThickness,
+      [componentTags.vehicleClaimableItems]: vehicleClaim,
       [componentTags.vehicleAccessories]: vehicleAccessories,
       [componentTags.vehicleSpecification]: vehicleSpecification,
     } as const;
@@ -151,7 +151,7 @@ export class VehicleLookup {
 
     this.wrapperErrorState = '';
 
-    this.componentsList[componentTags.dynamicClaim].headers = headers;
+    this.componentsList[componentTags.vehicleClaimableItems].headers = headers;
 
     if (!activeElement) return;
 
@@ -164,12 +164,12 @@ export class VehicleLookup {
 
   render() {
     const props = {
-      [componentTags.dynamicClaim]: {},
       [componentTags.paintThickness]: {},
       [componentTags.serviceHistory]: {},
       [componentTags.warrantyDetails]: {},
       [componentTags.vehicleAccessories]: {},
       [componentTags.vehicleSpecification]: {},
+      [componentTags.vehicleClaimableItems]: {},
     };
 
     try {
@@ -222,8 +222,13 @@ export class VehicleLookup {
           <paint-thickness base-url={this.baseUrl} language={this.language} query-string={this.queryString} {...props[componentTags.paintThickness]}></paint-thickness>
         </div>
 
-        <div class={cn('w-full', { hidden: this.activeElement !== componentTags.dynamicClaim })}>
-          <dynamic-claim {...props[componentTags.dynamicClaim]} language={this.language} base-url={this.baseUrl} query-string={this.queryString}></dynamic-claim>
+        <div class={cn('w-full', { hidden: this.activeElement !== componentTags.vehicleClaimableItems })}>
+          <vehicle-claimable-items
+            {...props[componentTags.vehicleClaimableItems]}
+            language={this.language}
+            base-url={this.baseUrl}
+            query-string={this.queryString}
+          ></vehicle-claimable-items>
         </div>
       </Host>
     );

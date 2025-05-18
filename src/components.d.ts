@@ -9,24 +9,24 @@ import { LanguageKeys } from "./global/types/locale";
 import { ErrorKeys } from "./global/lib/get-local-language";
 import { PartInformation } from "./global/types/part-information";
 import { DotNetObjectReference, MockJson } from "./global/types/components";
-import { ClaimPayload, ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
-import { DynamicRedeemType } from "./locales/vehicleLookup/dynamicClaim/type";
 import { FormHook } from "./global/lib/form-hook";
 import { InputParams } from "./global/types/general";
 import { FormElementMapper, FormFieldParams, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
+import { ClaimPayload, ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
 import { ActiveElement } from "./components/part-lookup/part-lookup";
+import { ClaimFormType } from "./locales/vehicleLookup/claimableItems/type";
 import { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 import { VehicleInformation as VehicleInformation1 } from "./components";
 export { LanguageKeys } from "./global/types/locale";
 export { ErrorKeys } from "./global/lib/get-local-language";
 export { PartInformation } from "./global/types/part-information";
 export { DotNetObjectReference, MockJson } from "./global/types/components";
-export { ClaimPayload, ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
-export { DynamicRedeemType } from "./locales/vehicleLookup/dynamicClaim/type";
 export { FormHook } from "./global/lib/form-hook";
 export { InputParams } from "./global/types/general";
 export { FormElementMapper, FormFieldParams, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
+export { ClaimPayload, ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
 export { ActiveElement } from "./components/part-lookup/part-lookup";
+export { ClaimFormType } from "./locales/vehicleLookup/claimableItems/type";
 export { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export { VehicleInformation as VehicleInformation1 } from "./components";
 export namespace Components {
@@ -69,36 +69,6 @@ export namespace Components {
         "setData": (newData: PartInformation | string, headers?: any) => Promise<void>;
         "setErrorMessage": (message: ErrorKeys) => Promise<void>;
         "setMockData": (newMockData: MockJson<PartInformation>) => Promise<void>;
-    }
-    interface DynamicClaim {
-        "activate"?: (vehicleInformation: VehicleInformation) => void;
-        "baseUrl": string;
-        "claim": (item: ServiceItem) => Promise<void>;
-        "claimEndPoint": string;
-        "completeClaim": () => Promise<void>;
-        "errorCallback": (errorMessage: ErrorKeys) => void;
-        "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
-        "headers": any;
-        "isDev": boolean;
-        "language": LanguageKeys;
-        "loadedResponse"?: (response: VehicleInformation) => void;
-        "loadingStateChange"?: (isLoading: boolean) => void;
-        "queryString": string;
-        "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
-        "setErrorMessage": (message: ErrorKeys) => Promise<void>;
-        "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
-    }
-    interface DynamicRedeem {
-        "canceledItems"?: ServiceItem[];
-        "getQrValue": () => Promise<string>;
-        "handleClaiming"?: (payload: ClaimPayload) => void;
-        "item"?: ServiceItem;
-        "language": LanguageKeys;
-        "loadingStateChange"?: (isLoading: boolean) => void;
-        "locale": DynamicRedeemType;
-        "quite": () => Promise<void>;
-        "unInvoicedByBrokerName"?: string;
-        "vin"?: string;
     }
     interface FormDialog {
         "dialogClosed": () => void;
@@ -255,6 +225,36 @@ export namespace Components {
         "setErrorMessage": (message: ErrorKeys) => Promise<void>;
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
     }
+    interface VehicleClaimableItems {
+        "activate"?: (vehicleInformation: VehicleInformation) => void;
+        "baseUrl": string;
+        "claim": (item: ServiceItem) => Promise<void>;
+        "claimEndPoint": string;
+        "completeClaim": () => Promise<void>;
+        "errorCallback": (errorMessage: ErrorKeys) => void;
+        "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
+        "headers": any;
+        "isDev": boolean;
+        "language": LanguageKeys;
+        "loadedResponse"?: (response: VehicleInformation) => void;
+        "loadingStateChange"?: (isLoading: boolean) => void;
+        "queryString": string;
+        "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
+        "setErrorMessage": (message: ErrorKeys) => Promise<void>;
+        "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
+    }
+    interface VehicleItemClaimForm {
+        "canceledItems"?: ServiceItem[];
+        "getQrValue": () => Promise<string>;
+        "handleClaiming"?: (payload: ClaimPayload) => void;
+        "item"?: ServiceItem;
+        "language": LanguageKeys;
+        "loadingStateChange"?: (isLoading: boolean) => void;
+        "locale": ClaimFormType;
+        "quite": () => Promise<void>;
+        "unInvoicedByBrokerName"?: string;
+        "vin"?: string;
+    }
     interface VehicleLookup {
         "activeElement"?: ActiveElement1;
         "baseUrl": string;
@@ -352,18 +352,6 @@ declare global {
         prototype: HTMLDistributorLookupElement;
         new (): HTMLDistributorLookupElement;
     };
-    interface HTMLDynamicClaimElement extends Components.DynamicClaim, HTMLStencilElement {
-    }
-    var HTMLDynamicClaimElement: {
-        prototype: HTMLDynamicClaimElement;
-        new (): HTMLDynamicClaimElement;
-    };
-    interface HTMLDynamicRedeemElement extends Components.DynamicRedeem, HTMLStencilElement {
-    }
-    var HTMLDynamicRedeemElement: {
-        prototype: HTMLDynamicRedeemElement;
-        new (): HTMLDynamicRedeemElement;
-    };
     interface HTMLFormDialogElement extends Components.FormDialog, HTMLStencilElement {
     }
     var HTMLFormDialogElement: {
@@ -454,6 +442,18 @@ declare global {
         prototype: HTMLVehicleAccessoriesElement;
         new (): HTMLVehicleAccessoriesElement;
     };
+    interface HTMLVehicleClaimableItemsElement extends Components.VehicleClaimableItems, HTMLStencilElement {
+    }
+    var HTMLVehicleClaimableItemsElement: {
+        prototype: HTMLVehicleClaimableItemsElement;
+        new (): HTMLVehicleClaimableItemsElement;
+    };
+    interface HTMLVehicleItemClaimFormElement extends Components.VehicleItemClaimForm, HTMLStencilElement {
+    }
+    var HTMLVehicleItemClaimFormElement: {
+        prototype: HTMLVehicleItemClaimFormElement;
+        new (): HTMLVehicleItemClaimFormElement;
+    };
     interface HTMLVehicleLookupElement extends Components.VehicleLookup, HTMLStencilElement {
     }
     var HTMLVehicleLookupElement: {
@@ -482,8 +482,6 @@ declare global {
         "contact-us-form": HTMLContactUsFormElement;
         "dead-stock-lookup": HTMLDeadStockLookupElement;
         "distributor-lookup": HTMLDistributorLookupElement;
-        "dynamic-claim": HTMLDynamicClaimElement;
-        "dynamic-redeem": HTMLDynamicRedeemElement;
         "form-dialog": HTMLFormDialogElement;
         "form-input": HTMLFormInputElement;
         "form-select": HTMLFormSelectElement;
@@ -499,6 +497,8 @@ declare global {
         "service-booking-form": HTMLServiceBookingFormElement;
         "service-history": HTMLServiceHistoryElement;
         "vehicle-accessories": HTMLVehicleAccessoriesElement;
+        "vehicle-claimable-items": HTMLVehicleClaimableItemsElement;
+        "vehicle-item-claim-form": HTMLVehicleItemClaimFormElement;
         "vehicle-lookup": HTMLVehicleLookupElement;
         "vehicle-specification": HTMLVehicleSpecificationElement;
         "vin-extractor": HTMLVinExtractorElement;
@@ -537,28 +537,6 @@ declare namespace LocalJSX {
         "loadingStateChange"?: (isLoading: boolean) => void;
         "localizationName"?: string;
         "queryString"?: string;
-    }
-    interface DynamicClaim {
-        "activate"?: (vehicleInformation: VehicleInformation) => void;
-        "baseUrl"?: string;
-        "claimEndPoint"?: string;
-        "errorCallback"?: (errorMessage: ErrorKeys) => void;
-        "headers"?: any;
-        "isDev"?: boolean;
-        "language"?: LanguageKeys;
-        "loadedResponse"?: (response: VehicleInformation) => void;
-        "loadingStateChange"?: (isLoading: boolean) => void;
-        "queryString"?: string;
-    }
-    interface DynamicRedeem {
-        "canceledItems"?: ServiceItem[];
-        "handleClaiming"?: (payload: ClaimPayload) => void;
-        "item"?: ServiceItem;
-        "language"?: LanguageKeys;
-        "loadingStateChange"?: (isLoading: boolean) => void;
-        "locale"?: DynamicRedeemType;
-        "unInvoicedByBrokerName"?: string;
-        "vin"?: string;
     }
     interface FormDialog {
         "dialogClosed"?: () => void;
@@ -697,6 +675,28 @@ declare namespace LocalJSX {
         "loadingStateChange"?: (isLoading: boolean) => void;
         "queryString"?: string;
     }
+    interface VehicleClaimableItems {
+        "activate"?: (vehicleInformation: VehicleInformation) => void;
+        "baseUrl"?: string;
+        "claimEndPoint"?: string;
+        "errorCallback"?: (errorMessage: ErrorKeys) => void;
+        "headers"?: any;
+        "isDev"?: boolean;
+        "language"?: LanguageKeys;
+        "loadedResponse"?: (response: VehicleInformation) => void;
+        "loadingStateChange"?: (isLoading: boolean) => void;
+        "queryString"?: string;
+    }
+    interface VehicleItemClaimForm {
+        "canceledItems"?: ServiceItem[];
+        "handleClaiming"?: (payload: ClaimPayload) => void;
+        "item"?: ServiceItem;
+        "language"?: LanguageKeys;
+        "loadingStateChange"?: (isLoading: boolean) => void;
+        "locale"?: ClaimFormType;
+        "unInvoicedByBrokerName"?: string;
+        "vin"?: string;
+    }
     interface VehicleLookup {
         "activeElement"?: ActiveElement1;
         "baseUrl"?: string;
@@ -765,8 +765,6 @@ declare namespace LocalJSX {
         "contact-us-form": ContactUsForm;
         "dead-stock-lookup": DeadStockLookup;
         "distributor-lookup": DistributorLookup;
-        "dynamic-claim": DynamicClaim;
-        "dynamic-redeem": DynamicRedeem;
         "form-dialog": FormDialog;
         "form-input": FormInput;
         "form-select": FormSelect;
@@ -782,6 +780,8 @@ declare namespace LocalJSX {
         "service-booking-form": ServiceBookingForm;
         "service-history": ServiceHistory;
         "vehicle-accessories": VehicleAccessories;
+        "vehicle-claimable-items": VehicleClaimableItems;
+        "vehicle-item-claim-form": VehicleItemClaimForm;
         "vehicle-lookup": VehicleLookup;
         "vehicle-specification": VehicleSpecification;
         "vin-extractor": VinExtractor;
@@ -795,8 +795,6 @@ declare module "@stencil/core" {
             "contact-us-form": LocalJSX.ContactUsForm & JSXBase.HTMLAttributes<HTMLContactUsFormElement>;
             "dead-stock-lookup": LocalJSX.DeadStockLookup & JSXBase.HTMLAttributes<HTMLDeadStockLookupElement>;
             "distributor-lookup": LocalJSX.DistributorLookup & JSXBase.HTMLAttributes<HTMLDistributorLookupElement>;
-            "dynamic-claim": LocalJSX.DynamicClaim & JSXBase.HTMLAttributes<HTMLDynamicClaimElement>;
-            "dynamic-redeem": LocalJSX.DynamicRedeem & JSXBase.HTMLAttributes<HTMLDynamicRedeemElement>;
             "form-dialog": LocalJSX.FormDialog & JSXBase.HTMLAttributes<HTMLFormDialogElement>;
             "form-input": LocalJSX.FormInput & JSXBase.HTMLAttributes<HTMLFormInputElement>;
             "form-select": LocalJSX.FormSelect & JSXBase.HTMLAttributes<HTMLFormSelectElement>;
@@ -812,6 +810,8 @@ declare module "@stencil/core" {
             "service-booking-form": LocalJSX.ServiceBookingForm & JSXBase.HTMLAttributes<HTMLServiceBookingFormElement>;
             "service-history": LocalJSX.ServiceHistory & JSXBase.HTMLAttributes<HTMLServiceHistoryElement>;
             "vehicle-accessories": LocalJSX.VehicleAccessories & JSXBase.HTMLAttributes<HTMLVehicleAccessoriesElement>;
+            "vehicle-claimable-items": LocalJSX.VehicleClaimableItems & JSXBase.HTMLAttributes<HTMLVehicleClaimableItemsElement>;
+            "vehicle-item-claim-form": LocalJSX.VehicleItemClaimForm & JSXBase.HTMLAttributes<HTMLVehicleItemClaimFormElement>;
             "vehicle-lookup": LocalJSX.VehicleLookup & JSXBase.HTMLAttributes<HTMLVehicleLookupElement>;
             "vehicle-specification": LocalJSX.VehicleSpecification & JSXBase.HTMLAttributes<HTMLVehicleSpecificationElement>;
             "vin-extractor": LocalJSX.VinExtractor & JSXBase.HTMLAttributes<HTMLVinExtractorElement>;
