@@ -2,7 +2,7 @@
 . "$(dirname "$0")/_/husky.sh"
 
 echo "🎨 Fixing Prettier formatting..."
-yarn prettier --write "src/**/*.{ts,tsx,js,jsx,css,scss,html}"
+npx lint-staged
 
 echo "🔧 TypeScript check..."
 yarn tsc --noEmit
