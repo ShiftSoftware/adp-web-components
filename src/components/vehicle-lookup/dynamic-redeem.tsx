@@ -1,13 +1,12 @@
-import { InferType } from 'yup';
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { LanguageKeys } from '~types/locale';
 import { ClaimPayload, ServiceItem } from '~types/vehicle-information';
 
 import cn from '~lib/cn';
-import { getLocaleLanguage, getSharedLocal, SharedLocales, sharedLocalesSchema } from '~lib/get-local-language';
+import { getSharedLocal, SharedLocales, sharedLocalesSchema } from '~lib/get-local-language';
 
-import dynamicRedeemSchema from '~locales/vehicleLookup/dynamicRedeem/type';
+import { dynamicRedeemSchema, DynamicRedeemType } from '~locales/vehicleLookup/dynamicClaim/type';
 
 @Component({
   shadow: true,
@@ -23,10 +22,10 @@ export class DynamicRedeem {
   @Prop() handleClaiming?: (payload: ClaimPayload) => void;
   //@Prop() handleQrChanges?: (code: string) => void;
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
-  @State() claimViaBarcodeScanner: boolean = true;
+  @Prop() locale: DynamicRedeemType = dynamicRedeemSchema.getDefault();
 
+  @State() claimViaBarcodeScanner: boolean = true;
   @State() sharedLocales: SharedLocales = sharedLocalesSchema.getDefault();
-  @State() locale: InferType<typeof dynamicRedeemSchema> = dynamicRedeemSchema.getDefault();
 
   @State() isLoading: boolean = false;
   @State() internalVin?: string = '';
@@ -56,9 +55,7 @@ export class DynamicRedeem {
 
   @Watch('language')
   async changeLanguage(newLanguage: LanguageKeys) {
-    const localeResponses = await Promise.all([getLocaleLanguage(newLanguage, 'vehicleLookup.dynamicRedeem', dynamicRedeemSchema), getSharedLocal(newLanguage)]);
-    this.locale = localeResponses[0];
-    this.sharedLocales = localeResponses[1];
+    this.sharedLocales = await getSharedLocal(newLanguage);
   }
 
   @Watch('isLoading')

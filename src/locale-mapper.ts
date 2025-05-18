@@ -42,7 +42,6 @@ const localeMapper = {
   "vehicleLookup": [
     "locales/vehicleLookup/accessories/",
     "locales/vehicleLookup/dynamicClaim/",
-    "locales/vehicleLookup/dynamicRedeem/",
     "locales/vehicleLookup/paintThickness/",
     "locales/vehicleLookup/serviceHistory/",
     "locales/vehicleLookup/specification/",
@@ -50,9 +49,6 @@ const localeMapper = {
   ],
   "vehicleLookup.dynamicClaim": [
     "locales/vehicleLookup/dynamicClaim/"
-  ],
-  "vehicleLookup.dynamicRedeem": [
-    "locales/vehicleLookup/dynamicRedeem/"
   ],
   "vehicleLookup.paintThickness": [
     "locales/vehicleLookup/paintThickness/"

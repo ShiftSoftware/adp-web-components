@@ -461,7 +461,7 @@ export class DynamicClaim implements VehicleInformationInterface {
 
     return (
       <Host>
-        <dynamic-redeem language={this.language} id="dynamic-redeem"></dynamic-redeem>
+        <dynamic-redeem locale={texts.dynamicRedeem} language={this.language} id="dynamic-redeem"></dynamic-redeem>
         <div class={cn('dynamic-claim-wrapper', { loading: this.isLoading, idle: this.isIdle })}>
           <div class="dynamic-claim-header">
             <strong onAnimationEnd={this.removeLoadAnimationClass} class="dynamic-claim-header-vin load-animation">

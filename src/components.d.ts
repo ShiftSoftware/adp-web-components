@@ -10,6 +10,7 @@ import { ErrorKeys } from "./global/lib/get-local-language";
 import { PartInformation } from "./global/types/part-information";
 import { DotNetObjectReference, MockJson } from "./global/types/components";
 import { ClaimPayload, ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
+import { DynamicRedeemType } from "./locales/vehicleLookup/dynamicClaim/type";
 import { FormHook } from "./global/lib/form-hook";
 import { InputParams } from "./global/types/general";
 import { FormElementMapper, FormFieldParams, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
@@ -21,6 +22,7 @@ export { ErrorKeys } from "./global/lib/get-local-language";
 export { PartInformation } from "./global/types/part-information";
 export { DotNetObjectReference, MockJson } from "./global/types/components";
 export { ClaimPayload, ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
+export { DynamicRedeemType } from "./locales/vehicleLookup/dynamicClaim/type";
 export { FormHook } from "./global/lib/form-hook";
 export { InputParams } from "./global/types/general";
 export { FormElementMapper, FormFieldParams, FormSelectFetcher, LocaleFormKeys, StructureObject } from "./global/types/forms";
@@ -93,6 +95,7 @@ export namespace Components {
         "item"?: ServiceItem;
         "language": LanguageKeys;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        "locale": DynamicRedeemType;
         "quite": () => Promise<void>;
         "unInvoicedByBrokerName"?: string;
         "vin"?: string;
@@ -553,6 +556,7 @@ declare namespace LocalJSX {
         "item"?: ServiceItem;
         "language"?: LanguageKeys;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        "locale"?: DynamicRedeemType;
         "unInvoicedByBrokerName"?: string;
         "vin"?: string;
     }
