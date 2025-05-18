@@ -1,12 +1,28 @@
-yarn test
-
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npx tsc --noEmit
+echo "🎨 Fixing Prettier formatting..."
+yarn prettier --write "src/**/*.{ts,tsx,js,jsx,css,scss,html}"
+
+echo "🔧 TypeScript check..."
+yarn tsc --noEmit
 if [ $? -ne 0 ]; then
-  echo "❌ TypeScript errors found. Commit aborted."
+  echo "❌ TypeScript errors. Push aborted."
   exit 1
 fi
 
-echo "✅ TypeScript check passed."
+echo "🛠️ Building project..."
+yarn build
+if [ $? -ne 0 ]; then
+  echo "❌ Build failed. Push aborted."
+  exit 1
+fi
+
+echo "🧪 Running tests..."
+yarn test
+if [ $? -ne 0 ]; then
+  echo "❌ Tests failed. Push aborted."
+  exit 1
+fi
+
+echo "✅ All checks passed. Proceeding with push."
