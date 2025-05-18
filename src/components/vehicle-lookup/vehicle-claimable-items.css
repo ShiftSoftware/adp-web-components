@@ -20,7 +20,9 @@
   border-radius: 5px;
   border: 1px solid #dcdcdc;
   background: rgb(253, 253, 253);
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.05),
+    0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .dynamic-claim-header {
@@ -43,7 +45,6 @@
 }
 
 .dynamic-claim-body {
-
   padding: 125px 30px 125px 30px;
   overflow-x: scroll;
   display: flex;
@@ -51,17 +52,17 @@
   flex-direction: row;
 }
 
-  .dynamic-claim-body.has-activation-box {
-    padding: 100px 30px 150px 30px;
-  }
+.dynamic-claim-body.has-activation-box {
+  padding: 100px 30px 150px 30px;
+}
 
-  .dynamic-claim-activation-box {
-    position: absolute;
-    width: 90%;
-    left: 50%;
-    margin-left: -45%;
-    bottom: 40px;
-  }
+.dynamic-claim-activation-box {
+  position: absolute;
+  width: 90%;
+  left: 50%;
+  margin-left: -45%;
+  bottom: 40px;
+}
 
 .idle .dynamic-claim-body,
 .loading .dynamic-claim-body {
@@ -93,10 +94,10 @@
   background: #c5c5c5;
   border-radius: 10px;
 }
-  /* Handle on hover */
-  .dynamic-claim-wrapper ::-webkit-scrollbar-thumb:hover {
-    background: #a1a1a1;
-  }
+/* Handle on hover */
+.dynamic-claim-wrapper ::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
 
 .loading-lane,
 .dynamic-claim-progress-lane {
@@ -185,40 +186,40 @@
   visibility: hidden;
 }
 
-  .dynamic-claim-item-popup-info.show,
-  .dynamic-claim-item-popup-info-triangle.show {
-    opacity: 1;
-    visibility: visible;
-  }
+.dynamic-claim-item-popup-info.show,
+.dynamic-claim-item-popup-info-triangle.show {
+  opacity: 1;
+  visibility: visible;
+}
 
-  .dynamic-claim-item-popup-info table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+.dynamic-claim-item-popup-info table {
+  width: 100%;
+  border-collapse: collapse;
+}
 
-    .dynamic-claim-item-popup-info table th {
-      border-bottom: 1px solid #ddd;
-      padding: 10px;
-      padding-inline-end: 50px;
-      text-align: start;
-      white-space: nowrap;
-    }
+.dynamic-claim-item-popup-info table th {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  padding-inline-end: 50px;
+  text-align: start;
+  white-space: nowrap;
+}
 
-    .dynamic-claim-item-popup-info table td {
-      border-bottom: 1px solid #ddd;
-      padding: 10px;
-      padding-inline-end: 50px;
-      text-align: start;
-      white-space: nowrap;
-      font-weight: normal;
-    }
+.dynamic-claim-item-popup-info table td {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  padding-inline-end: 50px;
+  text-align: start;
+  white-space: nowrap;
+  font-weight: normal;
+}
 
-  .dynamic-claim-item-popup-info .claim-button {
-    margin: auto;
-    margin-top: 15px;
-    width: 80%;
-    justify-content: center;
-  }
+.dynamic-claim-item-popup-info .claim-button {
+  margin: auto;
+  margin-top: 15px;
+  width: 80%;
+  justify-content: center;
+}
 
 .dynamic-claim-item-popup-info-triangle {
   opacity: 0;
@@ -263,9 +264,9 @@
   cursor: pointer;
 }
 
-  .dynamic-claim-item-header.load-animation {
-    animation: item-header-fade-in 0.65s ease forwards;
-  }
+.dynamic-claim-item-header.load-animation {
+  animation: item-header-fade-in 0.65s ease forwards;
+}
 
 @keyframes item-header-fade-in {
   0% {
@@ -311,9 +312,9 @@
   margin: 0;
 }
 
-  .dynamic-claim-item-footer.load-animation {
-    animation: item-footer-fade-in 0.65s ease forwards;
-  }
+.dynamic-claim-item-footer.load-animation {
+  animation: item-footer-fade-in 0.65s ease forwards;
+}
 
 @keyframes item-footer-fade-in {
   0% {
@@ -346,9 +347,9 @@
   z-index: 1;
 }
 
-  .dynamic-claim-item-circle.load-animation {
-    animation: item-circle-fade-in 0.65s ease forwards;
-  }
+.dynamic-claim-item-circle.load-animation {
+  animation: item-circle-fade-in 0.65s ease forwards;
+}
 
 @keyframes item-circle-fade-in {
   0% {
@@ -404,7 +405,7 @@
 }
 
 .dynamic-claim-item.activationRequired .dynamic-claim-item-header {
-  color: #9E9E9E;
+  color: #9e9e9e;
 }
 
 .dynamic-claim-loading-slider {
@@ -480,9 +481,9 @@
   gap: 3px;
 }
 
-  .dynamic-claim-button svg {
-    transition: 0.2s;
-  }
+.dynamic-claim-button svg {
+  transition: 0.2s;
+}
 
 .claim-button {
   border: 1px solid #27ae60;
@@ -492,28 +493,28 @@
   fill: #27ae60;
 }
 
-  .claim-button circle {
-    fill: #2ecc71;
-  }
+.claim-button circle {
+  fill: #2ecc71;
+}
 
-  .claim-button:hover {
-    color: white;
-    background-color: #2ecc71;
-    stroke: white;
-    fill: white;
-  }
+.claim-button:hover {
+  color: white;
+  background-color: #2ecc71;
+  stroke: white;
+  fill: white;
+}
 
-    .claim-button:hover circle {
-      fill: white;
-    }
+.claim-button:hover circle {
+  fill: white;
+}
 
-  .claim-button:active {
-    background-color: #27ae60;
-  }
+.claim-button:active {
+  background-color: #27ae60;
+}
 
-    .claim-button:active svg {
-      transform: scale(125%);
-    }
+.claim-button:active svg {
+  transform: scale(125%);
+}
 
 .cancel-button {
   border: 1px solid #c0392b;
@@ -523,21 +524,21 @@
   fill: #c0392b;
 }
 
-  .cancel-button circle {
-    fill: #c0392b;
-    transition: 0.1s;
-  }
+.cancel-button circle {
+  fill: #c0392b;
+  transition: 0.1s;
+}
 
-  .cancel-button:hover {
-    color: white;
-    background-color: #e74c3c;
-    stroke: white;
-    fill: white;
-  }
+.cancel-button:hover {
+  color: white;
+  background-color: #e74c3c;
+  stroke: white;
+  fill: white;
+}
 
-    .cancel-button:hover circle {
-      fill: white;
-    }
+.cancel-button:hover circle {
+  fill: white;
+}
 
 .card {
   gap: 8px;
@@ -549,24 +550,24 @@
   border-radius: 6px;
 }
 
-  .card p {
-    margin: 0px;
-    height: 25px;
-    flex: 1 1 0%;
-    display: flex;
-    font-size: 16px;
-    padding-left: 50px;
-    align-items: center;
-  }
+.card p {
+  margin: 0px;
+  height: 25px;
+  flex: 1 1 0%;
+  display: flex;
+  font-size: 16px;
+  padding-left: 50px;
+  align-items: center;
+}
 
-    .card p.no-padding {
-      padding-left: 4px;
-    }
+.card p.no-padding {
+  padding-left: 4px;
+}
 
-  .card img {
-    width: 25px;
-    height: 25px;
-  }
+.card img {
+  width: 25px;
+  height: 25px;
+}
 
 .warning-card {
   color: #8a6d3b;
@@ -575,16 +576,16 @@
 }
 
 .activation-panel {
-    opacity:0;
+  opacity: 0;
 }
 
-  .activation-panel.visible {
-    animation: activation-panel-fade-in 0.75s ease forwards;
-  }
+.activation-panel.visible {
+  animation: activation-panel-fade-in 0.75s ease forwards;
+}
 
-  .activation-panel.visible.loading {
-    animation: activation-panel-fade-out 0.75s ease forwards;
-  }
+.activation-panel.visible.loading {
+  animation: activation-panel-fade-out 0.75s ease forwards;
+}
 
 @keyframes activation-panel-fade-in {
   0% {

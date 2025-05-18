@@ -1,5 +1,5 @@
 const mockData = {
-  JTMHX01J8L4198293: {
+  'JTMHX01J8L4198293': {
     accessories: [
       {
         image: '',
@@ -231,7 +231,7 @@ const mockData = {
     serviceItems: null,
     basicModelCode: null,
   },
-  JTMHX01J8L4198294: {
+  'JTMHX01J8L4198294': {
     accessories: [],
     paintThickness: {},
     vin: 'JTMHX01J8L4198294',
@@ -458,7 +458,7 @@ const mockData = {
     serviceItems: [],
     basicModelCode: null,
   },
-  JTMHX01J8L4198295: {
+  'JTMHX01J8L4198295': {
     accessories: null,
     paintThickness: {
       parts: [],
@@ -725,7 +725,7 @@ const mockData = {
         activatedAt: '2023-10-08',
         expiresAt: '2024-01-08',
         status: 'pending',
-        menuCode: 'SER1384KJ'
+        menuCode: 'SER1384KJ',
       },
       {
         name: '20,000 KM Free Service',
@@ -739,7 +739,7 @@ const mockData = {
     ],
     basicModelCode: null,
   },
-  JTMHX01J8L4198296: {
+  'JTMHX01J8L4198296': {
     accessories: [
       {
         partNumber: 'yakam',
@@ -1029,7 +1029,7 @@ const mockData = {
     ],
     basicModelCode: null,
   },
-  MR0BX8CD3P2791075: {
+  'MR0BX8CD3P2791075': {
     accessories: [
       {
         partNumber: 'yakam',
@@ -1771,7 +1771,7 @@ const mockData = {
     ],
     basicModelCode: 'TGN126',
   },
-  JTMHX01J8L4198299: {
+  'JTMHX01J8L4198299': {
     accessories: [
       {
         partNumber: 'yakam2',
@@ -2097,7 +2097,7 @@ const mockData = {
     ],
     basicModelCode: null,
   },
-  JTMABBBJ9P4099243: {
+  'JTMABBBJ9P4099243': {
     accessories: [
       {
         partNumber: 'yakam',
@@ -2750,7 +2750,7 @@ const mockData = {
     ],
     basicModelCode: 'VJA300',
   },
-  JTMHU09J6E4100543: {
+  'JTMHU09J6E4100543': {
     paintThickness: {
       parts: [
         {
@@ -3212,7 +3212,7 @@ const mockData = {
     ],
     basicModelCode: null,
   },
-  JTMABBBJ9P4099200: {
+  'JTMABBBJ9P4099200': {
     paintThickness: {
       parts: [
         {
@@ -3751,7 +3751,7 @@ const mockData = {
     ],
     basicModelCode: 'VJA300',
   },
-  JTMABBBJ9P4099201: {
+  'JTMABBBJ9P4099201': {
     accessories: [
       {
         partNumber: 'yakam',
@@ -4331,9 +4331,7 @@ const mockData = {
     isAuthorized: false,
     warranty: null,
     nextServiceDate: '2023-12-12',
-    serviceHistory: [
-
-    ],
+    serviceHistory: [],
     ssc: null,
     vehicleVariantInfo: null,
     vehicleSpecification: null,
@@ -4372,7 +4370,7 @@ const mockData = {
         claimingMethodEnum: 2,
         activatedAt: '',
         expiresAt: '',
-        status: 'activationRequired'
+        status: 'activationRequired',
       },
       {
         name: '20,000 KM Free Service',

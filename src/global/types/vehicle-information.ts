@@ -37,12 +37,12 @@ export type SaleInformation = {
   countryName: string;
   branchID: string;
   branchName: string;
-  regionID: string,
+  regionID: string;
   customerAccountNumber: string;
   customerID: string;
   invoiceDate: string;
   invoiceNumber: number;
-  warrantyActivationDate: string,
+  warrantyActivationDate: string;
   broker: Broker;
 };
 
@@ -191,13 +191,12 @@ export type ServiceItem = {
   claimingMethodEnum?: number;
 };
 
-
 export type ClaimPayload = {
-  vin: string,
-  invoice?: string,
-  jobNumber?: string,
-  qrCode?: string,
-  saleInformation: SaleInformation,
-  serviceItem: ServiceItem,
-  cancelledServiceItems: ServiceItem[],
-}
+  vin: string;
+  invoice?: string;
+  jobNumber?: string;
+  qrCode?: string;
+  saleInformation: SaleInformation;
+  serviceItem: ServiceItem;
+  cancelledServiceItems: ServiceItem[];
+};

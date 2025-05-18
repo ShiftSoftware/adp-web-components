@@ -19,8 +19,7 @@ let lookupPage;
 function handleLoadingState(isLoading) {
   lookupPage.invokeMethodAsync('onLoadingStateChanged', isLoading);
 
-  if (!isLoading)
-    searching = false;
+  if (!isLoading) searching = false;
 }
 
 function handleLoadData(newResponse, activeElement) {
@@ -30,7 +29,6 @@ function handleLoadData(newResponse, activeElement) {
 }
 
 function registerLookupPage(instance) {
-
   lookupPage = instance;
 
   vehicleSpecification = document.getElementById('vehicle-specification');
@@ -49,22 +47,17 @@ function registerLookupPage(instance) {
   vinInput = document.getElementById('vinInput');
   franchiseSelector = document.getElementById('franchise-selector');
 
-
   if (lookupPage.invokeMethodAsync) {
-
-  }
-  else {
+  } else {
     lookupPage.invokeMethodAsync = async function (methodName, payload) {
       if (methodName === 'onErrorStateChanged') {
         await lookupPage.onErrorStateChanged(payload);
-      }
-      else if (methodName === 'onLoadingStateChanged') {
+      } else if (methodName === 'onLoadingStateChanged') {
         await lookupPage.onLoadingStateChanged(payload);
-      }
-      else if (methodName === 'getHeaders') {
+      } else if (methodName === 'getHeaders') {
         return await lookupPage.getHeaders();
       }
-    }
+    };
   }
 
   componentsList.forEach(element => {
@@ -75,13 +68,13 @@ function registerLookupPage(instance) {
   });
 
   if (searchutton) {
-    searchutton.addEventListener("click", async function (e) {
+    searchutton.addEventListener('click', async function (e) {
       await search();
     });
   }
 
   if (vinInput) {
-    vinInput.addEventListener("keydown", async function (e) {
+    vinInput.addEventListener('keydown', async function (e) {
       if (e.key === 'Enter') {
         e.preventDefault();
         await search();
@@ -90,7 +83,7 @@ function registerLookupPage(instance) {
   }
 
   if (partNumberInput) {
-    partNumberInput.addEventListener("keydown", async function (e) {
+    partNumberInput.addEventListener('keydown', async function (e) {
       if (e.key === 'Enter') {
         e.preventDefault();
         await search();
@@ -99,7 +92,7 @@ function registerLookupPage(instance) {
   }
 
   if (partQtyInput) {
-    partQtyInput.addEventListener("keydown", async function (e) {
+    partQtyInput.addEventListener('keydown', async function (e) {
       if (e.key === 'Enter') {
         e.preventDefault();
         await search();
@@ -109,7 +102,6 @@ function registerLookupPage(instance) {
 }
 
 async function search() {
-
   if (searching) return;
 
   searching = true;
@@ -136,13 +128,11 @@ async function search() {
     }
 
     if (franchiseSelector) {
-
       var franchise = franchiseSelector.value;
 
       warranty.setAttribute('brand-integration-id', franchise);
 
       if (franchise == '') {
-
         lookupPage.invokeMethodAsync('onErrorStateChanged', { vinError: null, franchiseError: 'Please Select a Franchise', partError: null });
 
         searching = false;
@@ -183,7 +173,6 @@ async function search() {
 
       return;
     }
-
 
     var searchText = partNumber;
 
@@ -280,6 +269,5 @@ function validateVin(vin) {
 
   return valid;
 }
-
 
 export { registerLookupPage };
