@@ -297,7 +297,7 @@ export class WarrantyDetails implements VehicleInformationInterface {
               )}
 
               {this.showSsc && ['data', 'data-loading'].includes(this.state) && this.vehicleInformation?.ssc !== null && !!this.vehicleInformation?.ssc.length && (
-                <SSCTable warrantyLocale={this.locale} ssc={this.vehicleInformation.ssc} />
+                <SSCTable warrantyLocale={this.locale} ssc={this.vehicleInformation?.ssc} />
               )}
             </div>
           </div>
