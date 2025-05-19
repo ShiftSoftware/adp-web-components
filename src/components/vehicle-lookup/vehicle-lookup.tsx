@@ -18,21 +18,21 @@ import { VehicleServiceHistory } from './vehicle-service-history';
 import { VehicleWarrantyDetails } from './vehicle-warranty-details';
 
 const componentTags = {
-  paintThickness: 'vehicle-paint-thickness',
-  serviceHistory: 'vehicle-service-history',
   vehicleAccessories: 'vehicle-accessories',
-  warrantyDetails: 'vehicle-warranty-details',
   vehicleSpecification: 'vehicle-specification',
+  vehiclePaintThickness: 'vehicle-paint-thickness',
+  vehicleServiceHistory: 'vehicle-service-history',
   vehicleClaimableItems: 'vehicle-claimable-items',
+  vehicleWarrantyDetails: 'vehicle-warranty-details',
 } as const;
 
 export type ComponentMap = {
-  [componentTags.serviceHistory]: VehicleServiceHistory;
-  [componentTags.paintThickness]: VehiclePaintThickness;
   [componentTags.vehicleAccessories]: VehicleAccessories;
-  [componentTags.warrantyDetails]: VehicleWarrantyDetails;
   [componentTags.vehicleSpecification]: VehicleSpecification;
+  [componentTags.vehicleServiceHistory]: VehicleServiceHistory;
+  [componentTags.vehiclePaintThickness]: VehiclePaintThickness;
   [componentTags.vehicleClaimableItems]: VehicleClaimableItems;
+  [componentTags.vehicleWarrantyDetails]: VehicleWarrantyDetails;
 };
 
 export type ActiveElement = (typeof componentTags)[keyof typeof componentTags] | '';
@@ -80,19 +80,19 @@ export class VehicleLookup {
   }
 
   async componentDidLoad() {
-    const vehicleHistory = this.el.getElementsByTagName('service-history')[0] as unknown as VehicleServiceHistory;
-    const vehicleDetails = this.el.getElementsByTagName('warranty-details')[0] as unknown as VehicleWarrantyDetails;
-    const vehicleThickness = this.el.getElementsByTagName('paint-thickness')[0] as unknown as VehiclePaintThickness;
     const vehicleAccessories = this.el.getElementsByTagName('vehicle-accessories')[0] as unknown as VehicleAccessories;
     const vehicleClaim = this.el.getElementsByTagName('vehicle-claimable-items')[0] as unknown as VehicleClaimableItems;
+    const vehicleHistory = this.el.getElementsByTagName('vehicle-service-history')[0] as unknown as VehicleServiceHistory;
+    const vehicleDetails = this.el.getElementsByTagName('vehicle-warranty-details')[0] as unknown as VehicleWarrantyDetails;
+    const vehicleThickness = this.el.getElementsByTagName('vehicle-paint-thickness')[0] as unknown as VehiclePaintThickness;
     const vehicleSpecification = this.el.getElementsByTagName('vehicle-specification')[0] as unknown as VehicleSpecification;
 
     this.componentsList = {
-      [componentTags.serviceHistory]: vehicleHistory,
-      [componentTags.warrantyDetails]: vehicleDetails,
-      [componentTags.paintThickness]: vehicleThickness,
       [componentTags.vehicleClaimableItems]: vehicleClaim,
+      [componentTags.vehicleServiceHistory]: vehicleHistory,
+      [componentTags.vehicleWarrantyDetails]: vehicleDetails,
       [componentTags.vehicleAccessories]: vehicleAccessories,
+      [componentTags.vehiclePaintThickness]: vehicleThickness,
       [componentTags.vehicleSpecification]: vehicleSpecification,
     } as const;
 
@@ -164,12 +164,12 @@ export class VehicleLookup {
 
   render() {
     const props = {
-      [componentTags.paintThickness]: {},
-      [componentTags.serviceHistory]: {},
-      [componentTags.warrantyDetails]: {},
       [componentTags.vehicleAccessories]: {},
       [componentTags.vehicleSpecification]: {},
       [componentTags.vehicleClaimableItems]: {},
+      [componentTags.vehiclePaintThickness]: {},
+      [componentTags.vehicleServiceHistory]: {},
+      [componentTags.vehicleWarrantyDetails]: {},
     };
 
     try {
@@ -186,6 +186,9 @@ export class VehicleLookup {
       console.error(error);
     }
 
+    if (!Object.values(componentTags).includes(this.activeElement as any))
+      return <div class="w-full h-[200px] text-[26px] text-red-600 flex items-center justify-center">Invalid tag</div>;
+
     return (
       <Host>
         <div class={cn('w-full', { hidden: this.activeElement !== componentTags.vehicleSpecification })}>
@@ -201,25 +204,35 @@ export class VehicleLookup {
           <vehicle-accessories base-url={this.baseUrl} language={this.language} query-string={this.queryString} {...props[componentTags.vehicleAccessories]}></vehicle-accessories>
         </div>
 
-        <div class={cn('w-full', { hidden: this.activeElement !== componentTags.warrantyDetails })}>
-          <warranty-details
+        <div class={cn('w-full', { hidden: this.activeElement !== componentTags.vehicleWarrantyDetails })}>
+          <vehicle-warranty-details
             show-ssc="true"
             show-warranty="true"
             base-url={this.baseUrl}
             language={this.language}
             query-string={this.queryString}
-            {...props[componentTags.warrantyDetails]}
+            {...props[componentTags.vehicleWarrantyDetails]}
           >
             <slot></slot>
-          </warranty-details>
+          </vehicle-warranty-details>
         </div>
 
-        <div class={cn('w-full', { hidden: this.activeElement !== componentTags.serviceHistory })}>
-          <service-history language={this.language} base-url={this.baseUrl} query-string={this.queryString} {...props[componentTags.serviceHistory]}></service-history>
+        <div class={cn('w-full', { hidden: this.activeElement !== componentTags.vehicleServiceHistory })}>
+          <vehicle-service-history
+            language={this.language}
+            base-url={this.baseUrl}
+            query-string={this.queryString}
+            {...props[componentTags.vehicleServiceHistory]}
+          ></vehicle-service-history>
         </div>
 
-        <div class={cn('w-full', { hidden: this.activeElement !== componentTags.paintThickness })}>
-          <paint-thickness base-url={this.baseUrl} language={this.language} query-string={this.queryString} {...props[componentTags.paintThickness]}></paint-thickness>
+        <div class={cn('w-full', { hidden: this.activeElement !== componentTags.vehiclePaintThickness })}>
+          <vehicle-paint-thickness
+            base-url={this.baseUrl}
+            language={this.language}
+            query-string={this.queryString}
+            {...props[componentTags.vehiclePaintThickness]}
+          ></vehicle-paint-thickness>
         </div>
 
         <div class={cn('w-full', { hidden: this.activeElement !== componentTags.vehicleClaimableItems })}>
