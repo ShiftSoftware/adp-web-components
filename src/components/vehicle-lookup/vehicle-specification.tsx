@@ -138,9 +138,32 @@ export class VehicleSpecification implements VehicleInformationInterface {
 
     const getProductionDate = () => <div class="px-[10px] py-[20px] text-center whitespace-nowrap">{productionDate}</div>;
 
+    const isLoading = this.state.includes('loading');
+    const isError = this.state.includes('error');
+
     return (
       <Host>
-        <div dir={this.sharedLocales.direction} class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
+        <div dir={this.sharedLocales.direction} part="vehicle-info-container" class={cn('vehicle-info-container', { loading: isLoading })}>
+          <div part="vehicle-info-header" class="vehicle-info-header">
+            <strong onAnimationEnd={() => {}} part="vehicle-info-header-vin" class="vehicle-info-header-vin load-animation">
+              {isError ? (
+                <span dir={this.sharedLocales.direction} style={{ color: 'red' }}>
+                  {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
+                </span>
+              ) : (
+                this.vehicleInformation?.vin
+              )}
+            </strong>
+          </div>
+          <div part="vehicle-info-body" class="vehicle-info-body">
+            <div part="loading-lane" class="loading-lane">
+              <div class="lane-loading-slider">
+                <div class="lane-loading-slider-line"></div>
+                <div class="lane-loading-slider-subline lane-inc"></div>
+                <div class="lane-loading-slider-subline lane-dec"></div>
+              </div>
+            </div>
+          </div>
           <div>
             <loading-spinner isLoading={this.state.includes('loading')} />
             <div class={cn('transition-all !duration-700', { 'scale-0': this.state.includes('loading') || this.state === 'idle', 'opacity-0': this.state.includes('loading') })}>

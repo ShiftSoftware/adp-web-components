@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.animate-lane-increase {
+  animation: lane-increase 2.5s ease infinite;
+}
+
+.animate-lane-decrease {
+  animation: lane-decrease 2.5s ease 1s infinite;
+}
+
+.vehicle-info-container {
+  @apply relative transition-all duration-300 overflow-hidden p-0 rounded-[5px] border border-[#dcdcdc] bg-[#fdfdfd] shadow-[inset_0_1px_3px_rgba(0,0,0,0.05),0_1px_0_rgba(255,255,255,0.1)];
+}
+
+.vehicle-info-container ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.vehicle-info-container ::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background: #f6f6f6;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: 1px solid #dcdcdc;
+}
+
+.vehicle-info-container ::-webkit-scrollbar-thumb {
+  background: #c5c5c5;
+  border-radius: 10px;
+}
+
+.vehicle-info-container ::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+.loading .vehicle-info-body::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.vehicle-info-body {
+  @apply overflow-x-scroll relative transition-all duration-500 ease-in-out h-[272px];
+}
+
+.loading .vehicle-info-body {
+  @apply pointer-events-none;
+}
+
+.vehicle-info-header {
+  @apply py-[15px] text-center bg-[#f6f6f6] border border-[#ededed];
+}
+
+.vehicle-info-header-vin {
+  @apply transition-all duration-[0.4s] inline-block;
+}
+
+.vehicle-info-header-vin span {
+  @apply text-red-500;
+}
+
+.loading .vehicle-info-header-vin {
+  @apply opacity-0 invisible scale-[1.5];
+}
+
+.loading-lane {
+  @apply pointer-events-none;
+}
+
+.lane-loading-slider {
+  @apply absolute overflow-hidden opacity-0 transition duration-300 pointer-events-none -translate-y-1/2 w-[calc(100%-60px)] h-[10px] bg-[#f2f2f2] rounded-[10px] border border-[#ddd] top-1/2 translate-x-[30px];
+}
+
+.loading .lane-loading-slider {
+  @apply opacity-100;
+}
+
+.lane-loading-slider-line {
+  @apply absolute opacity-0 bg-[#ddd] w-[150%] h-[10px];
+}
+
+.lane-loading-slider-subline {
+  @apply absolute h-[10px] bg-[linear-gradient(to_bottom,#428bca_0,#3071a9_100%)];
+}
+
+.loading .lane-inc {
+  animation: lane-increase 2.5s infinite ease;
+}
+
+.loading .lane-dec {
+  animation: lane-decrease 2.5s 1s infinite ease;
+}
+
+@keyframes lane-increase {
+  from {
+    left: -5%;
+    width: 5%;
+  }
+
+  to {
+    left: 130%;
+    width: 100%;
+  }
+}
+
+@keyframes lane-decrease {
+  from {
+    left: -80%;
+    width: 80%;
+  }
+
+  to {
+    left: 110%;
+    width: 10%;
+  }
+}

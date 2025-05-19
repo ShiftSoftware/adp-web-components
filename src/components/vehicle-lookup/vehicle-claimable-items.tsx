@@ -457,14 +457,12 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
     const serviceItems = this.vehicleInformation?.serviceItems || [];
     const texts = this.locale;
 
-    console.log(this.errorMessage);
-
     return (
       <Host>
         <vehicle-item-claim-form locale={texts.claimForm} language={this.language} id="dynamic-redeem"></vehicle-item-claim-form>
         <div class={cn('dynamic-claim-wrapper', { loading: this.isLoading, idle: this.isIdle })}>
           <div class="dynamic-claim-header">
-            <strong onAnimationEnd={this.removeLoadAnimationClass} class="dynamic-claim-header-vin load-animation">
+            <strong class="dynamic-claim-header-vin">
               {this.errorMessage && (
                 <span dir={this.sharedLocales.direction} style={{ color: 'red' }}>
                   {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
