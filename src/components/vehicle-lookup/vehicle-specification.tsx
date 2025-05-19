@@ -117,7 +117,8 @@ export class VehicleSpecification implements VehicleInformationInterface {
 
       if (contentEl && bodyEl) {
         const { clientHeight } = contentEl;
-        (bodyEl as HTMLElement).style.height = `${clientHeight}px`;
+
+        if (clientHeight) (bodyEl as HTMLElement).style.height = `${clientHeight}px`;
       }
     }, 50);
   };
@@ -160,9 +161,6 @@ export class VehicleSpecification implements VehicleInformationInterface {
 
     const isLoading = this.state.includes('loading');
     const isError = this.state.includes('error');
-
-    // @ts-ignore
-    window.hh = this;
 
     return (
       <Host>
