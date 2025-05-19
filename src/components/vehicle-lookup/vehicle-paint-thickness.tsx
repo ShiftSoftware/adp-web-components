@@ -2,6 +2,7 @@ import { InferType } from 'yup';
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import cn from '~lib/cn';
+import updateBodyHeight from '~lib/update-body-height';
 import { closeImageViewer, ImageViewerInterface, openImageViewer } from '~lib/image-expansion';
 import { ErrorKeys, getLocaleLanguage, getSharedLocal, SharedLocales, sharedLocalesSchema } from '~lib/get-local-language';
 
@@ -123,8 +124,14 @@ export class VehiclePaintThickness implements ImageViewerInterface {
     await this.setData(requestedVin, headers);
   }
 
+  @Watch('vehicleInformation')
+  async onInformationUpdate() {
+    updateBodyHeight(this);
+  }
+
   @Watch('state')
   async loadingListener() {
+    updateBodyHeight(this);
     if (this.loadingStateChange) this.loadingStateChange(this.state.includes('loading'));
   }
 
@@ -147,32 +154,42 @@ export class VehiclePaintThickness implements ImageViewerInterface {
 
   render() {
     const texts = this.locale;
+    // @ts-ignore
     const { imageGroups, parts } = this?.vehicleInformation ? this?.vehicleInformation?.paintThickness : { imageGroups: [], parts: [] };
+
+    const isLoading = this.state.includes('loading');
+    const isError = this.state.includes('error');
 
     return (
       <Host>
-        <div dir={this.sharedLocales.direction} class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
-          <div>
-            <loading-spinner isLoading={this.state.includes('loading')} />
-            <div class={cn('transition-all !duration-700', { 'scale-0': this.state.includes('loading') || this.state === 'idle', 'opacity-0': this.state.includes('loading') })}>
-              <div class={cn('text-center pt-[4px] text-[20px]', { 'text-red-600': !!this.errorMessage })}>{this.vehicleInformation?.vin}</div>
-
-              {['error', 'error-loading'].includes(this.state) && (
-                <div class="py-[16px] min-h-[100px] flex items-center">
-                  <div class="px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">
-                    {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
-                  </div>
-                </div>
+        <div dir={this.sharedLocales.direction} part="vehicle-info-container" class={cn('vehicle-info-container', { loading: isLoading })}>
+          <div part="vehicle-info-header" class="vehicle-info-header">
+            <strong onAnimationEnd={() => {}} part="vehicle-info-header-vin" class="vehicle-info-header-vin load-animation">
+              {isError ? (
+                <span dir={this.sharedLocales.direction} style={{ color: 'red' }}>
+                  {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
+                </span>
+              ) : (
+                this.vehicleInformation?.vin
               )}
-
+            </strong>
+          </div>
+          <div part="loading-lane" class="loading-lane">
+            <div class="lane-loading-slider">
+              <div class="lane-loading-slider-line"></div>
+              <div class="lane-loading-slider-subline lane-inc"></div>
+              <div class="lane-loading-slider-subline lane-dec"></div>
+            </div>
+          </div>
+          <div part="vehicle-info-body" class="vehicle-info-body">
+            <div part="vehicle-info-content" class="vehicle-info-content">
               {['data', 'data-loading'].includes(this.state) && (
-                <div class="flex mt-[12px] w-full max-h-[70dvh] overflow-hidden mx-auto rounded-[4px] flex-col border border-[#d6d8dc]">
-                  <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">{texts.paintThickness}</div>
-                  <div class="h-0 overflow-auto flex-1">
-                    {!parts.length && <div class="h-[50px] px-[30px] flex items-center justify-center text-[18px]">{texts.noData}</div>}
+                <div class={cn('flex m-[16px] overflow-hidden rounded-[4px] flex-col border-[#d6d8dc]', { border: !!this.vehicleInformation?.vehicleSpecification })}>
+                  <div class="h-0 overflow-hidden flex-1">
+                    {!parts.length && <div class="flex items-center font-bold text-[20px] justify-center h-[calc(272px-32px)]">{texts.noData}</div>}
                     {!!parts.length && (
-                      <table class="w-full overflow-auto relative border-collapse">
-                        <thead class="top-0 font-bold sticky bg-white">
+                      <table class="w-full overflow-hidden relative border-collapse">
+                        <thead class="top-0 font-bold sticky bg-[#e1e3e5]">
                           <tr>
                             {['part', 'left', 'right'].map(title => (
                               <th key={title} class="px-[15px] min-w-[100px] py-[15px] text-center whitespace-nowrap border-b border-[#d6d8dc]">
@@ -182,7 +199,7 @@ export class VehiclePaintThickness implements ImageViewerInterface {
                           </tr>
                         </thead>
                         <tbody>
-                          {parts.map((part, idx) => (
+                          {[...parts, ...parts, ...parts, ...parts, ...parts, ...parts, ...parts, ...parts].map((part, idx) => (
                             <tr class="transition-colors duration-100 hover:bg-slate-100" key={part.part}>
                               {['part', 'left', 'right'].map(key => (
                                 <td
@@ -205,8 +222,8 @@ export class VehiclePaintThickness implements ImageViewerInterface {
 
               {['data', 'data-loading'].includes(this.state) && (
                 <div>
-                  {!imageGroups.length && <div class="h-[40px] px-[30px] flex text-red-500 items-center justify-center text-[18px]">{texts.noImageGroups}</div>}
-                  {!!imageGroups.length && (
+                  {!!imageGroups.length && <div class="h-[40px] px-[30px] pb-[16px] flex text-red-500 items-center justify-center text-[18px]">{texts.noImageGroups}</div>}
+                  {!!!imageGroups.length && (
                     <div class="py-[16px] gap-[16px] justify-center flex flex-wrap px-[24px] w-full">
                       {imageGroups.map(imageGroup => (
                         <div class="shrink-0 rounded-lg shadow-sm border overflow-hidden flex flex-col" key={imageGroup.name}>

@@ -191,7 +191,7 @@ export class VehicleLookup {
 
     return (
       <Host>
-        <div class={cn('w-full', { 'opacity-0 absolute pointer-events-none': this.activeElement !== componentTags.vehicleSpecification })}>
+        <div class={cn('w-full', { 'opacity-0 absolute !pointer-events-none -top-[100%] -left-[100vw]': this.activeElement !== componentTags.vehicleSpecification })}>
           <vehicle-specification
             base-url={this.baseUrl}
             language={this.language}
@@ -200,11 +200,11 @@ export class VehicleLookup {
           ></vehicle-specification>
         </div>
 
-        <div class={cn('w-full', { 'opacity-0 absolute pointer-events-none': this.activeElement !== componentTags.vehicleAccessories })}>
+        <div class={cn('w-full', { 'opacity-0 absolute !pointer-events-none -top-[100%] -left-[100vw]': this.activeElement !== componentTags.vehicleAccessories })}>
           <vehicle-accessories base-url={this.baseUrl} language={this.language} query-string={this.queryString} {...props[componentTags.vehicleAccessories]}></vehicle-accessories>
         </div>
 
-        <div class={cn('w-full', { 'opacity-0 absolute pointer-events-none': this.activeElement !== componentTags.vehicleWarrantyDetails })}>
+        <div class={cn('w-full', { 'opacity-0 absolute !pointer-events-none -top-[100%] -left-[100vw]': this.activeElement !== componentTags.vehicleWarrantyDetails })}>
           <vehicle-warranty-details
             show-ssc="true"
             show-warranty="true"
@@ -217,7 +217,7 @@ export class VehicleLookup {
           </vehicle-warranty-details>
         </div>
 
-        <div class={cn('w-full', { 'opacity-0 absolute pointer-events-none': this.activeElement !== componentTags.vehicleServiceHistory })}>
+        <div class={cn('w-full', { 'opacity-0 absolute !pointer-events-none -top-[100%] -left-[100vw]': this.activeElement !== componentTags.vehicleServiceHistory })}>
           <vehicle-service-history
             language={this.language}
             base-url={this.baseUrl}
@@ -226,7 +226,7 @@ export class VehicleLookup {
           ></vehicle-service-history>
         </div>
 
-        <div class={cn('w-full', { 'opacity-0 absolute pointer-events-none': this.activeElement !== componentTags.vehiclePaintThickness })}>
+        <div class={cn('w-full', { 'opacity-0 absolute !pointer-events-none -top-[100%] -left-[100vw]': this.activeElement !== componentTags.vehiclePaintThickness })}>
           <vehicle-paint-thickness
             base-url={this.baseUrl}
             language={this.language}
@@ -235,7 +235,7 @@ export class VehicleLookup {
           ></vehicle-paint-thickness>
         </div>
 
-        <div class={cn('w-full', { 'opacity-0 absolute pointer-events-none': this.activeElement !== componentTags.vehicleClaimableItems })}>
+        <div class={cn('w-full', { 'opacity-0 absolute !pointer-events-none -top-[100%] -left-[100vw]': this.activeElement !== componentTags.vehicleClaimableItems })}>
           <vehicle-claimable-items
             {...props[componentTags.vehicleClaimableItems]}
             base-url={this.baseUrl}

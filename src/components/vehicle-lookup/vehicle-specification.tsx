@@ -6,6 +6,7 @@ import { AppStates, MockJson } from '~types/components';
 import { VehicleInformation } from '~types/vehicle-information';
 
 import cn from '~lib/cn';
+import updateBodyHeight from '~lib/update-body-height';
 import { ErrorKeys, getLocaleLanguage, getSharedLocal, SharedLocales, sharedLocalesSchema } from '~lib/get-local-language';
 
 import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicleInformation';
@@ -108,29 +109,14 @@ export class VehicleSpecification implements VehicleInformationInterface {
     await this.setData(requestedVin, headers);
   }
 
-  private updateBodyHeight = () => {
-    if (this.state.includes('loading')) return;
-
-    setTimeout(() => {
-      const bodyEl = this.el.shadowRoot.querySelector('.vehicle-info-body');
-      const contentEl = this.el.shadowRoot.querySelector('.vehicle-info-content');
-
-      if (contentEl && bodyEl) {
-        const { clientHeight } = contentEl;
-
-        if (clientHeight) (bodyEl as HTMLElement).style.height = `${clientHeight}px`;
-      }
-    }, 50);
-  };
-
   @Watch('vehicleInformation')
   async onInformationUpdate() {
-    this.updateBodyHeight();
+    updateBodyHeight(this);
   }
 
   @Watch('state')
   async loadingListener() {
-    this.updateBodyHeight();
+    updateBodyHeight(this);
     if (this.loadingStateChange) this.loadingStateChange(this.state.includes('loading'));
   }
 
@@ -186,7 +172,7 @@ export class VehicleSpecification implements VehicleInformationInterface {
           <div part="vehicle-info-body" class="vehicle-info-body">
             <div part="vehicle-info-content" class="vehicle-info-content">
               {['data', 'data-loading'].includes(this.state) && (
-                <div class={cn('flex m-[16px] max-h-[70dvh] overflow-hidden rounded-[4px] flex-col border-[#d6d8dc]', { border: !!this.vehicleInformation?.vehicleSpecification })}>
+                <div class={cn('flex m-[16px] overflow-hidden rounded-[4px] flex-col border-[#d6d8dc]', { border: !!this.vehicleInformation?.vehicleSpecification })}>
                   <div class="h-0 overflow-auto flex-1">
                     {!this.vehicleInformation?.vehicleSpecification && (
                       <div class="flex items-center font-bold text-[20px] justify-center h-[calc(272px-32px)]">{texts.noData}</div>
