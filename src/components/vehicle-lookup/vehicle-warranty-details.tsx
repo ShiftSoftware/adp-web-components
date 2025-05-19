@@ -22,10 +22,10 @@ declare const grecaptcha: Grecaptcha;
 
 @Component({
   shadow: true,
-  tag: 'warranty-details',
-  styleUrl: 'warranty-details.css',
+  tag: 'vehicle-warranty-details',
+  styleUrl: 'vehicle-warranty-details.css',
 })
-export class WarrantyDetails implements VehicleInformationInterface {
+export class VehicleWarrantyDetails implements VehicleInformationInterface {
   @Prop() baseUrl: string = '';
   @Prop() isDev: boolean = false;
   @Prop() showSsc: boolean = false;

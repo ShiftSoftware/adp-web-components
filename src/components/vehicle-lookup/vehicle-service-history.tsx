@@ -2,27 +2,24 @@ import { InferType } from 'yup';
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import cn from '~lib/cn';
-import { closeImageViewer, ImageViewerInterface, openImageViewer } from '~lib/image-expansion';
 import { ErrorKeys, getLocaleLanguage, getSharedLocal, SharedLocales, sharedLocalesSchema } from '~lib/get-local-language';
-
-import { getVehicleInformation } from '~api/vehicleInformation';
 
 import { LanguageKeys } from '~types/locale';
 import { AppStates, MockJson } from '~types/components';
 import { VehicleInformation } from '~types/vehicle-information';
 
-import Eye from '~assets/eye.svg';
+import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicleInformation';
 
-import paintThicknessSchema from '~locales/vehicleLookup/paintThickness/type';
+import ServiceHistorySchema from '~locales/vehicleLookup/serviceHistory/type';
 
 let mockData: MockJson<VehicleInformation> = {};
 
 @Component({
   shadow: true,
-  tag: 'paint-thickness',
-  styleUrl: 'paint-thickness.css',
+  tag: 'vehicle-service-history',
+  styleUrl: 'vehicle-service-history.css',
 })
-export class PaintThickness implements ImageViewerInterface {
+export class VehicleServiceHistory implements VehicleInformationInterface {
   @Prop() baseUrl: string = '';
   @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
@@ -32,18 +29,15 @@ export class PaintThickness implements ImageViewerInterface {
   @Prop() loadedResponse?: (response: VehicleInformation) => void;
 
   @State() sharedLocales: SharedLocales = sharedLocalesSchema.getDefault();
-  @State() locale: InferType<typeof paintThicknessSchema> = paintThicknessSchema.getDefault();
+  @State() locale: InferType<typeof ServiceHistorySchema> = ServiceHistorySchema.getDefault();
 
   @State() state: AppStates = 'idle';
   @State() externalVin?: string = null;
-  @State() expandedImage?: string = null;
   @State() errorMessage?: ErrorKeys = null;
   @State() vehicleInformation?: VehicleInformation;
 
   abortController: AbortController;
   networkTimeoutRef: ReturnType<typeof setTimeout>;
-
-  originalImage: HTMLImageElement;
 
   @Element() el: HTMLElement;
 
@@ -53,16 +47,13 @@ export class PaintThickness implements ImageViewerInterface {
 
   @Watch('language')
   async changeLanguage(newLanguage: LanguageKeys) {
-    const localeResponses = await Promise.all([getLocaleLanguage(newLanguage, 'vehicleLookup.paintThickness', paintThicknessSchema), getSharedLocal(newLanguage)]);
+    const localeResponses = await Promise.all([getLocaleLanguage(newLanguage, 'vehicleLookup.serviceHistory', ServiceHistorySchema), getSharedLocal(newLanguage)]);
     this.locale = localeResponses[0];
     this.sharedLocales = localeResponses[1];
   }
 
   private handleSettingData(response: VehicleInformation) {
-    if (!response.paintThickness) response.paintThickness = { imageGroups: [], parts: [] };
-    if (!response.paintThickness.parts || !Array.isArray(response.paintThickness.parts)) response.paintThickness.parts = [];
-    if (!response.paintThickness.imageGroups || !Array.isArray(response.paintThickness.imageGroups)) response.paintThickness.imageGroups = [];
-
+    if (response.serviceHistory === null) response.serviceHistory = [];
     this.vehicleInformation = response;
   }
 
@@ -133,21 +124,8 @@ export class PaintThickness implements ImageViewerInterface {
     mockData = newMockData;
   }
 
-  closeImageListener = (event?: KeyboardEvent) => {
-    this.closeImage(event);
-  };
-
-  openImage = (target: HTMLImageElement, imageSrc: string) => {
-    openImageViewer(this, target, imageSrc);
-  };
-
-  closeImage = (event?: KeyboardEvent) => {
-    closeImageViewer(this, event);
-  };
-
   render() {
     const texts = this.locale;
-    const { imageGroups, parts } = this?.vehicleInformation ? this?.vehicleInformation?.paintThickness : { imageGroups: [], parts: [] };
 
     return (
       <Host>
@@ -166,32 +144,32 @@ export class PaintThickness implements ImageViewerInterface {
               )}
 
               {['data', 'data-loading'].includes(this.state) && (
-                <div class="flex mt-[12px] w-full max-h-[70dvh] overflow-hidden mx-auto rounded-[4px] flex-col border border-[#d6d8dc]">
-                  <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">{texts.paintThickness}</div>
+                <div class="flex mt-[12px] max-h-[70dvh] overflow-hidden rounded-[4px] flex-col border border-[#d6d8dc]">
+                  <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">{texts.serviceHistory}</div>
                   <div class="h-0 overflow-auto flex-1">
-                    {!parts.length && <div class="h-[50px] px-[30px] flex items-center justify-center text-[18px]">{texts.noData}</div>}
-                    {!!parts.length && (
+                    {!this.vehicleInformation?.serviceHistory.length && <div class="h-[80px] flex items-center justify-center text-[18px]">{texts.noData}</div>}
+                    {!!this.vehicleInformation?.serviceHistory.length && (
                       <table class="w-full overflow-auto relative border-collapse">
                         <thead class="top-0 font-bold sticky bg-white">
                           <tr>
-                            {['part', 'left', 'right'].map(title => (
-                              <th key={title} class="px-[15px] min-w-[100px] py-[15px] text-center whitespace-nowrap border-b border-[#d6d8dc]">
+                            {['branch', 'dealer', 'invoiceNumber', 'date', 'serviceType', 'odometer'].map(title => (
+                              <th key={title} class="px-[10px] py-[20px] text-center whitespace-nowrap border-b border-[#d6d8dc]">
                                 {texts[title]}
                               </th>
                             ))}
                           </tr>
                         </thead>
                         <tbody>
-                          {parts.map((part, idx) => (
-                            <tr class="transition-colors duration-100 hover:bg-slate-100" key={part.part}>
-                              {['part', 'left', 'right'].map(key => (
+                          {this.vehicleInformation?.serviceHistory.map((service, idx) => (
+                            <tr class="transition-colors duration-100 hover:bg-slate-100" key={service.invoiceNumber}>
+                              {['branchName', 'companyName', 'invoiceNumber', 'serviceDate', 'serviceType', 'mileage'].map(serviceType => (
                                 <td
-                                  key={part.part + key}
+                                  key={service.invoiceNumber + serviceType}
                                   class={cn('px-[10px] py-[20px] text-center whitespace-nowrap border-b border-[#d6d8dc]', {
-                                    '!border-none': idx === parts.length - 1,
+                                    '!border-none': idx === this.vehicleInformation?.serviceHistory.length - 1,
                                   })}
                                 >
-                                  {part[key] || '...'}
+                                  {service[serviceType] || '...'}
                                 </td>
                               ))}
                             </tr>
@@ -200,51 +178,6 @@ export class PaintThickness implements ImageViewerInterface {
                       </table>
                     )}
                   </div>
-                </div>
-              )}
-
-              {['data', 'data-loading'].includes(this.state) && (
-                <div>
-                  {!imageGroups.length && <div class="h-[40px] px-[30px] flex text-red-500 items-center justify-center text-[18px]">{texts.noImageGroups}</div>}
-                  {!!imageGroups.length && (
-                    <div class="py-[16px] gap-[16px] justify-center flex flex-wrap px-[24px] w-full">
-                      {imageGroups.map(imageGroup => (
-                        <div class="shrink-0 rounded-lg shadow-sm border overflow-hidden flex flex-col" key={imageGroup.name}>
-                          <h1 class="text-center border-b bg-slate-200 font-semibold p-[6px]">{imageGroup.name}</h1>
-
-                          <div class="flex p-[12px] gap-[8px]">
-                            {imageGroup.images.map(image => (
-                              <div class="flex gap-[8px]" key={image}>
-                                <button
-                                  onClick={({ target }) => this.openImage(target as HTMLImageElement, image)}
-                                  class="shrink-0 relative ring-0 outline-none w-fit mx-auto [&_img]:hover:shadow-lg [&_div]:hover:!opacity-100 cursor-pointer"
-                                >
-                                  <div class="absolute flex-col justify-center gap-[4px] size-full flex items-center pointer-events-none hover:opacity-100 rounded-lg opacity-0 bg-black/40 transition-all duration-300">
-                                    <img src={Eye} />
-                                    <span class="text-white">{texts.expand}</span>
-                                  </div>
-                                  <img class="w-auto h-[150px] cursor-pointer shadow-sm rounded-lg transition-all duration-300" src={image} />
-                                </button>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                      <div
-                        onClick={() => this.closeImage()}
-                        style={{ backdropFilter: this.expandedImage ? 'blur(3px)' : 'blur(0px)' }}
-                        class={cn('pointer-events-none w-[100dvw] h-[100dvh] fixed top-0 z-10 left-0 opacity-0 bg-black/40 transition-all duration-400', {
-                          'pointer-events-auto opacity-100 delay-200': this.expandedImage,
-                        })}
-                      >
-                        <button class="flex flex-col mt-[16px] items-center justify-center size-12 float-right mr-[16px]" onClick={() => this.closeImage()}>
-                          <div class="h-1 w-12 rounded-full rotate-45 absolute bg-white"></div>
-                          <div class="h-1 w-12 rounded-full -rotate-45 absolute bg-white"></div>
-                        </button>
-                      </div>
-                      <img alt="" id="expanded-image" class="fixed opacity-0 z-40 transition-all rounded-lg" />
-                    </div>
-                  )}
                 </div>
               )}
             </div>

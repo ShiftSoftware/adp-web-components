@@ -6,31 +6,31 @@ import { ErrorKeys, getLocaleLanguage, getSharedLocal, SharedLocales, sharedLoca
 
 import { LanguageKeys } from '~types/locale';
 import { DotNetObjectReference } from '~types/components';
+import { VehicleInformation } from '~types/vehicle-information';
 
 import vehicleLookupWrapperSchema from '~locales/vehicleLookup/wrapper-type';
 
-import { VehicleClaimableItems } from './vehicle-claimable-items';
-import { PaintThickness } from './paint-thickness';
-import { ServiceHistory } from './service-history';
-import { WarrantyDetails } from './warranty-details';
 import { VehicleAccessories } from './vehicle-accessories';
 import { VehicleSpecification } from './vehicle-specification';
-import { VehicleInformation } from '../../components';
+import { VehicleClaimableItems } from './vehicle-claimable-items';
+import { VehiclePaintThickness } from './vehicle-paint-thickness';
+import { VehicleServiceHistory } from './vehicle-service-history';
+import { VehicleWarrantyDetails } from './vehicle-warranty-details';
 
 const componentTags = {
-  paintThickness: 'paint-thickness',
-  serviceHistory: 'service-history',
-  warrantyDetails: 'warranty-details',
+  paintThickness: 'vehicle-paint-thickness',
+  serviceHistory: 'vehicle-service-history',
   vehicleAccessories: 'vehicle-accessories',
+  warrantyDetails: 'vehicle-warranty-details',
   vehicleSpecification: 'vehicle-specification',
   vehicleClaimableItems: 'vehicle-claimable-items',
 } as const;
 
 export type ComponentMap = {
-  [componentTags.paintThickness]: PaintThickness;
-  [componentTags.serviceHistory]: ServiceHistory;
-  [componentTags.warrantyDetails]: WarrantyDetails;
+  [componentTags.serviceHistory]: VehicleServiceHistory;
+  [componentTags.paintThickness]: VehiclePaintThickness;
   [componentTags.vehicleAccessories]: VehicleAccessories;
+  [componentTags.warrantyDetails]: VehicleWarrantyDetails;
   [componentTags.vehicleSpecification]: VehicleSpecification;
   [componentTags.vehicleClaimableItems]: VehicleClaimableItems;
 };
@@ -80,9 +80,9 @@ export class VehicleLookup {
   }
 
   async componentDidLoad() {
-    const vehicleHistory = this.el.getElementsByTagName('service-history')[0] as unknown as ServiceHistory;
-    const vehicleThickness = this.el.getElementsByTagName('paint-thickness')[0] as unknown as PaintThickness;
-    const vehicleDetails = this.el.getElementsByTagName('warranty-details')[0] as unknown as WarrantyDetails;
+    const vehicleHistory = this.el.getElementsByTagName('service-history')[0] as unknown as VehicleServiceHistory;
+    const vehicleDetails = this.el.getElementsByTagName('warranty-details')[0] as unknown as VehicleWarrantyDetails;
+    const vehicleThickness = this.el.getElementsByTagName('paint-thickness')[0] as unknown as VehiclePaintThickness;
     const vehicleAccessories = this.el.getElementsByTagName('vehicle-accessories')[0] as unknown as VehicleAccessories;
     const vehicleClaim = this.el.getElementsByTagName('vehicle-claimable-items')[0] as unknown as VehicleClaimableItems;
     const vehicleSpecification = this.el.getElementsByTagName('vehicle-specification')[0] as unknown as VehicleSpecification;
