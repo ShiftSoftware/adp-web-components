@@ -199,7 +199,7 @@ export class VehiclePaintThickness implements ImageViewerInterface {
                           </tr>
                         </thead>
                         <tbody>
-                          {[...parts, ...parts, ...parts, ...parts, ...parts, ...parts, ...parts, ...parts].map((part, idx) => (
+                          {parts.map((part, idx) => (
                             <tr class="transition-colors duration-100 hover:bg-slate-100" key={part.part}>
                               {['part', 'left', 'right'].map(key => (
                                 <td
@@ -222,8 +222,8 @@ export class VehiclePaintThickness implements ImageViewerInterface {
 
               {['data', 'data-loading'].includes(this.state) && (
                 <div>
-                  {!!imageGroups.length && <div class="h-[40px] px-[30px] pb-[16px] flex text-red-500 items-center justify-center text-[18px]">{texts.noImageGroups}</div>}
-                  {!!!imageGroups.length && (
+                  {!imageGroups.length && <div class="h-[40px] px-[30px] pb-[16px] flex text-red-500 items-center justify-center text-[18px]">{texts.noImageGroups}</div>}
+                  {!!imageGroups.length && (
                     <div class="py-[16px] gap-[16px] justify-center flex flex-wrap px-[24px] w-full">
                       {imageGroups.map(imageGroup => (
                         <div class="shrink-0 rounded-lg shadow-sm border overflow-hidden flex flex-col" key={imageGroup.name}>
