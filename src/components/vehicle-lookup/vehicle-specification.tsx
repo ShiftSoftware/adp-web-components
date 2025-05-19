@@ -108,8 +108,28 @@ export class VehicleSpecification implements VehicleInformationInterface {
     await this.setData(requestedVin, headers);
   }
 
+  private updateBodyHeight = () => {
+    if (this.state.includes('loading')) return;
+
+    setTimeout(() => {
+      const bodyEl = this.el.shadowRoot.querySelector('.vehicle-info-body');
+      const contentEl = this.el.shadowRoot.querySelector('.vehicle-info-content');
+
+      if (contentEl && bodyEl) {
+        const { clientHeight } = contentEl;
+        (bodyEl as HTMLElement).style.height = `${clientHeight}px`;
+      }
+    }, 50);
+  };
+
+  @Watch('vehicleInformation')
+  async onInformationUpdate() {
+    this.updateBodyHeight();
+  }
+
   @Watch('state')
   async loadingListener() {
+    this.updateBodyHeight();
     if (this.loadingStateChange) this.loadingStateChange(this.state.includes('loading'));
   }
 
@@ -141,6 +161,9 @@ export class VehicleSpecification implements VehicleInformationInterface {
     const isLoading = this.state.includes('loading');
     const isError = this.state.includes('error');
 
+    // @ts-ignore
+    window.hh = this;
+
     return (
       <Host>
         <div dir={this.sharedLocales.direction} part="vehicle-info-container" class={cn('vehicle-info-container', { loading: isLoading })}>
@@ -155,36 +178,24 @@ export class VehicleSpecification implements VehicleInformationInterface {
               )}
             </strong>
           </div>
-          <div part="vehicle-info-body" class="vehicle-info-body">
-            <div part="loading-lane" class="loading-lane">
-              <div class="lane-loading-slider">
-                <div class="lane-loading-slider-line"></div>
-                <div class="lane-loading-slider-subline lane-inc"></div>
-                <div class="lane-loading-slider-subline lane-dec"></div>
-              </div>
+          <div part="loading-lane" class="loading-lane">
+            <div class="lane-loading-slider">
+              <div class="lane-loading-slider-line"></div>
+              <div class="lane-loading-slider-subline lane-inc"></div>
+              <div class="lane-loading-slider-subline lane-dec"></div>
             </div>
           </div>
-          <div>
-            <loading-spinner isLoading={this.state.includes('loading')} />
-            <div class={cn('transition-all !duration-700', { 'scale-0': this.state.includes('loading') || this.state === 'idle', 'opacity-0': this.state.includes('loading') })}>
-              <div class={cn('text-center pt-[4px] text-[20px]', { 'text-red-600': !!this.errorMessage })}>{this.vehicleInformation?.vin}</div>
-
-              {['error', 'error-loading'].includes(this.state) && (
-                <div class="py-[16px] min-h-[100px] flex items-center">
-                  <div class="px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">
-                    {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
-                  </div>
-                </div>
-              )}
-
+          <div part="vehicle-info-body" class="vehicle-info-body">
+            <div part="vehicle-info-content" class="vehicle-info-content">
               {['data', 'data-loading'].includes(this.state) && (
-                <div class="flex mt-[12px] max-h-[70dvh] overflow-hidden rounded-[4px] flex-col border border-[#d6d8dc]">
-                  <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">{texts.vehicleSpecification}</div>
+                <div class={cn('flex m-[16px] max-h-[70dvh] overflow-hidden rounded-[4px] flex-col border-[#d6d8dc]', { border: !!this.vehicleInformation?.vehicleSpecification })}>
                   <div class="h-0 overflow-auto flex-1">
-                    {!this.vehicleInformation?.vehicleSpecification && <div class="h-[80px] flex items-center justify-center text-[18px]">{texts.noData}</div>}
+                    {!this.vehicleInformation?.vehicleSpecification && (
+                      <div class="flex items-center font-bold text-[20px] justify-center h-[calc(272px-32px)]">{texts.noData}</div>
+                    )}
                     {!!this.vehicleInformation?.vehicleSpecification && (
                       <table class="w-full overflow-auto relative border-collapse">
-                        <thead class="top-0 font-bold sticky bg-white">
+                        <thead class="top-0 font-bold sticky bg-[#e1e3e5]">
                           <tr>
                             {['model', 'variant', 'katashiki', 'modelYear', ...(!!productionDate ? ['productionDate'] : []), 'sfx'].map(title => (
                               <th key={title} class="px-[10px] py-[20px] text-center whitespace-nowrap border-b border-[#d6d8dc]">

@@ -41,11 +41,19 @@
 }
 
 .vehicle-info-body {
-  @apply overflow-x-scroll relative transition-all duration-500 ease-in-out h-[272px];
+  @apply overflow-auto flex flex-col relative transition-all duration-500 ease-in-out h-[272px];
 }
 
 .loading .vehicle-info-body {
   @apply pointer-events-none;
+}
+
+.vehicle-info-content {
+  @apply transition duration-300 w-full h-fit;
+}
+
+.loading .vehicle-info-content {
+  @apply opacity-0 scale-[0.8];
 }
 
 .vehicle-info-header {
@@ -65,11 +73,11 @@
 }
 
 .loading-lane {
-  @apply pointer-events-none;
+  @apply pointer-events-none size-0;
 }
 
 .lane-loading-slider {
-  @apply absolute overflow-hidden opacity-0 transition duration-300 pointer-events-none -translate-y-1/2 w-[calc(100%-60px)] h-[10px] bg-[#f2f2f2] rounded-[10px] border border-[#ddd] top-1/2 translate-x-[30px];
+  @apply absolute overflow-hidden opacity-0 transition duration-300 pointer-events-none -translate-y-1/2 w-[calc(100%-60px)] h-[10px] bg-[#f2f2f2] rounded-[10px] border border-[#ddd] top-[calc(50%+25px)] translate-x-[30px];
 }
 
 .loading .lane-loading-slider {
