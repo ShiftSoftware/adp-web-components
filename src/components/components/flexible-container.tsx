@@ -9,13 +9,15 @@ import cn from '~lib/cn';
 export class FlexibleContainer {
   @Prop() classes?: string;
   @Prop() alwaysStrict?: boolean;
-  @Prop() height?: number | 'auto';
   @Prop() containerClasses?: string;
   @Prop() isOpened?: boolean = true;
+  @Prop() height?: number | 'auto' = 'auto';
 
   @Element() el: HTMLElement;
   @State() content: HTMLDivElement;
   @State() container: HTMLDivElement;
+
+  private resizeListener: () => void;
 
   private mutationObserver: MutationObserver;
 
@@ -25,9 +27,9 @@ export class FlexibleContainer {
     this.container = this.el.querySelector('.flexible-container');
     this.content = this.el.querySelector('.flexible-container-content');
 
-    const onMutation = () => this.handleChildUpdates();
+    const mustUpdate = () => this.handleChildUpdates();
 
-    this.mutationObserver = new MutationObserver(onMutation);
+    this.mutationObserver = new MutationObserver(mustUpdate);
 
     this.mutationObserver.observe(this.content, {
       childList: true, // watches child nodes added/removed
@@ -38,6 +40,10 @@ export class FlexibleContainer {
       characterDataOldValue: true, // optional: track old text content
     });
 
+    this.resizeListener = mustUpdate;
+
+    window.addEventListener('resize', this.resizeListener);
+
     setTimeout(() => {
       this.startTransition(true);
     }, 1000);
@@ -45,6 +51,7 @@ export class FlexibleContainer {
 
   async disconnectedCallback() {
     if (this.mutationObserver) this.mutationObserver.disconnect();
+    if (this.resizeListener) window.removeEventListener('resize', this.resizeListener);
   }
 
   private startTransition = (strict = false, staticHeight?: number) => {

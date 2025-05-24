@@ -1,10 +1,10 @@
 .shift-skeleton {
-  @apply !relative;
+  @apply !relative rounded;
 }
 
 .loading.shift-skeleton,
 .loading .shift-skeleton {
-  @apply !relative !overflow-hidden rounded !pointer-events-none;
+  @apply !relative !overflow-hidden !pointer-events-none;
 }
 
 .shift-skeleton::after {
