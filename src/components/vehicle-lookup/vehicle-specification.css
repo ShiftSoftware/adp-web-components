@@ -1,4 +1,4 @@
-@import './shared-styles.css';
+@import '../style/vehicle-info.css';
 
 :host {
   all: initial !important;

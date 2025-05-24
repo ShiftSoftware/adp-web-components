@@ -9,6 +9,7 @@ import cn from '~lib/cn';
 export class FlexibleContainer {
   @Prop() classes?: string;
   @Prop() alwaysStrict?: boolean;
+  @Prop() height?: number | 'auto';
   @Prop() containerClasses?: string;
   @Prop() isOpened?: boolean = true;
 
@@ -24,7 +25,9 @@ export class FlexibleContainer {
     this.container = this.el.querySelector('.flexible-container');
     this.content = this.el.querySelector('.flexible-container-content');
 
-    this.mutationObserver = new MutationObserver(this.handleChildUpdates);
+    const onMutation = () => this.handleChildUpdates();
+
+    this.mutationObserver = new MutationObserver(onMutation);
 
     this.mutationObserver.observe(this.content, {
       childList: true, // watches child nodes added/removed
@@ -44,26 +47,30 @@ export class FlexibleContainer {
     if (this.mutationObserver) this.mutationObserver.disconnect();
   }
 
-  private startTransition = (strict = false) => {
-    console.log(100);
-
+  private startTransition = (strict = false, staticHeight?: number) => {
+    if (staticHeight) return (this.container.style.height = `${staticHeight}px`);
+    if (this.height !== 'auto') return;
     if (!this.isOpened) this.container.style.height = '0px';
     else if (strict || this.alwaysStrict) this.container.style.height = `${this.content.clientHeight}px`;
     else this.container.style.height = `${this.content.clientHeight ? this.content.clientHeight + 4 : this.content.clientHeight}px`;
   };
 
-  private handleChildUpdates = () => {
-    console.log(99);
-
+  private handleChildUpdates = (staticHeight?: number) => {
     clearTimeout(this.ChildUpdatesActionTimeout);
     this.ChildUpdatesActionTimeout = setTimeout(() => {
-      this.startTransition();
+      this.startTransition(false, staticHeight);
     }, 50);
   };
 
   @Watch('isOpened')
   async handleOpenChanges() {
     this.handleChildUpdates();
+  }
+
+  @Watch('height')
+  async handleHeightChanges(newHeight: number | 'auto') {
+    if (newHeight === 'auto') this.handleChildUpdates();
+    else if (typeof newHeight === 'number') this.handleChildUpdates(newHeight);
   }
 
   render() {

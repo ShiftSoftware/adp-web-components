@@ -9,7 +9,7 @@
 
 .shift-skeleton::after {
   content: '';
-  @apply absolute left-0 top-0 z-10 opacity-0 scale-75 transition-all duration-500 pointer-events-none;
+  @apply absolute left-0 top-0 z-10 opacity-0 origin-left transition-all duration-500 pointer-events-none;
   width: 100%;
   height: 100%;
   background: linear-gradient(-45deg, #d4d8de, #e2e5e9, #d4d8de);
@@ -18,7 +18,7 @@
 
 .loading.shift-skeleton::after,
 .loading .shift-skeleton::after {
-  @apply opacity-100 scale-100;
+  @apply opacity-100 scale-x-100;
   animation: shimmer 2s ease-in-out infinite;
 }
 
