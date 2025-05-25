@@ -18,6 +18,7 @@ export type InformationTableColumn = {
 })
 export class InformationTable {
   @Prop() rows: object[] = [];
+  @Prop() templateRow: object = {};
   @Prop() isLoading: boolean = false;
   @Prop() headers: InformationTableColumn[];
 
@@ -35,15 +36,15 @@ export class InformationTable {
   }
 
   private renderRow = (data: object = {}) => (
-    <div class={cn('border-b information-table-row flex even:bg-slate-100 hover:bg-slate-200/50 transition duration-300 last:border-b-0')}>
+    <div class={cn('border-b information-table-row flex even:bg-slate-100 hover:bg-sky-100/50 transition duration-300 last:border-b-0')}>
       {this.headers.map(({ key, label, width, centeredHorizontally = true, centeredVertically = true, styles = {} }, idx) => (
         <div
           key={key + label + idx}
           style={{ width: `${width}px`, ...styles }}
-          class={cn('px-[16px] py-[16px] whitespace-nowrap', { 'text-center': centeredHorizontally, 'my-auto': centeredVertically })}
+          class={cn('px-[16px] py-[16px]', { 'text-center': centeredHorizontally, 'my-auto': centeredVertically })}
         >
           <div class="shift-skeleton">
-            {!(data[key] !== null || data[key] !== undefined) && '...'}
+            {(data[key] === null || data[key] === undefined) && '...'}
             {(data[key] !== null || data[key] !== undefined) && (typeof data[key] === 'string' || typeof data[key] === 'number') && data[key]}
             {(data[key] !== null || data[key] !== undefined) && typeof data[key] === 'function' && data[key]()}
           </div>
@@ -63,7 +64,7 @@ export class InformationTable {
           ))}
         </div>
         <flexible-container height={this.tableRowHeight}>
-          {!this.rows.length && this.renderRow()}
+          {!this.rows.length && this.renderRow(this.templateRow)}
           {!!this.rows.length && this.rows.map(row => this.renderRow(row))}
         </flexible-container>
       </div>

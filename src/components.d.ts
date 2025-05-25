@@ -156,6 +156,7 @@ export namespace Components {
         "headers": InformationTableColumn[];
         "isLoading": boolean;
         "rows": object[];
+        "templateRow": object;
     }
     interface LoadingSpinner {
         "isLoading": boolean;
@@ -677,6 +678,7 @@ declare namespace LocalJSX {
         "headers"?: InformationTableColumn[];
         "isLoading"?: boolean;
         "rows"?: object[];
+        "templateRow"?: object;
     }
     interface LoadingSpinner {
         "isLoading"?: boolean;

@@ -12,11 +12,9 @@ export default function containerHasTag(root: Node, tag: string): boolean {
 
       if (el.tagName.toLowerCase().startsWith(tag)) return true;
 
-      // Traverse shadow root if open
       const shadowRoot = (el as Element & { shadowRoot?: ShadowRoot })?.shadowRoot;
       if (shadowRoot) return traverse(shadowRoot);
 
-      // Traverse light DOM children
       return Array.from(el.children).some(traverse);
     } else if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
       return Array.from((node as DocumentFragment).children).some(traverse);

@@ -145,7 +145,7 @@ export class VehicleSpecification implements VehicleInformationInterface {
       <Host>
         <div dir={this.sharedLocales.direction} part="vehicle-info-container" class={cn('vehicle-info-container', { loading: isLoading })}>
           <div part="vehicle-info-header" class="vehicle-info-header">
-            <strong onAnimationEnd={() => {}} part="vehicle-info-header-vin" class="vehicle-info-header-vin load-animation">
+            <strong part="vehicle-info-header-vin" class="vehicle-info-header-vin load-animation">
               {isError ? (
                 <span dir={this.sharedLocales.direction} style={{ color: 'red' }}>
                   {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}

@@ -14,6 +14,7 @@ import { ErrorKeys, getLocaleLanguage, getSharedLocal, SharedLocales, sharedLoca
 import Eye from '~assets/eye.svg';
 
 import accessoriesSchema from '~locales/vehicleLookup/accessories/type';
+import { InformationTableColumn } from '../components/information-table';
 
 let mockData: MockJson<VehicleInformation> = {};
 
@@ -145,88 +146,83 @@ export class VehicleAccessories implements ImageViewerInterface {
     const texts = this.locale;
     const accessories = this?.vehicleInformation ? this.vehicleInformation?.accessories : [];
 
+    const isLoading = this.state.includes('loading');
+    const isError = this.state.includes('error');
+
+    const tableHeaders: InformationTableColumn[] = [
+      {
+        width: 300,
+        key: 'partNumber',
+        label: texts.partNumber,
+      },
+      {
+        width: 500,
+        key: 'description',
+        label: texts.description,
+      },
+      {
+        key: 'image',
+        width: 200,
+        label: texts.image,
+      },
+    ];
+
+    const rows = accessories.map(accessory => ({
+      partNumber: accessory.partNumber,
+      description: accessory.description,
+      image: () => (
+        <div class="size-[100px] flex mx-auto items-center justify-center">
+          <button
+            onClick={({ target }) => this.openImage(target as HTMLImageElement, accessory.image)}
+            class="shrink-0 relative ring-0 outline-none w-fit mx-auto [&_img]:hover:shadow-lg [&_div]:hover:!opacity-100 cursor-pointer"
+          >
+            <div class="absolute flex-col justify-center gap-[4px] size-full flex items-center pointer-events-none hover:opacity-100 rounded-lg opacity-0 bg-black/40 transition-all duration-300">
+              <img src={Eye} />
+              <span class="text-white">{texts.expand}</span>
+            </div>
+            <img class="w-auto h-auto max-w-[100px] max-h-[100px] cursor-pointer shadow-sm rounded-lg transition-all duration-300" src={accessory.image} />
+          </button>
+        </div>
+      ),
+    }));
+
+    const templateRow = {
+      partNumber: '...',
+      description: '...',
+      image: () => <div class="size-[100px] flex mx-auto items-center justify-center">...</div>,
+    };
+
     return (
       <Host>
-        <div dir={this.sharedLocales.direction} class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
-          <div>
-            <loading-spinner isLoading={this.state.includes('loading')} />
-            <div class={cn('transition-all !duration-700', { 'scale-0': this.state.includes('loading') || this.state === 'idle', 'opacity-0': this.state.includes('loading') })}>
-              <div class={cn('text-center pt-[4px] text-[20px]', { 'text-red-600': !!this.errorMessage })}>{this.vehicleInformation?.vin}</div>
-
-              {['error', 'error-loading'].includes(this.state) && (
-                <div class="py-[16px] min-h-[100px] flex items-center">
-                  <div class="px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">
-                    {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
-                  </div>
-                </div>
+        <div
+          onClick={() => this.closeImage()}
+          style={{ backdropFilter: this.expandedImage ? 'blur(3px)' : 'blur(0px)' }}
+          class={cn('pointer-events-none w-[100dvw] h-[100dvh] fixed top-0 z-50 left-0 opacity-0 bg-black/40 transition-all duration-400', {
+            'pointer-events-auto opacity-100 delay-200': this.expandedImage,
+          })}
+        >
+          <button class="flex flex-col mt-[16px] items-center justify-center size-12 float-right mr-[16px]" onClick={() => this.closeImage()}>
+            <div class="h-1 w-12 rounded-full rotate-45 absolute bg-white"></div>
+            <div class="h-1 w-12 rounded-full -rotate-45 absolute bg-white"></div>
+          </button>
+        </div>
+        <img alt="" id="expanded-image" class="fixed opacity-0 z-50 transition-all rounded-lg" />
+        <div dir={this.sharedLocales.direction} part="vehicle-info-container" class={cn('vehicle-info-container', { loading: isLoading })}>
+          <div part="vehicle-info-header" class="vehicle-info-header">
+            <strong part="vehicle-info-header-vin" class="vehicle-info-header-vin load-animation">
+              {isError ? (
+                <span dir={this.sharedLocales.direction} style={{ color: 'red' }}>
+                  {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
+                </span>
+              ) : (
+                this.vehicleInformation?.vin
               )}
+            </strong>
+          </div>
 
-              {['data', 'data-loading'].includes(this.state) && (
-                <div class="flex mt-[12px] max-h-[70dvh] overflow-hidden rounded-[4px] flex-col border border-[#d6d8dc]">
-                  <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">{texts.vehicleAccessories}</div>
-                  <div class="h-0 overflow-auto flex-1">
-                    {!accessories.length && <div class="h-[80px] flex items-center justify-center text-[18px]">{texts.noData}</div>}
-                    {!!accessories.length && (
-                      <table class="w-full overflow-auto relative border-collapse">
-                        <thead class="top-0 font-bold z-40 sticky bg-white">
-                          <tr>
-                            {['partNumber', 'description', 'image'].map(title => (
-                              <th key={title} class="px-[10px] py-[20px] text-center whitespace-nowrap border-b border-[#d6d8dc]">
-                                {texts[title]}
-                              </th>
-                            ))}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {accessories.map((accessory, idx) => (
-                            <tr class="transition-colors duration-100 hover:bg-slate-100" key={accessory.partNumber}>
-                              {['partNumber', 'description'].map(key => (
-                                <td
-                                  key={accessory.partNumber + key}
-                                  class={cn('px-[10px] py-[20px] text-center whitespace-nowrap border-b border-[#d6d8dc]', {
-                                    '!border-none': idx === this.vehicleInformation?.serviceHistory.length - 1,
-                                  })}
-                                >
-                                  {accessory[key] || '...'}
-                                </td>
-                              ))}
-                              <td
-                                class={cn('px-[10px] py-[10px] text-center whitespace-nowrap border-b border-[#d6d8dc]', {
-                                  '!border-none': idx === this.vehicleInformation?.serviceHistory.length - 1,
-                                })}
-                              >
-                                <button
-                                  onClick={({ target }) => this.openImage(target as HTMLImageElement, accessory.image)}
-                                  class="shrink-0 relative ring-0 outline-none w-fit mx-auto [&_img]:hover:shadow-lg [&_div]:hover:!opacity-100 cursor-pointer"
-                                >
-                                  <div class="absolute flex-col justify-center gap-[4px] size-full flex items-center pointer-events-none hover:opacity-100 rounded-lg opacity-0 bg-black/40 transition-all duration-300">
-                                    <img src={Eye} />
-                                    <span class="text-white">{texts.expand}</span>
-                                  </div>
-                                  <img class="w-auto h-auto max-w-[133px] max-h-[133px] cursor-pointer shadow-sm rounded-lg transition-all duration-300" src={accessory.image} />
-                                </button>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                        <div
-                          onClick={() => this.closeImage()}
-                          style={{ backdropFilter: this.expandedImage ? 'blur(3px)' : 'blur(0px)' }}
-                          class={cn('pointer-events-none w-[100dvw] h-[100dvh] fixed top-0 z-50 left-0 opacity-0 bg-black/40 transition-all duration-400', {
-                            'pointer-events-auto opacity-100 delay-200': this.expandedImage,
-                          })}
-                        >
-                          <button class="flex flex-col mt-[16px] items-center justify-center size-12 float-right mr-[16px]" onClick={() => this.closeImage()}>
-                            <div class="h-1 w-12 rounded-full rotate-45 absolute bg-white"></div>
-                            <div class="h-1 w-12 rounded-full -rotate-45 absolute bg-white"></div>
-                          </button>
-                        </div>
-                        <img alt="" id="expanded-image" class="fixed opacity-0 z-50 transition-all rounded-lg" />
-                      </table>
-                    )}
-                  </div>
-                </div>
-              )}
+          <div part="vehicle-info-body" class="vehicle-info-body">
+            <div part="vehicle-info-content" class="p-[16px] vehicle-info-content">
+              <information-table templateRow={templateRow} rows={rows} headers={tableHeaders} isLoading={isLoading}></information-table>
             </div>
           </div>
         </div>

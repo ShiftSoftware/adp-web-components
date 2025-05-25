@@ -45,7 +45,7 @@
 }
 
 .vehicle-info-content {
-  @apply transition duration-300 w-full h-fit;
+  @apply transition duration-300 w-full;
 }
 
 .vehicle-info-header {
