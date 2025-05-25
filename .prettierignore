@@ -2,3 +2,5 @@ node_modules
 dist
 build
 www
+components.d.ts
+src/components.d.ts
