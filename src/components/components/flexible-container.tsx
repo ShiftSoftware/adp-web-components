@@ -1,4 +1,5 @@
-import { Component, Element, Prop, State, Watch, h } from '@stencil/core';
+import { Component, Element, Prop, Watch, h } from '@stencil/core';
+
 import cn from '~lib/cn';
 
 @Component({
@@ -11,11 +12,12 @@ export class FlexibleContainer {
   @Prop() alwaysStrict?: boolean;
   @Prop() containerClasses?: string;
   @Prop() isOpened?: boolean = true;
+  @Prop() stopAnimation?: boolean = false;
   @Prop() height?: number | 'auto' = 'auto';
 
+  content: HTMLDivElement;
+  container: HTMLDivElement;
   @Element() el: HTMLElement;
-  @State() content: HTMLDivElement;
-  @State() container: HTMLDivElement;
 
   private resizeListener: () => void;
 
@@ -32,12 +34,12 @@ export class FlexibleContainer {
     this.mutationObserver = new MutationObserver(mustUpdate);
 
     this.mutationObserver.observe(this.content, {
-      childList: true, // watches child nodes added/removed
-      subtree: true, // watches all descendants, not just direct children
-      characterData: true, // watches text content changes
-      attributes: true, // watches attribute changes
-      attributeOldValue: true, // optional: track old attribute value
-      characterDataOldValue: true, // optional: track old text content
+      subtree: true,
+      childList: true,
+      attributes: true,
+      characterData: true,
+      attributeOldValue: true,
+      characterDataOldValue: true,
     });
 
     this.resizeListener = mustUpdate;
@@ -45,7 +47,7 @@ export class FlexibleContainer {
     window.addEventListener('resize', this.resizeListener);
 
     setTimeout(() => {
-      this.startTransition(true);
+      this.startTransition();
     }, 1000);
   }
 
@@ -54,18 +56,17 @@ export class FlexibleContainer {
     if (this.resizeListener) window.removeEventListener('resize', this.resizeListener);
   }
 
-  private startTransition = (strict = false, staticHeight?: number) => {
+  private startTransition = (staticHeight?: number) => {
     if (staticHeight) return (this.container.style.height = `${staticHeight}px`);
     if (this.height !== 'auto') return;
     if (!this.isOpened) this.container.style.height = '0px';
-    else if (strict || this.alwaysStrict) this.container.style.height = `${this.content.clientHeight}px`;
-    else this.container.style.height = `${this.content.clientHeight ? this.content.clientHeight + 4 : this.content.clientHeight}px`;
+    else this.container.style.height = `${this.content.clientHeight}px`;
   };
 
   private handleChildUpdates = (staticHeight?: number) => {
     clearTimeout(this.ChildUpdatesActionTimeout);
     this.ChildUpdatesActionTimeout = setTimeout(() => {
-      this.startTransition(false, staticHeight);
+      this.startTransition(staticHeight);
     }, 50);
   };
 
@@ -80,9 +81,20 @@ export class FlexibleContainer {
     else if (typeof newHeight === 'number') this.handleChildUpdates(newHeight);
   }
 
+  @Watch('stopAnimation')
+  async onAnimationPlayChanges(isAnimationStopped: boolean) {
+    if (!isAnimationStopped) this.container.style.height = `${this.content.clientHeight}px`;
+  }
+
   render() {
     return (
-      <div class={cn('flexible-container transition-all overflow-hidden duration-500', { 'h-0': !this.isOpened }, this.containerClasses)}>
+      <div
+        class={cn(
+          'flexible-container transition-all overflow-hidden duration-500',
+          { 'h-0': !this.isOpened, '!h-auto !duration-0 !transition-none': this.stopAnimation },
+          this.containerClasses,
+        )}
+      >
         <div class={cn('flexible-container-content', this.classes)}>
           <slot></slot>
         </div>
