@@ -161,8 +161,8 @@ export class VehicleAccessories implements ImageViewerInterface {
         label: texts.description,
       },
       {
-        key: 'image',
         width: 200,
+        key: 'image',
         label: texts.image,
       },
     ];

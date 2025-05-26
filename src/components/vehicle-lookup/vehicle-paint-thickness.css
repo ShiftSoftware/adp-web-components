@@ -1,4 +1,5 @@
 @import '../style/vehicle-info.css';
+@import '../style/shift-skeleton.css';
 
 :host {
   all: initial !important;
