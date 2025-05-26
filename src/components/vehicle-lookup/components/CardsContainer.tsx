@@ -26,10 +26,10 @@ export default function CardsContainer({ isLoading, vehicleInformation, isAuthor
         </div>
       </div>
 
-      <div class="col-span-full">
+      <div style={{ 'grid-column': '1 / -1' }}>
         <StatusCard
+          state="warning"
           icon={!!unInvoicedByBrokerName}
-          state={unInvoicedByBrokerName ? 'warning' : 'idle'}
           opened={isLoading || !!unInvoicedByBrokerName || !vehicleInformation}
           desc={unInvoicedByBrokerName ? warrantyLocale.notInvoiced + unInvoicedByBrokerName : '...'}
         />
