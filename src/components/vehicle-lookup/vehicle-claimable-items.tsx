@@ -49,9 +49,6 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   @State() sharedLocales: SharedLocales = sharedLocalesSchema.getDefault();
   @State() locale: InferType<typeof dynamicClaimSchema> = dynamicClaimSchema.getDefault();
 
-  @State() tempTabs = ['first', 'seconf', 'sad', 'adasdsad'];
-  @State() activeTabIndex = 5;
-
   @State() isIdle: boolean = true;
   @State() popupClasses: string = '';
   @State() isLoading: boolean = false;
@@ -464,32 +461,6 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
       <Host>
         <vehicle-item-claim-form locale={texts.claimForm} language={this.language} id="dynamic-redeem"></vehicle-item-claim-form>
 
-        <shift-accordion
-          items={this.tempTabs.map((tabName, idx) => ({
-            label: tabName,
-            content: (
-              <div>
-                {[...Array(idx + 1)].map((_, i) => (
-                  <div key={i} class="p-2 bg-gray-100 m-1 last:mb-10 rounded">
-                    Repeated div {i + 1}
-                  </div>
-                ))}
-              </div>
-            ),
-          }))}
-        ></shift-accordion>
-        <div class="my-5"></div>
-        <shift-tabs tabs={this.tempTabs} activeTabIndex={this.activeTabIndex} changeActiveTab={newIdx => (this.activeTabIndex = newIdx)}>
-          {[...Array(this.activeTabIndex + 1)].map((_, i) => (
-            <div key={i} class="p-2 bg-gray-100 m-1 rounded">
-              Repeated div {i + 1}
-            </div>
-          ))}
-        </shift-tabs>
-        <flexible-container>
-          <span>{this.vehicleInformation?.vin || ''}</span>
-        </flexible-container>
-        <div class="my-5"></div>
         <div class={cn('dynamic-claim-wrapper', { loading: this.isLoading, idle: this.isIdle })}>
           <div class="dynamic-claim-header">
             <strong class="dynamic-claim-header-vin">
