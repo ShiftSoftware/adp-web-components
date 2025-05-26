@@ -1,7 +1,5 @@
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import Loader from '~assets/loader.svg';
-import SSCTable from './components/SSCTable';
 import CardsContainer from './components/CardsContainer';
 
 import cn from '~lib/cn';
@@ -15,6 +13,10 @@ import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicle
 import { LanguageKeys } from '~types/locale';
 import warrantySchema from '~locales/vehicleLookup/warranty/type';
 import { InferType } from 'yup';
+import { InformationTableColumn } from '../components/information-table';
+
+import XIcon from './assets/x-mark.svg';
+import CheckIcon from './assets/check.svg';
 
 let mockData: MockJson<VehicleInformation> = {};
 
@@ -106,7 +108,7 @@ export class VehicleWarrantyDetails implements VehicleInformationInterface {
   private async handleInitializingRecaptcha(vin, scopedTimeoutRef) {
     if (this.vehicleInformation?.isAuthorized === false && this.showSsc && this.recaptchaKey !== '') {
       grecaptcha.reset();
-      await new Promise(r => setTimeout(r, 400));
+      // await new Promise(r => setTimeout(r, 400));
       this.recaptchaIntervalRef = setInterval(async () => {
         const recaptchaResponse = grecaptcha.getResponse();
         if (recaptchaResponse) {
@@ -247,31 +249,112 @@ export class VehicleWarrantyDetails implements VehicleInformationInterface {
   }
 
   render() {
+    const isLoading = this.state.includes('loading');
+    const isError = this.state.includes('error');
+
+    const tableHeaders: InformationTableColumn[] = [
+      {
+        width: 200,
+        key: 'sscTableCode',
+        label: this.locale.sscTableCode,
+      },
+      {
+        width: 400,
+        key: 'sscTableDescription',
+        label: this.locale.sscTableDescription,
+      },
+      {
+        width: 200,
+        key: 'sscTableRepairStatus',
+        label: this.locale.sscTableRepairStatus,
+      },
+      {
+        width: 200,
+        key: 'sscTableOPCode',
+        label: this.locale.sscTableOPCode,
+      },
+      {
+        width: 200,
+        key: 'sscTablePartNumber',
+        label: this.locale.sscTablePartNumber,
+      },
+    ];
+
+    const rows = !this.vehicleInformation?.ssc
+      ? []
+      : this.vehicleInformation?.ssc.map(sscItem => ({
+          sscTableCode: sscItem.sscCode,
+          sscTableDescription: sscItem.description,
+          sscTableRepairStatus: () => (
+            <div class="table-cell-container">
+              <img class="table-status-icon" src={sscItem.repaired ? CheckIcon : XIcon} /> {sscItem?.repairDate}
+            </div>
+          ),
+          sscTableOPCode: () => (
+            <div class="table-cell-container table-cell-labors-container">
+              {!!sscItem.labors.length
+                ? sscItem.labors.map(labor => (
+                    <div key={labor.laborCode} class="success">
+                      {labor.laborCode}
+                    </div>
+                  ))
+                : '...'}
+            </div>
+          ),
+          sscTablePartNumber: () => (
+            <div class="table-cell-container table-cell-parts-container">
+              {!!sscItem.parts.length
+                ? sscItem.parts.map(part => (
+                    <div key={part.partNumber} class={part.isAvailable ? 'success' : 'reject'}>
+                      {part.partNumber}
+                    </div>
+                  ))
+                : '...'}
+            </div>
+          ),
+        }));
+
+    const templateRow = {
+      sscTableCode: '...',
+      sscTableDescription: '...',
+      sscTableRepairStatus: () => (
+        <div class="table-cell-container">
+          <img class="table-status-icon" src={CheckIcon} /> ...
+        </div>
+      ),
+      sscTableOPCode: () => (
+        <div class="table-cell-container table-cell-labors-container">
+          <div class="success">12345</div>
+          <div class="success">67890</div>
+        </div>
+      ),
+      sscTablePartNumber: () => (
+        <div class="table-cell-container table-cell-parts-container">
+          <div class="success">13579</div>
+          <div class="reject">24680</div>
+        </div>
+      ),
+    };
+
     return (
       <Host>
-        <div dir={this.sharedLocales.direction} class="min-h-[100px] warranty">
-          <div>
-            <loading-spinner isLoading={this.state.includes('loading')} />
-            <div
-              class="transition-all !duration-700"
-              style={{ transform: this.state.includes('loading') || this.state === 'idle' ? 'scale(0)' : 'scale(1)', opacity: this.state.includes('loading') ? '0' : '1' }}
-            >
-              {(this.showSsc || this.showWarranty) && (
-                <div style={{ color: !!this.errorMessage ? 'red' : 'black' }} class="warranty-vin">
-                  {this.vehicleInformation?.vin}
-                </div>
+        <div dir={this.sharedLocales.direction} part="vehicle-info-container" class={cn('vehicle-info-container', { loading: isLoading })}>
+          <div part="vehicle-info-header" class="vehicle-info-header">
+            <strong part="vehicle-info-header-vin" class="vehicle-info-header-vin load-animation">
+              {isError ? (
+                <span dir={this.sharedLocales.direction} style={{ color: 'red' }}>
+                  {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
+                </span>
+              ) : (
+                this.vehicleInformation?.vin
               )}
-
-              {['error', 'error-loading'].includes(this.state) && (
-                <div class="py-[16px] min-h-[100px] flex items-center">
-                  <div class="px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">
-                    {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
-                  </div>
-                </div>
-              )}
-
-              {this.showWarranty && ['data', 'data-loading'].includes(this.state) && (
+            </strong>
+          </div>
+          <div part="vehicle-info-body" class="vehicle-info-body">
+            <div part="vehicle-info-content" class="p-[16px] vehicle-info-content">
+              {this.showWarranty && (
                 <CardsContainer
+                  isLoading={isLoading}
                   warrantyLocale={this.locale}
                   isAuthorized={this.vehicleInformation?.isAuthorized}
                   unInvoicedByBrokerName={this.unInvoicedByBrokerName}
@@ -279,26 +362,34 @@ export class VehicleWarrantyDetails implements VehicleInformationInterface {
                 />
               )}
 
-              <div style={{ ...(this.showRecaptcha ? { height: 'auto', padding: '16px 16px 0px 16px' } : { height: '0px' }) }} class="recaptcha-container">
-                <slot></slot>
-              </div>
+              <div class={cn('h-0 transition duration-500', { 'h-[8px]': this.showRecaptcha })}></div>
 
-              {['data', 'data-loading'].includes(this.state) && this.recaptchaRes && (
-                <div class={cn('recaptcha-response', !this.recaptchaRes.hasSSC ? 'success-card' : 'reject-card ')}>{this.locale[this.recaptchaRes.message]}</div>
-              )}
-
-              {this.checkingUnauthorizedSSC && (
-                <div class="loading-spinner" style={{ marginTop: '20px', flexDirection: 'column' }}>
-                  <div>
-                    <strong>{this.locale.checkingTMC}</strong>
-                  </div>
-                  <img class="spin" src={Loader} />
+              <flexible-container isOpened={this.showRecaptcha} classes="w-fit mx-auto shift-skeleton">
+                <div style={{ height: 'auto', padding: '16px 16px 0px 16px' }} class="recaptcha-container">
+                  <slot></slot>
                 </div>
-              )}
 
-              {this.showSsc && ['data', 'data-loading'].includes(this.state) && this.vehicleInformation?.ssc !== null && !!this.vehicleInformation?.ssc.length && (
-                <SSCTable warrantyLocale={this.locale} ssc={this.vehicleInformation.ssc} />
-              )}
+                {['data', 'data-loading'].includes(this.state) && this.recaptchaRes && (
+                  <div class={cn('recaptcha-response', !this.recaptchaRes?.hasSSC ? 'success-card' : 'reject-card ')}>{this.locale[this.recaptchaRes?.message]}</div>
+                )}
+              </flexible-container>
+
+              <flexible-container isOpened={this.checkingUnauthorizedSSC} classes="w-fit mx-auto">
+                <div class="pt-[16px]">
+                  <div class="flex shift-skeleton flex-col gap-[8px]">
+                    <strong>{this.locale.checkingTMC}</strong>
+                    <div class="relative pt-[40px]">
+                      <loading-spinner isLoading={this.checkingUnauthorizedSSC}></loading-spinner>
+                    </div>
+                  </div>
+                </div>
+              </flexible-container>
+              <div class="mt-[12px] mx-auto w-fit">
+                <div class="bg-[#f6f6f6] h-[50px] flex items-center justify-center px-[16px] font-bold text-[18px] rounded-t-[4px] border border-[#ededed]">
+                  {this.locale.sscCampings}
+                </div>
+                <information-table isLoading={isLoading} templateRow={templateRow} rows={rows} headers={tableHeaders}></information-table>
+              </div>
             </div>
           </div>
         </div>

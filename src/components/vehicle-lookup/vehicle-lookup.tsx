@@ -151,6 +151,8 @@ export class VehicleLookup {
   async onActiveElementChange(newActiveElement: ActiveElement) {
     clearTimeout(this.ChildUpdatesActionTimeout);
 
+    console.log(containerHasTag(this.componentsList[newActiveElement], 'flexible-container'));
+
     if (this.componentsList[newActiveElement] && containerHasTag(this.componentsList[newActiveElement], 'flexible-container')) {
       this.flexibleContainerRef.stopAnimation = false;
       this.ChildUpdatesActionTimeout = setTimeout(() => {

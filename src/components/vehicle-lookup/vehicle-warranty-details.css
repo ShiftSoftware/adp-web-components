@@ -1,3 +1,6 @@
+@import '../style/shift-skeleton.css';
+@import '../style/vehicle-info.css';
+
 :host {
   all: initial !important;
   display: block;
@@ -82,6 +85,7 @@
   border: 1px solid;
   align-items: center;
   border-radius: 6px;
+  @apply text-slate-900 border-slate-300 bg-slate-100;
 }
 
 .card p {
@@ -113,14 +117,14 @@
 }
 
 .success-card {
-  color: #0b3521;
-  background: #d0e7de;
+  color: #0b3521 !important;
+  background: #d0e7de !important;
   border-color: #a2d0bb !important;
 }
 
 .reject-card {
-  color: #58151c;
-  background: #f7d7d8;
+  color: #58151c !important;
+  background: #f7d7d8 !important;
   border-color: #f2aeb5 !important;
 }
 
