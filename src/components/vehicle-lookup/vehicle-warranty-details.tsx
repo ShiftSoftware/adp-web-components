@@ -384,10 +384,8 @@ export class VehicleWarrantyDetails implements VehicleInformationInterface {
                   </div>
                 </div>
               </flexible-container>
-              <div class="mt-[12px] mx-auto w-fit">
-                <div class="bg-[#f6f6f6] h-[50px] flex items-center justify-center px-[16px] font-bold text-[18px] rounded-t-[4px] border border-[#ededed]">
-                  {this.locale.sscCampings}
-                </div>
+              <div class="mt-[32px] mx-auto w-fit">
+                <div class="bg-[#f6f6f6] h-[50px] flex items-center justify-center px-[16px] font-bold text-[18px]">{this.locale.sscCampings}</div>
                 <information-table isLoading={isLoading} templateRow={templateRow} rows={rows} headers={tableHeaders}></information-table>
               </div>
             </div>

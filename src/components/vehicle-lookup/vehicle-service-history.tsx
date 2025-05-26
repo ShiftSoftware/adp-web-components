@@ -12,6 +12,8 @@ import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicle
 
 import ServiceHistorySchema from '~locales/vehicleLookup/serviceHistory/type';
 
+import { InformationTableColumn } from '../components/information-table';
+
 let mockData: MockJson<VehicleInformation> = {};
 
 @Component({
@@ -127,59 +129,59 @@ export class VehicleServiceHistory implements VehicleInformationInterface {
   render() {
     const texts = this.locale;
 
+    const isLoading = this.state.includes('loading');
+    const isError = this.state.includes('error');
+
+    const tableHeaders: InformationTableColumn[] = [
+      {
+        width: 400,
+        key: 'branchName',
+        label: texts.branch,
+      },
+      {
+        width: 200,
+        key: 'companyName',
+        label: texts.dealer,
+      },
+      {
+        width: 200,
+        key: 'invoiceNumber',
+        label: texts.invoiceNumber,
+      },
+      {
+        width: 200,
+        key: 'serviceDate',
+        label: texts.date,
+      },
+      {
+        width: 400,
+        key: 'serviceType',
+        label: texts.serviceType,
+      },
+      {
+        width: 200,
+        key: 'mileage',
+        label: texts.odometer,
+      },
+    ];
+
     return (
       <Host>
-        <div dir={this.sharedLocales.direction} class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
-          <div>
-            <loading-spinner isLoading={this.state.includes('loading')} />
-            <div class={cn('transition-all !duration-700', { 'scale-0': this.state.includes('loading') || this.state === 'idle', 'opacity-0': this.state.includes('loading') })}>
-              <div class={cn('text-center pt-[4px] text-[20px]', { 'text-red-600': !!this.errorMessage })}>{this.vehicleInformation?.vin}</div>
-
-              {['error', 'error-loading'].includes(this.state) && (
-                <div class="py-[16px] min-h-[100px] flex items-center">
-                  <div class="px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">
-                    {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
-                  </div>
-                </div>
+        <div dir={this.sharedLocales.direction} part="vehicle-info-container" class={cn('vehicle-info-container', { loading: isLoading })}>
+          <div part="vehicle-info-header" class="vehicle-info-header">
+            <strong part="vehicle-info-header-vin" class="vehicle-info-header-vin load-animation">
+              {isError ? (
+                <span dir={this.sharedLocales.direction} style={{ color: 'red' }}>
+                  {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
+                </span>
+              ) : (
+                this.vehicleInformation?.vin
               )}
-
-              {['data', 'data-loading'].includes(this.state) && (
-                <div class="flex mt-[12px] max-h-[70dvh] overflow-hidden rounded-[4px] flex-col border border-[#d6d8dc]">
-                  <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">{texts.serviceHistory}</div>
-                  <div class="h-0 overflow-auto flex-1">
-                    {!this.vehicleInformation?.serviceHistory.length && <div class="h-[80px] flex items-center justify-center text-[18px]">{texts.noData}</div>}
-                    {!!this.vehicleInformation?.serviceHistory.length && (
-                      <table class="w-full overflow-auto relative border-collapse">
-                        <thead class="top-0 font-bold sticky bg-white">
-                          <tr>
-                            {['branch', 'dealer', 'invoiceNumber', 'date', 'serviceType', 'odometer'].map(title => (
-                              <th key={title} class="px-[10px] py-[20px] text-center whitespace-nowrap border-b border-[#d6d8dc]">
-                                {texts[title]}
-                              </th>
-                            ))}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {this.vehicleInformation?.serviceHistory.map((service, idx) => (
-                            <tr class="transition-colors duration-100 hover:bg-slate-100" key={service.invoiceNumber}>
-                              {['branchName', 'companyName', 'invoiceNumber', 'serviceDate', 'serviceType', 'mileage'].map(serviceType => (
-                                <td
-                                  key={service.invoiceNumber + serviceType}
-                                  class={cn('px-[10px] py-[20px] text-center whitespace-nowrap border-b border-[#d6d8dc]', {
-                                    '!border-none': idx === this.vehicleInformation?.serviceHistory.length - 1,
-                                  })}
-                                >
-                                  {service[serviceType] || '...'}
-                                </td>
-                              ))}
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    )}
-                  </div>
-                </div>
-              )}
+            </strong>
+          </div>
+          <div part="vehicle-info-body" class="vehicle-info-body">
+            <div part="vehicle-info-content" class="p-[16px] vehicle-info-content">
+              <information-table rows={this.vehicleInformation?.serviceHistory || []} headers={tableHeaders} isLoading={isLoading}></information-table>
             </div>
           </div>
         </div>
