@@ -273,6 +273,7 @@ export namespace Components {
         "dynamicClaimActivate"?: (vehicleInformation: VehicleInformation) => void;
         "errorStateListener"?: (newError: string) => void;
         "fetchVin": (vin: string, headers?: any) => Promise<string>;
+        "handleLoadData": (newResponse: VehicleInformation, activeElement: any) => Promise<void>;
         "isDev": boolean;
         "language": LanguageKeys;
         "loadingStateChanged"?: (isLoading: boolean) => void;

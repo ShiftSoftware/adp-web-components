@@ -140,7 +140,8 @@ export class VehicleLookup {
     });
   };
 
-  private handleLoadData(newResponse: VehicleInformation, activeElement) {
+  @Method()
+  handleLoadData(newResponse: VehicleInformation, activeElement) {
     this.isError = false;
     this.currentVin = newResponse.vin || '';
     Object.values(this.componentsList).forEach(element => {
@@ -213,6 +214,7 @@ export class VehicleLookup {
       () => (
         <vehicle-specification
           coreOny
+          isDev={this.isDev}
           base-url={this.baseUrl}
           language={this.language}
           query-string={this.queryString}
@@ -222,6 +224,7 @@ export class VehicleLookup {
       () => (
         <vehicle-accessories
           coreOny
+          isDev={this.isDev}
           base-url={this.baseUrl}
           language={this.language}
           query-string={this.queryString}
@@ -232,6 +235,7 @@ export class VehicleLookup {
         <vehicle-warranty-details
           coreOny
           show-ssc="true"
+          isDev={this.isDev}
           show-warranty="true"
           base-url={this.baseUrl}
           language={this.language}
@@ -244,8 +248,9 @@ export class VehicleLookup {
       () => (
         <vehicle-service-history
           coreOny
-          language={this.language}
+          isDev={this.isDev}
           base-url={this.baseUrl}
+          language={this.language}
           query-string={this.queryString}
           {...props[componentTags.vehicleServiceHistory]}
         ></vehicle-service-history>
@@ -253,6 +258,7 @@ export class VehicleLookup {
       () => (
         <vehicle-paint-thickness
           coreOny
+          isDev={this.isDev}
           base-url={this.baseUrl}
           language={this.language}
           query-string={this.queryString}
@@ -261,18 +267,20 @@ export class VehicleLookup {
       ),
       () => (
         <vehicle-claimable-items
-          {...props[componentTags.vehicleClaimableItems]}
+          isDev={this.isDev}
           base-url={this.baseUrl}
           language={this.language}
           query-string={this.queryString}
+          {...props[componentTags.vehicleClaimableItems]}
         ></vehicle-claimable-items>
       ),
     ];
+
     return (
       <Host>
         <VehicleInfoLayout
-          isError={this.isError}
           vin={this.currentVin}
+          isError={this.isError}
           isLoading={this.isLoading}
           direction={this.sharedLocales.direction}
           errorMessage={this.sharedLocales.errors[this.errorKey] || this.sharedLocales.errors.wildCard}
