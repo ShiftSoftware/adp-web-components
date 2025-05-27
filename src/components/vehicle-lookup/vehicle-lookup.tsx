@@ -1,8 +1,6 @@
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import cn from '~lib/cn';
 import validateVin from '~lib/validate-vin';
-import containerHasTag from '~lib/container-has-tag';
 import { ErrorKeys, getLocaleLanguage, getSharedLocal, SharedLocales, sharedLocalesSchema } from '~lib/get-local-language';
 
 import { LanguageKeys } from '~types/locale';
@@ -18,7 +16,7 @@ import { VehiclePaintThickness } from './vehicle-paint-thickness';
 import { VehicleServiceHistory } from './vehicle-service-history';
 import { VehicleWarrantyDetails } from './vehicle-warranty-details';
 
-import { FlexibleContainer } from '../components/flexible-container';
+import { VehicleInfoLayout } from '../components/vehicle-info-layout';
 
 const componentTags = {
   vehicleAccessories: 'vehicle-accessories',
@@ -40,6 +38,15 @@ export type ComponentMap = {
 
 export type ActiveElement = (typeof componentTags)[keyof typeof componentTags] | '';
 
+const defaultComponentListOrder: ActiveElement[] = [
+  'vehicle-specification',
+  'vehicle-accessories',
+  'vehicle-warranty-details',
+  'vehicle-service-history',
+  'vehicle-paint-thickness',
+  'vehicle-claimable-items',
+];
+
 @Component({
   shadow: false,
   tag: 'vehicle-lookup',
@@ -53,6 +60,7 @@ export class VehicleLookup {
   @Prop() queryString: string = '';
   @Prop() language: LanguageKeys = 'en';
   @Prop() childrenProps?: string | Object;
+  @Prop() componentListOrder: ActiveElement[] = defaultComponentListOrder;
 
   @Prop() errorStateListener?: (newError: string) => void;
   @Prop() blazorErrorStateListener = '';
@@ -64,14 +72,12 @@ export class VehicleLookup {
   @Prop() blazorDynamicClaimActivate = '';
 
   @State() wrapperErrorState = '';
+  @State() currentVin: string = '';
   @State() blazorRef?: DotNetObjectReference;
 
   @State() sharedLocales: SharedLocales = sharedLocalesSchema.getDefault();
 
   @Element() el: HTMLElement;
-  flexibleContainerRef: FlexibleContainer;
-
-  private ChildUpdatesActionTimeout: ReturnType<typeof setTimeout>;
 
   private componentsList: ComponentMap;
 
@@ -86,7 +92,6 @@ export class VehicleLookup {
   }
 
   async componentDidLoad() {
-    this.flexibleContainerRef = this.el.getElementsByTagName('flexible-container')[0] as unknown as FlexibleContainer;
     const vehicleAccessories = this.el.getElementsByTagName('vehicle-accessories')[0] as unknown as VehicleAccessories;
     const vehicleClaim = this.el.getElementsByTagName('vehicle-claimable-items')[0] as unknown as VehicleClaimableItems;
     const vehicleHistory = this.el.getElementsByTagName('vehicle-service-history')[0] as unknown as VehicleServiceHistory;
@@ -130,7 +135,8 @@ export class VehicleLookup {
     });
   };
 
-  private handleLoadData(newResponse, activeElement) {
+  private handleLoadData(newResponse: VehicleInformation, activeElement) {
+    this.currentVin = newResponse.vin || '';
     Object.values(this.componentsList).forEach(element => {
       if (element !== null && element !== activeElement && newResponse) element.setData(newResponse);
     });
@@ -145,20 +151,6 @@ export class VehicleLookup {
   async errorListener(newState) {
     if (this.errorStateListener) this.errorStateListener(newState);
     if (this.blazorRef && this.blazorErrorStateListener) this.blazorRef.invokeMethodAsync(this.blazorErrorStateListener, newState);
-  }
-
-  @Watch('activeElement')
-  async onActiveElementChange(newActiveElement: ActiveElement) {
-    clearTimeout(this.ChildUpdatesActionTimeout);
-
-    console.log(containerHasTag(this.componentsList[newActiveElement], 'flexible-container'));
-
-    if (this.componentsList[newActiveElement] && containerHasTag(this.componentsList[newActiveElement], 'flexible-container')) {
-      this.flexibleContainerRef.stopAnimation = false;
-      this.ChildUpdatesActionTimeout = setTimeout(() => {
-        this.flexibleContainerRef.stopAnimation = true;
-      }, 600);
-    } else this.flexibleContainerRef.stopAnimation = false;
   }
 
   @Method()
@@ -210,67 +202,83 @@ export class VehicleLookup {
     if (!Object.values(componentTags).includes(this.activeElement as any))
       return <div class="w-full h-[200px] text-[26px] text-red-600 flex items-center justify-center">Invalid tag</div>;
 
+    const componentList = [
+      () => (
+        <vehicle-specification
+          coreOny
+          base-url={this.baseUrl}
+          language={this.language}
+          query-string={this.queryString}
+          {...props[componentTags.vehicleSpecification]}
+        ></vehicle-specification>
+      ),
+      () => (
+        <vehicle-accessories
+          coreOny
+          base-url={this.baseUrl}
+          language={this.language}
+          query-string={this.queryString}
+          {...props[componentTags.vehicleAccessories]}
+        ></vehicle-accessories>
+      ),
+      () => (
+        <vehicle-warranty-details
+          coreOny
+          show-ssc="true"
+          show-warranty="true"
+          base-url={this.baseUrl}
+          language={this.language}
+          query-string={this.queryString}
+          {...props[componentTags.vehicleWarrantyDetails]}
+        >
+          <slot></slot>
+        </vehicle-warranty-details>
+      ),
+      () => (
+        <vehicle-service-history
+          coreOny
+          language={this.language}
+          base-url={this.baseUrl}
+          query-string={this.queryString}
+          {...props[componentTags.vehicleServiceHistory]}
+        ></vehicle-service-history>
+      ),
+      () => (
+        <vehicle-paint-thickness
+          coreOny
+          base-url={this.baseUrl}
+          language={this.language}
+          query-string={this.queryString}
+          {...props[componentTags.vehiclePaintThickness]}
+        ></vehicle-paint-thickness>
+      ),
+      () => (
+        <vehicle-claimable-items
+          {...props[componentTags.vehicleClaimableItems]}
+          base-url={this.baseUrl}
+          language={this.language}
+          query-string={this.queryString}
+        ></vehicle-claimable-items>
+      ),
+    ];
     return (
       <Host>
-        <flexible-container stopAnimation>
-          <div class={cn('w-full', { 'opacity-0 absolute !pointer-events-none -top-[100%] -left-[100vw]': this.activeElement !== componentTags.vehicleSpecification })}>
-            <vehicle-specification
-              base-url={this.baseUrl}
-              language={this.language}
-              query-string={this.queryString}
-              {...props[componentTags.vehicleSpecification]}
-            ></vehicle-specification>
+        <VehicleInfoLayout vin={this.currentVin} isError={false} direction={this.sharedLocales.direction} isLoading={false} errorMessage={this.wrapperErrorState}>
+          <shift-slider components={componentList} activeIndex={this.componentListOrder.indexOf(this.activeElement)}></shift-slider>
+        </VehicleInfoLayout>
+        {/* <div part="vehicle-info-container" class={cn('vehicle-info-container', { loading: false })}>
+          <div part="vehicle-info-header" class="vehicle-info-header">
+            <strong part="vehicle-info-header-vin" class="vehicle-info-header-vin load-animation">
+              {false ? <span style={{ color: 'red' }}>{'asdasd'}</span> : 'ads'}
+            </strong>
           </div>
 
-          <div class={cn('w-full', { 'opacity-0 absolute !pointer-events-none -top-[100%] -left-[100vw]': this.activeElement !== componentTags.vehicleAccessories })}>
-            <vehicle-accessories
-              base-url={this.baseUrl}
-              language={this.language}
-              query-string={this.queryString}
-              {...props[componentTags.vehicleAccessories]}
-            ></vehicle-accessories>
+          <div part="vehicle-info-body" class="vehicle-info-body">
+            <div part="vehicle-info-content" class="p-[16px] vehicle-info-content">
+              <shift-slider components={componentList} activeIndex={this.componentListOrder.indexOf(this.activeElement)}></shift-slider>
+            </div>
           </div>
-
-          <div class={cn('w-full', { 'opacity-0 absolute !pointer-events-none -top-[100%] -left-[100vw]': this.activeElement !== componentTags.vehicleWarrantyDetails })}>
-            <vehicle-warranty-details
-              show-ssc="true"
-              show-warranty="true"
-              base-url={this.baseUrl}
-              language={this.language}
-              query-string={this.queryString}
-              {...props[componentTags.vehicleWarrantyDetails]}
-            >
-              <slot></slot>
-            </vehicle-warranty-details>
-          </div>
-
-          <div class={cn('w-full', { 'opacity-0 absolute !pointer-events-none -top-[100%] -left-[100vw]': this.activeElement !== componentTags.vehicleServiceHistory })}>
-            <vehicle-service-history
-              language={this.language}
-              base-url={this.baseUrl}
-              query-string={this.queryString}
-              {...props[componentTags.vehicleServiceHistory]}
-            ></vehicle-service-history>
-          </div>
-
-          <div class={cn('w-full', { 'opacity-0 absolute !pointer-events-none -top-[100%] -left-[100vw]': this.activeElement !== componentTags.vehiclePaintThickness })}>
-            <vehicle-paint-thickness
-              base-url={this.baseUrl}
-              language={this.language}
-              query-string={this.queryString}
-              {...props[componentTags.vehiclePaintThickness]}
-            ></vehicle-paint-thickness>
-          </div>
-
-          <div class={cn('w-full', { 'opacity-0 absolute !pointer-events-none -top-[100%] -left-[100vw]': this.activeElement !== componentTags.vehicleClaimableItems })}>
-            <vehicle-claimable-items
-              {...props[componentTags.vehicleClaimableItems]}
-              base-url={this.baseUrl}
-              language={this.language}
-              query-string={this.queryString}
-            ></vehicle-claimable-items>
-          </div>
-        </flexible-container>
+        </div> */}
       </Host>
     );
   }

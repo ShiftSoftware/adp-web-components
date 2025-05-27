@@ -61,5 +61,5 @@
 }
 
 .loading .vehicle-info-header-vin {
-  @apply opacity-0 invisible scale-[1.5];
+  @apply opacity-0 !bg-red-500 !text-[16px] invisible scale-[1.5];
 }

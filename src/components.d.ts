@@ -207,6 +207,10 @@ export namespace Components {
         "accordionContentClasses"?: string;
         "items": AccordionItem[];
     }
+    interface ShiftSlider {
+        "activeIndex": number;
+        "components": (() => Node)[];
+    }
     interface ShiftTabs {
         "activeTabIndex": number;
         "changeActiveTab": (newTabindex: number) => void;
@@ -216,6 +220,7 @@ export namespace Components {
     }
     interface VehicleAccessories {
         "baseUrl": string;
+        "coreOny": boolean;
         "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
@@ -264,6 +269,7 @@ export namespace Components {
         "blazorErrorStateListener": string;
         "blazorOnLoadingStateChange": string;
         "childrenProps"?: string | Object;
+        "componentListOrder": ActiveElement1[];
         "dynamicClaimActivate"?: (vehicleInformation: VehicleInformation) => void;
         "errorStateListener"?: (newError: string) => void;
         "fetchVin": (vin: string, headers?: any) => Promise<string>;
@@ -275,6 +281,7 @@ export namespace Components {
     }
     interface VehiclePaintThickness {
         "baseUrl": string;
+        "coreOny": boolean;
         "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
@@ -288,6 +295,7 @@ export namespace Components {
     }
     interface VehicleServiceHistory {
         "baseUrl": string;
+        "coreOny": boolean;
         "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
@@ -301,6 +309,7 @@ export namespace Components {
     }
     interface VehicleSpecification {
         "baseUrl": string;
+        "coreOny": boolean;
         "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
@@ -321,6 +330,7 @@ export namespace Components {
         "companyBranchIntegrationId"?: string;
         "companyId"?: string;
         "companyIntegrationId"?: string;
+        "coreOny": boolean;
         "customerEmail"?: string;
         "customerName"?: string;
         "customerPhone"?: string;
@@ -470,6 +480,12 @@ declare global {
         prototype: HTMLShiftAccordionElement;
         new (): HTMLShiftAccordionElement;
     };
+    interface HTMLShiftSliderElement extends Components.ShiftSlider, HTMLStencilElement {
+    }
+    var HTMLShiftSliderElement: {
+        prototype: HTMLShiftSliderElement;
+        new (): HTMLShiftSliderElement;
+    };
     interface HTMLShiftTabsElement extends Components.ShiftTabs, HTMLStencilElement {
     }
     var HTMLShiftTabsElement: {
@@ -549,6 +565,7 @@ declare global {
         "part-lookup": HTMLPartLookupElement;
         "service-booking-form": HTMLServiceBookingFormElement;
         "shift-accordion": HTMLShiftAccordionElement;
+        "shift-slider": HTMLShiftSliderElement;
         "shift-tabs": HTMLShiftTabsElement;
         "vehicle-accessories": HTMLVehicleAccessoriesElement;
         "vehicle-claimable-items": HTMLVehicleClaimableItemsElement;
@@ -723,6 +740,10 @@ declare namespace LocalJSX {
         "accordionContentClasses"?: string;
         "items"?: AccordionItem[];
     }
+    interface ShiftSlider {
+        "activeIndex"?: number;
+        "components"?: (() => Node)[];
+    }
     interface ShiftTabs {
         "activeTabIndex"?: number;
         "changeActiveTab"?: (newTabindex: number) => void;
@@ -732,6 +753,7 @@ declare namespace LocalJSX {
     }
     interface VehicleAccessories {
         "baseUrl"?: string;
+        "coreOny"?: boolean;
         "errorCallback"?: (errorMessage: ErrorKeys) => void;
         "isDev"?: boolean;
         "language"?: LanguageKeys;
@@ -768,6 +790,7 @@ declare namespace LocalJSX {
         "blazorErrorStateListener"?: string;
         "blazorOnLoadingStateChange"?: string;
         "childrenProps"?: string | Object;
+        "componentListOrder"?: ActiveElement1[];
         "dynamicClaimActivate"?: (vehicleInformation: VehicleInformation) => void;
         "errorStateListener"?: (newError: string) => void;
         "isDev"?: boolean;
@@ -777,6 +800,7 @@ declare namespace LocalJSX {
     }
     interface VehiclePaintThickness {
         "baseUrl"?: string;
+        "coreOny"?: boolean;
         "errorCallback"?: (errorMessage: ErrorKeys) => void;
         "isDev"?: boolean;
         "language"?: LanguageKeys;
@@ -786,6 +810,7 @@ declare namespace LocalJSX {
     }
     interface VehicleServiceHistory {
         "baseUrl"?: string;
+        "coreOny"?: boolean;
         "errorCallback"?: (errorMessage: ErrorKeys) => void;
         "isDev"?: boolean;
         "language"?: LanguageKeys;
@@ -795,6 +820,7 @@ declare namespace LocalJSX {
     }
     interface VehicleSpecification {
         "baseUrl"?: string;
+        "coreOny"?: boolean;
         "errorCallback"?: (errorMessage: ErrorKeys) => void;
         "isDev"?: boolean;
         "language"?: LanguageKeys;
@@ -811,6 +837,7 @@ declare namespace LocalJSX {
         "companyBranchIntegrationId"?: string;
         "companyId"?: string;
         "companyIntegrationId"?: string;
+        "coreOny"?: boolean;
         "customerEmail"?: string;
         "customerName"?: string;
         "customerPhone"?: string;
@@ -862,6 +889,7 @@ declare namespace LocalJSX {
         "part-lookup": PartLookup;
         "service-booking-form": ServiceBookingForm;
         "shift-accordion": ShiftAccordion;
+        "shift-slider": ShiftSlider;
         "shift-tabs": ShiftTabs;
         "vehicle-accessories": VehicleAccessories;
         "vehicle-claimable-items": VehicleClaimableItems;
@@ -896,6 +924,7 @@ declare module "@stencil/core" {
             "part-lookup": LocalJSX.PartLookup & JSXBase.HTMLAttributes<HTMLPartLookupElement>;
             "service-booking-form": LocalJSX.ServiceBookingForm & JSXBase.HTMLAttributes<HTMLServiceBookingFormElement>;
             "shift-accordion": LocalJSX.ShiftAccordion & JSXBase.HTMLAttributes<HTMLShiftAccordionElement>;
+            "shift-slider": LocalJSX.ShiftSlider & JSXBase.HTMLAttributes<HTMLShiftSliderElement>;
             "shift-tabs": LocalJSX.ShiftTabs & JSXBase.HTMLAttributes<HTMLShiftTabsElement>;
             "vehicle-accessories": LocalJSX.VehicleAccessories & JSXBase.HTMLAttributes<HTMLVehicleAccessoriesElement>;
             "vehicle-claimable-items": LocalJSX.VehicleClaimableItems & JSXBase.HTMLAttributes<HTMLVehicleClaimableItemsElement>;

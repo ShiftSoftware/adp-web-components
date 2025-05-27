@@ -1,18 +1,20 @@
+import { InferType } from 'yup';
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-
-import CardsContainer from './components/CardsContainer';
 
 import cn from '~lib/cn';
 import { ErrorKeys, getLocaleLanguage, getSharedLocal, SharedLocales, sharedLocalesSchema } from '~lib/get-local-language';
 
 import { Grecaptcha } from '~types/general';
+import { LanguageKeys } from '~types/locale';
 import { AppStates, MockJson } from '~types/components';
 import { VehicleInformation } from '~types/vehicle-information';
 
 import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicleInformation';
-import { LanguageKeys } from '~types/locale';
+
 import warrantySchema from '~locales/vehicleLookup/warranty/type';
-import { InferType } from 'yup';
+
+import CardsContainer from './components/CardsContainer';
+import { VehicleInfoLayout } from '../components/vehicle-info-layout';
 import { InformationTableColumn } from '../components/information-table';
 
 import XIcon from './assets/x-mark.svg';
@@ -33,6 +35,7 @@ export class VehicleWarrantyDetails implements VehicleInformationInterface {
   @Prop() showSsc: boolean = false;
   @Prop() queryString: string = '';
   @Prop() recaptchaKey: string = '';
+  @Prop() coreOny: boolean = false;
   @Prop() language: LanguageKeys = 'en';
   @Prop() showWarranty: boolean = false;
   @Prop() unauthorizedSscLookupBaseUrl: string = '';
@@ -324,73 +327,65 @@ export class VehicleWarrantyDetails implements VehicleInformationInterface {
       ),
       sscTableOPCode: () => (
         <div class="table-cell-container table-cell-labors-container">
-          <div class="success">12345</div>
-          <div class="success">67890</div>
+          <div class="success">........</div>
+          <div class="success">........</div>
         </div>
       ),
       sscTablePartNumber: () => (
         <div class="table-cell-container table-cell-parts-container">
-          <div class="success">13579</div>
-          <div class="reject">24680</div>
+          <div class="success">........</div>
+          <div class="reject">........</div>
         </div>
       ),
     };
 
     return (
       <Host>
-        <div dir={this.sharedLocales.direction} part="vehicle-info-container" class={cn('vehicle-info-container', { loading: isLoading })}>
-          <div part="vehicle-info-header" class="vehicle-info-header">
-            <strong part="vehicle-info-header-vin" class="vehicle-info-header-vin load-animation">
-              {isError ? (
-                <span dir={this.sharedLocales.direction} style={{ color: 'red' }}>
-                  {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
-                </span>
-              ) : (
-                this.vehicleInformation?.vin
-              )}
-            </strong>
-          </div>
-          <div part="vehicle-info-body" class="vehicle-info-body">
-            <div part="vehicle-info-content" class="p-[16px] vehicle-info-content">
-              {this.showWarranty && (
-                <CardsContainer
-                  isLoading={isLoading}
-                  warrantyLocale={this.locale}
-                  isAuthorized={this.vehicleInformation?.isAuthorized}
-                  unInvoicedByBrokerName={this.unInvoicedByBrokerName}
-                  vehicleInformation={this.vehicleInformation}
-                />
-              )}
+        <VehicleInfoLayout
+          isError={isError}
+          isLoading={isLoading}
+          coreOnly={this.coreOny}
+          vin={this.vehicleInformation?.vin}
+          direction={this.sharedLocales.direction}
+          errorMessage={this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
+        >
+          {this.showWarranty && (
+            <CardsContainer
+              isLoading={isLoading}
+              warrantyLocale={this.locale}
+              isAuthorized={this.vehicleInformation?.isAuthorized}
+              unInvoicedByBrokerName={this.unInvoicedByBrokerName}
+              vehicleInformation={this.vehicleInformation}
+            />
+          )}
 
-              <div class={cn('h-0 transition duration-500', { 'h-[8px]': this.showRecaptcha })}></div>
+          <div class={cn('h-0 transition duration-500', { 'h-[8px]': this.showRecaptcha })}></div>
 
-              <flexible-container isOpened={this.showRecaptcha} classes="w-fit mx-auto shift-skeleton">
-                <div style={{ height: 'auto', padding: '16px 16px 0px 16px' }} class="recaptcha-container">
-                  <slot></slot>
+          <flexible-container isOpened={this.showRecaptcha} classes="w-fit mx-auto shift-skeleton">
+            <div style={{ height: 'auto', padding: '16px 16px 0px 16px' }} class="recaptcha-container">
+              <slot></slot>
+            </div>
+
+            {['data', 'data-loading'].includes(this.state) && this.recaptchaRes && (
+              <div class={cn('recaptcha-response', !this.recaptchaRes?.hasSSC ? 'success-card' : 'reject-card ')}>{this.locale[this.recaptchaRes?.message]}</div>
+            )}
+          </flexible-container>
+
+          <flexible-container isOpened={this.checkingUnauthorizedSSC} classes="w-fit mx-auto">
+            <div class="pt-[16px]">
+              <div class="flex shift-skeleton flex-col gap-[8px]">
+                <strong>{this.locale.checkingTMC}</strong>
+                <div class="relative pt-[40px]">
+                  <loading-spinner isLoading={this.checkingUnauthorizedSSC}></loading-spinner>
                 </div>
-
-                {['data', 'data-loading'].includes(this.state) && this.recaptchaRes && (
-                  <div class={cn('recaptcha-response', !this.recaptchaRes?.hasSSC ? 'success-card' : 'reject-card ')}>{this.locale[this.recaptchaRes?.message]}</div>
-                )}
-              </flexible-container>
-
-              <flexible-container isOpened={this.checkingUnauthorizedSSC} classes="w-fit mx-auto">
-                <div class="pt-[16px]">
-                  <div class="flex shift-skeleton flex-col gap-[8px]">
-                    <strong>{this.locale.checkingTMC}</strong>
-                    <div class="relative pt-[40px]">
-                      <loading-spinner isLoading={this.checkingUnauthorizedSSC}></loading-spinner>
-                    </div>
-                  </div>
-                </div>
-              </flexible-container>
-              <div class="mt-[32px] mx-auto w-fit">
-                <div class="bg-[#f6f6f6] h-[50px] flex items-center justify-center px-[16px] font-bold text-[18px]">{this.locale.sscCampings}</div>
-                <information-table isLoading={isLoading} templateRow={templateRow} rows={rows} headers={tableHeaders}></information-table>
               </div>
             </div>
+          </flexible-container>
+          <div class="mt-[32px] mx-auto w-fit">
+            <div class="bg-[#f6f6f6] h-[50px] flex items-center justify-center px-[16px] font-bold text-[18px]">{this.locale.sscCampings}</div>
+            <information-table isLoading={isLoading} templateRow={templateRow} rows={rows} headers={tableHeaders}></information-table>
           </div>
-        </div>
+        </VehicleInfoLayout>
       </Host>
     );
   }

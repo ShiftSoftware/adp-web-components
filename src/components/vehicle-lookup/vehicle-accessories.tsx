@@ -14,6 +14,8 @@ import { ErrorKeys, getLocaleLanguage, getSharedLocal, SharedLocales, sharedLoca
 import Eye from '~assets/eye.svg';
 
 import accessoriesSchema from '~locales/vehicleLookup/accessories/type';
+
+import { VehicleInfoLayout } from '../components/vehicle-info-layout';
 import { InformationTableColumn } from '../components/information-table';
 
 let mockData: MockJson<VehicleInformation> = {};
@@ -26,6 +28,7 @@ let mockData: MockJson<VehicleInformation> = {};
 export class VehicleAccessories implements ImageViewerInterface {
   @Prop() baseUrl: string = '';
   @Prop() isDev: boolean = false;
+  @Prop() coreOny: boolean = false;
   @Prop() queryString: string = '';
   @Prop() language: LanguageKeys = 'en';
   @Prop() errorCallback: (errorMessage: ErrorKeys) => void;
@@ -207,25 +210,17 @@ export class VehicleAccessories implements ImageViewerInterface {
           </button>
         </div>
         <img alt="" id="expanded-image" class="fixed opacity-0 z-50 transition-all rounded-lg" />
-        <div dir={this.sharedLocales.direction} part="vehicle-info-container" class={cn('vehicle-info-container', { loading: isLoading })}>
-          <div part="vehicle-info-header" class="vehicle-info-header">
-            <strong part="vehicle-info-header-vin" class="vehicle-info-header-vin load-animation">
-              {isError ? (
-                <span dir={this.sharedLocales.direction} style={{ color: 'red' }}>
-                  {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
-                </span>
-              ) : (
-                this.vehicleInformation?.vin
-              )}
-            </strong>
-          </div>
 
-          <div part="vehicle-info-body" class="vehicle-info-body">
-            <div part="vehicle-info-content" class="p-[16px] vehicle-info-content">
-              <information-table templateRow={templateRow} rows={rows} headers={tableHeaders} isLoading={isLoading}></information-table>
-            </div>
-          </div>
-        </div>
+        <VehicleInfoLayout
+          isError={isError}
+          isLoading={isLoading}
+          coreOnly={this.coreOny}
+          vin={this.vehicleInformation?.vin}
+          direction={this.sharedLocales.direction}
+          errorMessage={this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
+        >
+          <information-table templateRow={templateRow} rows={rows} headers={tableHeaders} isLoading={isLoading}></information-table>
+        </VehicleInfoLayout>
       </Host>
     );
   }

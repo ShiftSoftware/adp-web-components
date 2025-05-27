@@ -5,7 +5,6 @@ import { LanguageKeys } from '~types/locale';
 import { AppStates, MockJson } from '~types/components';
 import { VehicleInformation } from '~types/vehicle-information';
 
-import cn from '~lib/cn';
 import { ErrorKeys, getLocaleLanguage, getSharedLocal, SharedLocales, sharedLocalesSchema } from '~lib/get-local-language';
 
 import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicleInformation';
@@ -13,6 +12,7 @@ import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicle
 import specificationSchema from '~locales/vehicleLookup/specification/type';
 
 import { CardContent } from '../components/card-content';
+import { VehicleInfoLayout } from '../components/vehicle-info-layout';
 
 let mockData: MockJson<VehicleInformation> = {};
 
@@ -25,6 +25,7 @@ export class VehicleSpecification implements VehicleInformationInterface {
   @Prop() baseUrl: string = '';
   @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
+  @Prop() coreOny: boolean = false;
   @Prop() language: LanguageKeys = 'en';
   @Prop() errorCallback: (errorMessage: ErrorKeys) => void;
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
@@ -143,52 +144,43 @@ export class VehicleSpecification implements VehicleInformationInterface {
 
     return (
       <Host>
-        <div dir={this.sharedLocales.direction} part="vehicle-info-container" class={cn('vehicle-info-container', { loading: isLoading })}>
-          <div part="vehicle-info-header" class="vehicle-info-header">
-            <strong part="vehicle-info-header-vin" class="vehicle-info-header-vin load-animation">
-              {isError ? (
-                <span dir={this.sharedLocales.direction} style={{ color: 'red' }}>
-                  {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
-                </span>
-              ) : (
-                this.vehicleInformation?.vin
-              )}
-            </strong>
-          </div>
-
-          <div part="vehicle-info-body" class="vehicle-info-body">
-            <div part="vehicle-info-content" class="p-[16px] vehicle-info-content">
-              <flexible-container>
-                <div class="flex p-[4px] [&>div]:grow overflow-auto gap-[16px] items-stretch justify-center md:justify-between flex-wrap">
-                  <CardContent title={texts?.model} classes="grow" minWidth="400px">
-                    <div class="text-center w-full shift-skeleton">
-                      {this?.vehicleInformation?.vehicleVariantInfo?.modelCode || '...'} <br class="my-2" />
-                      {this?.vehicleInformation?.vehicleSpecification?.modelDesc || '...'}
-                    </div>
-                  </CardContent>
-                  <CardContent title={texts?.variant} classes="grow" minWidth="400px">
-                    <div class="text-center w-full shift-skeleton">
-                      {this?.vehicleInformation?.identifiers?.variant?.trim() || '...'} <br />
-                      {this?.vehicleInformation?.vehicleSpecification?.variantDesc?.trim() || '...'}
-                    </div>
-                  </CardContent>
-                  <CardContent title={texts?.katashiki} minWidth="250px">
-                    <div class="w-full shift-skeleton">{this?.vehicleInformation?.identifiers?.katashiki?.trim() || '...'}</div>
-                  </CardContent>
-                  <CardContent title={texts?.modelYear} minWidth="250px">
-                    <div class="w-full shift-skeleton">{this?.vehicleInformation?.vehicleVariantInfo?.modelYear?.toString()?.trim() || '...'}</div>
-                  </CardContent>
-                  <CardContent title={texts?.productionDate} minWidth="250px">
-                    <div class="w-full shift-skeleton">{!!productionDate ? productionDate : '...'}</div>
-                  </CardContent>
-                  <CardContent title={texts?.sfx} minWidth="250px">
-                    <div class="w-full shift-skeleton">{this?.vehicleInformation?.vehicleVariantInfo?.sfx?.trim() || '...'}</div>
-                  </CardContent>
+        <VehicleInfoLayout
+          isError={isError}
+          isLoading={isLoading}
+          coreOnly={this.coreOny}
+          vin={this.vehicleInformation?.vin}
+          direction={this.sharedLocales.direction}
+          errorMessage={this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
+        >
+          <flexible-container>
+            <div class="flex p-[4px] [&>div]:grow overflow-auto gap-[16px] items-stretch justify-center md:justify-between flex-wrap">
+              <CardContent title={texts?.model} classes="grow" minWidth="400px">
+                <div class="text-center w-full shift-skeleton">
+                  {this?.vehicleInformation?.vehicleVariantInfo?.modelCode || '...'} <br class="my-2" />
+                  {this?.vehicleInformation?.vehicleSpecification?.modelDesc || '...'}
                 </div>
-              </flexible-container>
+              </CardContent>
+              <CardContent title={texts?.variant} classes="grow" minWidth="400px">
+                <div class="text-center w-full shift-skeleton">
+                  {this?.vehicleInformation?.identifiers?.variant?.trim() || '...'} <br />
+                  {this?.vehicleInformation?.vehicleSpecification?.variantDesc?.trim() || '...'}
+                </div>
+              </CardContent>
+              <CardContent title={texts?.katashiki} minWidth="250px">
+                <div class="w-full shift-skeleton">{this?.vehicleInformation?.identifiers?.katashiki?.trim() || '...'}</div>
+              </CardContent>
+              <CardContent title={texts?.modelYear} minWidth="250px">
+                <div class="w-full shift-skeleton">{this?.vehicleInformation?.vehicleVariantInfo?.modelYear?.toString()?.trim() || '...'}</div>
+              </CardContent>
+              <CardContent title={texts?.productionDate} minWidth="250px">
+                <div class="w-full shift-skeleton">{!!productionDate ? productionDate : '...'}</div>
+              </CardContent>
+              <CardContent title={texts?.sfx} minWidth="250px">
+                <div class="w-full shift-skeleton">{this?.vehicleInformation?.vehicleVariantInfo?.sfx?.trim() || '...'}</div>
+              </CardContent>
             </div>
-          </div>
-        </div>
+          </flexible-container>
+        </VehicleInfoLayout>
       </Host>
     );
   }

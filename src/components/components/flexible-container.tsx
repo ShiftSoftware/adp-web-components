@@ -90,7 +90,7 @@ export class FlexibleContainer {
     return (
       <div
         class={cn(
-          'flexible-container transition-all overflow-hidden duration-500',
+          'flexible-container w-fit min-w-full transition-all overflow-hidden duration-500',
           { 'h-0': !this.isOpened, '!h-auto !duration-0 !transition-none': this.stopAnimation },
           this.containerClasses,
         )}

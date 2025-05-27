@@ -1,7 +1,6 @@
 import { InferType } from 'yup';
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import cn from '~lib/cn';
 import { ErrorKeys, getLocaleLanguage, getSharedLocal, SharedLocales, sharedLocalesSchema } from '~lib/get-local-language';
 
 import { LanguageKeys } from '~types/locale';
@@ -12,6 +11,7 @@ import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicle
 
 import ServiceHistorySchema from '~locales/vehicleLookup/serviceHistory/type';
 
+import { VehicleInfoLayout } from '../components/vehicle-info-layout';
 import { InformationTableColumn } from '../components/information-table';
 
 let mockData: MockJson<VehicleInformation> = {};
@@ -25,6 +25,7 @@ export class VehicleServiceHistory implements VehicleInformationInterface {
   @Prop() baseUrl: string = '';
   @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
+  @Prop() coreOny: boolean = false;
   @Prop() language: LanguageKeys = 'en';
   @Prop() errorCallback: (errorMessage: ErrorKeys) => void;
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
@@ -167,24 +168,16 @@ export class VehicleServiceHistory implements VehicleInformationInterface {
 
     return (
       <Host>
-        <div dir={this.sharedLocales.direction} part="vehicle-info-container" class={cn('vehicle-info-container', { loading: isLoading })}>
-          <div part="vehicle-info-header" class="vehicle-info-header">
-            <strong part="vehicle-info-header-vin" class="vehicle-info-header-vin load-animation">
-              {isError ? (
-                <span dir={this.sharedLocales.direction} style={{ color: 'red' }}>
-                  {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
-                </span>
-              ) : (
-                this.vehicleInformation?.vin
-              )}
-            </strong>
-          </div>
-          <div part="vehicle-info-body" class="vehicle-info-body">
-            <div part="vehicle-info-content" class="p-[16px] vehicle-info-content">
-              <information-table rows={this.vehicleInformation?.serviceHistory || []} headers={tableHeaders} isLoading={isLoading}></information-table>
-            </div>
-          </div>
-        </div>
+        <VehicleInfoLayout
+          isError={isError}
+          isLoading={isLoading}
+          coreOnly={this.coreOny}
+          vin={this.vehicleInformation?.vin}
+          direction={this.sharedLocales.direction}
+          errorMessage={this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
+        >
+          <information-table rows={this.vehicleInformation?.serviceHistory || []} headers={tableHeaders} isLoading={isLoading}></information-table>
+        </VehicleInfoLayout>
       </Host>
     );
   }

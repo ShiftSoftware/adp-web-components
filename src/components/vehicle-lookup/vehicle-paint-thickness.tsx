@@ -15,6 +15,7 @@ import Eye from '~assets/eye.svg';
 
 import paintThicknessSchema from '~locales/vehicleLookup/paintThickness/type';
 
+import { VehicleInfoLayout } from '../components/vehicle-info-layout';
 import { InformationTableColumn } from '../components/information-table';
 
 let mockData: MockJson<VehicleInformation> = {};
@@ -28,6 +29,7 @@ export class VehiclePaintThickness implements ImageViewerInterface {
   @Prop() baseUrl: string = '';
   @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
+  @Prop() coreOny: boolean = false;
   @Prop() language: LanguageKeys = 'en';
   @Prop() errorCallback: (errorMessage: ErrorKeys) => void;
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
@@ -210,54 +212,45 @@ export class VehiclePaintThickness implements ImageViewerInterface {
         </div>
         <img alt="" id="expanded-image" class="fixed opacity-0 z-40 transition-all rounded-lg" />
 
-        <div dir={this.sharedLocales.direction} part="vehicle-info-container" class={cn('vehicle-info-container', { loading: isLoading })}>
-          <div part="vehicle-info-header" class="vehicle-info-header">
-            <strong part="vehicle-info-header-vin" class="vehicle-info-header-vin load-animation">
-              {isError ? (
-                <span dir={this.sharedLocales.direction} style={{ color: 'red' }}>
-                  {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
-                </span>
-              ) : (
-                this.vehicleInformation?.vin
-              )}
-            </strong>
-          </div>
+        <VehicleInfoLayout
+          isError={isError}
+          isLoading={isLoading}
+          coreOnly={this.coreOny}
+          vin={this.vehicleInformation?.vin}
+          direction={this.sharedLocales.direction}
+          errorMessage={this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
+        >
+          <information-table rows={parts} headers={tableHeaders} isLoading={isLoading}></information-table>
 
-          <div part="vehicle-info-body" class="vehicle-info-body">
-            <div part="vehicle-info-content" class="vehicle-info-content">
-              <information-table rows={parts} headers={tableHeaders} isLoading={isLoading}></information-table>
+          <flexible-container>
+            <div class="py-[16px] gap-[16px] justify-center flex flex-wrap px-[24px] w-full">
+              {imageGroups.map((imageGroup, index) => (
+                <div class="shrink-0 rounded-lg shadow-sm border overflow-hidden flex flex-col" key={imageGroup.name + index}>
+                  <h1 class="text-center border-b bg-slate-50 font-semibold p-[6px]">
+                    <span class="shift-skeleton">{imageGroup.name}</span>
+                  </h1>
 
-              <flexible-container>
-                <div class="py-[16px] gap-[16px] justify-center flex flex-wrap px-[24px] w-full">
-                  {imageGroups.map((imageGroup, index) => (
-                    <div class="shrink-0 rounded-lg shadow-sm border overflow-hidden flex flex-col" key={imageGroup.name + index}>
-                      <h1 class="text-center border-b bg-slate-50 font-semibold p-[6px]">
-                        <span class="shift-skeleton">{imageGroup.name}</span>
-                      </h1>
-
-                      <div class="flex p-[12px] gap-[8px]">
-                        {imageGroup.images.map((image, idx) => (
-                          <div class={cn('flex shift-skeleton gap-[8px]', { loading: !image })} key={image + idx}>
-                            <button
-                              onClick={({ target }) => this.openImage(target as HTMLImageElement, image)}
-                              class="shrink-0 relative ring-0 outline-none w-fit mx-auto [&_img]:hover:shadow-lg [&_div]:hover:!opacity-100 cursor-pointer"
-                            >
-                              <div class="absolute flex-col justify-center gap-[4px] size-full flex items-center pointer-events-none hover:opacity-100 rounded-lg opacity-0 bg-black/40 transition-all duration-300">
-                                <img src={Eye} />
-                                <span class="text-white">{texts.expand}</span>
-                              </div>
-                              <img src={image} class="h-[150px] cursor-pointer shadow-sm rounded-lg w-[84px] transition-all duration-300" />
-                            </button>
+                  <div class="flex p-[12px] gap-[8px]">
+                    {imageGroup.images.map((image, idx) => (
+                      <div class={cn('flex shift-skeleton gap-[8px]', { loading: !image })} key={image + idx}>
+                        <button
+                          onClick={({ target }) => this.openImage(target as HTMLImageElement, image)}
+                          class="shrink-0 relative ring-0 outline-none w-fit mx-auto [&_img]:hover:shadow-lg [&_div]:hover:!opacity-100 cursor-pointer"
+                        >
+                          <div class="absolute flex-col justify-center gap-[4px] size-full flex items-center pointer-events-none hover:opacity-100 rounded-lg opacity-0 bg-black/40 transition-all duration-300">
+                            <img src={Eye} />
+                            <span class="text-white">{texts.expand}</span>
                           </div>
-                        ))}
+                          <img src={image} class="h-[150px] cursor-pointer shadow-sm rounded-lg w-[84px] transition-all duration-300" />
+                        </button>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </flexible-container>
+              ))}
             </div>
-          </div>
-        </div>
+          </flexible-container>
+        </VehicleInfoLayout>
       </Host>
     );
   }
