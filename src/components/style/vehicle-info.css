@@ -53,7 +53,7 @@
 }
 
 .vehicle-info-header-vin {
-  @apply transition-all duration-[0.4s] inline-block;
+  @apply transition-all text-[16px] duration-[0.4s] inline-block;
 }
 
 .vehicle-info-header-vin span {
@@ -61,5 +61,5 @@
 }
 
 .loading .vehicle-info-header-vin {
-  @apply opacity-0 !bg-red-500 !text-[16px] invisible scale-[1.5];
+  @apply opacity-0 invisible scale-[1.5];
 }

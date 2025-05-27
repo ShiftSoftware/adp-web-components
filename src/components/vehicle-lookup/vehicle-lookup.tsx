@@ -71,8 +71,11 @@ export class VehicleLookup {
   @Prop() dynamicClaimActivate?: (vehicleInformation: VehicleInformation) => void;
   @Prop() blazorDynamicClaimActivate = '';
 
+  @State() errorKey: ErrorKeys;
   @State() wrapperErrorState = '';
   @State() currentVin: string = '';
+  @State() isError: boolean = false;
+  @State() isLoading: boolean = false;
   @State() blazorRef?: DotNetObjectReference;
 
   @State() sharedLocales: SharedLocales = sharedLocalesSchema.getDefault();
@@ -130,12 +133,15 @@ export class VehicleLookup {
   }
 
   private syncErrorAcrossComponents = (newErrorMessage: ErrorKeys) => {
+    this.isError = true;
+    this.errorKey = newErrorMessage;
     Object.values(this.componentsList).forEach(element => {
       if (element) element.setErrorMessage(newErrorMessage);
     });
   };
 
   private handleLoadData(newResponse: VehicleInformation, activeElement) {
+    this.isError = false;
     this.currentVin = newResponse.vin || '';
     Object.values(this.componentsList).forEach(element => {
       if (element !== null && element !== activeElement && newResponse) element.setData(newResponse);
@@ -143,6 +149,7 @@ export class VehicleLookup {
   }
 
   private loadingStateChangingMiddleware = (newState: boolean) => {
+    this.isLoading = newState;
     if (this.loadingStateChanged) this.loadingStateChanged(newState);
     if (this.blazorRef && this.blazorOnLoadingStateChange) this.blazorRef.invokeMethodAsync(this.blazorOnLoadingStateChange, newState);
   };
@@ -263,22 +270,15 @@ export class VehicleLookup {
     ];
     return (
       <Host>
-        <VehicleInfoLayout vin={this.currentVin} isError={false} direction={this.sharedLocales.direction} isLoading={false} errorMessage={this.wrapperErrorState}>
+        <VehicleInfoLayout
+          isError={this.isError}
+          vin={this.currentVin}
+          isLoading={this.isLoading}
+          direction={this.sharedLocales.direction}
+          errorMessage={this.sharedLocales.errors[this.errorKey] || this.sharedLocales.errors.wildCard}
+        >
           <shift-slider components={componentList} activeIndex={this.componentListOrder.indexOf(this.activeElement)}></shift-slider>
         </VehicleInfoLayout>
-        {/* <div part="vehicle-info-container" class={cn('vehicle-info-container', { loading: false })}>
-          <div part="vehicle-info-header" class="vehicle-info-header">
-            <strong part="vehicle-info-header-vin" class="vehicle-info-header-vin load-animation">
-              {false ? <span style={{ color: 'red' }}>{'asdasd'}</span> : 'ads'}
-            </strong>
-          </div>
-
-          <div part="vehicle-info-body" class="vehicle-info-body">
-            <div part="vehicle-info-content" class="p-[16px] vehicle-info-content">
-              <shift-slider components={componentList} activeIndex={this.componentListOrder.indexOf(this.activeElement)}></shift-slider>
-            </div>
-          </div>
-        </div> */}
       </Host>
     );
   }
