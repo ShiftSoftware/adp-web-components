@@ -19,6 +19,8 @@ import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicle
 import dynamicClaimSchema from '~locales/vehicleLookup/claimableItems/type';
 import { VehicleItemClaimForm } from './vehicle-item-claim-form';
 
+import { VehicleInfoLayout } from '../components/vehicle-info-layout';
+
 let mockData: MockJson<VehicleInformation> = {};
 
 const icons = {
@@ -36,11 +38,12 @@ const icons = {
 })
 export class VehicleClaimableItems implements VehicleInformationInterface {
   @Prop() baseUrl: string;
+  @Prop() headers: any = {};
   @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
-  @Prop() claimEndPoint: string = 'api/vehicle/swift-claim';
-  @Prop() headers: any = {};
+  @Prop() coreOnly: boolean = false;
   @Prop() language: LanguageKeys = 'en';
+  @Prop() claimEndPoint: string = 'api/vehicle/swift-claim';
   @Prop() errorCallback: (errorMessage: ErrorKeys) => void;
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
   @Prop() loadedResponse?: (response: VehicleInformation) => void;
@@ -49,8 +52,8 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   @State() sharedLocales: SharedLocales = sharedLocalesSchema.getDefault();
   @State() locale: InferType<typeof dynamicClaimSchema> = dynamicClaimSchema.getDefault();
 
-  @State() isIdle: boolean = true;
-  @State() popupClasses: string = '';
+  @State() isError: boolean = false;
+  @State() showPopup: boolean = false;
   @State() isLoading: boolean = false;
   @State() externalVin?: string = null;
   @State() errorMessage?: ErrorKeys = null;
@@ -68,10 +71,10 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
 
   cachedClaimItem: ServiceItem;
 
-  dynamicClaimBody: HTMLElement;
+  progressBar: HTMLElement;
   popupPositionRef: HTMLElement;
   dynamicRedeem: VehicleItemClaimForm;
-  dynamicClaimProgressBar: HTMLElement;
+  claimableContentWrapper: HTMLElement;
 
   async componentWillLoad() {
     await this.changeLanguage(this.language);
@@ -85,9 +88,9 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   }
 
   async componentDidLoad() {
-    this.dynamicClaimBody = this.el.shadowRoot.querySelector('.dynamic-claim-body');
+    this.claimableContentWrapper = this.el.shadowRoot.querySelector('.claimable-content-wrapper');
     this.dynamicRedeem = this.el.shadowRoot.getElementById('dynamic-redeem') as unknown as VehicleItemClaimForm;
-    this.dynamicClaimProgressBar = this.el.shadowRoot.querySelector('.dynamic-claim-progress-bar');
+    this.progressBar = this.el.shadowRoot.querySelector('.progress-bar');
   }
 
   @Method()
@@ -109,12 +112,12 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
 
     try {
       if (!vin || vin.trim().length === 0) {
-        this.isIdle = true;
+        this.isError = false;
+        this.vehicleInformation = null;
         return;
       }
 
       this.isLoading = true;
-      this.isIdle = false;
 
       await new Promise(r => {
         scopedTimeoutRef = setTimeout(r, 1000);
@@ -131,6 +134,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
 
       this.errorMessage = null;
       this.isLoading = false;
+      this.isError = false;
     } catch (error) {
       if (error && error?.name === 'AbortError') return;
       if (this.errorCallback) this.errorCallback(error.message);
@@ -141,7 +145,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
 
   @Method()
   async setErrorMessage(message: ErrorKeys) {
-    this.isIdle = false;
+    this.isError = true;
     this.isLoading = false;
     this.vehicleInformation = null;
     this.errorMessage = message;
@@ -160,7 +164,8 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
 
   async setLoadingUi(isLoading: boolean) {
     if (!isLoading) {
-      this.dynamicClaimProgressBar.style.width = '0';
+      this.progressBar.style.width = '0';
+      this.progressBar.style.opacity = '0';
       await new Promise(r => setTimeout(r, 200));
       this.updateProgressBar();
     }
@@ -170,18 +175,25 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
     const serviceItems = this.vehicleInformation?.serviceItems || [];
 
     if (serviceItems.filter(x => x.status === 'pending').length === 0) {
-      if (serviceItems.length === 0 || serviceItems.filter(x => x.status === 'activationRequired').length === serviceItems.length) this.dynamicClaimProgressBar.style.width = '0%';
-      else this.dynamicClaimProgressBar.style.width = '100%';
-      this.dynamicClaimBody.scrollTo({
-        left: this.dynamicClaimBody.scrollWidth,
+      if (serviceItems.length === 0 || serviceItems.filter(x => x.status === 'activationRequired').length === serviceItems.length) {
+        this.progressBar.style.width = '0%';
+        this.progressBar.style.opacity = '0';
+      } else {
+        this.progressBar.style.width = '100%';
+        this.progressBar.style.opacity = '1';
+      }
+      this.claimableContentWrapper.scrollTo({
+        left: this.claimableContentWrapper.scrollWidth,
         behavior: 'smooth',
       });
     } else {
       const firstPendingItem = serviceItems.find(x => x.status === 'pending');
       const firstPendingItemIndex = serviceItems.indexOf(firstPendingItem) + 1;
-      const firstPendingItemRef = this.dynamicClaimBody.getElementsByClassName('dynamic-claim-item')[firstPendingItemIndex - 1] as HTMLElement;
-      this.dynamicClaimProgressBar.style.width = (firstPendingItemIndex / serviceItems.length - 1 / (serviceItems.length * 2)) * 100 + '%';
-      this.dynamicClaimBody.scrollTo({
+      const firstPendingItemRef = this.claimableContentWrapper.getElementsByClassName('claimable-item')[firstPendingItemIndex - 1] as HTMLElement;
+      this.progressBar.style.width = (firstPendingItemIndex / serviceItems.length - 1 / (serviceItems.length * 2)) * 100 + '%';
+      this.progressBar.style.opacity = this.progressBar.style.width === '0%' ? '0' : '1';
+
+      this.claimableContentWrapper.scrollTo({
         left: firstPendingItemRef.offsetLeft - firstPendingItemRef.clientWidth * 3,
         behavior: 'smooth',
       });
@@ -200,17 +212,17 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
     if (newValue) {
       this.scrollListenerRef = () => this.calculatePopupPos(this.el.shadowRoot);
       window.addEventListener('scroll', this.scrollListenerRef);
-      this.dynamicClaimBody.addEventListener('scroll', this.scrollListenerRef);
+      this.claimableContentWrapper.addEventListener('scroll', this.scrollListenerRef);
     } else {
       window.removeEventListener('scroll', this.scrollListenerRef);
-      this.dynamicClaimBody.removeEventListener('scroll', this.scrollListenerRef);
+      this.claimableContentWrapper.removeEventListener('scroll', this.scrollListenerRef);
     }
   }
 
   onMouseLeave = () => {
     clearTimeout(this.timeoutRef);
 
-    this.popupClasses = '';
+    this.showPopup = false;
 
     this.timeoutRef = setTimeout(() => {
       this.activePopupIndex = null;
@@ -223,24 +235,24 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
     this.activePopupIndex = idx;
 
     this.timeoutRef = setTimeout(() => {
-      const positionRef = dynamicClaimItemHeader.querySelector('.popup-position-ref') as HTMLElement;
+      const positionRef = dynamicClaimItemHeader.querySelector('.popup-ref') as HTMLElement;
 
       this.popupPositionRef = positionRef;
       this.calculatePopupPos(this.el.shadowRoot);
 
-      this.popupClasses = 'show';
+      this.showPopup = true;
     }, 50);
   };
 
   calculatePopupPos(root: ShadowRoot) {
-    const popupPositionRef = root.querySelector('.popup-position-ref') as HTMLElement;
+    const popupPositionRef = root.querySelector('.popup-ref') as HTMLElement;
 
     let { x, y } = popupPositionRef.getBoundingClientRect();
     const popupContainer = popupPositionRef.querySelector('.popup-container') as HTMLElement;
 
     const { width } = popupContainer.getBoundingClientRect();
 
-    const popupInfo = popupContainer.querySelector('.dynamic-claim-item-popup-info') as HTMLElement;
+    const popupInfo = popupContainer.querySelector('.popup-info') as HTMLElement;
 
     const windowWidth = window.innerWidth; // Get the viewport's width
 
@@ -310,16 +322,9 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
 
   private async handleClaiming() {
     if (this.isDev) {
+      // @ts-ignore
       this.dynamicRedeem.handleClaiming = async (payload: ClaimPayload) => {
         await new Promise(r => setTimeout(r, 500));
-
-        console.log({
-          ...payload,
-          vin: this.vehicleInformation.vin,
-          saleInformation: this.vehicleInformation.saleInformation,
-          serviceItem: this.dynamicRedeem.item,
-          cancelledServiceItems: this.dynamicRedeem.canceledItems,
-        });
 
         this.dynamicRedeem.quite();
         this.completeClaim();
@@ -383,14 +388,28 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
     const texts = this.locale;
 
     return (
-      <div dir={this.sharedLocales.direction} class="popup-position-ref">
-        <div class="popup-container">
-          <div class={cn('dynamic-claim-item-popup-info-triangle', this.popupClasses)}>
-            <div class="dynamic-claim-item-popup-info-triangle-up"></div>
-            <div class="dynamic-claim-item-popup-info-triangle-up2"></div>
+      <div dir={this.sharedLocales.direction} class="popup-ref w-0 h-0 bottom-0 flex absolute justify-center">
+        <div class="popup-container fixed z-[100]">
+          <div
+            class={cn('opacity-0 w-full z-[101] flex transition-all duration-[0.4s] relative invisible justify-center translate-y-[-9px]', {
+              '!opacity-100 !visible': this.showPopup,
+            })}
+          >
+            <div class="absolute w-0 h-0 border-[10px] border-t-0 !border-b-[#dddddd] border-transparent"></div>
+            <div class="mt-[1px] absolute w-0 h-0 border-[10px] border-t-0 !border-b-[#f9f9f9] border-transparent"></div>
           </div>
-          <div class={cn('dynamic-claim-item-popup-info', this.popupClasses)}>
-            <table>
+          <div
+            class={cn('popup-info bg-[#f9f9f9] border border-[#ddd] w-auto p-[20px] rounded-[5px] transition-all duration-[0.4s] text-[#282828] opacity-0 invisible', {
+              '!opacity-100 !visible': this.showPopup,
+            })}
+          >
+            <table
+              class={cn(
+                'w-full border-collapse',
+                '[&_th]:border-b [&_th]:border-[#ddd] [&_th]:p-[10px] [&_th]:pe-[50px] [&_th]:text-start [&_th]:whitespace-nowrap',
+                '[&_td]:border-b [&_td]:border-[#ddd] [&_td]:p-[10px] [&_td]:pe-[50px] [&_td]:text-start [&_td]:whitespace-nowrap',
+              )}
+            >
               <tbody>
                 <tr>
                   <th>{texts.serviceType}</th>
@@ -435,8 +454,8 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
             </table>
 
             {item.claimable && (
-              <button onClick={() => this.claim(item)} class="claim-button dynamic-claim-button">
-                <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <button onClick={() => this.claim(item)} class="claim-button m-auto mt-[15px] w-[80%] justify-center">
+                <svg class="size-[30px] duration-200" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g stroke-width="0"></g>
                   <g stroke-linecap="round" stroke-linejoin="round"></g>
                   <g>
@@ -457,36 +476,42 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
     const serviceItems = this.vehicleInformation?.serviceItems || [];
     const texts = this.locale;
 
+    const hasInactiveItems = this.vehicleInformation && this.vehicleInformation.serviceItems.filter(x => x.status === 'activationRequired').length > 0;
     return (
       <Host>
         <vehicle-item-claim-form locale={texts.claimForm} language={this.language} id="dynamic-redeem"></vehicle-item-claim-form>
 
-        <div class={cn('dynamic-claim-wrapper', { loading: this.isLoading, idle: this.isIdle })}>
-          <div class="dynamic-claim-header">
-            <strong class="dynamic-claim-header-vin">
-              {this.errorMessage && (
-                <span dir={this.sharedLocales.direction} style={{ color: 'red' }}>
-                  {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
-                </span>
-              )}
-              {!this.errorMessage && this.vehicleInformation?.vin}
-            </strong>
-          </div>
-
+        <VehicleInfoLayout
+          noPadding
+          isError={this.isError}
+          coreOnly={this.coreOnly}
+          isLoading={this.isLoading}
+          vin={this.vehicleInformation?.vin}
+          direction={this.sharedLocales.direction}
+          errorMessage={this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
+        >
           <div
-            class={cn('dynamic-claim-body', {
-              'has-activation-box': this.vehicleInformation && this.vehicleInformation.serviceItems.filter(x => x.status === 'activationRequired').length > 0,
+            class={cn('flex px-[30px] h-[250px] items-center transition-all duration-300 overflow-x-auto claimable-content-wrapper', {
+              'h-[290px]': hasInactiveItems,
             })}
           >
-            <div class="loading-lane">
-              <div class="dynamic-claim-loading-slider">
-                <div class="dynamic-claim-loading-slider-line"></div>
-                <div class="dynamic-claim-loading-slider-subline dynamic-claim-inc"></div>
-                <div class="dynamic-claim-loading-slider-subline dynamic-claim-dec"></div>
+            <div
+              class={cn('h-[10px] bg-[#f2f2f2] border border-[#ddd] rounded-[10px] w-[calc(100%-60px)] absolute items-center justify-around invisible', {
+                visible: this.isLoading,
+              })}
+            >
+              <div class="w-full h-[10px] rounded-[4px] overflow-x-hidden absolute left-0 top-0">
+                <div class="absolute opacity-0 bg-[#ddd] w-[150%] h-[10px]"></div>
+                <div class="absolute h-[10px] bg-[linear-gradient(to_bottom,_#428bca_0%,_#3071a9_100%)] lane-inc"></div>
+                <div class="absolute h-[10px] bg-[linear-gradient(to_bottom,_#428bca_0%,_#3071a9_100%)] lane-dec"></div>
               </div>
             </div>
 
-            <div class="dynamic-claim-progress-lane">
+            <div
+              class={cn('h-[10px] bg-[#f2f2f2] border flex-1 border-[#ddd] rounded-[10px] flex items-center justify-around relative', {
+                'bg-transparent border-transparent': this.isLoading,
+              })}
+            >
               {serviceItems.map((item: ServiceItem, idx) => {
                 let statusClass = '';
 
@@ -495,32 +520,60 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
                 } else statusClass = item.status;
 
                 return (
-                  <div key={item.name} class={cn('dynamic-claim-item', statusClass)} onMouseLeave={this.onMouseLeave}>
+                  <div key={item.name} class={cn('claimable-item flex flex-col items-center gap-[5px] font-[14px] min-w-[250px]', statusClass)} onMouseLeave={this.onMouseLeave}>
                     <div
                       onAnimationEnd={this.removeLoadAnimationClass}
-                      class="dynamic-claim-item-header load-animation"
+                      class={cn(
+                        'claimable-item-header load-animation hover:[&>img]:rotate-[360deg] hover:[&>img]:scale-[125%] relative duration-[0.4s] py-[10px] leading-[1em] h-[3em] flex flex-col items-center cursor-pointer',
+                        {
+                          '!opacity-0 !translate-y-[-5px] !scale-[70%]': this.isLoading,
+                        },
+                      )}
                       onMouseEnter={event => this.onMouseEnter(event.target as HTMLElement, idx)}
                     >
-                      <img src={icons[item.status]} alt="status icon" />
-                      <span>{texts[item.status]}</span>
+                      <img class="duration-[0.4s]" src={icons[item.status]} alt="status icon" />
+                      <span class="font-bold">{texts[item.status]}</span>
                       {this.activePopupIndex === idx && this.createPopup(item)}
                     </div>
-                    <div onAnimationEnd={this.removeLoadAnimationClass} class="dynamic-claim-item-circle load-animation"></div>
-                    <p onAnimationEnd={this.removeLoadAnimationClass} class="dynamic-claim-item-footer load-animation">
+                    <div
+                      onAnimationEnd={this.removeLoadAnimationClass}
+                      class={cn(
+                        'claimable-item-circle load-animation w-[18px] h-[18px] rounded-[50%] bg-[#a1a1a1] border-[5px] border-double border-[#ececec] transition-all duration-[0.4s] z-[1]',
+                        {
+                          '!opacity-0 !scale-[150%]': this.isLoading,
+                        },
+                      )}
+                    ></div>
+                    <p
+                      onAnimationEnd={this.removeLoadAnimationClass}
+                      class={cn(
+                        'claimable-item-footer load-animation transition-all duration-[0.4s] px-[20px] text-center leading-[1.5em] h-[4.5em] overflow-hidden text-ellipsis m-0',
+                        {
+                          '!opacity-0 !translate-y-[10px] !scale-[70%]': this.isLoading,
+                        },
+                      )}
+                    >
                       {item.name}
                     </p>
                   </div>
                 );
               })}
 
-              <div class="dynamic-claim-progress-bar"></div>
+              <div
+                class={cn(
+                  'progress-bar h-[10px] opacity-0 bg-[linear-gradient(to_bottom,_#428bca_0%,_#3071a9_100%)] border border-[#ddd] rounded-[10px] w-0 absolute left-0 transition-all duration-500 z-0',
+                  {
+                    '!w-0 opacity-0': this.isLoading,
+                  },
+                )}
+              ></div>
             </div>
 
-            <div class="dynamic-claim-activation-box">
+            <div class="absolute w-[90%] left-1/2 ml-[-45%] bottom-[40px]">
               <div
                 class={cn('card warning-card span-entire-1st-row activation-panel', {
                   loading: this.isLoading,
-                  visible: this.vehicleInformation && this.vehicleInformation.serviceItems.filter(x => x.status === 'activationRequired').length > 0,
+                  visible: hasInactiveItems,
                 })}
                 onAnimationEnd={this.removeLoadAnimationClass}
               >
@@ -534,9 +587,9 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
                       this.activate(this.vehicleInformation);
                     }
                   }}
-                  class="claim-button dynamic-claim-button"
+                  class="claim-button"
                 >
-                  <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg class="size-[30px] duration-200" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g stroke-width="0"></g>
                     <g stroke-linecap="round" stroke-linejoin="round"></g>
                     <g>
@@ -549,7 +602,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
               </div>
             </div>
           </div>
-        </div>
+        </VehicleInfoLayout>
       </Host>
     );
   }

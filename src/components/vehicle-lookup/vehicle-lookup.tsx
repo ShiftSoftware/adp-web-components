@@ -213,7 +213,7 @@ export class VehicleLookup {
     const componentList = [
       () => (
         <vehicle-specification
-          coreOny
+          coreOnly
           isDev={this.isDev}
           base-url={this.baseUrl}
           language={this.language}
@@ -223,7 +223,7 @@ export class VehicleLookup {
       ),
       () => (
         <vehicle-accessories
-          coreOny
+          coreOnly
           isDev={this.isDev}
           base-url={this.baseUrl}
           language={this.language}
@@ -233,7 +233,7 @@ export class VehicleLookup {
       ),
       () => (
         <vehicle-warranty-details
-          coreOny
+          coreOnly
           show-ssc="true"
           isDev={this.isDev}
           show-warranty="true"
@@ -247,7 +247,7 @@ export class VehicleLookup {
       ),
       () => (
         <vehicle-service-history
-          coreOny
+          coreOnly
           isDev={this.isDev}
           base-url={this.baseUrl}
           language={this.language}
@@ -257,7 +257,7 @@ export class VehicleLookup {
       ),
       () => (
         <vehicle-paint-thickness
-          coreOny
+          coreOnly
           isDev={this.isDev}
           base-url={this.baseUrl}
           language={this.language}
@@ -267,6 +267,7 @@ export class VehicleLookup {
       ),
       () => (
         <vehicle-claimable-items
+          coreOnly
           isDev={this.isDev}
           base-url={this.baseUrl}
           language={this.language}

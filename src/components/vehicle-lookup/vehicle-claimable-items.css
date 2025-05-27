@@ -1,3 +1,5 @@
+@import '../style/vehicle-info.css';
+
 :host {
   all: initial !important;
   display: block;
@@ -13,258 +15,7 @@
   box-sizing: content-box;
 }
 
-.dynamic-claim-wrapper {
-  padding: 0px;
-  overflow: hidden;
-  position: relative;
-  border-radius: 5px;
-  border: 1px solid #dcdcdc;
-  background: rgb(253, 253, 253);
-  box-shadow:
-    inset 0 1px 3px rgba(0, 0, 0, 0.05),
-    0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-.dynamic-claim-header {
-  padding: 15px 0px;
-  text-align: center;
-  background: #f6f6f6;
-  border: 1px solid #ededed;
-}
-
-.dynamic-claim-header-vin {
-  transition: 0.4s;
-  display: inline-block;
-}
-
-.idle .dynamic-claim-header-vin,
-.loading .dynamic-claim-header-vin {
-  opacity: 0;
-  visibility: hidden;
-  transform: scale(150%);
-}
-
-.dynamic-claim-body {
-  padding: 125px 30px 125px 30px;
-  overflow-x: scroll;
-  display: flex;
-  transition: 0.5s ease;
-  flex-direction: row;
-}
-
-.dynamic-claim-body.has-activation-box {
-  padding: 100px 30px 150px 30px;
-}
-
-.dynamic-claim-activation-box {
-  position: absolute;
-  width: 90%;
-  left: 50%;
-  margin-left: -45%;
-  bottom: 40px;
-}
-
-.idle .dynamic-claim-body,
-.loading .dynamic-claim-body {
-  /* disable scroll functionality */
-  pointer-events: none;
-}
-
-.dynamic-claim-wrapper ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-/* Track */
-.dynamic-claim-wrapper ::-webkit-scrollbar-track {
-  background: #f6f6f6;
-  border-top: 1px solid #dcdcdc;
-  border-radius: 5px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-.idle .dynamic-claim-body::-webkit-scrollbar-thumb,
-.loading .dynamic-claim-body::-webkit-scrollbar-thumb {
-  background: transparent;
-}
-
-/* Handle */
-.dynamic-claim-wrapper ::-webkit-scrollbar-thumb {
-  background: #c5c5c5;
-  border-radius: 10px;
-}
-/* Handle on hover */
-.dynamic-claim-wrapper ::-webkit-scrollbar-thumb:hover {
-  background: #a1a1a1;
-}
-
-.loading-lane,
-.dynamic-claim-progress-lane {
-  height: 10px;
-  background-color: #f2f2f2;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  position: relative;
-  flex: 1;
-}
-
-.idle .dynamic-claim-progress-lane,
-.loading .dynamic-claim-progress-lane {
-  background-color: transparent;
-  border: 1px solid transparent;
-}
-
-.loading-lane {
-  position: absolute;
-  visibility: hidden;
-  /* each side has 30px padding in the body */
-  width: calc(100% - 60px);
-}
-
-.loading .loading-lane {
-  visibility: visible;
-}
-
-.dynamic-claim-progress-bar {
-  height: 10px;
-  background-image: linear-gradient(to bottom, #428bca 0, #3071a9 100%);
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  width: 0%;
-  position: absolute;
-  left: 0;
-  transition: all;
-  transition-duration: 0.5s;
-  transition-timing-function: ease-in-out;
-  z-index: 0;
-}
-
-.idle .dynamic-claim-progress-bar,
-.loading .dynamic-claim-progress-bar {
-  width: 0% !important;
-  opacity: 0;
-}
-
-.dynamic-claim-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  font-size: 14px;
-  min-width: 250px;
-}
-
-.popup-position-ref {
-  width: 0px;
-  height: 0px;
-  bottom: 0px;
-  display: flex;
-  position: absolute;
-  justify-content: center;
-}
-
-.popup-container {
-  z-index: 100;
-  position: fixed;
-}
-
-.dynamic-claim-item-popup-info {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  width: auto;
-  padding: 20px;
-  /* box-shadow: 0 0 3px 2px #f1f1f1; */
-  border-radius: 5px;
-  transition: 0.4s;
-  color: #282828;
-  opacity: 0;
-  visibility: hidden;
-}
-
-.dynamic-claim-item-popup-info.show,
-.dynamic-claim-item-popup-info-triangle.show {
-  opacity: 1;
-  visibility: visible;
-}
-
-.dynamic-claim-item-popup-info table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.dynamic-claim-item-popup-info table th {
-  border-bottom: 1px solid #ddd;
-  padding: 10px;
-  padding-inline-end: 50px;
-  text-align: start;
-  white-space: nowrap;
-}
-
-.dynamic-claim-item-popup-info table td {
-  border-bottom: 1px solid #ddd;
-  padding: 10px;
-  padding-inline-end: 50px;
-  text-align: start;
-  white-space: nowrap;
-  font-weight: normal;
-}
-
-.dynamic-claim-item-popup-info .claim-button {
-  margin: auto;
-  margin-top: 15px;
-  width: 80%;
-  justify-content: center;
-}
-
-.dynamic-claim-item-popup-info-triangle {
-  opacity: 0;
-  width: 100%;
-  z-index: 101;
-  display: flex;
-  transition: 0.4s;
-  position: relative;
-  visibility: hidden;
-  justify-content: center;
-  transform: translateY(-9px);
-}
-
-.dynamic-claim-item-popup-info-triangle-up {
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #dddddd;
-}
-
-.dynamic-claim-item-popup-info-triangle-up2 {
-  margin-top: 1px;
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #f9f9f9;
-}
-
-.dynamic-claim-item-header {
-  position: relative;
-  transition: 0.4s;
-  padding: 10px 0px;
-  line-height: 1em;
-  height: 3em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-}
-
-.dynamic-claim-item-header.load-animation {
+.claimable-item-header.load-animation {
   animation: item-header-fade-in 0.65s ease forwards;
 }
 
@@ -280,39 +31,13 @@
   }
 }
 
-.dynamic-claim-item-header span {
-  font-weight: bold;
-}
-
-.dynamic-claim-item-header img {
-  transition: 0.4s;
-}
-
-.dynamic-claim-item-header:hover > img {
-  transform: rotate(360deg) scale(125%);
-}
-
-.idle .dynamic-claim-item-header,
-.loading .dynamic-claim-item-header {
-  opacity: 0;
-  transform: translateY(-5px) scale(70%);
-}
-
-.dynamic-claim-item-footer {
-  transition: 0.4s;
-  padding: 0px 20px;
-  text-align: center;
-  line-height: 1.5em;
-  height: 4.5em;
+.claimable-item-footer {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0;
 }
 
-.dynamic-claim-item-footer.load-animation {
+.claimable-item-footer.load-animation {
   animation: item-footer-fade-in 0.65s ease forwards;
 }
 
@@ -330,24 +55,7 @@
   }
 }
 
-.idle .dynamic-claim-item-footer,
-.loading .dynamic-claim-item-footer {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(5px) scale(70%);
-}
-
-.dynamic-claim-item-circle {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background-color: #a1a1a1;
-  border: 5px double #ececec;
-  transition: 0.4s;
-  z-index: 1;
-}
-
-.dynamic-claim-item-circle.load-animation {
+.claimable-item-circle.load-animation {
   animation: item-circle-fade-in 0.65s ease forwards;
 }
 
@@ -365,84 +73,51 @@
   }
 }
 
-.idle .dynamic-claim-item-circle,
-.loading .dynamic-claim-item-circle {
-  opacity: 0;
-  visibility: hidden;
-  transform: scale(150%);
-}
-
-.dynamic-claim-item.processed .dynamic-claim-item-circle {
+.processed .claimable-item-circle {
   background-color: #3071a9;
 }
 
-.dynamic-claim-item.processed .dynamic-claim-item-header {
+.processed .claimable-item-header {
   color: #3071a9;
 }
 
-.dynamic-claim-item.expired .dynamic-claim-item-circle {
+.expired .claimable-item-circle {
   background-color: #282828;
 }
 
-.dynamic-claim-item.expired .dynamic-claim-item-headaer {
+.expired .claimable-item-header {
   color: #282828;
 }
 
-.dynamic-claim-item.cancelled .dynamic-claim-item-circle {
+.cancelled .claimable-item-circle {
   background-color: #a80000;
 }
 
-.dynamic-claim-item.cancelled .dynamic-claim-item-header {
+.cancelled .claimable-item-header {
   color: #a80000;
 }
 
-.dynamic-claim-item.pending .dynamic-claim-item-circle {
+.pending .claimable-item-circle {
   background-color: #00a300;
 }
 
-.dynamic-claim-item.pending .dynamic-claim-item-header {
+.pending .claimable-item-header {
   color: #00a300;
 }
 
-.dynamic-claim-item.activationRequired .dynamic-claim-item-header {
+.activationRequired .claimable-item-header {
   color: #9e9e9e;
 }
 
-.dynamic-claim-loading-slider {
-  position: relative;
-  width: 100%;
-  height: 10px;
-  border-radius: 4px;
-  overflow-x: hidden;
-  position: absolute;
-  left: 0;
-  top: 0;
+.loading .lane-inc {
+  animation: lane-increase 2.5s infinite ease;
 }
 
-.dynamic-claim-loading-slider-line {
-  position: absolute;
-  opacity: 0.4;
-  background: #ddd;
-  width: 150%;
-  height: 10px;
-  opacity: 0;
+.loading .lane-dec {
+  animation: lane-decrease 2.5s 1s infinite ease;
 }
 
-.dynamic-claim-loading-slider-subline {
-  position: absolute;
-  background-image: linear-gradient(to bottom, #428bca 0, #3071a9 100%);
-  height: 10px;
-}
-
-.dynamic-claim-wrapper.loading .dynamic-claim-inc {
-  animation: dynamic-claim-increase 2.5s infinite ease;
-}
-
-.dynamic-claim-wrapper.loading .dynamic-claim-dec {
-  animation: dynamic-claim-decrease 2.5s 1s infinite ease;
-}
-
-@keyframes dynamic-claim-increase {
+@keyframes lane-increase {
   from {
     left: -5%;
     width: 5%;
@@ -454,7 +129,7 @@
   }
 }
 
-@keyframes dynamic-claim-decrease {
+@keyframes lane-decrease {
   from {
     left: -80%;
     width: 80%;
@@ -466,78 +141,8 @@
   }
 }
 
-.dynamic-claim-button {
-  outline: none;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
-  font-weight: bold;
-  padding: 0 10px;
-  padding-left: 0;
-  display: flex;
-  align-items: center;
-  gap: 3px;
-}
-
-.dynamic-claim-button svg {
-  transition: 0.2s;
-}
-
 .claim-button {
-  border: 1px solid #27ae60;
-  color: #27ae60;
-  background-color: transparent;
-  stroke: #27ae60;
-  fill: #27ae60;
-}
-
-.claim-button circle {
-  fill: #2ecc71;
-}
-
-.claim-button:hover {
-  color: white;
-  background-color: #2ecc71;
-  stroke: white;
-  fill: white;
-}
-
-.claim-button:hover circle {
-  fill: white;
-}
-
-.claim-button:active {
-  background-color: #27ae60;
-}
-
-.claim-button:active svg {
-  transform: scale(125%);
-}
-
-.cancel-button {
-  border: 1px solid #c0392b;
-  color: #c0392b;
-  background-color: transparent;
-  stroke: #c0392b;
-  fill: #c0392b;
-}
-
-.cancel-button circle {
-  fill: #c0392b;
-  transition: 0.1s;
-}
-
-.cancel-button:hover {
-  color: white;
-  background-color: #e74c3c;
-  stroke: white;
-  fill: white;
-}
-
-.cancel-button:hover circle {
-  fill: white;
+  @apply active:[&_svg]:scale-[125%] active:bg-[#27ae60] [&_circle]:fill-[#2ecc71] hover:text-white hover:bg-[#2ecc71] hover:stroke-white hover:fill-white hover:[&_circle]:fill-white outline-none flex items-center gap-[3px] border border-[#27ae60] bg-transparent fill-[#27ae60] stroke-[#27ae60] text-[#27ae60]  rounded-[5px] cursor-pointer duration-200 font-bold pr-[10px];
 }
 
 .card {

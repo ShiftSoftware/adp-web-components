@@ -28,7 +28,7 @@ let mockData: MockJson<VehicleInformation> = {};
 export class VehicleAccessories implements ImageViewerInterface {
   @Prop() baseUrl: string = '';
   @Prop() isDev: boolean = false;
-  @Prop() coreOny: boolean = false;
+  @Prop() coreOnly: boolean = false;
   @Prop() queryString: string = '';
   @Prop() language: LanguageKeys = 'en';
   @Prop() errorCallback: (errorMessage: ErrorKeys) => void;
@@ -214,7 +214,7 @@ export class VehicleAccessories implements ImageViewerInterface {
         <VehicleInfoLayout
           isError={isError}
           isLoading={isLoading}
-          coreOnly={this.coreOny}
+          coreOnly={this.coreOnly}
           vin={this.vehicleInformation?.vin}
           direction={this.sharedLocales.direction}
           errorMessage={this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}

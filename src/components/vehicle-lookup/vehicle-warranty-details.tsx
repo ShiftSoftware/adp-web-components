@@ -35,7 +35,7 @@ export class VehicleWarrantyDetails implements VehicleInformationInterface {
   @Prop() showSsc: boolean = false;
   @Prop() queryString: string = '';
   @Prop() recaptchaKey: string = '';
-  @Prop() coreOny: boolean = false;
+  @Prop() coreOnly: boolean = false;
   @Prop() language: LanguageKeys = 'en';
   @Prop() showWarranty: boolean = false;
   @Prop() unauthorizedSscLookupBaseUrl: string = '';
@@ -344,7 +344,7 @@ export class VehicleWarrantyDetails implements VehicleInformationInterface {
         <VehicleInfoLayout
           isError={isError}
           isLoading={isLoading}
-          coreOnly={this.coreOny}
+          coreOnly={this.coreOnly}
           vin={this.vehicleInformation?.vin}
           direction={this.sharedLocales.direction}
           errorMessage={this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}

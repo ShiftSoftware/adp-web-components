@@ -25,7 +25,7 @@ export class VehicleServiceHistory implements VehicleInformationInterface {
   @Prop() baseUrl: string = '';
   @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
-  @Prop() coreOny: boolean = false;
+  @Prop() coreOnly: boolean = false;
   @Prop() language: LanguageKeys = 'en';
   @Prop() errorCallback: (errorMessage: ErrorKeys) => void;
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
@@ -171,7 +171,7 @@ export class VehicleServiceHistory implements VehicleInformationInterface {
         <VehicleInfoLayout
           isError={isError}
           isLoading={isLoading}
-          coreOnly={this.coreOny}
+          coreOnly={this.coreOnly}
           vin={this.vehicleInformation?.vin}
           direction={this.sharedLocales.direction}
           errorMessage={this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}

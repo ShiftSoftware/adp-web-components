@@ -220,7 +220,7 @@ export namespace Components {
     }
     interface VehicleAccessories {
         "baseUrl": string;
-        "coreOny": boolean;
+        "coreOnly": boolean;
         "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
@@ -238,6 +238,7 @@ export namespace Components {
         "claim": (item: ServiceItem) => Promise<void>;
         "claimEndPoint": string;
         "completeClaim": () => Promise<void>;
+        "coreOnly": boolean;
         "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "headers": any;
@@ -282,7 +283,7 @@ export namespace Components {
     }
     interface VehiclePaintThickness {
         "baseUrl": string;
-        "coreOny": boolean;
+        "coreOnly": boolean;
         "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
@@ -296,7 +297,7 @@ export namespace Components {
     }
     interface VehicleServiceHistory {
         "baseUrl": string;
-        "coreOny": boolean;
+        "coreOnly": boolean;
         "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
@@ -310,7 +311,7 @@ export namespace Components {
     }
     interface VehicleSpecification {
         "baseUrl": string;
-        "coreOny": boolean;
+        "coreOnly": boolean;
         "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
         "isDev": boolean;
@@ -331,7 +332,7 @@ export namespace Components {
         "companyBranchIntegrationId"?: string;
         "companyId"?: string;
         "companyIntegrationId"?: string;
-        "coreOny": boolean;
+        "coreOnly": boolean;
         "customerEmail"?: string;
         "customerName"?: string;
         "customerPhone"?: string;
@@ -754,7 +755,7 @@ declare namespace LocalJSX {
     }
     interface VehicleAccessories {
         "baseUrl"?: string;
-        "coreOny"?: boolean;
+        "coreOnly"?: boolean;
         "errorCallback"?: (errorMessage: ErrorKeys) => void;
         "isDev"?: boolean;
         "language"?: LanguageKeys;
@@ -766,6 +767,7 @@ declare namespace LocalJSX {
         "activate"?: (vehicleInformation: VehicleInformation) => void;
         "baseUrl"?: string;
         "claimEndPoint"?: string;
+        "coreOnly"?: boolean;
         "errorCallback"?: (errorMessage: ErrorKeys) => void;
         "headers"?: any;
         "isDev"?: boolean;
@@ -801,7 +803,7 @@ declare namespace LocalJSX {
     }
     interface VehiclePaintThickness {
         "baseUrl"?: string;
-        "coreOny"?: boolean;
+        "coreOnly"?: boolean;
         "errorCallback"?: (errorMessage: ErrorKeys) => void;
         "isDev"?: boolean;
         "language"?: LanguageKeys;
@@ -811,7 +813,7 @@ declare namespace LocalJSX {
     }
     interface VehicleServiceHistory {
         "baseUrl"?: string;
-        "coreOny"?: boolean;
+        "coreOnly"?: boolean;
         "errorCallback"?: (errorMessage: ErrorKeys) => void;
         "isDev"?: boolean;
         "language"?: LanguageKeys;
@@ -821,7 +823,7 @@ declare namespace LocalJSX {
     }
     interface VehicleSpecification {
         "baseUrl"?: string;
-        "coreOny"?: boolean;
+        "coreOnly"?: boolean;
         "errorCallback"?: (errorMessage: ErrorKeys) => void;
         "isDev"?: boolean;
         "language"?: LanguageKeys;
@@ -838,7 +840,7 @@ declare namespace LocalJSX {
         "companyBranchIntegrationId"?: string;
         "companyId"?: string;
         "companyIntegrationId"?: string;
-        "coreOny"?: boolean;
+        "coreOnly"?: boolean;
         "customerEmail"?: string;
         "customerName"?: string;
         "customerPhone"?: string;
