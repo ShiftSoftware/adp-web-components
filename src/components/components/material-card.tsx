@@ -12,8 +12,6 @@ interface MaterialCardProps {
 }
 
 export const MaterialCard: FunctionalComponent<MaterialCardProps> = (props, children = []) => {
-  console.log(children);
-
   const wrapperStyle: JSXBase.HTMLAttributes<HTMLDivElement>['style'] = {
     flex: '1',
     display: 'flex',
