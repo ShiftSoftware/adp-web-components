@@ -211,6 +211,10 @@ export namespace Components {
         "activeIndex": number;
         "components": (() => Node)[];
     }
+    interface ShiftTabContent {
+        "activeComponent": string;
+        "components": { [key: string]: Node };
+    }
     interface ShiftTabs {
         "activeTabIndex": number;
         "changeActiveTab": (newTabindex: number) => void;
@@ -270,7 +274,6 @@ export namespace Components {
         "blazorErrorStateListener": string;
         "blazorOnLoadingStateChange": string;
         "childrenProps"?: string | Object;
-        "componentListOrder": ActiveElement1[];
         "dynamicClaimActivate"?: (vehicleInformation: VehicleInformation) => void;
         "errorStateListener"?: (newError: string) => void;
         "fetchVin": (vin: string, headers?: any) => Promise<string>;
@@ -488,6 +491,12 @@ declare global {
         prototype: HTMLShiftSliderElement;
         new (): HTMLShiftSliderElement;
     };
+    interface HTMLShiftTabContentElement extends Components.ShiftTabContent, HTMLStencilElement {
+    }
+    var HTMLShiftTabContentElement: {
+        prototype: HTMLShiftTabContentElement;
+        new (): HTMLShiftTabContentElement;
+    };
     interface HTMLShiftTabsElement extends Components.ShiftTabs, HTMLStencilElement {
     }
     var HTMLShiftTabsElement: {
@@ -568,6 +577,7 @@ declare global {
         "service-booking-form": HTMLServiceBookingFormElement;
         "shift-accordion": HTMLShiftAccordionElement;
         "shift-slider": HTMLShiftSliderElement;
+        "shift-tab-content": HTMLShiftTabContentElement;
         "shift-tabs": HTMLShiftTabsElement;
         "vehicle-accessories": HTMLVehicleAccessoriesElement;
         "vehicle-claimable-items": HTMLVehicleClaimableItemsElement;
@@ -746,6 +756,10 @@ declare namespace LocalJSX {
         "activeIndex"?: number;
         "components"?: (() => Node)[];
     }
+    interface ShiftTabContent {
+        "activeComponent"?: string;
+        "components"?: { [key: string]: Node };
+    }
     interface ShiftTabs {
         "activeTabIndex"?: number;
         "changeActiveTab"?: (newTabindex: number) => void;
@@ -793,7 +807,6 @@ declare namespace LocalJSX {
         "blazorErrorStateListener"?: string;
         "blazorOnLoadingStateChange"?: string;
         "childrenProps"?: string | Object;
-        "componentListOrder"?: ActiveElement1[];
         "dynamicClaimActivate"?: (vehicleInformation: VehicleInformation) => void;
         "errorStateListener"?: (newError: string) => void;
         "isDev"?: boolean;
@@ -893,6 +906,7 @@ declare namespace LocalJSX {
         "service-booking-form": ServiceBookingForm;
         "shift-accordion": ShiftAccordion;
         "shift-slider": ShiftSlider;
+        "shift-tab-content": ShiftTabContent;
         "shift-tabs": ShiftTabs;
         "vehicle-accessories": VehicleAccessories;
         "vehicle-claimable-items": VehicleClaimableItems;
@@ -928,6 +942,7 @@ declare module "@stencil/core" {
             "service-booking-form": LocalJSX.ServiceBookingForm & JSXBase.HTMLAttributes<HTMLServiceBookingFormElement>;
             "shift-accordion": LocalJSX.ShiftAccordion & JSXBase.HTMLAttributes<HTMLShiftAccordionElement>;
             "shift-slider": LocalJSX.ShiftSlider & JSXBase.HTMLAttributes<HTMLShiftSliderElement>;
+            "shift-tab-content": LocalJSX.ShiftTabContent & JSXBase.HTMLAttributes<HTMLShiftTabContentElement>;
             "shift-tabs": LocalJSX.ShiftTabs & JSXBase.HTMLAttributes<HTMLShiftTabsElement>;
             "vehicle-accessories": LocalJSX.VehicleAccessories & JSXBase.HTMLAttributes<HTMLVehicleAccessoriesElement>;
             "vehicle-claimable-items": LocalJSX.VehicleClaimableItems & JSXBase.HTMLAttributes<HTMLVehicleClaimableItemsElement>;

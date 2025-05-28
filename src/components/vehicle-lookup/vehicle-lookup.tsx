@@ -38,15 +38,6 @@ export type ComponentMap = {
 
 export type ActiveElement = (typeof componentTags)[keyof typeof componentTags] | '';
 
-const defaultComponentListOrder: ActiveElement[] = [
-  'vehicle-specification',
-  'vehicle-accessories',
-  'vehicle-warranty-details',
-  'vehicle-service-history',
-  'vehicle-paint-thickness',
-  'vehicle-claimable-items',
-];
-
 @Component({
   shadow: false,
   tag: 'vehicle-lookup',
@@ -60,7 +51,6 @@ export class VehicleLookup {
   @Prop() queryString: string = '';
   @Prop() language: LanguageKeys = 'en';
   @Prop() childrenProps?: string | Object;
-  @Prop() componentListOrder: ActiveElement[] = defaultComponentListOrder;
 
   @Prop() errorStateListener?: (newError: string) => void;
   @Prop() blazorErrorStateListener = '';
@@ -210,8 +200,8 @@ export class VehicleLookup {
     if (!Object.values(componentTags).includes(this.activeElement as any))
       return <div class="w-full h-[200px] text-[26px] text-red-600 flex items-center justify-center">Invalid tag</div>;
 
-    const componentList = [
-      () => (
+    const componentList: Partial<Record<ActiveElement, Node>> = {
+      'vehicle-specification': (
         <vehicle-specification
           coreOnly
           isDev={this.isDev}
@@ -221,7 +211,7 @@ export class VehicleLookup {
           {...props[componentTags.vehicleSpecification]}
         ></vehicle-specification>
       ),
-      () => (
+      'vehicle-accessories': (
         <vehicle-accessories
           coreOnly
           isDev={this.isDev}
@@ -231,7 +221,7 @@ export class VehicleLookup {
           {...props[componentTags.vehicleAccessories]}
         ></vehicle-accessories>
       ),
-      () => (
+      'vehicle-warranty-details': (
         <vehicle-warranty-details
           coreOnly
           show-ssc="true"
@@ -245,7 +235,7 @@ export class VehicleLookup {
           <slot></slot>
         </vehicle-warranty-details>
       ),
-      () => (
+      'vehicle-service-history': (
         <vehicle-service-history
           coreOnly
           isDev={this.isDev}
@@ -255,7 +245,7 @@ export class VehicleLookup {
           {...props[componentTags.vehicleServiceHistory]}
         ></vehicle-service-history>
       ),
-      () => (
+      'vehicle-paint-thickness': (
         <vehicle-paint-thickness
           coreOnly
           isDev={this.isDev}
@@ -265,7 +255,7 @@ export class VehicleLookup {
           {...props[componentTags.vehiclePaintThickness]}
         ></vehicle-paint-thickness>
       ),
-      () => (
+      'vehicle-claimable-items': (
         <vehicle-claimable-items
           coreOnly
           isDev={this.isDev}
@@ -275,7 +265,7 @@ export class VehicleLookup {
           {...props[componentTags.vehicleClaimableItems]}
         ></vehicle-claimable-items>
       ),
-    ];
+    };
 
     return (
       <Host>
@@ -286,7 +276,7 @@ export class VehicleLookup {
           direction={this.sharedLocales.direction}
           errorMessage={this.sharedLocales.errors[this.errorKey] || this.sharedLocales.errors.wildCard}
         >
-          <shift-slider components={componentList} activeIndex={this.componentListOrder.indexOf(this.activeElement)}></shift-slider>
+          <shift-tab-content components={componentList} activeComponent={this.activeElement}></shift-tab-content>
         </VehicleInfoLayout>
       </Host>
     );
