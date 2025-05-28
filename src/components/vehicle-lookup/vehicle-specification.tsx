@@ -11,8 +11,8 @@ import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicle
 
 import specificationSchema from '~locales/vehicleLookup/specification/type';
 
-import { CardContent } from '../components/card-content';
 import { VehicleInfoLayout } from '../components/vehicle-info-layout';
+import { MaterialCard, MaterialCardChildren } from '../components/material-card';
 
 let mockData: MockJson<VehicleInformation> = {};
 
@@ -154,30 +154,33 @@ export class VehicleSpecification implements VehicleInformationInterface {
         >
           <flexible-container>
             <div class="flex p-[4px] [&>div]:grow overflow-auto gap-[16px] items-stretch justify-center md:justify-between flex-wrap">
-              <CardContent title={texts?.model} classes="grow" minWidth="400px">
-                <div class="text-center w-full shift-skeleton">
+              <MaterialCard class="grow" title={texts?.model} minWidth="300px">
+                <MaterialCardChildren
+                  class="text-center"
+                  hidden={!this?.vehicleInformation?.vehicleVariantInfo?.modelCode && !this?.vehicleInformation?.vehicleSpecification.modelDesc}
+                >
                   {this?.vehicleInformation?.vehicleVariantInfo?.modelCode || '...'} <br class="my-2" />
                   {this?.vehicleInformation?.vehicleSpecification?.modelDesc || '...'}
-                </div>
-              </CardContent>
-              <CardContent title={texts?.variant} classes="grow" minWidth="400px">
-                <div class="text-center w-full shift-skeleton">
+                </MaterialCardChildren>
+              </MaterialCard>
+
+              <MaterialCard class="grow" title={texts?.variant} minWidth="300px">
+                <MaterialCardChildren
+                  class="text-center"
+                  hidden={!this?.vehicleInformation?.vehicleVariantInfo?.modelCode && !this?.vehicleInformation?.vehicleSpecification.modelDesc}
+                >
                   {this?.vehicleInformation?.identifiers?.variant?.trim() || '...'} <br />
                   {this?.vehicleInformation?.vehicleSpecification?.variantDesc?.trim() || '...'}
-                </div>
-              </CardContent>
-              <CardContent title={texts?.katashiki} minWidth="250px">
-                <div class="w-full shift-skeleton">{this?.vehicleInformation?.identifiers?.katashiki?.trim() || '...'}</div>
-              </CardContent>
-              <CardContent title={texts?.modelYear} minWidth="250px">
-                <div class="w-full shift-skeleton">{this?.vehicleInformation?.vehicleVariantInfo?.modelYear?.toString()?.trim() || '...'}</div>
-              </CardContent>
-              <CardContent title={texts?.productionDate} minWidth="250px">
-                <div class="w-full shift-skeleton">{!!productionDate ? productionDate : '...'}</div>
-              </CardContent>
-              <CardContent title={texts?.sfx} minWidth="250px">
-                <div class="w-full shift-skeleton">{this?.vehicleInformation?.vehicleVariantInfo?.sfx?.trim() || '...'}</div>
-              </CardContent>
+                </MaterialCardChildren>
+              </MaterialCard>
+
+              <MaterialCard desc={this?.vehicleInformation?.identifiers?.katashiki?.trim() || '...'} title={texts?.katashiki} minWidth="250px" />
+
+              <MaterialCard desc={this?.vehicleInformation?.vehicleVariantInfo?.modelYear?.toString()?.trim() || '...'} title={texts?.modelYear} minWidth="250px" />
+
+              <MaterialCard desc={!!productionDate ? productionDate : '...'} title={texts?.productionDate} minWidth="250px" />
+
+              <MaterialCard desc={this?.vehicleInformation?.vehicleVariantInfo?.sfx?.trim() || '...'} title={texts?.sfx} minWidth="250px" />
             </div>
           </flexible-container>
         </VehicleInfoLayout>
