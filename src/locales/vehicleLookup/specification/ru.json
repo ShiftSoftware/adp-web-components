@@ -1,10 +1,10 @@
 {
-  "vehicleSpecification": "Технические характеристики автомобиля",
-  "noData": "Данных нет.",
-  "model": "Модель",
-  "variant": "Вариант",
-  "katashiki": "Каташики",
-  "modelYear": "Модельный год",
-  "sfx": "звуковые эффекты",
-  "productionDate": "Год производства"
+    "vehicleSpecification": "Комплектация",
+    "noData": "Данных нет.",
+    "model": "Модель",
+    "variant": "Вариант",
+    "katashiki": "Katashiki",
+    "modelYear": "Год модели",
+    "sfx": "SFX",
+    "productionDate": "Год выпуска"
 }
