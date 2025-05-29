@@ -1,8 +1,8 @@
 {
-  "vehicleAccessories": "Транспортные аксессуары",
-  "noData": "Данных нет.",
-  "partNumber": "Номер детали",
-  "description": "Описание",
-  "image": "Изображение",
-  "expand": "Расширять"
+    "vehicleAccessories": "Аксессуары для автомобиля",
+    "noData": "Данных нет.",
+    "partNumber": "Номер запчасти",
+    "description": "Описание",
+    "image": "Изображение",
+    "expand": "Раскрыть"
 }
