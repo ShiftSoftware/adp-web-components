@@ -117,6 +117,7 @@ export class DynamicClaim implements VehicleInformationInterface {
       }
 
       this.isLoading = true;
+      this.showPrintBox = false;
       this.isIdle = false;
 
       await new Promise(r => {
