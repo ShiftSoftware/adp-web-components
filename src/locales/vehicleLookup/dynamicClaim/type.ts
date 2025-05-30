@@ -43,6 +43,8 @@ const dynamicClaimSchema = object({
     'pending',
     'warning',
     'activateNow',
+    "print",
+    "successFulClaimMessage",
     'activationRequired',
     'warrantyAndServicesNotActivated',
   ]),

@@ -51,17 +51,17 @@
   flex-direction: row;
 }
 
-  .dynamic-claim-body.has-activation-box {
+  .dynamic-claim-body.has-footer-box {
     padding: 100px 30px 150px 30px;
   }
 
-  .dynamic-claim-activation-box {
-    position: absolute;
-    width: 90%;
-    left: 50%;
-    margin-left: -45%;
-    bottom: 40px;
-  }
+.dynamic-claim-activation-box, .dynamic-claim-success-box {
+  position: absolute;
+  width: 90%;
+  left: 50%;
+  margin-left: -45%;
+  bottom: 40px;
+}
 
 .idle .dynamic-claim-body,
 .loading .dynamic-claim-body {
@@ -505,6 +505,14 @@
 
     .claim-button:hover circle {
       fill: white;
+    }
+
+    .claim-button path{
+        transition:0.2s;
+    }
+
+    .claim-button:hover path {
+      fill: #2ecc71;
     }
 
   .claim-button:active {

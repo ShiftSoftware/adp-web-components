@@ -45,6 +45,7 @@ export class DynamicClaim implements VehicleInformationInterface {
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
   @Prop() loadedResponse?: (response: VehicleInformation) => void;
   @Prop() activate?: (vehicleInformation: VehicleInformation) => void;
+  @Prop() print?: (claimResponse: any) => void;
 
   @State() sharedLocales: SharedLocales = sharedLocalesSchema.getDefault();
   @State() locale: InferType<typeof dynamicClaimSchema> = dynamicClaimSchema.getDefault();
@@ -52,6 +53,8 @@ export class DynamicClaim implements VehicleInformationInterface {
   @State() isIdle: boolean = true;
   @State() popupClasses: string = '';
   @State() isLoading: boolean = false;
+  @State() showPrintBox: boolean = false;
+  @State() lastSuccessfullClaimResponse: any = null;
   @State() externalVin?: string = null;
   @State() errorMessage?: ErrorKeys = null;
   @State() activePopupIndex: null | number = null;
@@ -264,7 +267,7 @@ export class DynamicClaim implements VehicleInformationInterface {
   }
 
   @Method()
-  async completeClaim() {
+  async completeClaim(response: any) {
     const serviceItems = this.vehicleInformation?.serviceItems || [];
 
     const item = this.cachedClaimItem;
@@ -285,6 +288,9 @@ export class DynamicClaim implements VehicleInformationInterface {
     const vehicleDataClone = JSON.parse(JSON.stringify(this.vehicleInformation)) as VehicleInformation;
     vehicleDataClone.serviceItems = serviceDataClone;
     this.vehicleInformation = JSON.parse(JSON.stringify(vehicleDataClone));
+
+    this.showPrintBox = true;
+    this.lastSuccessfullClaimResponse = response;
   }
 
   @Method()
@@ -322,7 +328,7 @@ export class DynamicClaim implements VehicleInformationInterface {
         });
 
         this.dynamicRedeem.quite();
-        this.completeClaim();
+        this.completeClaim({ Success: true, ID: '11223344', PrintURL: 'http://localhost/test/print/1122' });
         this.dynamicRedeem.handleClaiming = null;
       };
     } else {
@@ -353,7 +359,7 @@ export class DynamicClaim implements VehicleInformationInterface {
           }
 
           this.dynamicRedeem.quite();
-          this.completeClaim();
+          this.completeClaim(data);
           this.dynamicRedeem.handleClaiming = null;
         } catch (error) {
           console.error(error);
@@ -476,7 +482,7 @@ export class DynamicClaim implements VehicleInformationInterface {
 
           <div
             class={cn('dynamic-claim-body', {
-              'has-activation-box': this.vehicleInformation && this.vehicleInformation.serviceItems.filter(x => x.status === 'activationRequired').length > 0,
+              'has-footer-box': (this.vehicleInformation && this.vehicleInformation.serviceItems.filter(x => x.status === 'activationRequired').length > 0) || this.showPrintBox,
             })}
           >
             <div class="loading-lane">
@@ -546,6 +552,43 @@ export class DynamicClaim implements VehicleInformationInterface {
                     </g>
                   </svg>
                   <span>{texts.activateNow}</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="dynamic-claim-activation-box">
+              <div
+                class={cn('card warning-card span-entire-1st-row activation-panel', {
+                  loading: this.isLoading,
+                  visible: this.showPrintBox,
+                })}
+                onAnimationEnd={this.removeLoadAnimationClass}
+              >
+                <p class="no-padding flex gap-2">
+                  <span class="font-semibold">{texts.successFulClaimMessage}</span>
+                </p>
+
+                <button
+                  onClick={() => {
+                    if (this.print) {
+                      this.print(this.lastSuccessfullClaimResponse);
+                    } else {
+                      if (this.lastSuccessfullClaimResponse.PrintURL) {
+                        window.open(this.lastSuccessfullClaimResponse.PrintURL, '_blank').focus();
+                      }
+                    }
+                  }}
+                  class="claim-button dynamic-claim-button"
+                >
+                  <svg width="30px" height="30px" viewBox="-5 -5 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M17 7H7V6h10v1zm0 12H7v-6h10v6zm2-12V3H5v4H1v8.996C1 17.103 1.897 18 3.004 18H5v3h14v-3h1.996A2.004 2.004 0 0 0 23 15.996V7h-4z"
+                      fill="rgb(252, 248, 227)" />
+                  </svg>
+
+                  <span>{texts.print}</span>
                 </button>
               </div>
             </div>

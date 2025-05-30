@@ -14,6 +14,8 @@
   "pending": "قيد الانتظار",
   "warning": "تحذير",
   "activateNow": "Activate Now",
+  "print": "Print",
+  "successFulClaimMessage": "Item was claimed successfully.",
   "activationRequired": "Activation Required",
   "warrantyAndServicesNotActivated": "Warranty & Services have not been activated for this vehicle.",
   "dynamicRedeem": {
