@@ -25,15 +25,28 @@ export class ShiftTabContent {
     this.flexibleContainerRef = this.el.getElementsByTagName('flexible-container')[0] as unknown as FlexibleContainer;
   }
 
+  private clearAnimationClasses = (elementName: string): HTMLElement => {
+    const element = this.el.getElementsByClassName(`tab-${elementName}`)[0] as HTMLElement;
+
+    element.classList.remove('slide-content-out');
+    element.classList.remove('slide-content-in');
+
+    return element;
+  };
+
   @Watch('activeComponent')
   async onActiveIndexChange(newActiveComponent: string, oldActiveComponent: string) {
     this.lastActiveComponent = oldActiveComponent;
 
     clearTimeout(this.ChildUpdatesActionTimeout);
 
-    const newActiveElement = this.el.getElementsByClassName(`tab-${newActiveComponent}`)[0] as HTMLElement;
+    const oldElement = this.clearAnimationClasses(oldActiveComponent);
+    const newElement = this.clearAnimationClasses(newActiveComponent);
 
-    if (newActiveElement && containerHasTag(newActiveElement, 'flexible-container')) {
+    oldElement.classList.add('slide-content-out');
+    newElement.classList.add('slide-content-in');
+
+    if (newElement && containerHasTag(newElement, 'flexible-container')) {
       this.flexibleContainerRef.stopAnimation = false;
       this.ChildUpdatesActionTimeout = setTimeout(() => {
         this.flexibleContainerRef.stopAnimation = true;
@@ -47,9 +60,9 @@ export class ShiftTabContent {
         <flexible-container stopAnimation classes="relative">
           {Object.entries(this.components).map(([componentName, component]) => (
             <div
-              class={cn('w-full transition !duration-[0.35s]', `tab-${componentName}`, {
-                'opacity-0 absolute top-0 !pointer-events-none [&_*]:!pointer-events-none translate-y-[30%]': componentName !== this.activeComponent,
-                'translate-y-[-30%]': this.lastActiveComponent === componentName,
+              onAnimationEnd={() => this.clearAnimationClasses(componentName)}
+              class={cn('w-full transition !duration-0', `tab-${componentName}`, {
+                'absolute opacity-0 top-0 !pointer-events-none [&_*]:!pointer-events-none translate-x-[-200%] translate-y-[200%]': componentName !== this.activeComponent,
               })}
             >
               {component}
