@@ -79,6 +79,8 @@ export namespace Components {
         "height"?: number | 'auto';
         "isOpened"?: boolean;
         "stopAnimation"?: boolean;
+        "subscribeAsParent": (parent: FlexibleContainer) => Promise<void>;
+        "triggerStopAnimation": (state: boolean) => Promise<void>;
     }
     interface FormDialog {
         "dialogClosed": () => void;

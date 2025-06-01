@@ -1,9 +1,6 @@
 import { Component, Element, h, Host, Prop, State, Watch } from '@stencil/core';
 
 import cn from '~lib/cn';
-import containerHasTag from '~lib/container-has-tag';
-
-import { FlexibleContainer } from './flexible-container';
 
 @Component({
   shadow: false,
@@ -17,13 +14,7 @@ export class ShiftTabContent {
   @Element() el: HTMLElement;
   @State() lastActiveComponent: string;
 
-  flexibleContainerRef: FlexibleContainer;
-
   private ChildUpdatesActionTimeout: ReturnType<typeof setTimeout>;
-
-  async componentDidLoad() {
-    this.flexibleContainerRef = this.el.getElementsByTagName('flexible-container')[0] as unknown as FlexibleContainer;
-  }
 
   private clearAnimationClasses = (elementName: string): HTMLElement => {
     const element = this.el.getElementsByClassName(`tab-${elementName}`)[0] as HTMLElement;
@@ -45,19 +36,12 @@ export class ShiftTabContent {
 
     oldElement.classList.add('slide-content-out');
     newElement.classList.add('slide-content-in');
-
-    if (newElement && containerHasTag(newElement, 'flexible-container')) {
-      this.flexibleContainerRef.stopAnimation = false;
-      this.ChildUpdatesActionTimeout = setTimeout(() => {
-        this.flexibleContainerRef.stopAnimation = true;
-      }, 600);
-    } else this.flexibleContainerRef.stopAnimation = false;
   }
 
   render() {
     return (
       <Host>
-        <flexible-container stopAnimation classes="relative">
+        <flexible-container classes="relative">
           {Object.entries(this.components).map(([componentName, component]) => (
             <div
               onAnimationEnd={() => this.clearAnimationClasses(componentName)}

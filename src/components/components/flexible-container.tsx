@@ -1,4 +1,5 @@
-import { Component, Element, Prop, Watch, h } from '@stencil/core';
+import { Component, Element, Prop, Watch, State, h, Method } from '@stencil/core';
+import childrenWithTag from '~lib/children-with-tag';
 
 import cn from '~lib/cn';
 
@@ -19,15 +20,29 @@ export class FlexibleContainer {
   container: HTMLDivElement;
   @Element() el: HTMLElement;
 
+  @State() localStopAnimation: boolean = false;
+  @State() initialTransitionDone: boolean = true;
+
   private resizeListener: () => void;
 
   private mutationObserver: MutationObserver;
 
+  private parentListeners: FlexibleContainer[] = [];
+
   private ChildUpdatesActionTimeout: ReturnType<typeof setTimeout>;
+
+  @Method()
+  subscribeAsParent(parent: FlexibleContainer) {
+    this.parentListeners.push(parent);
+  }
 
   async componentDidLoad() {
     this.container = this.el.querySelector('.flexible-container');
     this.content = this.el.querySelector('.flexible-container-content');
+
+    const flexibleChildren = childrenWithTag<FlexibleContainer>(this.el, 'flexible-container');
+
+    flexibleChildren.forEach(child => child.subscribeAsParent(this));
 
     const mustUpdate = () => this.handleChildUpdates();
 
@@ -47,8 +62,9 @@ export class FlexibleContainer {
     window.addEventListener('resize', this.resizeListener);
 
     setTimeout(() => {
+      this.initialTransitionDone = false;
       this.startTransition();
-    }, 1000);
+    }, 200);
   }
 
   async disconnectedCallback() {
@@ -86,12 +102,34 @@ export class FlexibleContainer {
     if (!isAnimationStopped) this.container.style.height = `${this.content.clientHeight}px`;
   }
 
+  @Method()
+  triggerStopAnimation(state: boolean) {
+    this.localStopAnimation = state;
+  }
+
+  startTransitionAnimation = () => {
+    if (!this.initialTransitionDone) {
+      this.initialTransitionDone = true;
+      return;
+    }
+
+    this.parentListeners.forEach(parent => parent.triggerStopAnimation(true));
+  };
+  stopTransitionAnimation = () => {
+    this.parentListeners.forEach(parent => {
+      parent.onAnimationPlayChanges(false);
+      parent.triggerStopAnimation(false);
+    });
+  };
+
   render() {
     return (
       <div
+        onTransitionEnd={this.stopTransitionAnimation}
+        onTransitionStart={this.startTransitionAnimation}
         class={cn(
           'flexible-container w-fit min-w-full transition-all overflow-hidden duration-500',
-          { 'h-0': !this.isOpened, '!h-auto !duration-0 !transition-none': this.stopAnimation },
+          { 'h-0': !this.isOpened, '!h-auto !duration-0 !transition-none': this.stopAnimation || this.localStopAnimation },
           this.containerClasses,
         )}
       >
