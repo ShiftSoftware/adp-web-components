@@ -31,7 +31,9 @@ export const MaterialCard: FunctionalComponent<MaterialCardProps> = (props, chil
   return (
     <div style={wrapperStyle} class={props.class}>
       <strong style={titleStyle}>{props.title}</strong>
-      {!children.length ? <MaterialCardChildren hidden={['...', ''].includes(props?.desc?.trim())}>{props.desc || '...'}</MaterialCardChildren> : children}
+      <flexible-container>
+        {!children.length ? <MaterialCardChildren hidden={['...', ''].includes(props?.desc?.trim())}>{props.desc || '...'}</MaterialCardChildren> : children}
+      </flexible-container>
     </div>
   );
 };
