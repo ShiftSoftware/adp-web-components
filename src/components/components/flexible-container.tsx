@@ -20,8 +20,8 @@ export class FlexibleContainer {
   container: HTMLDivElement;
   @Element() el: HTMLElement;
 
-  @State() localStopAnimation: boolean = false;
   @State() initialTransitionDone: boolean = true;
+  @State() childrenAnimatingList: FlexibleContainer[] = [];
 
   private resizeListener: () => void;
 
@@ -103,8 +103,13 @@ export class FlexibleContainer {
   }
 
   @Method()
-  triggerStopAnimation(state: boolean) {
-    this.localStopAnimation = state;
+  addChildrenAnimation(child: FlexibleContainer) {
+    this.childrenAnimatingList = [...this.childrenAnimatingList, child];
+  }
+
+  @Method()
+  removeChildrenAnimation(child: FlexibleContainer) {
+    this.childrenAnimatingList = this.childrenAnimatingList.filter(x => x !== child);
   }
 
   startTransitionAnimation = () => {
@@ -113,12 +118,12 @@ export class FlexibleContainer {
       return;
     }
 
-    this.parentListeners.forEach(parent => parent.triggerStopAnimation(true));
+    this.parentListeners.forEach(parent => parent.addChildrenAnimation(this));
   };
   stopTransitionAnimation = () => {
     this.parentListeners.forEach(parent => {
       parent.onAnimationPlayChanges(false);
-      parent.triggerStopAnimation(false);
+      parent.removeChildrenAnimation(this);
     });
   };
 
@@ -129,7 +134,7 @@ export class FlexibleContainer {
         onTransitionStart={this.startTransitionAnimation}
         class={cn(
           'flexible-container w-fit min-w-full transition-all overflow-hidden duration-500',
-          { 'h-0': !this.isOpened, '!h-auto !duration-0 !transition-none': this.stopAnimation || this.localStopAnimation },
+          { 'h-0': !this.isOpened, '!h-auto !duration-0 !transition-none': this.stopAnimation || !!this.childrenAnimatingList.length },
           this.containerClasses,
         )}
       >

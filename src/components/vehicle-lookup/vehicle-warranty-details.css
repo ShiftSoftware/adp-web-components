@@ -144,6 +144,10 @@
   grid-row: 2 / 3;
 }
 
+.tags-container {
+  max-width: 1000px;
+}
+
 .warranty-tags {
   gap: 12px;
   display: grid;

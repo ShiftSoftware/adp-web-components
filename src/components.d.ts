@@ -73,14 +73,15 @@ export namespace Components {
         "setMockData": (newMockData: MockJson<PartInformation>) => Promise<void>;
     }
     interface FlexibleContainer {
+        "addChildrenAnimation": (child: FlexibleContainer) => Promise<void>;
         "alwaysStrict"?: boolean;
         "classes"?: string;
         "containerClasses"?: string;
         "height"?: number | 'auto';
         "isOpened"?: boolean;
+        "removeChildrenAnimation": (child: FlexibleContainer) => Promise<void>;
         "stopAnimation"?: boolean;
         "subscribeAsParent": (parent: FlexibleContainer) => Promise<void>;
-        "triggerStopAnimation": (state: boolean) => Promise<void>;
     }
     interface FormDialog {
         "dialogClosed": () => void;
