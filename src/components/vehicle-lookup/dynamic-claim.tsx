@@ -524,7 +524,7 @@ export class DynamicClaim implements VehicleInformationInterface {
               <div class="dynamic-claim-progress-bar"></div>
             </div>
 
-            <div class="dynamic-claim-activation-box">
+            <div class="dynamic-claim-activation-box" style={{ zIndex: this.vehicleInformation && this.vehicleInformation.serviceItems.filter(x => x.status === 'activationRequired').length > 0 ? '1' : '-1' }}>
               <div
                 class={cn('card warning-card span-entire-1st-row activation-panel', {
                   loading: this.isLoading,
@@ -557,7 +557,7 @@ export class DynamicClaim implements VehicleInformationInterface {
               </div>
             </div>
 
-            <div class="dynamic-claim-activation-box">
+            <div class="dynamic-claim-activation-box" style={{ zIndex: this.showPrintBox ? '1' : '-1' }}>
               <div
                 class={cn('card warning-card span-entire-1st-row activation-panel', {
                   loading: this.isLoading,
