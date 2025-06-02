@@ -220,7 +220,8 @@ export namespace Components {
     }
     interface ShiftTabs {
         "activeTabIndex": number;
-        "changeActiveTab": (newTabindex: number) => void;
+        "activeTabLabel": string;
+        "changeActiveTab": (activeStatus: { label: string; idx: number }) => void;
         "containerClasses"?: string;
         "tabClasses"?: string;
         "tabs": string[];
@@ -765,7 +766,8 @@ declare namespace LocalJSX {
     }
     interface ShiftTabs {
         "activeTabIndex"?: number;
-        "changeActiveTab"?: (newTabindex: number) => void;
+        "activeTabLabel"?: string;
+        "changeActiveTab"?: (activeStatus: { label: string; idx: number }) => void;
         "containerClasses"?: string;
         "tabClasses"?: string;
         "tabs"?: string[];

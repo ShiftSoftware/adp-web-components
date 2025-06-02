@@ -2751,6 +2751,12 @@ const mockData = {
     basicModelCode: 'VJA300',
   },
   'JTMHU09J6E4100543': {
+    groups: [
+      { label: 'One', hasProgress: true },
+      { label: 'Two', hasProgress: false },
+      { label: 'Three', hasProgress: true },
+      { label: 'Four', hasProgress: false },
+    ],
     paintThickness: {
       parts: [
         {
@@ -2819,6 +2825,7 @@ const mockData = {
     nextServiceDate: '2025-02-19',
     serviceHistory: [
       {
+        group: 'One',
         serviceType: 'PM SL (5K, 15K,25K...95K)',
         serviceDate: '2024-11-19',
         mileage: 55005,
@@ -2865,6 +2872,7 @@ const mockData = {
         ],
       },
       {
+        group: 'One',
         serviceType: 'Value Added Services',
         serviceDate: '2024-11-19',
         mileage: 55005,
@@ -2893,6 +2901,7 @@ const mockData = {
         ],
       },
       {
+        group: 'One',
         serviceType: 'PM SL (5K, 15K,25K...95K)',
         serviceDate: '2024-06-02',
         mileage: 49380,
@@ -2969,6 +2978,7 @@ const mockData = {
         ],
       },
       {
+        group: 'Two',
         serviceType: 'PM SL (5K, 15K,25K...95K)',
         serviceDate: '2024-02-07',
         mileage: 46366,
@@ -3020,6 +3030,7 @@ const mockData = {
     vehicleSpecification: null,
     serviceItems: [
       {
+        group: 'One',
         name: '1,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3030,6 +3041,7 @@ const mockData = {
         claimDate: '2023-01-19',
       },
       {
+        group: 'One',
         name: '5,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3039,6 +3051,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'One',
         name: '10,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3048,6 +3061,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Two',
         name: '15,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3057,6 +3071,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Two',
         name: '20,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3066,6 +3081,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Two',
         name: '25,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3075,6 +3091,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Two',
         name: '30,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3084,6 +3101,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Two',
         name: '35,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3093,6 +3111,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Two',
         name: '40,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3102,6 +3121,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Two',
         name: '45,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3111,6 +3131,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Two',
         name: '50,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3120,6 +3141,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Two',
         name: '55,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3129,6 +3151,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Two',
         name: '60,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3138,6 +3161,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Two',
         name: '65,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3147,6 +3171,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Four',
         name: '70,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3156,6 +3181,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'One',
         name: '75,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3165,6 +3191,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'One',
         name: '80,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3174,6 +3201,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'One',
         name: '85,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3183,6 +3211,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'One',
         name: '90,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3192,6 +3221,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'One',
         name: '95,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3201,6 +3231,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'One',
         name: '100,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -4333,6 +4364,12 @@ const mockData = {
     nextServiceDate: '2023-12-12',
     serviceHistory: [],
     ssc: null,
+    groups: [
+      { label: 'One', hasProgress: true },
+      { label: 'Two', hasProgress: false },
+      { label: 'Three', hasProgress: true },
+      { label: 'Four', hasProgress: false },
+    ],
     vehicleVariantInfo: null,
     vehicleSpecification: null,
     serviceItems: [
@@ -4341,6 +4378,7 @@ const mockData = {
         type: 'free',
         claimable: false,
         claimingMethodEnum: 2,
+        group: 'One',
         activatedAt: '',
         expiresAt: '',
         status: 'activationRequired',
@@ -4350,6 +4388,7 @@ const mockData = {
         type: 'free',
         claimable: false,
         claimingMethodEnum: 2,
+        group: 'Two',
         activatedAt: '',
         expiresAt: '',
         status: 'activationRequired',
@@ -4358,6 +4397,7 @@ const mockData = {
         name: '10,000 KM Free Service',
         type: 'free',
         claimable: false,
+        group: 'Two',
         claimingMethodEnum: 2,
         activatedAt: '',
         expiresAt: '',
@@ -4366,6 +4406,7 @@ const mockData = {
       {
         name: '15,000 KM Free Service',
         type: 'free',
+        group: 'One',
         claimable: false,
         claimingMethodEnum: 2,
         activatedAt: '',
@@ -4376,6 +4417,7 @@ const mockData = {
         name: '20,000 KM Free Service',
         type: 'free',
         claimable: false,
+        group: 'One',
         claimingMethodEnum: 2,
         activatedAt: '',
         expiresAt: '',

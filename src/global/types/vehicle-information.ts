@@ -14,6 +14,7 @@ export type VehicleInformation = {
   serviceItems: ServiceItem[];
   basicModelCode: string;
   sscLogId?: string;
+  groups?: { label?: string; hasProgress?: boolean }[];
 };
 
 export const dev = false;
@@ -163,6 +164,7 @@ export interface PaintPart {
 }
 
 export type ServiceItem = {
+  group?: string;
   activatedAt?: string;
   activeFor: number;
   activeForInterval: string;

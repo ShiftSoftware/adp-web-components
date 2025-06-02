@@ -20,6 +20,7 @@ import dynamicClaimSchema from '~locales/vehicleLookup/claimableItems/type';
 import { VehicleItemClaimForm } from './vehicle-item-claim-form';
 
 import { VehicleInfoLayout } from '../components/vehicle-info-layout';
+import closestParentTag from '~lib/closest-parent-tag';
 
 let mockData: MockJson<VehicleInformation> = {};
 
@@ -52,12 +53,14 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   @State() sharedLocales: SharedLocales = sharedLocalesSchema.getDefault();
   @State() locale: InferType<typeof dynamicClaimSchema> = dynamicClaimSchema.getDefault();
 
+  @State() activeTab: string = '';
   @State() isError: boolean = false;
   @State() showPopup: boolean = false;
   @State() isLoading: boolean = false;
   @State() externalVin?: string = null;
   @State() errorMessage?: ErrorKeys = null;
   @State() activePopupIndex: null | number = null;
+  @State() tabs: VehicleInformation['groups'] = [];
   @State() vehicleInformation?: VehicleInformation;
 
   pendingItemHighlighted = false;
@@ -71,8 +74,11 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
 
   cachedClaimItem: ServiceItem;
 
+  infoBody: HTMLDivElement;
   progressBar: HTMLElement;
   popupPositionRef: HTMLElement;
+  tabsContainerRef: HTMLDivElement;
+  tabsListenerCallback: () => void;
   dynamicRedeem: VehicleItemClaimForm;
   claimableContentWrapper: HTMLElement;
 
@@ -88,9 +94,22 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   }
 
   async componentDidLoad() {
+    this.tabsContainerRef = this.el.shadowRoot.querySelector('.tabs-container') as HTMLDivElement;
+    this.infoBody = closestParentTag(this.tabsContainerRef, 'vehicle-info-body') as HTMLDivElement;
     this.claimableContentWrapper = this.el.shadowRoot.querySelector('.claimable-content-wrapper');
     this.dynamicRedeem = this.el.shadowRoot.getElementById('dynamic-redeem') as unknown as VehicleItemClaimForm;
     this.progressBar = this.el.shadowRoot.querySelector('.progress-bar');
+
+    if (this.tabsContainerRef && this.infoBody) {
+      this.tabsListenerCallback = () => {
+        const calculatedWidth = this.infoBody.clientWidth - (this.coreOnly ? 92 : 60);
+        this.tabsContainerRef.style.width = `${calculatedWidth}px`;
+        this.tabsContainerRef.style.transform = `translateX(${this.infoBody.scrollLeft}px)`;
+      };
+
+      this.infoBody.addEventListener('scroll', this.tabsListenerCallback);
+      window.addEventListener('resize', this.tabsListenerCallback);
+    }
   }
 
   @Method()
@@ -130,8 +149,26 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
         if (!vehicleResponse) throw new Error('wrongResponseFormat');
         if (!Array.isArray(vehicleResponse.serviceItems)) throw new Error('noServiceAvailable');
         this.vehicleInformation = vehicleResponse;
+
+        if (vehicleResponse?.groups?.length && vehicleResponse?.serviceItems?.length) {
+          const parsedGroups: VehicleInformation['groups'] = [];
+
+          Object.values(vehicleResponse.groups).forEach(group => vehicleResponse.serviceItems.some(item => item?.group === group.label) && parsedGroups.push(group));
+
+          if (!!parsedGroups.length) {
+            this.tabs = parsedGroups;
+            this.activeTab = parsedGroups[0].label;
+          } else {
+            this.tabs = [];
+            this.activeTab = '';
+          }
+        } else {
+          this.tabs = [];
+          this.activeTab = '';
+        }
       }
 
+      this.tabsListenerCallback();
       this.errorMessage = null;
       this.isLoading = false;
       this.isError = false;
@@ -384,6 +421,14 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
     this.handleClaiming();
   }
 
+  private getServiceItems = (): VehicleInformation['serviceItems'] => {
+    if (!this.vehicleInformation?.serviceItems?.length) return [];
+
+    if (!this.tabs?.length) return this.vehicleInformation?.serviceItems;
+
+    return this.vehicleInformation?.serviceItems.filter(serviceItem => serviceItem?.group === this.activeTab);
+  };
+
   createPopup(item: ServiceItem) {
     const texts = this.locale;
 
@@ -473,10 +518,12 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   }
 
   render() {
-    const serviceItems = this.vehicleInformation?.serviceItems || [];
+    const serviceItems = this.getServiceItems();
     const texts = this.locale;
 
     const hasInactiveItems = this.vehicleInformation && this.vehicleInformation.serviceItems.filter(x => x.status === 'activationRequired').length > 0;
+
+    const hideTabs = this.isLoading || this.isError || !this.tabs.length || !serviceItems.length;
     return (
       <Host>
         <vehicle-item-claim-form locale={texts.claimForm} language={this.language} id="dynamic-redeem"></vehicle-item-claim-form>
@@ -490,13 +537,18 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
           direction={this.sharedLocales.direction}
           errorMessage={this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
         >
+          <div class={cn('absolute z-10 tabs-container mx-[30px] w-[calc(100%-60px)]', { 'pt-[16px]': !this.coreOnly })}>
+            <div class={cn('duration-300', { 'translate-y-[-50%] opacity-0': hideTabs })}>
+              <shift-tabs activeTabLabel={this.activeTab} changeActiveTab={({ label }) => (this.activeTab = label)} tabs={this.tabs.map(group => group.label)}></shift-tabs>
+            </div>
+          </div>
           <div
-            class={cn('flex px-[30px] h-[250px] items-center transition-all duration-300 overflow-x-auto claimable-content-wrapper', {
-              'h-[290px]': hasInactiveItems,
+            class={cn('flex px-[30px] relative h-[300px] items-center transition-all duration-300 overflow-x-auto claimable-content-wrapper', {
+              'h-[320px]': hasInactiveItems,
             })}
           >
             <div
-              class={cn('h-[10px] bg-[#f2f2f2] border border-[#ddd] rounded-[10px] w-[calc(100%-60px)] absolute items-center justify-around invisible', {
+              class={cn('h-[10px] bg-[#f2f2f2] border border-[#ddd] rounded-[10px] w-[calc(100%-62px)] absolute items-center justify-around invisible', {
                 visible: this.isLoading,
               })}
             >
@@ -563,7 +615,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
                 class={cn(
                   'progress-bar h-[10px] opacity-0 bg-[linear-gradient(to_bottom,_#428bca_0%,_#3071a9_100%)] border border-[#ddd] rounded-[10px] w-0 absolute left-0 transition-all duration-500 z-0',
                   {
-                    '!w-0 opacity-0': this.isLoading,
+                    '!w-0 !opacity-0': this.isLoading,
                   },
                 )}
               ></div>
