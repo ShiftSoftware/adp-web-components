@@ -59,6 +59,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   @State() isLoading: boolean = false;
   @State() externalVin?: string = null;
   @State() errorMessage?: ErrorKeys = null;
+  @State() tabAnimationLoading: boolean = false;
   @State() activePopupIndex: null | number = null;
   @State() tabs: VehicleInformation['groups'] = [];
   @State() vehicleInformation?: VehicleInformation;
@@ -71,12 +72,14 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   abortController: AbortController;
   timeoutRef: ReturnType<typeof setTimeout>;
   networkTimeoutRef: ReturnType<typeof setTimeout>;
+  tabAnimationTimeoutRef: ReturnType<typeof setTimeout>;
 
   cachedClaimItem: ServiceItem;
 
   infoBody: HTMLDivElement;
   progressBar: HTMLElement;
   popupPositionRef: HTMLElement;
+  loadingLaneRef: HTMLDivElement;
   tabsContainerRef: HTMLDivElement;
   tabsListenerCallback: () => void;
   dynamicRedeem: VehicleItemClaimForm;
@@ -94,6 +97,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   }
 
   async componentDidLoad() {
+    this.loadingLaneRef = this.el.shadowRoot.querySelector('.loading-lane') as HTMLDivElement;
     this.tabsContainerRef = this.el.shadowRoot.querySelector('.tabs-container') as HTMLDivElement;
     this.infoBody = closestParentTag(this.tabsContainerRef, 'vehicle-info-body') as HTMLDivElement;
     this.claimableContentWrapper = this.el.shadowRoot.querySelector('.claimable-content-wrapper');
@@ -105,6 +109,9 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
         const calculatedWidth = this.infoBody.clientWidth - (this.coreOnly ? 92 : 60);
         this.tabsContainerRef.style.width = `${calculatedWidth}px`;
         this.tabsContainerRef.style.transform = `translateX(${this.infoBody.scrollLeft}px)`;
+        if (this.loadingLaneRef) this.loadingLaneRef.style.width = `${calculatedWidth}px`;
+
+        if (this.loadingLaneRef) this.loadingLaneRef.style.transform = `translateX(${this.infoBody.scrollLeft}px)`;
       };
 
       this.infoBody.addEventListener('scroll', this.tabsListenerCallback);
@@ -137,11 +144,12 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
       }
 
       this.isLoading = true;
-
       await new Promise(r => {
         scopedTimeoutRef = setTimeout(r, 1000);
         this.networkTimeoutRef = scopedTimeoutRef;
       });
+
+      this.infoBody.scrollLeft = 0;
 
       const vehicleResponse = isVinRequest ? await getVehicleInformation(this, { scopedTimeoutRef, vin, mockData }, headers) : newData;
 
@@ -168,7 +176,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
         }
       }
 
-      this.tabsListenerCallback();
+      if (this.tabsListenerCallback) this.tabsListenerCallback();
       this.errorMessage = null;
       this.isLoading = false;
       this.isError = false;
@@ -209,7 +217,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   }
 
   updateProgressBar() {
-    const serviceItems = this.vehicleInformation?.serviceItems || [];
+    const serviceItems = this.getServiceItems();
 
     if (serviceItems.filter(x => x.status === 'pending').length === 0) {
       if (serviceItems.length === 0 || serviceItems.filter(x => x.status === 'activationRequired').length === serviceItems.length) {
@@ -218,11 +226,9 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
       } else {
         this.progressBar.style.width = '100%';
         this.progressBar.style.opacity = '1';
+        const claimableItems = this.claimableContentWrapper.getElementsByClassName('claimable-item');
+        claimableItems[claimableItems.length - 1]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
       }
-      this.claimableContentWrapper.scrollTo({
-        left: this.claimableContentWrapper.scrollWidth,
-        behavior: 'smooth',
-      });
     } else {
       const firstPendingItem = serviceItems.find(x => x.status === 'pending');
       const firstPendingItemIndex = serviceItems.indexOf(firstPendingItem) + 1;
@@ -230,10 +236,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
       this.progressBar.style.width = (firstPendingItemIndex / serviceItems.length - 1 / (serviceItems.length * 2)) * 100 + '%';
       this.progressBar.style.opacity = this.progressBar.style.width === '0%' ? '0' : '1';
 
-      this.claimableContentWrapper.scrollTo({
-        left: firstPendingItemRef.offsetLeft - firstPendingItemRef.clientWidth * 3,
-        behavior: 'smooth',
-      });
+      firstPendingItemRef?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     }
   }
 
@@ -314,7 +317,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
 
   @Method()
   async completeClaim() {
-    const serviceItems = this.vehicleInformation?.serviceItems || [];
+    const serviceItems = this.getServiceItems();
 
     const item = this.cachedClaimItem;
     const serviceDataClone = JSON.parse(JSON.stringify(serviceItems));
@@ -338,7 +341,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
 
   @Method()
   async claim(item: ServiceItem) {
-    const serviceItems = this.vehicleInformation?.serviceItems || [];
+    const serviceItems = this.getServiceItems();
 
     const vinDataClone = JSON.parse(JSON.stringify(serviceItems));
     const index = serviceItems.indexOf(item);
@@ -427,6 +430,25 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
     if (!this.tabs?.length) return this.vehicleInformation?.serviceItems;
 
     return this.vehicleInformation?.serviceItems.filter(serviceItem => serviceItem?.group === this.activeTab);
+  };
+
+  private onActiveTabChange = ({ label }: { label: string; idx: number }) => {
+    this.tabAnimationLoading = true;
+    this.infoBody.style.overflow = 'hidden';
+    clearTimeout(this.tabAnimationTimeoutRef);
+
+    this.tabAnimationTimeoutRef = setTimeout(() => {
+      this.activeTab = label;
+      // @ts-ignore
+      window.ff = this.infoBody;
+      this.infoBody.scrollLeft = 0;
+      setTimeout(() => {
+        this.tabsListenerCallback();
+        this.tabAnimationLoading = false;
+        this.infoBody.style.overflow = 'auto';
+        this.updateProgressBar();
+      }, 100);
+    }, 500);
   };
 
   createPopup(item: ServiceItem) {
@@ -521,9 +543,12 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
     const serviceItems = this.getServiceItems();
     const texts = this.locale;
 
-    const hasInactiveItems = this.vehicleInformation && this.vehicleInformation.serviceItems.filter(x => x.status === 'activationRequired').length > 0;
+    // const hasInactiveItems = this.vehicleInformation && this.vehicleInformation.serviceItems.filter(x => x.status === 'activationRequired').length > 0;
+    const hasInactiveItems = serviceItems.filter(x => x.status === 'activationRequired').length > 0;
 
     const hideTabs = this.isLoading || this.isError || !this.tabs.length || !serviceItems.length;
+
+    const tabs = this.tabs.map(group => group.label);
     return (
       <Host>
         <vehicle-item-claim-form locale={texts.claimForm} language={this.language} id="dynamic-redeem"></vehicle-item-claim-form>
@@ -537,31 +562,33 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
           direction={this.sharedLocales.direction}
           errorMessage={this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
         >
-          <div class={cn('absolute z-10 tabs-container mx-[30px] w-[calc(100%-60px)]', { 'pt-[16px]': !this.coreOnly })}>
+          <div class={cn('absolute z-10 tabs-container mx-[30px] w-[calc(100%-62px)]', { 'pt-[16px]': !this.coreOnly })}>
             <div class={cn('duration-300', { 'translate-y-[-50%] opacity-0': hideTabs })}>
-              <shift-tabs activeTabLabel={this.activeTab} changeActiveTab={({ label }) => (this.activeTab = label)} tabs={this.tabs.map(group => group.label)}></shift-tabs>
+              <shift-tabs activeTabLabel={this.activeTab} changeActiveTab={this.onActiveTabChange} tabs={tabs}></shift-tabs>
             </div>
           </div>
           <div
-            class={cn('flex px-[30px] relative h-[300px] items-center transition-all duration-300 overflow-x-auto claimable-content-wrapper', {
+            class={cn('flex px-[30px] relative h-[300px] items-center transition-all duration-300 claimable-content-wrapper', {
               'h-[320px]': hasInactiveItems,
             })}
           >
-            <div
-              class={cn('h-[10px] bg-[#f2f2f2] border border-[#ddd] rounded-[10px] w-[calc(100%-62px)] absolute items-center justify-around invisible', {
-                visible: this.isLoading,
-              })}
-            >
+            <div class="h-[10px] loading-lane transition-none transition duration-[0.4s] bg-[#f2f2f2] border border-[#ddd] rounded-[10px] w-[calc(100%-62px)] absolute items-center justify-around">
               <div class="w-full h-[10px] rounded-[4px] overflow-x-hidden absolute left-0 top-0">
-                <div class="absolute opacity-0 bg-[#ddd] w-[150%] h-[10px]"></div>
+                <div class="absolute opacity-0 bg-[#1a1a1a] w-[150%] h-[10px]"></div>
                 <div class="absolute h-[10px] bg-[linear-gradient(to_bottom,_#428bca_0%,_#3071a9_100%)] lane-inc"></div>
                 <div class="absolute h-[10px] bg-[linear-gradient(to_bottom,_#428bca_0%,_#3071a9_100%)] lane-dec"></div>
               </div>
             </div>
 
             <div
+              class={cn('h-[10px] transition duration-[0.4s] bg-[#f2f2f2] border border-[#ddd] rounded-[10px] w-[calc(100%-62px)] absolute items-center justify-around invisible', {
+                'opacity-0': this.isLoading || this.tabAnimationLoading,
+              })}
+            />
+
+            <div
               class={cn('h-[10px] bg-[#f2f2f2] border flex-1 border-[#ddd] rounded-[10px] flex items-center justify-around relative', {
-                'bg-transparent border-transparent': this.isLoading,
+                'bg-transparent border-transparent': this.isLoading || this.tabAnimationLoading,
               })}
             >
               {serviceItems.map((item: ServiceItem, idx) => {
@@ -578,7 +605,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
                       class={cn(
                         'claimable-item-header load-animation hover:[&>img]:rotate-[360deg] hover:[&>img]:scale-[125%] relative duration-[0.4s] py-[10px] leading-[1em] h-[3em] flex flex-col items-center cursor-pointer',
                         {
-                          '!opacity-0 !translate-y-[-5px] !scale-[70%]': this.isLoading,
+                          '!opacity-0 !translate-y-[-5px] !scale-[70%]': this.isLoading || this.tabAnimationLoading,
                         },
                       )}
                       onMouseEnter={event => this.onMouseEnter(event.target as HTMLElement, idx)}
@@ -592,7 +619,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
                       class={cn(
                         'claimable-item-circle load-animation w-[18px] h-[18px] rounded-[50%] bg-[#a1a1a1] border-[5px] border-double border-[#ececec] transition-all duration-[0.4s] z-[1]',
                         {
-                          '!opacity-0 !scale-[150%]': this.isLoading,
+                          '!opacity-0 !scale-[150%]': this.isLoading || this.tabAnimationLoading,
                         },
                       )}
                     ></div>
@@ -601,7 +628,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
                       class={cn(
                         'claimable-item-footer load-animation transition-all duration-[0.4s] px-[20px] text-center leading-[1.5em] h-[4.5em] overflow-hidden text-ellipsis m-0',
                         {
-                          '!opacity-0 !translate-y-[10px] !scale-[70%]': this.isLoading,
+                          '!opacity-0 !translate-y-[10px] !scale-[70%]': this.isLoading || this.tabAnimationLoading,
                         },
                       )}
                     >
@@ -615,7 +642,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
                 class={cn(
                   'progress-bar h-[10px] opacity-0 bg-[linear-gradient(to_bottom,_#428bca_0%,_#3071a9_100%)] border border-[#ddd] rounded-[10px] w-0 absolute left-0 transition-all duration-500 z-0',
                   {
-                    '!w-0 !opacity-0': this.isLoading,
+                    '!w-0 !opacity-0': this.isLoading || this.tabAnimationLoading,
                   },
                 )}
               ></div>
@@ -624,7 +651,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
             <div class="absolute w-[90%] left-1/2 ml-[-45%] bottom-[40px]">
               <div
                 class={cn('card warning-card span-entire-1st-row activation-panel', {
-                  loading: this.isLoading,
+                  loading: this.isLoading || this.tabAnimationLoading,
                   visible: hasInactiveItems,
                 })}
                 onAnimationEnd={this.removeLoadAnimationClass}

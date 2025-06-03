@@ -49,7 +49,7 @@
 }
 
 .vehicle-info-header {
-  @apply py-[15px] text-center bg-[#f6f6f6] border border-[#ededed];
+  @apply h-[54px] flex items-center justify-center text-center bg-[#f6f6f6] border border-[#ededed];
 }
 
 .vehicle-info-header-vin {
