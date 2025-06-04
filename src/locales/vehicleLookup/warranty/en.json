@@ -1,4 +1,5 @@
 {
+  "dealer": "Dealer",
   "authorized": "Authorized",
   "unauthorized": "Unauthorized",
   "activeWarranty": "Has Active Warranty",

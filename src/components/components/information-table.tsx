@@ -44,7 +44,7 @@ export class InformationTable {
           class={cn('px-[16px] py-[16px]', { 'text-center': centeredHorizontally, 'my-auto': centeredVertically })}
         >
           <div class="shift-skeleton">
-            {(data[key] === null || data[key] === undefined) && '...'}
+            {(data[key] === null || data[key] === undefined) && <div>&nbsp;</div>}
             {(data[key] !== null || data[key] !== undefined) && (typeof data[key] === 'string' || typeof data[key] === 'number') && data[key]}
             {(data[key] !== null || data[key] !== undefined) && typeof data[key] === 'function' && data[key]()}
           </div>

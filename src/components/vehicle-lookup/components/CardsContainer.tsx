@@ -21,19 +21,20 @@ type Props = {
 export default function CardsContainer({ isLoading, vehicleInformation, isAuthorized, unInvoicedByBrokerName, warrantyLocale }: Props) {
   return (
     <div class="tags-container mx-auto pt-3">
-      <flexible-container isOpened={isLoading || !!vehicleInformation?.saleInformation?.companyName}>
-        <div style={{ paddingBottom: '12px' }}>
+      <flexible-container isOpened={!vehicleInformation || !!vehicleInformation?.saleInformation?.companyName}>
+        <div class={!(!vehicleInformation || !!vehicleInformation?.saleInformation?.companyName) && 'loading'} style={{ paddingBottom: '12px' }}>
           <div class="shift-skeleton !rounded-[4px]">
             <div class="card warning-card">
               <p class="no-padding flex gap-2">
-                <span class="font-semibold">Dealer:</span> {vehicleInformation?.saleInformation?.companyName || '...'} ({vehicleInformation?.saleInformation?.countryName || '...'})
+                <span class="font-semibold">{warrantyLocale.dealer}:</span> {vehicleInformation?.saleInformation?.companyName || '...'}{' '}
+                {vehicleInformation?.saleInformation?.countryName && `(${vehicleInformation?.saleInformation?.countryName})`}
               </p>
             </div>
           </div>
         </div>
       </flexible-container>
 
-      <flexible-container classes={cn({ loading: isLoading || !unInvoicedByBrokerName })} isOpened={isLoading || !!unInvoicedByBrokerName}>
+      <flexible-container classes={cn({ loading: isLoading || !unInvoicedByBrokerName })} isOpened={!!unInvoicedByBrokerName}>
         <div style={{ paddingBottom: '12px' }}>
           <div class="shift-skeleton">
             <div class="card warning-card">
@@ -61,7 +62,7 @@ export default function CardsContainer({ isLoading, vehicleInformation, isAuthor
           icon={false}
           fromDesc={warrantyLocale.from}
           desc={vehicleInformation?.warranty.warrantyStartDate || '...'}
-          opened={!!vehicleInformation?.warranty.warrantyStartDate || !vehicleInformation || isLoading}
+          opened={!!vehicleInformation?.warranty.warrantyStartDate || !vehicleInformation}
           state={!!vehicleInformation ? (vehicleInformation?.warranty?.hasActiveWarranty ? 'success' : 'reject') : 'idle'}
         />
 
@@ -70,7 +71,7 @@ export default function CardsContainer({ isLoading, vehicleInformation, isAuthor
           icon={false}
           toDesc={warrantyLocale.to}
           desc={vehicleInformation?.warranty.warrantyEndDate || '...'}
-          opened={!!vehicleInformation?.warranty.warrantyEndDate || !vehicleInformation || isLoading}
+          opened={!!vehicleInformation?.warranty.warrantyEndDate || !vehicleInformation}
           state={!!vehicleInformation ? (vehicleInformation?.warranty?.hasActiveWarranty ? 'success' : 'reject') : 'idle'}
         />
       </div>

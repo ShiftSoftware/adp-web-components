@@ -1,6 +1,7 @@
 import yupTypeMapper from '~lib/yup-type-mapper';
 
 const warrantySchema = yupTypeMapper([
+  'dealer',
   'authorized',
   'unauthorized',
   'activeWarranty',

@@ -318,25 +318,9 @@ export class VehicleWarrantyDetails implements VehicleInformationInterface {
         }));
 
     const templateRow = {
-      sscTableCode: '...',
-      sscTableDescription: '...',
-      sscTableRepairStatus: () => (
-        <div class="table-cell-container">
-          <img class="table-status-icon" src={CheckIcon} /> ...
-        </div>
-      ),
-      sscTableOPCode: () => (
-        <div class="table-cell-container table-cell-labors-container">
-          <div class="success">........</div>
-          <div class="success">........</div>
-        </div>
-      ),
-      sscTablePartNumber: () => (
-        <div class="table-cell-container table-cell-parts-container">
-          <div class="success">........</div>
-          <div class="reject">........</div>
-        </div>
-      ),
+      sscTableOPCode: () => <div class="h-[25px]" />,
+      sscTablePartNumber: () => <div class="h-[25px]" />,
+      sscTableRepairStatus: () => <div class="h-[25px]" />,
     };
 
     return (
@@ -359,9 +343,9 @@ export class VehicleWarrantyDetails implements VehicleInformationInterface {
             />
           )}
 
-          <div class={cn('h-0 transition duration-500', { 'h-[8px]': this.showRecaptcha })}></div>
+          <div class="h-[8px]" />
 
-          <flexible-container isOpened={this.showRecaptcha} classes="w-fit mx-auto shift-skeleton">
+          <flexible-container isOpened={this.showRecaptcha} classes={cn('w-fit mx-auto shift-skeleton', { loading: !this.showRecaptcha })}>
             <div style={{ height: 'auto', padding: '16px 16px 0px 16px' }} class="recaptcha-container">
               <slot></slot>
             </div>
