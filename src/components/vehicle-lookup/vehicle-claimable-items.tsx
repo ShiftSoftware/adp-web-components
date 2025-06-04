@@ -59,6 +59,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   @State() isLoading: boolean = false;
   @State() externalVin?: string = null;
   @State() errorMessage?: ErrorKeys = null;
+  @State() isElementOnScreen: boolean = false;
   @State() tabAnimationLoading: boolean = false;
   @State() activePopupIndex: null | number = null;
   @State() tabs: VehicleInformation['groups'] = [];
@@ -85,6 +86,8 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   dynamicRedeem: VehicleItemClaimForm;
   claimableContentWrapper: HTMLElement;
 
+  private intersectionObserver: IntersectionObserver;
+
   async componentWillLoad() {
     await this.changeLanguage(this.language);
   }
@@ -94,6 +97,10 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
     const localeResponses = await Promise.all([getLocaleLanguage(newLanguage, 'vehicleLookup.claimableItems', dynamicClaimSchema), getSharedLocal(newLanguage)]);
     this.locale = localeResponses[0];
     this.sharedLocales = localeResponses[1];
+  }
+
+  async disconnectedCallback() {
+    this.intersectionObserver.disconnect();
   }
 
   async componentDidLoad() {
@@ -117,6 +124,17 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
       this.infoBody.addEventListener('scroll', this.tabsListenerCallback);
       window.addEventListener('resize', this.tabsListenerCallback);
     }
+
+    this.intersectionObserver = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => (this.isElementOnScreen = entry.isIntersecting));
+      },
+      {
+        threshold: 0.1,
+      },
+    );
+
+    this.intersectionObserver.observe(this.loadingLaneRef);
   }
 
   @Method()
@@ -227,7 +245,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
         this.progressBar.style.width = '100%';
         this.progressBar.style.opacity = '1';
         const claimableItems = this.claimableContentWrapper.getElementsByClassName('claimable-item');
-        claimableItems[claimableItems.length - 1]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        if (this.isElementOnScreen) claimableItems[claimableItems.length - 1]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
       }
     } else {
       const firstPendingItem = serviceItems.find(x => x.status === 'pending');
@@ -236,7 +254,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
       this.progressBar.style.width = (firstPendingItemIndex / serviceItems.length - 1 / (serviceItems.length * 2)) * 100 + '%';
       this.progressBar.style.opacity = this.progressBar.style.width === '0%' ? '0' : '1';
 
-      firstPendingItemRef?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      if (this.isElementOnScreen) firstPendingItemRef?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     }
   }
 
