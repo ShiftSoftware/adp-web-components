@@ -3267,34 +3267,7 @@ const mockData = {
           right: 90,
         },
       ],
-      imageGroups: [
-        {
-          name: 'zero',
-          images: ['https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Hood_1.jpg'],
-        },
-        {
-          name: 'second',
-          images: [
-            'https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Left_Front_Door_1.jpg',
-            'https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Left_Front_Door_2.jpg',
-          ],
-        },
-        {
-          name: 'second',
-          images: [
-            'https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Left_Front_Door_1.jpg',
-            'https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Left_Front_Door_2.jpg',
-          ],
-        },
-        {
-          name: 'third',
-          images: [
-            'https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Right_Front_Fender_3.jpg',
-            'https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Right_Rear_Door_1.jpg',
-            'https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Right_Rear_Door_2.jpg',
-          ],
-        },
-      ],
+      imageGroups: [],
     },
     vin: 'JTMABBBJ9P4099200',
     identifiers: {

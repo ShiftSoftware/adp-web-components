@@ -9,7 +9,7 @@ import { getVehicleInformation } from '~api/vehicleInformation';
 
 import { LanguageKeys } from '~types/locale';
 import { AppStates, MockJson } from '~types/components';
-import { ImageGroups, VehicleInformation } from '~types/vehicle-information';
+import { VehicleInformation } from '~types/vehicle-information';
 
 import Eye from '~assets/eye.svg';
 
@@ -155,25 +155,7 @@ export class VehiclePaintThickness implements ImageViewerInterface {
   render() {
     const texts = this.locale;
 
-    const templateGroupImages: ImageGroups[] = [
-      {
-        name: '...',
-        images: [''],
-      },
-      {
-        name: '...',
-        images: ['', ''],
-      },
-      {
-        name: '...',
-        images: ['', '', ''],
-      },
-    ];
-
-    // @ts-ignore
-    const { imageGroups, parts } = this?.vehicleInformation ? this?.vehicleInformation?.paintThickness : { imageGroups: templateGroupImages, parts: [] };
-
-    if (imageGroups.length === 0) imageGroups.push(...templateGroupImages);
+    const { imageGroups, parts } = this?.vehicleInformation ? this?.vehicleInformation?.paintThickness : { imageGroups: [], parts: [] };
 
     const isLoading = this.state.includes('loading');
     const isError = this.state.includes('error');
@@ -222,7 +204,7 @@ export class VehiclePaintThickness implements ImageViewerInterface {
         >
           <information-table rows={parts} headers={tableHeaders} isLoading={isLoading}></information-table>
 
-          <flexible-container>
+          <flexible-container isOpened={!isLoading && !!imageGroups.length}>
             <div class="py-[16px] gap-[16px] justify-center flex flex-wrap px-[24px] w-full">
               {imageGroups.map((imageGroup, index) => (
                 <div class="shrink-0 rounded-lg shadow-sm border overflow-hidden flex flex-col" key={imageGroup.name + index}>

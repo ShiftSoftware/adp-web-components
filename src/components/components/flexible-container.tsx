@@ -134,7 +134,7 @@ export class FlexibleContainer {
         onTransitionStart={this.startTransitionAnimation}
         class={cn(
           'flexible-container w-fit min-w-full transition-all overflow-hidden duration-500',
-          { 'h-0': !this.isOpened, '!h-auto !duration-0 !transition-none': this.stopAnimation || !!this.childrenAnimatingList.length },
+          { 'h-0 opacity-0': !this.isOpened, '!h-auto !duration-0 !transition-none': this.stopAnimation || !!this.childrenAnimatingList.length },
           this.containerClasses,
         )}
       >
