@@ -190,9 +190,7 @@ export class VehicleAccessories implements ImageViewerInterface {
     }));
 
     const templateRow = {
-      partNumber: '...',
-      description: '...',
-      image: () => <div class="size-[100px] flex mx-auto items-center justify-center">...</div>,
+      image: () => <div class="size-[100px] flex mx-auto items-center justify-center">&nbsp;</div>,
     };
 
     return (
