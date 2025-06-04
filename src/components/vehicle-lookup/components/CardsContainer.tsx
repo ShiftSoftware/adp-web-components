@@ -53,16 +53,16 @@ export default function CardsContainer({ isLoading, vehicleInformation, isAuthor
         />
 
         <StatusCard
-          state={vehicleInformation ? (vehicleInformation?.warranty.hasActiveWarranty ? 'success' : 'reject') : 'idle'}
-          desc={vehicleInformation ? (vehicleInformation?.warranty.hasActiveWarranty ? warrantyLocale.activeWarranty : warrantyLocale.notActiveWarranty) : '...'}
+          state={vehicleInformation ? (vehicleInformation?.warranty?.hasActiveWarranty ? 'success' : 'reject') : 'idle'}
+          desc={vehicleInformation ? (vehicleInformation?.warranty?.hasActiveWarranty ? warrantyLocale.activeWarranty : warrantyLocale.notActiveWarranty) : '...'}
         />
 
         <StatusCard
           from
           icon={false}
           fromDesc={warrantyLocale.from}
-          desc={vehicleInformation?.warranty.warrantyStartDate || '...'}
-          opened={!!vehicleInformation?.warranty.warrantyStartDate || !vehicleInformation}
+          desc={vehicleInformation?.warranty?.warrantyStartDate || '...'}
+          opened={!!vehicleInformation?.warranty?.warrantyStartDate || !vehicleInformation}
           state={!!vehicleInformation ? (vehicleInformation?.warranty?.hasActiveWarranty ? 'success' : 'reject') : 'idle'}
         />
 
@@ -70,8 +70,8 @@ export default function CardsContainer({ isLoading, vehicleInformation, isAuthor
           to
           icon={false}
           toDesc={warrantyLocale.to}
-          desc={vehicleInformation?.warranty.warrantyEndDate || '...'}
-          opened={!!vehicleInformation?.warranty.warrantyEndDate || !vehicleInformation}
+          desc={vehicleInformation?.warranty?.warrantyEndDate || '...'}
+          opened={!!vehicleInformation?.warranty?.warrantyEndDate || !vehicleInformation}
           state={!!vehicleInformation ? (vehicleInformation?.warranty?.hasActiveWarranty ? 'success' : 'reject') : 'idle'}
         />
       </div>
