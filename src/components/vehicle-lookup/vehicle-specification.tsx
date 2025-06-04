@@ -157,17 +157,17 @@ export class VehicleSpecification implements VehicleInformationInterface {
               <MaterialCard class="grow" title={texts?.model} minWidth="300px">
                 <MaterialCardChildren
                   class="text-center"
-                  hidden={!this?.vehicleInformation?.vehicleVariantInfo?.modelCode && !this?.vehicleInformation?.vehicleSpecification.modelDesc}
+                  hidden={!this?.vehicleInformation?.vehicleVariantInfo?.modelCode?.trim() && !this?.vehicleInformation?.vehicleSpecification?.modelDesc?.trim()}
                 >
-                  {this?.vehicleInformation?.vehicleVariantInfo?.modelCode || '...'} <br class="my-2" />
-                  {this?.vehicleInformation?.vehicleSpecification?.modelDesc || '...'}
+                  {this?.vehicleInformation?.vehicleVariantInfo?.modelCode?.trim() || '...'} <br class="my-2" />
+                  {this?.vehicleInformation?.vehicleSpecification?.modelDesc?.trim() || '...'}
                 </MaterialCardChildren>
               </MaterialCard>
 
               <MaterialCard class="grow" title={texts?.variant} minWidth="300px">
                 <MaterialCardChildren
                   class="text-center"
-                  hidden={!this?.vehicleInformation?.vehicleVariantInfo?.modelCode && !this?.vehicleInformation?.vehicleSpecification.modelDesc}
+                  hidden={!this?.vehicleInformation?.identifiers?.variant?.trim() && !this?.vehicleInformation?.vehicleSpecification?.variantDesc?.trim()}
                 >
                   {this?.vehicleInformation?.identifiers?.variant?.trim() || '...'} <br />
                   {this?.vehicleInformation?.vehicleSpecification?.variantDesc?.trim() || '...'}
