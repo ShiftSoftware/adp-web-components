@@ -1,16 +1,16 @@
 {
   "info": "Информация",
-  "distributorStock": "Дистрибьютор",
-  "availability": "Доступность",
+  "distributorStock": "Сток Дистрибьютора",
+  "availability": "Наличие",
   "notAvailable": "Нет в наличии",
-  "partiallyAvailable": "Частично доступно",
-  "available": "Доступный",
+  "partiallyAvailable": "Частично в наличии",
+  "available": "В наличии",
   "location": "Расположение",
   "description": "Описание",
   "productGroup": "Группа продукта",
   "localDescription": "$ Описание",
-  "dealerPurchasePrice": "Цена покупки дилера",
+  "dealerPurchasePrice": "Цена закупки для дилера",
   "recommendedRetailPrice": "Рекомендуемая розничная цена",
   "supersededFrom": "Заменен от",
-  "supersessions": "замены"
+  "supersessions": "Замена запчасти"
 }
