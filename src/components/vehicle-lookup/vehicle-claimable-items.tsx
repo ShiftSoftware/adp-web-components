@@ -676,7 +676,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
               ></div>
             </div>
 
-            <div class="absolute w-[90%] left-1/2 ml-[-45%] bottom-[40px]">
+            <div class={cn('absolute w-[90%] left-1/2 ml-[-45%] bottom-[40px] z-[1]', { '!z-[-1]': !(this.vehicleInformation && hasInactiveItems) })}>
               <div
                 class={cn('card warning-card span-entire-1st-row activation-panel', {
                   loading: this.isLoading || this.tabAnimationLoading,
@@ -709,7 +709,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
               </div>
             </div>
 
-            <div class="absolute w-[90%] left-1/2 ml-[-45%] bottom-[40px]">
+            <div class={cn('absolute w-[90%] left-1/2 ml-[-45%] bottom-[40px] z-[1]', { '!z-[-1]': !this.showPrintBox })}>
               <div
                 class={cn('card warning-card span-entire-1st-row activation-panel', {
                   loading: this.isLoading,
