@@ -14,11 +14,11 @@
   "pending": "В ожидании",
   "warning": "Предупреждение",
   "activateNow": "Activate Now",
-  "print": "Print",
-  "successFulClaimMessage": "Item was claimed successfully.",
+  "print": "Печать",
+  "successFulClaimMessage": "Пункт был претендуется успешно.",
   "activationRequired": "Activation Required",
   "warrantyAndServicesNotActivated": "Warranty & Services have not been activated for this vehicle.",
-  "dynamicRedeem": {
+  "claimForm": {
     "serviceType": "Тип обслуживания",
     "name": "Имя",
     "activationDate": "Дата активации",

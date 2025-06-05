@@ -6,14 +6,14 @@ import { ClaimPayload, ServiceItem } from '~types/vehicle-information';
 import cn from '~lib/cn';
 import { getSharedLocal, SharedLocales, sharedLocalesSchema } from '~lib/get-local-language';
 
-import { dynamicRedeemSchema, DynamicRedeemType } from '~locales/vehicleLookup/dynamicClaim/type';
+import { claimFormSchema, ClaimFormType } from '~locales/vehicleLookup/claimableItems/type';
 
 @Component({
   shadow: true,
-  tag: 'dynamic-redeem',
-  styleUrl: 'dynamic-redeem.css',
+  tag: 'vehicle-item-claim-form',
+  styleUrl: 'vehicle-item-claim-form.css',
 })
-export class DynamicRedeem {
+export class VehicleItemClaimForm {
   @Prop() vin?: string = '';
   @Prop() item?: ServiceItem = null;
   @Prop() language: LanguageKeys = 'en';
@@ -22,7 +22,7 @@ export class DynamicRedeem {
   @Prop() handleClaiming?: (payload: ClaimPayload) => void;
   //@Prop() handleQrChanges?: (code: string) => void;
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
-  @Prop() locale: DynamicRedeemType = dynamicRedeemSchema.getDefault();
+  @Prop() locale: ClaimFormType = claimFormSchema.getDefault();
 
   @State() claimViaBarcodeScanner: boolean = true;
   @State() sharedLocales: SharedLocales = sharedLocalesSchema.getDefault();

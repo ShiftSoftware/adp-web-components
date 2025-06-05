@@ -2,7 +2,7 @@ import { object, InferType } from 'yup';
 
 import yupTypeMapper from '~lib/yup-type-mapper';
 
-export const dynamicRedeemSchema = yupTypeMapper([
+export const claimFormSchema = yupTypeMapper([
   'serviceType',
   'name',
   'activationDate',
@@ -22,10 +22,10 @@ export const dynamicRedeemSchema = yupTypeMapper([
   'claim',
 ]);
 
-export type DynamicRedeemType = InferType<typeof dynamicRedeemSchema>;
+export type ClaimFormType = InferType<typeof claimFormSchema>;
 
-const dynamicClaimSchema = object({
-  dynamicRedeem: dynamicRedeemSchema,
+const claimableItemsSchema = object({
+  claimForm: claimFormSchema,
 }).concat(
   yupTypeMapper([
     'serviceType',
@@ -43,11 +43,11 @@ const dynamicClaimSchema = object({
     'pending',
     'warning',
     'activateNow',
-    "print",
-    "successFulClaimMessage",
+    'print',
+    'successFulClaimMessage',
     'activationRequired',
     'warrantyAndServicesNotActivated',
   ]),
 );
 
-export default dynamicClaimSchema;
+export default claimableItemsSchema;

@@ -1,5 +1,5 @@
 const mockData = {
-  JTMHX01J8L4198293: {
+  'JTMHX01J8L4198293': {
     accessories: [
       {
         image: '',
@@ -231,7 +231,7 @@ const mockData = {
     serviceItems: null,
     basicModelCode: null,
   },
-  JTMHX01J8L4198294: {
+  'JTMHX01J8L4198294': {
     accessories: [],
     paintThickness: {},
     vin: 'JTMHX01J8L4198294',
@@ -458,7 +458,7 @@ const mockData = {
     serviceItems: [],
     basicModelCode: null,
   },
-  JTMHX01J8L4198295: {
+  'JTMHX01J8L4198295': {
     accessories: null,
     paintThickness: {
       parts: [],
@@ -725,7 +725,7 @@ const mockData = {
         activatedAt: '2023-10-08',
         expiresAt: '2024-01-08',
         status: 'pending',
-        menuCode: 'SER1384KJ'
+        menuCode: 'SER1384KJ',
       },
       {
         name: '20,000 KM Free Service',
@@ -739,7 +739,7 @@ const mockData = {
     ],
     basicModelCode: null,
   },
-  JTMHX01J8L4198296: {
+  'JTMHX01J8L4198296': {
     accessories: [
       {
         partNumber: 'yakam',
@@ -1029,7 +1029,7 @@ const mockData = {
     ],
     basicModelCode: null,
   },
-  MR0BX8CD3P2791075: {
+  'MR0BX8CD3P2791075': {
     accessories: [
       {
         partNumber: 'yakam',
@@ -1771,7 +1771,7 @@ const mockData = {
     ],
     basicModelCode: 'TGN126',
   },
-  JTMHX01J8L4198299: {
+  'JTMHX01J8L4198299': {
     accessories: [
       {
         partNumber: 'yakam2',
@@ -2097,7 +2097,7 @@ const mockData = {
     ],
     basicModelCode: null,
   },
-  JTMABBBJ9P4099243: {
+  'JTMABBBJ9P4099243': {
     accessories: [
       {
         partNumber: 'yakam',
@@ -2750,7 +2750,13 @@ const mockData = {
     ],
     basicModelCode: 'VJA300',
   },
-  JTMHU09J6E4100543: {
+  'JTMHU09J6E4100543': {
+    groups: [
+      { label: 'One', hasProgress: true },
+      { label: 'Two', hasProgress: false },
+      { label: 'Three', hasProgress: true },
+      { label: 'Four', hasProgress: false },
+    ],
     paintThickness: {
       parts: [
         {
@@ -2819,6 +2825,7 @@ const mockData = {
     nextServiceDate: '2025-02-19',
     serviceHistory: [
       {
+        group: 'One',
         serviceType: 'PM SL (5K, 15K,25K...95K)',
         serviceDate: '2024-11-19',
         mileage: 55005,
@@ -2865,6 +2872,7 @@ const mockData = {
         ],
       },
       {
+        group: 'One',
         serviceType: 'Value Added Services',
         serviceDate: '2024-11-19',
         mileage: 55005,
@@ -2893,6 +2901,7 @@ const mockData = {
         ],
       },
       {
+        group: 'One',
         serviceType: 'PM SL (5K, 15K,25K...95K)',
         serviceDate: '2024-06-02',
         mileage: 49380,
@@ -2969,6 +2978,7 @@ const mockData = {
         ],
       },
       {
+        group: 'Two',
         serviceType: 'PM SL (5K, 15K,25K...95K)',
         serviceDate: '2024-02-07',
         mileage: 46366,
@@ -3020,6 +3030,7 @@ const mockData = {
     vehicleSpecification: null,
     serviceItems: [
       {
+        group: 'One',
         name: '1,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3030,6 +3041,7 @@ const mockData = {
         claimDate: '2023-01-19',
       },
       {
+        group: 'One',
         name: '5,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3039,6 +3051,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'One',
         name: '10,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3048,6 +3061,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Two',
         name: '15,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3057,6 +3071,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Two',
         name: '20,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3066,6 +3081,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Two',
         name: '25,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3075,6 +3091,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Two',
         name: '30,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3084,6 +3101,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Two',
         name: '35,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3093,6 +3111,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Two',
         name: '40,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3102,6 +3121,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Two',
         name: '45,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3111,6 +3131,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Two',
         name: '50,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3120,6 +3141,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Two',
         name: '55,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3129,6 +3151,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Two',
         name: '60,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3138,6 +3161,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Two',
         name: '65,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3147,6 +3171,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'Four',
         name: '70,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3156,6 +3181,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'One',
         name: '75,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3165,6 +3191,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'One',
         name: '80,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3174,6 +3201,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'One',
         name: '85,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3183,6 +3211,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'One',
         name: '90,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3192,6 +3221,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'One',
         name: '95,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3201,6 +3231,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: 'One',
         name: '100,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3212,7 +3243,7 @@ const mockData = {
     ],
     basicModelCode: null,
   },
-  JTMABBBJ9P4099200: {
+  'JTMABBBJ9P4099200': {
     paintThickness: {
       parts: [
         {
@@ -3236,34 +3267,7 @@ const mockData = {
           right: 90,
         },
       ],
-      imageGroups: [
-        {
-          name: 'zero',
-          images: ['https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Hood_1.jpg'],
-        },
-        {
-          name: 'second',
-          images: [
-            'https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Left_Front_Door_1.jpg',
-            'https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Left_Front_Door_2.jpg',
-          ],
-        },
-        {
-          name: 'second',
-          images: [
-            'https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Left_Front_Door_1.jpg',
-            'https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Left_Front_Door_2.jpg',
-          ],
-        },
-        {
-          name: 'third',
-          images: [
-            'https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Right_Front_Fender_3.jpg',
-            'https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Right_Rear_Door_1.jpg',
-            'https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Right_Rear_Door_2.jpg',
-          ],
-        },
-      ],
+      imageGroups: [],
     },
     vin: 'JTMABBBJ9P4099200',
     identifiers: {
@@ -3751,7 +3755,7 @@ const mockData = {
     ],
     basicModelCode: 'VJA300',
   },
-  JTMABBBJ9P4099201: {
+  'JTMABBBJ9P4099201': {
     accessories: [
       {
         partNumber: 'yakam',
@@ -4331,10 +4335,14 @@ const mockData = {
     isAuthorized: false,
     warranty: null,
     nextServiceDate: '2023-12-12',
-    serviceHistory: [
-
-    ],
+    serviceHistory: [],
     ssc: null,
+    groups: [
+      { label: 'One', hasProgress: true },
+      { label: 'Two', hasProgress: false },
+      { label: 'Three', hasProgress: true },
+      { label: 'Four', hasProgress: false },
+    ],
     vehicleVariantInfo: null,
     vehicleSpecification: null,
     serviceItems: [
@@ -4343,6 +4351,7 @@ const mockData = {
         type: 'free',
         claimable: false,
         claimingMethodEnum: 2,
+        group: 'One',
         activatedAt: '',
         expiresAt: '',
         status: 'activationRequired',
@@ -4352,6 +4361,7 @@ const mockData = {
         type: 'free',
         claimable: false,
         claimingMethodEnum: 2,
+        group: 'Two',
         activatedAt: '',
         expiresAt: '',
         status: 'activationRequired',
@@ -4360,6 +4370,7 @@ const mockData = {
         name: '10,000 KM Free Service',
         type: 'free',
         claimable: false,
+        group: 'Two',
         claimingMethodEnum: 2,
         activatedAt: '',
         expiresAt: '',
@@ -4368,16 +4379,18 @@ const mockData = {
       {
         name: '15,000 KM Free Service',
         type: 'free',
+        group: 'One',
         claimable: false,
         claimingMethodEnum: 2,
         activatedAt: '',
         expiresAt: '',
-        status: 'activationRequired'
+        status: 'activationRequired',
       },
       {
         name: '20,000 KM Free Service',
         type: 'free',
         claimable: false,
+        group: 'One',
         claimingMethodEnum: 2,
         activatedAt: '',
         expiresAt: '',

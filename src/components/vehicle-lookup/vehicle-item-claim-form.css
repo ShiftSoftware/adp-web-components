@@ -59,17 +59,19 @@
   transition: 0.35s;
 }
 
-  .dynamic-claim-processor .dynamic-redeem-input:focus {
-    border-bottom-color: #3071a9;
-    transform: scale(1.1) translateY(-10px);
-  }
+.dynamic-claim-processor .dynamic-redeem-input:focus {
+  border-bottom-color: #3071a9;
+  transform: scale(1.1) translateY(-10px);
+}
 
 .dynamic-claim-processor-info-box {
   padding: 0px;
   border: 1px solid #dcdcdc;
   border-radius: 5px;
   background: rgb(253, 253, 253);
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.05),
+    0 1px 0 rgba(255, 255, 255, 0.1);
   width: 100%;
   font-size: 14px;
   margin-top: 50px;
@@ -248,7 +250,9 @@
   background-color: var(--md-admonition-bg-color);
   border: 0.075rem solid #ff9100;
   border-radius: 0.2rem;
-  box-shadow: 0 0.2rem 0.5rem #0000000d, 0 0 0.05rem #0000001a;
+  box-shadow:
+    0 0.2rem 0.5rem #0000000d,
+    0 0 0.05rem #0000001a;
   color: var(--md-admonition-fg-color);
   display: flow-root;
   margin-top: 15px;
@@ -274,7 +278,6 @@
   padding-inline-start: 2.5rem;
 }
 
-
 .dynamic-claim-button {
   outline: none;
   color: white;
@@ -289,21 +292,21 @@
   align-items: center;
   gap: 3px;
 
-  width:350px;
-  justify-self:center;
-  justify-content:center;
+  width: 350px;
+  justify-self: center;
+  justify-content: center;
 }
 
-  .dynamic-claim-button.disabled {
-    border-color: #d5d5d5;
-    color: #d5d5d5 !important;
-    stroke: #d5d5d5 !important;
-    pointer-events:none;
-  }
+.dynamic-claim-button.disabled {
+  border-color: #d5d5d5;
+  color: #d5d5d5 !important;
+  stroke: #d5d5d5 !important;
+  pointer-events: none;
+}
 
-    .dynamic-claim-button.disabled circle {
-      fill: #d5d5d5 !important;
-    }
+.dynamic-claim-button.disabled circle {
+  fill: #d5d5d5 !important;
+}
 
 .dynamic-claim-button svg {
   transition: 0.2s;
@@ -317,25 +320,25 @@
   fill: #27ae60;
 }
 
-  .claim-button circle {
-    fill: #2ecc71;
-  }
+.claim-button circle {
+  fill: #2ecc71;
+}
 
-  .claim-button:hover {
-    color: white;
-    background-color: #2ecc71;
-    stroke: white;
-    fill: white;
-  }
+.claim-button:hover {
+  color: white;
+  background-color: #2ecc71;
+  stroke: white;
+  fill: white;
+}
 
-    .claim-button:hover circle {
-      fill: white;
-    }
+.claim-button:hover circle {
+  fill: white;
+}
 
-  .claim-button:active {
-    background-color: #27ae60;
-  }
+.claim-button:active {
+  background-color: #27ae60;
+}
 
-    .claim-button:active svg {
-      transform: scale(125%);
-    }
+.claim-button:active svg {
+  transform: scale(125%);
+}

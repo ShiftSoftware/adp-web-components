@@ -14,6 +14,7 @@ export type VehicleInformation = {
   serviceItems: ServiceItem[];
   basicModelCode: string;
   sscLogId?: string;
+  groups?: { label?: string; hasProgress?: boolean }[];
 };
 
 export const dev = false;
@@ -37,12 +38,12 @@ export type SaleInformation = {
   countryName: string;
   branchID: string;
   branchName: string;
-  regionID: string,
+  regionID: string;
   customerAccountNumber: string;
   customerID: string;
   invoiceDate: string;
   invoiceNumber: number;
-  warrantyActivationDate: string,
+  warrantyActivationDate: string;
   broker: Broker;
 };
 
@@ -163,6 +164,7 @@ export interface PaintPart {
 }
 
 export type ServiceItem = {
+  group?: string;
   activatedAt?: string;
   activeFor: number;
   activeForInterval: string;
@@ -191,13 +193,12 @@ export type ServiceItem = {
   claimingMethodEnum?: number;
 };
 
-
 export type ClaimPayload = {
-  vin: string,
-  invoice?: string,
-  jobNumber?: string,
-  qrCode?: string,
-  saleInformation: SaleInformation,
-  serviceItem: ServiceItem,
-  cancelledServiceItems: ServiceItem[],
-}
+  vin: string;
+  invoice?: string;
+  jobNumber?: string;
+  qrCode?: string;
+  saleInformation: SaleInformation;
+  serviceItem: ServiceItem;
+  cancelledServiceItems: ServiceItem[];
+};
