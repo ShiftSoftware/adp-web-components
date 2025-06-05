@@ -43,6 +43,8 @@ const claimableItemsSchema = object({
     'pending',
     'warning',
     'activateNow',
+    'print',
+    'successFulClaimMessage',
     'activationRequired',
     'warrantyAndServicesNotActivated',
   ]),

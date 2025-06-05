@@ -14,6 +14,8 @@
   "pending": "Pending",
   "warning": "Warning",
   "activateNow": "Activate Now",
+  "print": "Print",
+  "successFulClaimMessage": "Item was claimed successfully.",
   "activationRequired": "Activation Required",
   "warrantyAndServicesNotActivated": "Warranty & Services have not been activated for this vehicle.",
   "claimForm": {

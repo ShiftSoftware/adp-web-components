@@ -219,3 +219,11 @@
     transform: translateY(0) scale(100%);
   }
 }
+
+.claim-button path {
+  transition: 0.2s;
+}
+
+.claim-button:hover path {
+  fill: #2ecc71;
+}

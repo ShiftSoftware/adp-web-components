@@ -79,18 +79,18 @@
     </label>
     <div id="container"></div>
     <script>
-      let dynamicClaim;
+      let claimableItems;
 
       document.addEventListener('DOMContentLoaded', function () {
-        dynamicClaim = document.getElementById('vehicle-claimable-items');
+        claimableItems = document.getElementById('vehicle-claimable-items');
 
-        dynamicClaim.setMockData(mockData);
+        claimableItems.setMockData(mockData);
 
-        dynamicClaim.loadingStateChange = isLoading => {
+        claimableItems.loadingStateChange = isLoading => {
           console.log('isLoading: ' + isLoading);
         };
 
-        dynamicClaim.loadedResponse = newResponse => {
+        claimableItems.loadedResponse = newResponse => {
           console.log(newResponse);
 
           const urlParams = new URLSearchParams(window.location.search);
@@ -100,7 +100,7 @@
           if (claimIndex) {
             var itemToClaim = newResponse['serviceItems'][claimIndex];
 
-            dynamicClaim.claim(itemToClaim);
+            claimableItems.claim(itemToClaim);
           }
         };
 
@@ -112,23 +112,29 @@
           vinLookup(vin);
         }
 
-        dynamicClaim.activate = vehicleInformation => {
+        claimableItems.activate = vehicleInformation => {
           console.log(vehicleInformation);
 
           alert(JSON.stringify(vehicleInformation));
         };
+
+        //claimableItems.print = lastClaimResponse => {Add commentMore actions
+        //  console.log(lastClaimResponse);
+
+        //  alert(JSON.stringify(lastClaimResponse))
+        //};
       });
 
       function updateLang(newLang) {
-        dynamicClaim.language = newLang;
+        claimableItems.language = newLang;
       }
 
       function vinLookup(vin) {
-        dynamicClaim.fetchData(vin);
+        claimableItems.fetchData(vin);
       }
 
       function setData(key) {
-        dynamicClaim.setData(mockData[key]);
+        claimableItems.setData(mockData[key]);
       }
 
       function toggleCheckbox(e) {

@@ -44,6 +44,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   @Prop() queryString: string = '';
   @Prop() coreOnly: boolean = false;
   @Prop() language: LanguageKeys = 'en';
+  @Prop() print?: (claimResponse: any) => void;
   @Prop() claimEndPoint: string = 'api/vehicle/swift-claim';
   @Prop() errorCallback: (errorMessage: ErrorKeys) => void;
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
@@ -58,11 +59,13 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   @State() showPopup: boolean = false;
   @State() isLoading: boolean = false;
   @State() externalVin?: string = null;
+  @State() showPrintBox: boolean = false;
   @State() errorMessage?: ErrorKeys = null;
   @State() isElementOnScreen: boolean = false;
   @State() tabAnimationLoading: boolean = false;
   @State() activePopupIndex: null | number = null;
   @State() tabs: VehicleInformation['groups'] = [];
+  @State() lastSuccessfulClaimResponse: any = null;
   @State() vehicleInformation?: VehicleInformation;
 
   pendingItemHighlighted = false;
@@ -340,7 +343,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   }
 
   @Method()
-  async completeClaim() {
+  async completeClaim(response: any) {
     const serviceItems = this.getServiceItems();
 
     const item = this.cachedClaimItem;
@@ -361,6 +364,9 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
     const vehicleDataClone = JSON.parse(JSON.stringify(this.vehicleInformation)) as VehicleInformation;
     vehicleDataClone.serviceItems = serviceDataClone;
     this.vehicleInformation = JSON.parse(JSON.stringify(vehicleDataClone));
+
+    this.showPrintBox = true;
+    this.lastSuccessfulClaimResponse = response;
   }
 
   @Method()
@@ -391,7 +397,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
         await new Promise(r => setTimeout(r, 500));
 
         this.dynamicRedeem.quite();
-        this.completeClaim();
+        this.completeClaim({ Success: true, ID: '11223344', PrintURL: 'http://localhost/test/print/1122' });
         this.dynamicRedeem.handleClaiming = null;
       };
     } else {
@@ -422,7 +428,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
           }
 
           this.dynamicRedeem.quite();
-          this.completeClaim();
+          this.completeClaim(data);
           this.dynamicRedeem.handleClaiming = null;
         } catch (error) {
           console.error(error);
@@ -590,7 +596,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
           </div>
           <div
             class={cn('flex px-[30px] relative h-[300px] items-center transition-all duration-300 claimable-content-wrapper', {
-              'h-[320px]': hasInactiveItems,
+              'h-[320px]': hasInactiveItems || this.showPrintBox,
             })}
           >
             <div class="h-[10px] loading-lane transition-none transition duration-[0.4s] bg-[#f2f2f2] border border-[#ddd] rounded-[10px] w-[calc(100%-62px)] absolute items-center justify-around">
@@ -698,6 +704,44 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
                     </g>
                   </svg>
                   <span>{texts.activateNow}</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="absolute w-[90%] left-1/2 ml-[-45%] bottom-[40px]">
+              <div
+                class={cn('card warning-card span-entire-1st-row activation-panel', {
+                  loading: this.isLoading,
+                  visible: this.showPrintBox,
+                })}
+                onAnimationEnd={this.removeLoadAnimationClass}
+              >
+                <p class="no-padding flex gap-2">
+                  <span class="font-semibold">{texts.successFulClaimMessage}</span>
+                </p>
+
+                <button
+                  onClick={() => {
+                    if (this.print) {
+                      this.print(this.lastSuccessfulClaimResponse);
+                    } else {
+                      if (this.lastSuccessfulClaimResponse.PrintURL) {
+                        window.open(this.lastSuccessfulClaimResponse.PrintURL, '_blank').focus();
+                      }
+                    }
+                  }}
+                  class="claim-button dynamic-claim-button"
+                >
+                  <svg width="30px" height="30px" viewBox="-5 -5 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M17 7H7V6h10v1zm0 12H7v-6h10v6zm2-12V3H5v4H1v8.996C1 17.103 1.897 18 3.004 18H5v3h14v-3h1.996A2.004 2.004 0 0 0 23 15.996V7h-4z"
+                      fill="rgb(252, 248, 227)"
+                    />
+                  </svg>
+
+                  <span>{texts.print}</span>
                 </button>
               </div>
             </div>

@@ -14,6 +14,8 @@
   "pending": "قيد الانتظار",
   "warning": "تحذير",
   "activateNow": "Activate Now",
+  "print": "مطبعة",
+  "successFulClaimMessage": "تم المطالبة بنجاح.",
   "activationRequired": "Activation Required",
   "warrantyAndServicesNotActivated": "Warranty & Services have not been activated for this vehicle.",
   "claimForm": {

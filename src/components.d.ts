@@ -245,7 +245,7 @@ export namespace Components {
         "baseUrl": string;
         "claim": (item: ServiceItem) => Promise<void>;
         "claimEndPoint": string;
-        "completeClaim": () => Promise<void>;
+        "completeClaim": (response: any) => Promise<void>;
         "coreOnly": boolean;
         "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
@@ -254,6 +254,7 @@ export namespace Components {
         "language": LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        "print"?: (claimResponse: any) => void;
         "queryString": string;
         "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
         "setErrorMessage": (message: ErrorKeys) => Promise<void>;
@@ -793,6 +794,7 @@ declare namespace LocalJSX {
         "language"?: LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        "print"?: (claimResponse: any) => void;
         "queryString"?: string;
     }
     interface VehicleItemClaimForm {
