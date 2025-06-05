@@ -12,7 +12,7 @@ const localeMapper = {
   "forms": [
     "locales/forms/",
     "locales/forms/contactUs/"
-  ], 
+  ],
   "forms.contactUs": [
     "locales/forms/contactUs/"
   ],
