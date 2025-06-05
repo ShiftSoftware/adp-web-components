@@ -237,6 +237,12 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   updateProgressBar() {
     const serviceItems = this.getServiceItems();
 
+    if (!!this.tabs?.length && this.tabs.find(tab => tab.label === this.activeTab) && !this.tabs.find(tab => tab.label === this.activeTab)?.hasProgress) {
+      this.progressBar.style.width = '0%';
+      this.progressBar.style.opacity = '0';
+      return;
+    }
+
     if (serviceItems.filter(x => x.status === 'pending').length === 0) {
       if (serviceItems.length === 0 || serviceItems.filter(x => x.status === 'activationRequired').length === serviceItems.length) {
         this.progressBar.style.width = '0%';
@@ -457,8 +463,6 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
 
     this.tabAnimationTimeoutRef = setTimeout(() => {
       this.activeTab = label;
-      // @ts-ignore
-      window.ff = this.infoBody;
       this.infoBody.scrollLeft = 0;
       setTimeout(() => {
         this.tabsListenerCallback();
@@ -561,7 +565,6 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
     const serviceItems = this.getServiceItems();
     const texts = this.locale;
 
-    // const hasInactiveItems = this.vehicleInformation && this.vehicleInformation.serviceItems.filter(x => x.status === 'activationRequired').length > 0;
     const hasInactiveItems = serviceItems.filter(x => x.status === 'activationRequired').length > 0;
 
     const hideTabs = this.isLoading || this.isError || !this.tabs.length || !serviceItems.length;
