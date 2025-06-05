@@ -137,7 +137,6 @@ export class VehicleWarrantyDetails implements VehicleInformationInterface {
 
             this.showRecaptcha = false;
 
-            ///
             const response = await fetch(`${this.unauthorizedSscLookupBaseUrl}${vin}/${this.vehicleInformation?.sscLogId}?${this.unauthorizedSscLookupQueryString}`, {
               signal: this.abortController.signal,
               headers: {
@@ -286,19 +285,19 @@ export class VehicleWarrantyDetails implements VehicleInformationInterface {
     const rows = !this.vehicleInformation?.ssc
       ? []
       : this.vehicleInformation?.ssc.map(sscItem => ({
-          sscTableCode: sscItem.sscCode,
-          sscTableDescription: sscItem.description,
+          sscTableCode: sscItem?.sscCode,
+          sscTableDescription: sscItem?.description,
           sscTableRepairStatus: () => (
             <div class="table-cell-container">
-              <img class="table-status-icon" src={sscItem.repaired ? CheckIcon : XIcon} /> {sscItem?.repairDate}
+              <img class="table-status-icon" src={sscItem?.repaired ? CheckIcon : XIcon} /> {sscItem?.repairDate}
             </div>
           ),
           sscTableOPCode: () => (
             <div class="table-cell-container table-cell-labors-container">
-              {!!sscItem.labors.length
-                ? sscItem.labors.map(labor => (
-                    <div key={labor.laborCode} class="success">
-                      {labor.laborCode}
+              {!!sscItem?.labors.length
+                ? sscItem?.labors.map(labor => (
+                    <div key={labor?.laborCode} class="success">
+                      {labor?.laborCode}
                     </div>
                   ))
                 : '...'}
@@ -306,10 +305,10 @@ export class VehicleWarrantyDetails implements VehicleInformationInterface {
           ),
           sscTablePartNumber: () => (
             <div class="table-cell-container table-cell-parts-container">
-              {!!sscItem.parts.length
-                ? sscItem.parts.map(part => (
-                    <div key={part.partNumber} class={part.isAvailable ? 'success' : 'reject'}>
-                      {part.partNumber}
+              {!!sscItem?.parts.length
+                ? sscItem?.parts.map(part => (
+                    <div key={part?.partNumber} class={part?.isAvailable ? 'success' : 'reject'}>
+                      {part?.partNumber}
                     </div>
                   ))
                 : '...'}
@@ -337,9 +336,9 @@ export class VehicleWarrantyDetails implements VehicleInformationInterface {
             <CardsContainer
               isLoading={isLoading}
               warrantyLocale={this.locale}
+              vehicleInformation={this.vehicleInformation}
               isAuthorized={this.vehicleInformation?.isAuthorized}
               unInvoicedByBrokerName={this.unInvoicedByBrokerName}
-              vehicleInformation={this.vehicleInformation}
             />
           )}
 
