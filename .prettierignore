@@ -4,3 +4,5 @@ build
 www
 components.d.ts
 src/components.d.ts
+src/locale-mapper.ts
+locale-mapper.ts
