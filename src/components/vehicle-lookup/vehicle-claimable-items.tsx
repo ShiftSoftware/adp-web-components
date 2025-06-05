@@ -165,6 +165,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
       }
 
       this.isLoading = true;
+      this.showPrintBox = false;
       await new Promise(r => {
         scopedTimeoutRef = setTimeout(r, 1000);
         this.networkTimeoutRef = scopedTimeoutRef;
