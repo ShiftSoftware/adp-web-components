@@ -184,6 +184,8 @@ export type ServiceItem = {
   claimDate?: string;
   serviceItemID?: string;
   skipZeroTrust?: string;
+  showDocumentUploader?: boolean;
+  documentUploaderIsRequired?: boolean;
   status: 'processed' | 'expired' | 'cancelled' | 'pending' | 'activationRequired';
   claimable: boolean;
   statusEnum?: string;
