@@ -8,7 +8,6 @@ interface VehicleInfoLayoutProps {
   direction: string;
   coreOnly?: boolean;
   isLoading: boolean;
-  noPadding?: boolean;
   errorMessage: string;
 }
 
@@ -30,7 +29,7 @@ export const VehicleInfoLayout: FunctionalComponent<VehicleInfoLayoutProps> = (p
       </div>
 
       <div part="vehicle-info-body" class="vehicle-info-body">
-        <div part="vehicle-info-content" class={cn('vehicle-info-content', { 'p-[16px]': !props.noPadding })}>
+        <div part="vehicle-info-content" class="vehicle-info-content">
           {children}
         </div>
       </div>

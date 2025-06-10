@@ -45,7 +45,7 @@ export class ShiftTabContent {
           {Object.entries(this.components).map(([componentName, component]) => (
             <div
               onAnimationEnd={() => this.clearAnimationClasses(componentName)}
-              class={cn('w-full transition !duration-0', `tab-${componentName}`, {
+              class={cn('!w-full transition !duration-0', `tab-${componentName}`, {
                 'absolute opacity-0 top-0 !pointer-events-none [&_*]:!pointer-events-none translate-x-[-200%] translate-y-[200%]': componentName !== this.activeComponent,
               })}
             >

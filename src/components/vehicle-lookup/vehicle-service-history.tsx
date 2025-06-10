@@ -176,7 +176,9 @@ export class VehicleServiceHistory implements VehicleInformationInterface {
           direction={this.sharedLocales.direction}
           errorMessage={this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
         >
-          <information-table rows={this.vehicleInformation?.serviceHistory || []} headers={tableHeaders} isLoading={isLoading}></information-table>
+          <div class="overflow-x-auto">
+            <information-table rows={this.vehicleInformation?.serviceHistory || []} headers={tableHeaders} isLoading={isLoading}></information-table>
+          </div>
         </VehicleInfoLayout>
       </Host>
     );

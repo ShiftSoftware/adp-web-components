@@ -20,7 +20,7 @@ type Props = {
 
 export default function CardsContainer({ isLoading, vehicleInformation, isAuthorized, unInvoicedByBrokerName, warrantyLocale }: Props) {
   return (
-    <div class="tags-container mx-auto pt-3">
+    <div class="tags-container mx-auto">
       <flexible-container isOpened={!vehicleInformation || !!vehicleInformation?.saleInformation?.companyName}>
         <div class={!(!vehicleInformation || !!vehicleInformation?.saleInformation?.companyName) && 'loading'} style={{ paddingBottom: '12px' }}>
           <div class="shift-skeleton !rounded-[4px]">

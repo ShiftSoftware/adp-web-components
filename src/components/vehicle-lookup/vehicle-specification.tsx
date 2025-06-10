@@ -153,7 +153,7 @@ export class VehicleSpecification implements VehicleInformationInterface {
           errorMessage={this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
         >
           <flexible-container>
-            <div class="flex p-[4px] [&>div]:grow overflow-auto gap-[16px] items-stretch justify-center md:justify-between flex-wrap">
+            <div class="flex p-[16px] [&>div]:grow overflow-auto gap-[16px] items-stretch justify-center md:justify-between flex-wrap">
               <MaterialCard class="grow" title={texts?.model} minWidth="300px">
                 <MaterialCardChildren
                   class="text-center"

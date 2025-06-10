@@ -2,24 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-.animate-lane-increase {
-  animation: lane-increase 2.5s ease infinite;
-}
-
-.animate-lane-decrease {
-  animation: lane-decrease 2.5s ease 1s infinite;
-}
-
 .vehicle-info-container {
   @apply relative transition-all duration-300 overflow-hidden p-0 rounded-[5px] border border-[#dcdcdc] bg-[#fdfdfd] shadow-[inset_0_1px_3px_rgba(0,0,0,0.05),0_1px_0_rgba(255,255,255,0.1)];
 }
 
-.vehicle-info-container ::-webkit-scrollbar {
+*::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 
-.vehicle-info-container ::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track {
   border-radius: 5px;
   background: #f6f6f6;
   border-top-left-radius: 0;
@@ -27,21 +19,23 @@
   border-top: 1px solid #dcdcdc;
 }
 
-.vehicle-info-container ::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
   background: #c5c5c5;
   border-radius: 10px;
 }
 
-.vehicle-info-container ::-webkit-scrollbar-thumb:hover {
+*::-webkit-scrollbar-thumb:hover {
   background: #a1a1a1;
 }
 
-.loading .vehicle-info-body::-webkit-scrollbar-thumb {
+.loading *::-webkit-scrollbar-thumb,
+.hide-scroll::-webkit-scrollbar-thumb,
+.hide-scroll *::-webkit-scrollbar-thumb {
   background: transparent;
 }
 
 .vehicle-info-body {
-  @apply overflow-auto flex flex-col relative transition-all duration-500 ease-in-out;
+  @apply overflow-hidden flex flex-col relative transition-all duration-500 ease-in-out;
 }
 
 .vehicle-info-content {

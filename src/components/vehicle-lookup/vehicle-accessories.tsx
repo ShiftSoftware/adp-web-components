@@ -217,7 +217,9 @@ export class VehicleAccessories implements ImageViewerInterface {
           direction={this.sharedLocales.direction}
           errorMessage={this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
         >
-          <information-table templateRow={templateRow} rows={rows} headers={tableHeaders} isLoading={isLoading}></information-table>
+          <div class="overflow-x-auto">
+            <information-table templateRow={templateRow} rows={rows} headers={tableHeaders} isLoading={isLoading}></information-table>
+          </div>
         </VehicleInfoLayout>
       </Host>
     );

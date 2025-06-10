@@ -202,7 +202,9 @@ export class VehiclePaintThickness implements ImageViewerInterface {
           direction={this.sharedLocales.direction}
           errorMessage={this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
         >
-          <information-table rows={parts} headers={tableHeaders} isLoading={isLoading}></information-table>
+          <div class="overflow-x-auto">
+            <information-table rows={parts} headers={tableHeaders} isLoading={isLoading}></information-table>
+          </div>
 
           <flexible-container isOpened={!isLoading && !!imageGroups.length}>
             <div class="py-[16px] gap-[16px] justify-center flex flex-wrap px-[24px] w-full">
@@ -212,7 +214,7 @@ export class VehiclePaintThickness implements ImageViewerInterface {
                     <span class="shift-skeleton">{imageGroup.name}</span>
                   </h1>
 
-                  <div class="flex p-[12px] gap-[8px]">
+                  <div class="flex max-w-full flex-wrap p-[12px] gap-[8px]">
                     {imageGroup.images.map((image, idx) => (
                       <div class={cn('flex shift-skeleton gap-[8px]', { loading: !image })} key={image + idx}>
                         <button

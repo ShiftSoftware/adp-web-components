@@ -2,6 +2,7 @@ import { InferType } from 'yup';
 import { Component, Element, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import cn from '~lib/cn';
+import { scrollIntoContainerView } from '~lib/scroll-into-container-view';
 import { ErrorKeys, getLocaleLanguage, getSharedLocal, SharedLocales, sharedLocalesSchema } from '~lib/get-local-language';
 
 import { LanguageKeys } from '~types/locale';
@@ -20,7 +21,6 @@ import dynamicClaimSchema from '~locales/vehicleLookup/claimableItems/type';
 import { VehicleItemClaimForm } from './vehicle-item-claim-form';
 
 import { VehicleInfoLayout } from '../components/vehicle-info-layout';
-import closestParentTag from '~lib/closest-parent-tag';
 
 let mockData: MockJson<VehicleInformation> = {};
 
@@ -61,7 +61,6 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   @State() externalVin?: string = null;
   @State() showPrintBox: boolean = false;
   @State() errorMessage?: ErrorKeys = null;
-  @State() isElementOnScreen: boolean = false;
   @State() tabAnimationLoading: boolean = false;
   @State() activePopupIndex: null | number = null;
   @State() tabs: VehicleInformation['groups'] = [];
@@ -80,16 +79,10 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
 
   cachedClaimItem: ServiceItem;
 
-  infoBody: HTMLDivElement;
   progressBar: HTMLElement;
   popupPositionRef: HTMLElement;
-  loadingLaneRef: HTMLDivElement;
-  tabsContainerRef: HTMLDivElement;
-  tabsListenerCallback: () => void;
   claimForm: VehicleItemClaimForm;
   claimableContentWrapper: HTMLElement;
-
-  private intersectionObserver: IntersectionObserver;
 
   async componentWillLoad() {
     await this.changeLanguage(this.language);
@@ -102,42 +95,10 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
     this.sharedLocales = localeResponses[1];
   }
 
-  async disconnectedCallback() {
-    this.intersectionObserver.disconnect();
-  }
-
   async componentDidLoad() {
-    this.loadingLaneRef = this.el.shadowRoot.querySelector('.loading-lane') as HTMLDivElement;
-    this.tabsContainerRef = this.el.shadowRoot.querySelector('.tabs-container') as HTMLDivElement;
-    this.infoBody = closestParentTag(this.tabsContainerRef, 'vehicle-info-body') as HTMLDivElement;
     this.claimableContentWrapper = this.el.shadowRoot.querySelector('.claimable-content-wrapper');
     this.claimForm = this.el.shadowRoot.getElementById('vehicle-item-claim-form') as unknown as VehicleItemClaimForm;
     this.progressBar = this.el.shadowRoot.querySelector('.progress-bar');
-
-    if (this.tabsContainerRef && this.infoBody) {
-      this.tabsListenerCallback = () => {
-        const calculatedWidth = this.infoBody.clientWidth - (this.coreOnly ? 92 : 60);
-        this.tabsContainerRef.style.width = `${calculatedWidth}px`;
-        this.tabsContainerRef.style.transform = `translateX(${this.infoBody.scrollLeft}px)`;
-        if (this.loadingLaneRef) this.loadingLaneRef.style.width = `${calculatedWidth}px`;
-
-        if (this.loadingLaneRef) this.loadingLaneRef.style.transform = `translateX(${this.infoBody.scrollLeft}px)`;
-      };
-
-      this.infoBody.addEventListener('scroll', this.tabsListenerCallback);
-      window.addEventListener('resize', this.tabsListenerCallback);
-    }
-
-    this.intersectionObserver = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => (this.isElementOnScreen = entry.isIntersecting));
-      },
-      {
-        threshold: 0.1,
-      },
-    );
-
-    this.intersectionObserver.observe(this.loadingLaneRef);
   }
 
   @Method()
@@ -171,7 +132,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
         this.networkTimeoutRef = scopedTimeoutRef;
       });
 
-      this.infoBody.scrollLeft = 0;
+      this.claimableContentWrapper.scrollLeft = 0;
 
       const vehicleResponse = isVinRequest ? await getVehicleInformation(this, { scopedTimeoutRef, vin, mockData }, headers) : newData;
 
@@ -198,7 +159,6 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
         }
       }
 
-      if (this.tabsListenerCallback) this.tabsListenerCallback();
       this.errorMessage = null;
       this.isLoading = false;
       this.isError = false;
@@ -254,8 +214,8 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
       } else {
         this.progressBar.style.width = '100%';
         this.progressBar.style.opacity = '1';
-        const claimableItems = this.claimableContentWrapper.getElementsByClassName('claimable-item');
-        if (this.isElementOnScreen) claimableItems[claimableItems.length - 1]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        const claimableItems = this.claimableContentWrapper.getElementsByClassName('claimable-item') as HTMLCollectionOf<HTMLElement>;
+        scrollIntoContainerView(claimableItems[claimableItems.length - 1], this.claimableContentWrapper);
       }
     } else {
       const firstPendingItem = serviceItems.find(x => x.status === 'pending');
@@ -264,7 +224,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
       this.progressBar.style.width = (firstPendingItemIndex / serviceItems.length - 1 / (serviceItems.length * 2)) * 100 + '%';
       this.progressBar.style.opacity = this.progressBar.style.width === '0%' ? '0' : '1';
 
-      if (this.isElementOnScreen) firstPendingItemRef?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      scrollIntoContainerView(firstPendingItemRef, this.claimableContentWrapper);
     }
   }
 
@@ -465,16 +425,13 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
 
   private onActiveTabChange = ({ label }: { label: string; idx: number }) => {
     this.tabAnimationLoading = true;
-    this.infoBody.style.overflow = 'hidden';
     clearTimeout(this.tabAnimationTimeoutRef);
 
     this.tabAnimationTimeoutRef = setTimeout(() => {
       this.activeTab = label;
-      this.infoBody.scrollLeft = 0;
+      this.claimableContentWrapper.scrollLeft = 0;
       setTimeout(() => {
-        this.tabsListenerCallback();
         this.tabAnimationLoading = false;
-        this.infoBody.style.overflow = 'auto';
         this.updateProgressBar();
       }, 100);
     }, 500);
@@ -583,7 +540,6 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
         <vehicle-item-claim-form locale={texts.claimForm} language={this.language} id="vehicle-item-claim-form"></vehicle-item-claim-form>
 
         <VehicleInfoLayout
-          noPadding
           isError={this.isError}
           coreOnly={this.coreOnly}
           isLoading={this.isLoading}
@@ -591,160 +547,158 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
           direction={this.sharedLocales.direction}
           errorMessage={this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
         >
-          <div class={cn('absolute z-10 tabs-container mx-[30px] w-[calc(100%-62px)]', { 'pt-[16px]': !this.coreOnly })}>
+          <div class="absolute z-10 w-full pt-[16px]">
             <div class={cn('duration-300', { 'translate-y-[-50%] opacity-0': hideTabs })}>
               <shift-tabs activeTabLabel={this.activeTab} changeActiveTab={this.onActiveTabChange} tabs={tabs}></shift-tabs>
             </div>
           </div>
-          <div
-            class={cn('flex px-[30px] relative h-[300px] items-center transition-all duration-300 claimable-content-wrapper', {
-              'h-[320px]': hasInactiveItems || this.showPrintBox,
-            })}
-          >
-            <div class="h-[10px] loading-lane transition-none transition duration-[0.4s] bg-[#f2f2f2] border border-[#ddd] rounded-[10px] w-[calc(100%-62px)] absolute items-center justify-around">
-              <div class="w-full h-[10px] rounded-[4px] overflow-x-hidden absolute left-0 top-0">
-                <div class="absolute opacity-0 bg-[#1a1a1a] w-[150%] h-[10px]"></div>
-                <div class="absolute h-[10px] bg-[linear-gradient(to_bottom,_#428bca_0%,_#3071a9_100%)] lane-inc"></div>
-                <div class="absolute h-[10px] bg-[linear-gradient(to_bottom,_#428bca_0%,_#3071a9_100%)] lane-dec"></div>
+          <div class="relative">
+            <div class="flex px-[30px] absolute w-full h-[320px] items-center">
+              <div class="h-[10px] translate-y-[-5px] relative bg-[#f2f2f2] border border-[#ddd] rounded-[10px] w-[calc(100%-62px)] items-center justify-around">
+                <div class="w-full h-full rounded-[4px] overflow-x-hidden absolute left-0 top-0">
+                  <div class="absolute opacity-0 bg-[#1a1a1a] w-[150%] h-full" />
+                  <div class="absolute h-full bg-[linear-gradient(to_bottom,_#428bca_0%,_#3071a9_100%)] lane-inc" />
+                  <div class="absolute h-full bg-[linear-gradient(to_bottom,_#428bca_0%,_#3071a9_100%)] lane-dec" />
+                </div>
               </div>
             </div>
 
             <div
-              class={cn('h-[10px] transition duration-[0.4s] bg-[#f2f2f2] border border-[#ddd] rounded-[10px] w-[calc(100%-62px)] absolute items-center justify-around invisible', {
-                'opacity-0': this.isLoading || this.tabAnimationLoading,
-              })}
-            />
-
-            <div
-              class={cn('h-[10px] bg-[#f2f2f2] border flex-1 border-[#ddd] rounded-[10px] flex items-center justify-around relative', {
-                'bg-transparent border-transparent': this.isLoading || this.tabAnimationLoading,
+              class={cn('flex overflow-x-scroll px-[30px] relative h-[320px] items-center transition-all duration-300 claimable-content-wrapper', {
+                'hide-scroll': this.tabAnimationLoading,
               })}
             >
-              {serviceItems.map((item: ServiceItem, idx) => {
-                let statusClass = '';
+              <div
+                class={cn('h-[10px] bg-[#f2f2f2] border flex-1 border-[#ddd] rounded-[10px] flex items-center justify-around relative', {
+                  'bg-transparent border-transparent': this.isLoading || this.tabAnimationLoading || !serviceItems.length,
+                })}
+              >
+                {serviceItems.map((item: ServiceItem, idx) => {
+                  let statusClass = '';
 
-                if (item.status === 'pending') {
-                  if (serviceItems.findIndex(i => i.status === 'pending') === idx) statusClass = item.status;
-                } else statusClass = item.status;
+                  if (item.status === 'pending') {
+                    if (serviceItems.findIndex(i => i.status === 'pending') === idx) statusClass = item.status;
+                  } else statusClass = item.status;
 
-                return (
-                  <div key={item.name} class={cn('claimable-item flex flex-col items-center gap-[5px] font-[14px] min-w-[250px]', statusClass)} onMouseLeave={this.onMouseLeave}>
-                    <div
-                      onAnimationEnd={this.removeLoadAnimationClass}
-                      class={cn(
-                        'claimable-item-header load-animation hover:[&>img]:rotate-[360deg] hover:[&>img]:scale-[125%] relative duration-[0.4s] py-[10px] leading-[1em] h-[3em] flex flex-col items-center cursor-pointer',
-                        {
-                          '!opacity-0 !translate-y-[-5px] !scale-[70%]': this.isLoading || this.tabAnimationLoading,
-                        },
-                      )}
-                      onMouseEnter={event => this.onMouseEnter(event.target as HTMLElement, idx)}
-                    >
-                      <img class="duration-[0.4s]" src={icons[item.status]} alt="status icon" />
-                      <span class="font-bold">{texts[item.status]}</span>
-                      {this.activePopupIndex === idx && this.createPopup(item)}
+                  return (
+                    <div key={item.name} class={cn('claimable-item flex flex-col items-center gap-[5px] font-[14px] min-w-[250px]', statusClass)} onMouseLeave={this.onMouseLeave}>
+                      <div
+                        onAnimationEnd={this.removeLoadAnimationClass}
+                        class={cn(
+                          'claimable-item-header load-animation hover:[&>img]:rotate-[360deg] hover:[&>img]:scale-[125%] relative duration-[0.4s] py-[10px] leading-[1em] h-[3em] flex flex-col items-center cursor-pointer',
+                          {
+                            '!opacity-0 !translate-y-[-5px] !scale-[70%]': this.isLoading || this.tabAnimationLoading,
+                          },
+                        )}
+                        onMouseEnter={event => this.onMouseEnter(event.target as HTMLElement, idx)}
+                      >
+                        <img class="duration-[0.4s]" src={icons[item.status]} alt="status icon" />
+                        <span class="font-bold">{texts[item.status]}</span>
+                        {this.activePopupIndex === idx && this.createPopup(item)}
+                      </div>
+                      <div
+                        onAnimationEnd={this.removeLoadAnimationClass}
+                        class={cn(
+                          'claimable-item-circle load-animation w-[18px] translate-y-[2px] h-[18px] rounded-[50%] bg-[#a1a1a1] border-[5px] border-double border-[#ececec] transition-all duration-[0.4s] z-[1]',
+                          {
+                            '!opacity-0 !scale-[150%]': this.isLoading || this.tabAnimationLoading,
+                          },
+                        )}
+                      ></div>
+                      <p
+                        onAnimationEnd={this.removeLoadAnimationClass}
+                        class={cn(
+                          'claimable-item-footer load-animation transition-all duration-[0.4s] px-[20px] text-center leading-[1.5em] h-[4.5em] overflow-hidden text-ellipsis m-0',
+                          {
+                            '!opacity-0 !translate-y-[10px] !scale-[70%]': this.isLoading || this.tabAnimationLoading,
+                          },
+                        )}
+                      >
+                        {item.name}
+                      </p>
                     </div>
-                    <div
-                      onAnimationEnd={this.removeLoadAnimationClass}
-                      class={cn(
-                        'claimable-item-circle load-animation w-[18px] h-[18px] rounded-[50%] bg-[#a1a1a1] border-[5px] border-double border-[#ececec] transition-all duration-[0.4s] z-[1]',
-                        {
-                          '!opacity-0 !scale-[150%]': this.isLoading || this.tabAnimationLoading,
-                        },
-                      )}
-                    ></div>
-                    <p
-                      onAnimationEnd={this.removeLoadAnimationClass}
-                      class={cn(
-                        'claimable-item-footer load-animation transition-all duration-[0.4s] px-[20px] text-center leading-[1.5em] h-[4.5em] overflow-hidden text-ellipsis m-0',
-                        {
-                          '!opacity-0 !translate-y-[10px] !scale-[70%]': this.isLoading || this.tabAnimationLoading,
-                        },
-                      )}
-                    >
-                      {item.name}
-                    </p>
-                  </div>
-                );
-              })}
-
-              <div
-                class={cn(
-                  'progress-bar h-[10px] opacity-0 bg-[linear-gradient(to_bottom,_#428bca_0%,_#3071a9_100%)] border border-[#ddd] rounded-[10px] w-0 absolute left-0 transition-all duration-500 z-0',
-                  {
-                    '!w-0 !opacity-0': this.isLoading || this.tabAnimationLoading,
-                  },
-                )}
-              ></div>
-            </div>
-
-            <div class={cn('absolute w-[90%] left-1/2 ml-[-45%] bottom-[40px] z-[1]', { '!z-[-1]': !(this.vehicleInformation && hasInactiveItems) })}>
-              <div
-                class={cn('card warning-card span-entire-1st-row activation-panel', {
-                  loading: this.isLoading || this.tabAnimationLoading,
-                  visible: hasInactiveItems,
+                  );
                 })}
-                onAnimationEnd={this.removeLoadAnimationClass}
-              >
-                <p class="no-padding flex gap-2">
-                  <span class="font-semibold">{texts.warrantyAndServicesNotActivated}</span>
-                </p>
 
-                <button
-                  onClick={() => {
-                    if (this.activate) {
-                      this.activate(this.vehicleInformation);
-                    }
-                  }}
-                  class="claim-button"
-                >
-                  <svg class="size-[30px] duration-200" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g stroke-width="0"></g>
-                    <g stroke-linecap="round" stroke-linejoin="round"></g>
-                    <g>
-                      <circle cx="12" cy="12" r="8" fill-opacity="0.24"></circle>
-                      <path d="M8.5 11L11.3939 13.8939C11.4525 13.9525 11.5475 13.9525 11.6061 13.8939L19.5 6" stroke-width="1.2"></path>
-                    </g>
-                  </svg>
-                  <span>{texts.activateNow}</span>
-                </button>
+                <div
+                  class={cn(
+                    'progress-bar h-[10px] opacity-0 bg-[linear-gradient(to_bottom,_#428bca_0%,_#3071a9_100%)] border border-[#ddd] rounded-[10px] w-0 absolute left-0 transition-all duration-500 z-0',
+                    {
+                      '!w-0 !opacity-0': this.isLoading || this.tabAnimationLoading,
+                    },
+                  )}
+                ></div>
               </div>
-            </div>
 
-            <div class={cn('absolute w-[90%] left-1/2 ml-[-45%] bottom-[40px] z-[1]', { '!z-[-1]': !this.showPrintBox })}>
-              <div
-                class={cn('card warning-card span-entire-1st-row activation-panel', {
-                  loading: this.isLoading,
-                  visible: this.showPrintBox,
-                })}
-                onAnimationEnd={this.removeLoadAnimationClass}
-              >
-                <p class="no-padding flex gap-2">
-                  <span class="font-semibold">{texts.successFulClaimMessage}</span>
-                </p>
-
-                <button
-                  onClick={() => {
-                    if (this.print) {
-                      this.print(this.lastSuccessfulClaimResponse);
-                    } else {
-                      if (this.lastSuccessfulClaimResponse.PrintURL) {
-                        window.open(this.lastSuccessfulClaimResponse.PrintURL, '_blank').focus();
-                      }
-                    }
-                  }}
-                  class="claim-button dynamic-claim-button"
+              <div class={cn('absolute w-[90%] left-1/2 ml-[-45%] bottom-[40px] z-[1]', { '!z-[-1]': !(this.vehicleInformation && hasInactiveItems) })}>
+                <div
+                  class={cn('card warning-card span-entire-1st-row activation-panel', {
+                    loading: this.isLoading || this.tabAnimationLoading,
+                    visible: hasInactiveItems,
+                  })}
+                  onAnimationEnd={this.removeLoadAnimationClass}
                 >
-                  <svg width="30px" height="30px" viewBox="-5 -5 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M17 7H7V6h10v1zm0 12H7v-6h10v6zm2-12V3H5v4H1v8.996C1 17.103 1.897 18 3.004 18H5v3h14v-3h1.996A2.004 2.004 0 0 0 23 15.996V7h-4z"
-                      fill="rgb(252, 248, 227)"
-                    />
-                  </svg>
+                  <p class="no-padding flex gap-2">
+                    <span class="font-semibold">{texts.warrantyAndServicesNotActivated}</span>
+                  </p>
 
-                  <span>{texts.print}</span>
-                </button>
+                  <button
+                    onClick={() => {
+                      if (this.activate) {
+                        this.activate(this.vehicleInformation);
+                      }
+                    }}
+                    class="claim-button"
+                  >
+                    <svg class="size-[30px] duration-200" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g stroke-width="0"></g>
+                      <g stroke-linecap="round" stroke-linejoin="round"></g>
+                      <g>
+                        <circle cx="12" cy="12" r="8" fill-opacity="0.24"></circle>
+                        <path d="M8.5 11L11.3939 13.8939C11.4525 13.9525 11.5475 13.9525 11.6061 13.8939L19.5 6" stroke-width="1.2"></path>
+                      </g>
+                    </svg>
+                    <span>{texts.activateNow}</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class={cn('absolute w-[90%] left-1/2 ml-[-45%] bottom-[40px] z-[1]', { '!z-[-1]': !this.showPrintBox })}>
+                <div
+                  class={cn('card warning-card span-entire-1st-row activation-panel', {
+                    loading: this.isLoading,
+                    visible: this.showPrintBox,
+                  })}
+                  onAnimationEnd={this.removeLoadAnimationClass}
+                >
+                  <p class="no-padding flex gap-2">
+                    <span class="font-semibold">{texts.successFulClaimMessage}</span>
+                  </p>
+
+                  <button
+                    onClick={() => {
+                      if (this.print) {
+                        this.print(this.lastSuccessfulClaimResponse);
+                      } else {
+                        if (this.lastSuccessfulClaimResponse.PrintURL) {
+                          window.open(this.lastSuccessfulClaimResponse.PrintURL, '_blank').focus();
+                        }
+                      }
+                    }}
+                    class="claim-button dynamic-claim-button"
+                  >
+                    <svg width="30px" height="30px" viewBox="-5 -5 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M17 7H7V6h10v1zm0 12H7v-6h10v6zm2-12V3H5v4H1v8.996C1 17.103 1.897 18 3.004 18H5v3h14v-3h1.996A2.004 2.004 0 0 0 23 15.996V7h-4z"
+                        fill="rgb(252, 248, 227)"
+                      />
+                    </svg>
+
+                    <span>{texts.print}</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

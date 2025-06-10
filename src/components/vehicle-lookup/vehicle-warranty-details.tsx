@@ -332,28 +332,29 @@ export class VehicleWarrantyDetails implements VehicleInformationInterface {
           direction={this.sharedLocales.direction}
           errorMessage={this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
         >
-          {this.showWarranty && (
-            <CardsContainer
-              isLoading={isLoading}
-              warrantyLocale={this.locale}
-              vehicleInformation={this.vehicleInformation}
-              isAuthorized={this.vehicleInformation?.isAuthorized}
-              unInvoicedByBrokerName={this.unInvoicedByBrokerName}
-            />
-          )}
-
-          <div class="h-[8px]" />
-
-          <flexible-container isOpened={this.showRecaptcha} classes={cn('w-fit mx-auto shift-skeleton', { loading: !this.showRecaptcha })}>
-            <div style={{ height: 'auto', padding: '16px 16px 0px 16px' }} class="recaptcha-container">
-              <slot></slot>
-            </div>
-
-            {['data', 'data-loading'].includes(this.state) && this.recaptchaRes && (
-              <div class={cn('recaptcha-response', !this.recaptchaRes?.hasSSC ? 'success-card' : 'reject-card ')}>{this.locale[this.recaptchaRes?.message]}</div>
+          <div class="p-[16px]">
+            {this.showWarranty && (
+              <CardsContainer
+                isLoading={isLoading}
+                warrantyLocale={this.locale}
+                vehicleInformation={this.vehicleInformation}
+                isAuthorized={this.vehicleInformation?.isAuthorized}
+                unInvoicedByBrokerName={this.unInvoicedByBrokerName}
+              />
             )}
-          </flexible-container>
 
+            <div class="h-[8px]" />
+
+            <flexible-container isOpened={this.showRecaptcha} classes={cn('w-fit mx-auto shift-skeleton', { loading: !this.showRecaptcha })}>
+              <div style={{ height: 'auto' }} class="recaptcha-container">
+                <slot></slot>
+              </div>
+
+              {['data', 'data-loading'].includes(this.state) && this.recaptchaRes && (
+                <div class={cn('recaptcha-response', !this.recaptchaRes?.hasSSC ? 'success-card' : 'reject-card ')}>{this.locale[this.recaptchaRes?.message]}</div>
+              )}
+            </flexible-container>
+          </div>
           <flexible-container isOpened={this.checkingUnauthorizedSSC} classes="w-fit mx-auto">
             <div class="pt-[16px]">
               <div class="flex shift-skeleton flex-col gap-[8px]">
@@ -364,9 +365,11 @@ export class VehicleWarrantyDetails implements VehicleInformationInterface {
               </div>
             </div>
           </flexible-container>
-          <div class="mt-[32px] mx-auto w-fit">
+          <div class="mt-[32px] mx-auto w-fit max-w-full">
             <div class="bg-[#f6f6f6] h-[50px] flex items-center justify-center px-[16px] font-bold text-[18px]">{this.locale.sscCampings}</div>
-            <information-table isLoading={isLoading} templateRow={templateRow} rows={rows} headers={tableHeaders}></information-table>
+            <div class="overflow-x-auto">
+              <information-table isLoading={isLoading} templateRow={templateRow} rows={rows} headers={tableHeaders}></information-table>
+            </div>
           </div>
         </VehicleInfoLayout>
       </Host>
