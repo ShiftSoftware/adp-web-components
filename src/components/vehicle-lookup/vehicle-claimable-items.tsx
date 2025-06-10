@@ -45,6 +45,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   @Prop() coreOnly: boolean = false;
   @Prop() language: LanguageKeys = 'en';
   @Prop() print?: (claimResponse: any) => void;
+  @Prop() maximumDocumentFileSizeInMb: number = 5;
   @Prop() claimEndPoint: string = 'api/vehicle/swift-claim';
   @Prop() errorCallback: (errorMessage: ErrorKeys) => void;
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
@@ -537,7 +538,12 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
 
     return (
       <Host>
-        <vehicle-item-claim-form locale={texts.claimForm} language={this.language} id="vehicle-item-claim-form"></vehicle-item-claim-form>
+        <vehicle-item-claim-form
+          locale={texts.claimForm}
+          language={this.language}
+          id="vehicle-item-claim-form"
+          maximumDocumentFileSizeInMb={this.maximumDocumentFileSizeInMb}
+        ></vehicle-item-claim-form>
 
         <VehicleInfoLayout
           isError={this.isError}

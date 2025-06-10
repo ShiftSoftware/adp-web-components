@@ -19,6 +19,8 @@
   "activationRequired": "Activation Required",
   "warrantyAndServicesNotActivated": "Warranty & Services have not been activated for this vehicle.",
   "claimForm": {
+    "documentLimitError": "لقد تجاوز المستند الحد الأقصى لحجم الملف: ",
+    "documentRequiredError": "من فضلك إملأ حقل المستند.",
     "document": "وثيقة",
     "serviceType": "نوع الخدمة",
     "name": "اسم",

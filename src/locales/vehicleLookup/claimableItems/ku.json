@@ -19,6 +19,8 @@
   "activationRequired": "Activation Required",
   "warrantyAndServicesNotActivated": "Warranty & Services have not been activated for this vehicle.",
   "claimForm": {
+    "documentLimitError": "بەڵگەنامەکە سنووری قەبارەی پەڕگەکەی تێپەڕاند: ",
+    "documentRequiredError": "تکایە بەڵگەنامەکە داخڵبکە.",
     "document": "بەڵگەنامە",
     "serviceType": "جۆری خزمەتگوزاری",
     "name": "ناو",

@@ -254,6 +254,7 @@ export namespace Components {
         "language": LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        "maximumDocumentFileSizeInMb": number;
         "print"?: (claimResponse: any) => void;
         "queryString": string;
         "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
@@ -268,6 +269,7 @@ export namespace Components {
         "language": LanguageKeys;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "locale": ClaimFormType;
+        "maximumDocumentFileSizeInMb": number;
         "quite": () => Promise<void>;
         "unInvoicedByBrokerName"?: string;
         "vin"?: string;
@@ -794,6 +796,7 @@ declare namespace LocalJSX {
         "language"?: LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        "maximumDocumentFileSizeInMb"?: number;
         "print"?: (claimResponse: any) => void;
         "queryString"?: string;
     }
@@ -804,6 +807,7 @@ declare namespace LocalJSX {
         "language"?: LanguageKeys;
         "loadingStateChange"?: (isLoading: boolean) => void;
         "locale"?: ClaimFormType;
+        "maximumDocumentFileSizeInMb"?: number;
         "unInvoicedByBrokerName"?: string;
         "vin"?: string;
     }

@@ -17,6 +17,7 @@ export class VehicleItemClaimForm {
   @Prop() vin?: string = '';
   @Prop() item?: ServiceItem = null;
   @Prop() language: LanguageKeys = 'en';
+  @Prop() maximumDocumentFileSizeInMb: number;
   @Prop() canceledItems?: ServiceItem[] = null;
   @Prop() unInvoicedByBrokerName?: string = null;
   @Prop() handleClaiming?: (payload: ClaimPayload) => void;
@@ -30,11 +31,13 @@ export class VehicleItemClaimForm {
   @State() isLoading: boolean = false;
   @State() internalVin?: string = '';
   @State() isOpened?: boolean = false;
+  @State() isDocumentError: boolean = false;
   @State() selectedFile: File | null = null;
   @State() internalItem?: ServiceItem = null;
   @State() confirmServiceCancellation: boolean = false;
   @State() internalCanceledItem?: ServiceItem[] = null;
   @State() confirmUnInvoicedTBPVehicles: boolean = false;
+  @State() documentError: 'documentLimitError' | 'documentRequiredError' = 'documentRequiredError';
 
   @State() readyToClaim: boolean = false;
   @State() qrCode?: string = null;
@@ -202,6 +205,7 @@ export class VehicleItemClaimForm {
   @Watch('isOpened')
   async onOpenChange(newOpenState: boolean) {
     document.body.style.overflow = newOpenState ? 'hidden' : 'auto';
+    this.isDocumentError = false;
   }
 
   registerFileUploader = () => {
@@ -212,9 +216,6 @@ export class VehicleItemClaimForm {
     this.documentUploader = this.el.shadowRoot.querySelector('.document-uploader');
 
     if (!this.documentButton || !this.documentUploader) return;
-
-    console.log(this.documentButton);
-    console.log(this.documentUploader);
 
     this.documentButton.addEventListener('click', this.onFileUploaderClick);
     this.documentUploader.addEventListener('change', this.onFileUploaderChange);
@@ -228,9 +229,22 @@ export class VehicleItemClaimForm {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
 
-    console.log(file);
-
     if (!file) return;
+
+    this.selectedFile = file;
+
+    if (this.selectedFile.size > this.maximumDocumentFileSizeInMb * 1024 * 1024) {
+      this.documentError = 'documentLimitError';
+      this.isDocumentError = true;
+      return;
+    } else this.isDocumentError = false;
+  };
+
+  clearFile = (event: MouseEvent) => {
+    event.stopPropagation();
+
+    this.selectedFile = null;
+    this.isDocumentError = false;
   };
 
   render() {
@@ -500,28 +514,57 @@ export class VehicleItemClaimForm {
 
                     <div class="mt-[55px]">
                       {this.item?.showDocumentUploader && (
-                        <div>
+                        <div class="flex mb-[12px] flex-col">
                           <input class="document-uploader" type="file" hidden />
                           <div
                             class={cn(
-                              'document-button flex items-center w-fit mx-auto cursor-pointer gap-[16px] px-[8px] mb-[12px] h-[32px] transition duration-300 text-white bg-[#275e8f] active:bg-[#223f57] hover:bg-[#3071a9] rounded-[5px]',
+                              'document-button overflow-hidden flex items-center w-fit mx-auto cursor-pointer gap-[16px] ps-[8px] h-[32px] transition duration-300 text-white bg-[#275e8f] active:bg-[#223f57] hover:bg-[#3071a9] rounded-[5px]',
                               { 'pointer-events-none cursor-default': disableInput },
                             )}
                           >
-                            {texts.document}
-                            <svg
-                              fill="none"
-                              stroke-width="2"
-                              class="size-[24px]"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              xmlns="http://www.w3.org/2000/svg"
+                            <div title={this.selectedFile?.name || texts.document} class="max-w-[200px] truncate whitespace-nowrap overflow-hidden text-ellipsis">
+                              {this.selectedFile?.name || texts.document}
+                            </div>
+                            <button
+                              onClick={this.clearFile}
+                              class={cn('overflow-hidden transition duration-300 hover:bg-red-600 relative cursor-pointer flex items-center justify-center size-[32px]', {
+                                'pointer-events-none cursor-default': !this.selectedFile,
+                              })}
                             >
-                              <path d="m16 6-8.414 8.586a2 2 0 0 0 2.829 2.829l8.414-8.586a4 4 0 1 0-5.657-5.657l-8.379 8.551a6 6 0 1 0 8.485 8.485l8.379-8.551" />
-                            </svg>
+                              <svg
+                                fill="none"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                xmlns="http://www.w3.org/2000/svg"
+                                class={cn('size-[24px] absolute transition duration-500', { '-translate-y-[32px]': !!this.selectedFile })}
+                              >
+                                <path d="m16 6-8.414 8.586a2 2 0 0 0 2.829 2.829l8.414-8.586a4 4 0 1 0-5.657-5.657l-8.379 8.551a6 6 0 1 0 8.485 8.485l8.379-8.551" />
+                              </svg>
+                              <svg
+                                fill="none"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                xmlns="http://www.w3.org/2000/svg"
+                                class={cn('size-[24px] absolute transition translate-y-[32px] duration-500', { 'translate-y-0': !!this.selectedFile })}
+                              >
+                                <path d="M18 6 6 18" />
+                                <path d="m6 6 12 12" />
+                              </svg>
+                            </button>
                           </div>
+                          <flexible-container isOpened={this.isDocumentError}>
+                            <div class="text-red-700 w-fit mx-auto pt-[8px]">
+                              {this.documentError === 'documentLimitError'
+                                ? texts.documentLimitError + `${this.maximumDocumentFileSizeInMb}Mb`
+                                : texts.documentRequiredError || this.sharedLocales.errors.wildCard}
+                            </div>
+                          </flexible-container>
                         </div>
                       )}
                       <button
