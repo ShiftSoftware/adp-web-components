@@ -48,26 +48,6 @@
       <button class="sample-button" onclick="fetchData('JTMABBBJ9P4099294')">JTMABBBJ9P4099294 (Broker Stock)</button>
     </div>
 
-    <h3>offline Loads</h3>
-    <div class="button-container">
-      <button class="sample-button" onclick="setData('')">Empty</button>
-      <button class="sample-button" onclick="setData('error')">Error</button>
-      <button class="sample-button" onclick="setData('JTMHX01J8L4198295')">JTMHX01J8L4198295</button>
-      <button class="sample-button" onclick="setData('JTMHX01J8L4198296')">JTMHX01J8L4198296</button>
-      <button class="sample-button" onclick="setData('MR0BX8CD3P2791075')">MR0BX8CD3P2791075</button>
-      <button class="sample-button" onclick="setData('JTMHX01J8L4198299')">JTMHX01J8L4198299</button>
-      <button class="sample-button" onclick="setData('JTMABBBJ9P4099243')">JTMABBBJ9P4099243</button>
-      <button class="sample-button" onclick="setData('JTMHU09J6E4100543')">JTMHU09J6E4100543</button>
-      <button class="sample-button" onclick="setData('JTMABBBJ9P4099200')">JTMABBBJ9P4099200</button>
-      <button class="sample-button" onclick="setData('JTMABBBJ9P4099294')">JTMABBBJ9P4099294 (Broker Stock)</button>
-    </div>
-
-    <label
-      >render
-      <input onchange="toggleCheckbox(this)" type="checkbox" />
-    </label>
-    <div id="container"></div>
-
     <script>
       let warranty;
 
@@ -93,38 +73,6 @@
 
       function updateLang(newLang) {
         warranty.language = newLang;
-      }
-
-      function toggleCheckbox(e) {
-        const container = document.getElementById('container');
-        if (e.checked) {
-          const warrantyDetails = document.createElement('warranty-details');
-
-          warrantyDetails.setAttribute('user-id', '1');
-          warrantyDetails.setAttribute('is-dev', 'true');
-          warrantyDetails.setAttribute('id', 'toggle-item');
-          warrantyDetails.setAttribute('show-ssc', 'true');
-          warrantyDetails.setAttribute('query-string', '');
-          warrantyDetails.setAttribute('show-warranty', 'true');
-          warrantyDetails.setAttribute('brand-integration-id', 'TYT');
-          warrantyDetails.setAttribute('recaptcha-key', '6LetFoYqAAAAAE0fg-070Qtm3z-DG24sMJ8wzY1f');
-          warrantyDetails.setAttribute('base-url', 'http://localhost:7174/api/secure-vehicle-lookup/');
-          warrantyDetails.setAttribute('unauthorized-ssc-lookup-base-url', 'http://localhost:7174/api/secure-unauthorized-ssc-lookup/');
-
-          const recaptchaDiv = document.createElement('div');
-          recaptchaDiv.className = 'g-recaptcha';
-          recaptchaDiv.id = 'warranty-recaptcha';
-          recaptchaDiv.setAttribute('data-sitekey', '6LetFoYqAAAAAE0fg-070Qtm3z-DG24sMJ8wzY1f');
-
-          warrantyDetails.appendChild(recaptchaDiv);
-
-          warrantyDetails.setData(mockData['JTMABBBJ9P4099243']);
-
-          container.appendChild(warrantyDetails);
-        } else {
-          const element = document.getElementById('toggle-item');
-          element.parentNode.removeChild(element);
-        }
       }
     </script>
 
