@@ -564,6 +564,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
             </div>
 
             <div
+              dir="ltr"
               class={cn('flex overflow-x-scroll px-[30px] relative h-[320px] items-center transition-all duration-300 claimable-content-wrapper', {
                 'hide-scroll': this.tabAnimationLoading,
               })}
@@ -593,7 +594,9 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
                         onMouseEnter={event => this.onMouseEnter(event.target as HTMLElement, idx)}
                       >
                         <img class="duration-[0.4s]" src={icons[item.status]} alt="status icon" />
-                        <span class="font-bold">{texts[item.status]}</span>
+                        <span dir={this.sharedLocales.direction} class="font-bold">
+                          {texts[item.status]}
+                        </span>
                         {this.activePopupIndex === idx && this.createPopup(item)}
                       </div>
                       <div

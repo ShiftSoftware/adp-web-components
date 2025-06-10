@@ -30,6 +30,7 @@ export class VehicleItemClaimForm {
   @State() isLoading: boolean = false;
   @State() internalVin?: string = '';
   @State() isOpened?: boolean = false;
+  @State() selectedFile: File | null = null;
   @State() internalItem?: ServiceItem = null;
   @State() confirmServiceCancellation: boolean = false;
   @State() internalCanceledItem?: ServiceItem[] = null;
@@ -223,8 +224,9 @@ export class VehicleItemClaimForm {
     this.documentUploader.click();
   };
 
-  onFileUploaderChange = () => {
-    const file = this.documentUploader.files?.[0];
+  onFileUploaderChange = (event: Event) => {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
 
     console.log(file);
 
