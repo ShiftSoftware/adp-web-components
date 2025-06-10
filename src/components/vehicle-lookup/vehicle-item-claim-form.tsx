@@ -482,7 +482,9 @@ export class VehicleItemClaimForm {
                               <path d="M8.5 11L11.3939 13.8939C11.4525 13.9525 11.5475 13.9525 11.6061 13.8939L19.5 6" stroke-width="1.2"></path>
                             </g>
                           </svg>
-                          <span>{texts.claim}</span>
+                          <span>
+                            {texts.claim} {typeof this.item?.showDocumentUploader === 'boolean' && 'new - '} {this.item?.documentUploaderIsRequired && 'Required'}{' '}
+                          </span>
                         </button>
                       </div>
                     </div>

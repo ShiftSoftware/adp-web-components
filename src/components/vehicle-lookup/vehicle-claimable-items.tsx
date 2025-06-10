@@ -86,7 +86,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   loadingLaneRef: HTMLDivElement;
   tabsContainerRef: HTMLDivElement;
   tabsListenerCallback: () => void;
-  dynamicRedeem: VehicleItemClaimForm;
+  claimForm: VehicleItemClaimForm;
   claimableContentWrapper: HTMLElement;
 
   private intersectionObserver: IntersectionObserver;
@@ -111,7 +111,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
     this.tabsContainerRef = this.el.shadowRoot.querySelector('.tabs-container') as HTMLDivElement;
     this.infoBody = closestParentTag(this.tabsContainerRef, 'vehicle-info-body') as HTMLDivElement;
     this.claimableContentWrapper = this.el.shadowRoot.querySelector('.claimable-content-wrapper');
-    this.dynamicRedeem = this.el.shadowRoot.getElementById('dynamic-redeem') as unknown as VehicleItemClaimForm;
+    this.claimForm = this.el.shadowRoot.getElementById('vehicle-item-claim-form') as unknown as VehicleItemClaimForm;
     this.progressBar = this.el.shadowRoot.querySelector('.progress-bar');
 
     if (this.tabsContainerRef && this.infoBody) {
@@ -394,15 +394,15 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   private async handleClaiming() {
     if (this.isDev) {
       // @ts-ignore
-      this.dynamicRedeem.handleClaiming = async (payload: ClaimPayload) => {
+      this.claimForm.handleClaiming = async (payload: ClaimPayload) => {
         await new Promise(r => setTimeout(r, 500));
 
-        this.dynamicRedeem.quite();
+        this.claimForm.quite();
         this.completeClaim({ Success: true, ID: '11223344', PrintURL: 'http://localhost/test/print/1122' });
-        this.dynamicRedeem.handleClaiming = null;
+        this.claimForm.handleClaiming = null;
       };
     } else {
-      this.dynamicRedeem.handleClaiming = async (payload: ClaimPayload) => {
+      this.claimForm.handleClaiming = async (payload: ClaimPayload) => {
         try {
           const response = await fetch(this.claimEndPoint, {
             method: 'POST',
@@ -414,8 +414,8 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
               ...payload,
               vin: this.vehicleInformation.vin,
               saleInformation: this.vehicleInformation.saleInformation,
-              serviceItem: this.dynamicRedeem.item,
-              cancelledServiceItems: this.dynamicRedeem.canceledItems,
+              serviceItem: this.claimForm.item,
+              cancelledServiceItems: this.claimForm.canceledItems,
             }),
           });
 
@@ -423,19 +423,19 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
 
           if (!data.Success) {
             alert(data.Message);
-            this.dynamicRedeem.quite();
-            this.dynamicRedeem.handleClaiming = null;
+            this.claimForm.quite();
+            this.claimForm.handleClaiming = null;
             return;
           }
 
-          this.dynamicRedeem.quite();
+          this.claimForm.quite();
           this.completeClaim(data);
-          this.dynamicRedeem.handleClaiming = null;
+          this.claimForm.handleClaiming = null;
         } catch (error) {
           console.error(error);
           alert(this.sharedLocales.errors.requestFailedPleaseTryAgainLater);
-          this.dynamicRedeem.quite();
-          this.dynamicRedeem.handleClaiming = null;
+          this.claimForm.quite();
+          this.claimForm.handleClaiming = null;
         }
       };
     }
@@ -444,13 +444,13 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   private openRedeem(item: ServiceItem, oldItems: ServiceItem[]) {
     const vehicleInformation = this.vehicleInformation as VehicleInformation;
 
-    this.dynamicRedeem.vin = vehicleInformation?.vin;
-    this.dynamicRedeem.item = item;
-    this.dynamicRedeem.canceledItems = oldItems;
+    this.claimForm.vin = vehicleInformation?.vin;
+    this.claimForm.item = item;
+    this.claimForm.canceledItems = oldItems;
 
     if (vehicleInformation?.saleInformation?.broker !== null && vehicleInformation?.saleInformation?.broker?.invoiceDate === null)
-      this.dynamicRedeem.unInvoicedByBrokerName = vehicleInformation?.saleInformation?.broker?.brokerName;
-    else this.dynamicRedeem.unInvoicedByBrokerName = null;
+      this.claimForm.unInvoicedByBrokerName = vehicleInformation?.saleInformation?.broker?.brokerName;
+    else this.claimForm.unInvoicedByBrokerName = null;
 
     this.handleClaiming();
   }
@@ -577,9 +577,10 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
     const hideTabs = this.isLoading || this.isError || !this.tabs.length || !serviceItems.length;
 
     const tabs = this.tabs.map(group => group.label);
+
     return (
       <Host>
-        <vehicle-item-claim-form locale={texts.claimForm} language={this.language} id="dynamic-redeem"></vehicle-item-claim-form>
+        <vehicle-item-claim-form locale={texts.claimForm} language={this.language} id="vehicle-item-claim-form"></vehicle-item-claim-form>
 
         <VehicleInfoLayout
           noPadding
