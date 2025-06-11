@@ -385,8 +385,6 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
     } else {
       this.claimForm.handleClaiming = async ({ document, ...payload }: ClaimPayload) => {
         try {
-          const tempUrl = 'https://tca-services-staging.azurewebsites.net/api/ItemClaim/claim-form-data';
-
           const formData = new FormData();
           formData.append(
             'payload',
@@ -402,7 +400,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
 
           await new Promise<void>((resolve, reject) => {
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', tempUrl || this.claimEndPoint);
+            xhr.open('POST', this.claimEndPoint);
 
             Object.entries(this.headers || {}).forEach(([key, value]) => {
               xhr.setRequestHeader(key, value as string);
@@ -418,7 +416,6 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
               if (xhr.status === 200) {
                 try {
                   const responseData = JSON.parse(xhr.responseText);
-                  console.log('Upload successful', responseData);
 
                   this.completeClaim(responseData);
                   resolve();
