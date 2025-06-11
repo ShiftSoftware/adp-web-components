@@ -205,7 +205,10 @@ export class VehicleItemClaimForm {
   @Watch('isOpened')
   async onOpenChange(newOpenState: boolean) {
     document.body.style.overflow = newOpenState ? 'hidden' : 'auto';
-    this.isDocumentError = false;
+    if (newOpenState) {
+      this.isDocumentError = false;
+      this.selectedFile = null;
+    }
   }
 
   registerFileUploader = () => {
@@ -255,7 +258,7 @@ export class VehicleItemClaimForm {
       <Host>
         <div
           dir={this.sharedLocales.direction}
-          class={cn('dynamic-claim-processor min-w-[100dvw] min-h-[100dvh] flex flex-col justify-between p-[50px] box-border overflow-auto', this?.isOpened && 'active')}
+          class={cn('dynamic-claim-processor min-w-[100dvw] h-[100dvh] flex flex-col justify-between p-[50px] box-border overflow-auto', this?.isOpened && 'active')}
         >
           <svg id="dynamic-claim-processor-close-icon" onClick={this.closeModal} viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -524,6 +527,7 @@ export class VehicleItemClaimForm {
                           >
                             <div title={this.selectedFile?.name || texts.document} class="max-w-[200px] truncate whitespace-nowrap overflow-hidden text-ellipsis">
                               {this.selectedFile?.name || texts.document}
+                              {this?.item?.documentUploaderIsRequired && !this.selectedFile && <span class="ps-[4px] text-red-500">*</span>}
                             </div>
                             <button
                               onClick={this.clearFile}
@@ -581,9 +585,7 @@ export class VehicleItemClaimForm {
                             <path d="M8.5 11L11.3939 13.8939C11.4525 13.9525 11.5475 13.9525 11.6061 13.8939L19.5 6" stroke-width="1.2"></path>
                           </g>
                         </svg>
-                        <span>
-                          {texts.claim} {typeof this.item?.showDocumentUploader === 'boolean' && 'new - '} {this.item?.documentUploaderIsRequired && 'Required'}{' '}
-                        </span>
+                        <span>{texts.claim}</span>
                       </button>
                     </div>
                   </div>
