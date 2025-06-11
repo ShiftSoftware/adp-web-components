@@ -271,6 +271,7 @@ export namespace Components {
         "locale": ClaimFormType;
         "maximumDocumentFileSizeInMb": number;
         "quite": () => Promise<void>;
+        "setFileUploadProgression": (uploadPercentage: number) => Promise<void>;
         "unInvoicedByBrokerName"?: string;
         "vin"?: string;
     }

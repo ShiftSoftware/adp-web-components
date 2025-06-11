@@ -28,8 +28,9 @@ export class VehicleItemClaimForm {
   @State() claimViaBarcodeScanner: boolean = true;
   @State() sharedLocales: SharedLocales = sharedLocalesSchema.getDefault();
 
-  @State() isLoading: boolean = false;
   @State() internalVin?: string = '';
+  @State() uploadProgress: number = 0;
+  @State() isLoading: boolean = false;
   @State() isOpened?: boolean = false;
   @State() isDocumentError: boolean = false;
   @State() selectedFile: File | null = null;
@@ -177,6 +178,21 @@ export class VehicleItemClaimForm {
 
       if (!this.readyToClaim) return;
 
+      if (this.item?.showDocumentUploader) {
+        if (this.selectedFile && this.selectedFile.size > this.maximumDocumentFileSizeInMb * 1024 * 1024) {
+          this.documentError = 'documentLimitError';
+          this.isDocumentError = true;
+
+          return;
+        }
+
+        if (this.item?.documentUploaderIsRequired && !this.selectedFile) {
+          this.documentError = 'documentRequiredError';
+          this.isDocumentError = true;
+          return;
+        }
+      }
+
       this.readyToClaim = false;
 
       if (this.claimViaBarcodeScanner) {
@@ -188,7 +204,10 @@ export class VehicleItemClaimForm {
 
       this.isLoading = true;
 
-      this.handleClaiming({ jobNumber: this.job, invoice: this.invoice, qrCode: this.qrCode } as ClaimPayload);
+      await this.handleClaiming({ jobNumber: this.job, invoice: this.invoice, qrCode: this.qrCode, document: this.selectedFile } as ClaimPayload);
+
+      this.isLoading = false;
+      this.readyToClaim = true;
     }
   };
 
@@ -206,8 +225,9 @@ export class VehicleItemClaimForm {
   async onOpenChange(newOpenState: boolean) {
     document.body.style.overflow = newOpenState ? 'hidden' : 'auto';
     if (newOpenState) {
-      this.isDocumentError = false;
+      this.uploadProgress = 0;
       this.selectedFile = null;
+      this.isDocumentError = false;
     }
   }
 
@@ -250,9 +270,16 @@ export class VehicleItemClaimForm {
     this.isDocumentError = false;
   };
 
+  @Method()
+  async setFileUploadProgression(uploadPercentage: number) {
+    this.uploadProgress = uploadPercentage;
+  }
+
   render() {
     const texts = this.locale;
     const disableInput = !this.confirmServiceCancellation || !this.confirmUnInvoicedTBPVehicles;
+
+    console.log('upload', this.uploadProgress);
 
     return (
       <Host>
@@ -355,9 +382,9 @@ export class VehicleItemClaimForm {
 
             <div class={cn('dynamic-claim-processor-progress', disableInput && 'disabled')}>
               <div id="scan-invoice-step" class={cn('dynamic-claim-processor-progress-step', this.isLoading && 'processing')}>
-                <div style={{ position: 'relative', width: '130px', height: '130px', display: 'block', margin: 'auto', marginTop: '15px' }}>
-                  <div style={{ position: 'absolute' }} class="scan-invoice-wrapper flex flex-col gap-1 justify-center items-center">
-                    <svg fill="#3071a9" height="100px" width="100px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" stroke="#ffffff">
+                <div class="relative size-[130px] m-auto mt-[15px] flex justify-center">
+                  <div class="absolute scan-invoice-wrapper flex flex-col gap-[4px] justify-center items-center">
+                    <svg class="size-[100px]" fill="#3071a9" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" stroke="#ffffff">
                       <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                       <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                       <g id="SVGRepo_iconCarrier">
@@ -445,12 +472,19 @@ export class VehicleItemClaimForm {
                     </svg>
                     <div>{this.claimViaBarcodeScanner ? texts.scanTheVoucher : texts.enterServiceInfo}</div>
                   </div>
-                  <div style={{ position: 'absolute' }} class="loading-wrapper">
-                    <div class={cn('lds-ripple', this.isLoading && 'active')}>
+                  <div class="loading-wrapper flex flex-col gap-[4px] items-center justify-center absolute">
+                    <div class={cn('lds-ripple relative size-[100px] flex items-center justify-center', this.isLoading && 'active')}>
                       <div></div>
                       <div></div>
                     </div>
-                    <div class={cn('lds-ripple-loading', this.isLoading && 'active')}>{texts.processing}</div>
+                    {this.item?.showDocumentUploader && this.selectedFile ? (
+                      <div class="relative border-[#3071a9] w-[300px] border-[2px] h-[30px] overflow-hidden rounded-full flex items-center justify-center">
+                        {texts.processing} {this.uploadProgress}%
+                        <div style={{ width: `${this.uploadProgress}%` }} class="absolute !transition-all !duration-500 left-0 top-0 h-full bg-blue-200/80 -z-10" />
+                      </div>
+                    ) : (
+                      <div class={cn('lds-ripple-loading', this.isLoading && 'active')}>{texts.processing}</div>
+                    )}
                   </div>
                 </div>
 

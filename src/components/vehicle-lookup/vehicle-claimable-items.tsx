@@ -354,9 +354,18 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
 
   private async handleClaiming() {
     if (this.isDev) {
-      // @ts-ignore
-      this.claimForm.handleClaiming = async (payload: ClaimPayload) => {
-        await new Promise(r => setTimeout(r, 500));
+      this.claimForm.handleClaiming = async ({ document }: ClaimPayload) => {
+        if (document) {
+          this.claimForm.uploadProgress = 0;
+          let uploadChunks = 20;
+          for (let index = 0; index < uploadChunks; index++) {
+            const uploadPercentage = Math.round(((index + 1) / uploadChunks) * 100);
+
+            await new Promise(r => setTimeout(r, 200));
+
+            this.claimForm.setFileUploadProgression(uploadPercentage);
+          }
+        }
 
         this.claimForm.quite();
         this.completeClaim({ Success: true, ID: '11223344', PrintURL: 'http://localhost/test/print/1122' });

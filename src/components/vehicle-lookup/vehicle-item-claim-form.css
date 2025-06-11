@@ -102,18 +102,6 @@
   border-radius: 5px;
 }
 
-.lds-ripple {
-  width: 80px;
-  height: 80px;
-  top: 55px;
-  left: 50%;
-  display: inline-block;
-  margin-left: 12px;
-  position: relative;
-  top: 0;
-  left: 0;
-}
-
 .lds-ripple,
 .lds-ripple div {
   box-sizing: border-box;
@@ -160,34 +148,26 @@
 
 @keyframes lds-ripple {
   0% {
-    top: 36px;
-    left: 36px;
     width: 8px;
     height: 8px;
     opacity: 0;
   }
 
   4.9% {
-    top: 36px;
-    left: 36px;
     width: 8px;
     height: 8px;
     opacity: 0;
   }
 
   5% {
-    top: 36px;
-    left: 36px;
     width: 8px;
     height: 8px;
     opacity: 1;
   }
 
   100% {
-    top: 0;
-    left: 0;
-    width: 80px;
-    height: 80px;
+    width: 100%;
+    height: 100%;
     opacity: 0;
   }
 }
@@ -249,10 +229,6 @@
   border-radius: 5px;
   background: #f8f8f8;
   font-weight: bold;
-}
-
-.dynamic-claim-processor-progress.disabled {
-  opacity: 0.6;
 }
 
 .warning-ul {

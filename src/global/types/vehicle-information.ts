@@ -200,6 +200,7 @@ export type ClaimPayload = {
   invoice?: string;
   jobNumber?: string;
   qrCode?: string;
+  document?: File;
   saleInformation: SaleInformation;
   serviceItem: ServiceItem;
   cancelledServiceItems: ServiceItem[];
