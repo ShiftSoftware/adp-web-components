@@ -478,11 +478,14 @@ export class VehicleItemClaimForm {
                       <div></div>
                     </div>
                     {this.item?.showDocumentUploader && this.selectedFile ? (
-                      <div class="relative border-[#3071a9] w-[300px] border-[2px] h-[30px] overflow-hidden rounded-full flex items-center justify-center">
-                        {texts.processing} {Math.min(this.uploadProgress + 3, 100)}%
+                      <div class="relative border-[#3071a9] w-[300px] border-[2px] font-semibold h-[30px] overflow-hidden rounded-full flex items-center justify-center">
+                        {texts.processing} {`${this.uploadProgress}%`}
                         <div
-                          style={{ width: `${Math.min(this.uploadProgress + 3, 100)}%` }}
-                          class="absolute left-0 top-0 h-full bg-blue-200/80 -z-10 transition-[width] duration-700 ease-out"
+                          style={{
+                            width: `${this.uploadProgress}%`,
+                            background: `linear-gradient(to right, rgba(219, 234, 254, ${Math.min(0.1 + this.uploadProgress / 100, 1)}), rgba(191, 219, 254, ${Math.min(0.15 + this.uploadProgress / 100, 1)}), rgba(147, 197, 253, ${Math.min(0.2 + this.uploadProgress / 100, 1)}))`,
+                          }}
+                          class="absolute left-0 top-0 h-full -z-10 transition-[width] duration-700 ease-out"
                         />
                       </div>
                     ) : (
