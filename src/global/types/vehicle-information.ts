@@ -48,7 +48,7 @@ export type SaleInformation = {
   customerAccountNumber: string;
   customerID: string;
   invoiceDate: string;
-  invoiceNumber: number;
+  invoiceNumber?: string;
   warrantyActivationDate: string;
   broker: Broker;
 };
@@ -57,7 +57,7 @@ export type Broker = {
   brokerId: number;
   brokerName: string;
   customerID: number;
-  invoiceNumber: number;
+  invoiceNumber?: number;
   invoiceDate: string;
 };
 
@@ -79,7 +79,7 @@ export type ServiceHistory = {
   companyId: number;
   branchId: number;
   account: string;
-  invoiceNumber: number;
+  invoiceNumber?: string;
   jobNumber: number;
   laborLines: LaborLine[];
   partLines: PartLine[];

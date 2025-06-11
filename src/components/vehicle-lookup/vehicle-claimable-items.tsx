@@ -419,15 +419,15 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
                 this.claimForm.handleClaiming = null;
                 resolve();
               } else {
-                alert('Error');
                 this.claimForm.quite();
                 this.claimForm.handleClaiming = null;
                 reject(new Error(`Upload failed with status ${xhr.status}`));
               }
             };
 
-            xhr.onerror = () => {
-              alert('Error');
+            xhr.onerror = e => {
+              console.log(e);
+
               this.claimForm.quite();
               this.claimForm.handleClaiming = null;
               reject(new Error('Network error'));

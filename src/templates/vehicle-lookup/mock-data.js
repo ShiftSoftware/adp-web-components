@@ -59,7 +59,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51456604,
+        invoiceNumber: '51456604',
         jobNumber: 13681,
         laborLines: [
           {
@@ -117,7 +117,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51447340,
+        invoiceNumber: '51447340',
         jobNumber: 52446,
         laborLines: [
           {
@@ -169,7 +169,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51441539,
+        invoiceNumber: '51441539',
         jobNumber: 41940,
         laborLines: [
           {
@@ -221,7 +221,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51431492,
+        invoiceNumber: '51431492',
         jobNumber: 22296,
         laborLines: [
           {
@@ -286,7 +286,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51456604,
+        invoiceNumber: '51456604',
         jobNumber: 13681,
         laborLines: [
           {
@@ -344,7 +344,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51447340,
+        invoiceNumber: '51447340',
         jobNumber: 52446,
         laborLines: [
           {
@@ -396,7 +396,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51441539,
+        invoiceNumber: '51441539',
         jobNumber: 41940,
         laborLines: [
           {
@@ -448,7 +448,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51431492,
+        invoiceNumber: '51431492',
         jobNumber: 22296,
         laborLines: [
           {
@@ -515,7 +515,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51456604,
+        invoiceNumber: '51456604',
         jobNumber: 13681,
         laborLines: [
           {
@@ -573,7 +573,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51447340,
+        invoiceNumber: '51447340',
         jobNumber: 52446,
         laborLines: [
           {
@@ -625,7 +625,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51441539,
+        invoiceNumber: '51441539',
         jobNumber: 41940,
         laborLines: [
           {
@@ -677,7 +677,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51431492,
+        invoiceNumber: '51431492',
         jobNumber: 22296,
         laborLines: [
           {
@@ -810,7 +810,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51456604,
+        invoiceNumber: '51456604',
         jobNumber: 13681,
         laborLines: [
           {
@@ -868,7 +868,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51447340,
+        invoiceNumber: '51447340',
         jobNumber: 52446,
         laborLines: [
           {
@@ -920,7 +920,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51441539,
+        invoiceNumber: '51441539',
         jobNumber: 41940,
         laborLines: [
           {
@@ -972,7 +972,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51431492,
+        invoiceNumber: '51431492',
         jobNumber: 22296,
         laborLines: [
           {
@@ -1160,7 +1160,7 @@ const mockData = {
       customerAccountNumber: 'R01447',
       customerID: '89437',
       invoiceDate: '2023-05-11',
-      invoiceNumber: 11155049,
+      invoiceNumber: '11155049',
       broker: {
         brokerId: 628,
         brokerName: 'Modren Cars',
@@ -1189,7 +1189,7 @@ const mockData = {
         companyId: 1,
         branchId: 43,
         account: 'C00015',
-        invoiceNumber: 53166219,
+        invoiceNumber: '53166219',
         jobNumber: 16416,
         laborLines: [
           {
@@ -1247,7 +1247,7 @@ const mockData = {
         companyId: 1,
         branchId: 43,
         account: 'C00015',
-        invoiceNumber: 53165038,
+        invoiceNumber: '53165038',
         jobNumber: 14587,
         laborLines: [
           {
@@ -1299,7 +1299,7 @@ const mockData = {
         companyId: 1,
         branchId: 43,
         account: 'C00015',
-        invoiceNumber: 53163666,
+        invoiceNumber: '53163666',
         jobNumber: 12359,
         laborLines: [
           {
@@ -1357,7 +1357,7 @@ const mockData = {
         companyId: 1,
         branchId: 43,
         account: 'C00015',
-        invoiceNumber: 53162583,
+        invoiceNumber: '53162583',
         jobNumber: 10672,
         laborLines: [
           {
@@ -1409,7 +1409,7 @@ const mockData = {
         companyId: 1,
         branchId: 43,
         account: 'S00058',
-        invoiceNumber: 53161736,
+        invoiceNumber: '53161736',
         jobNumber: 64345,
         laborLines: [
           {
@@ -1473,7 +1473,7 @@ const mockData = {
         companyId: 1,
         branchId: 43,
         account: 'C00015',
-        invoiceNumber: 53160685,
+        invoiceNumber: '53160685',
         jobNumber: 62792,
         laborLines: [
           {
@@ -1549,7 +1549,7 @@ const mockData = {
         companyId: 1,
         branchId: 43,
         account: 'C00015',
-        invoiceNumber: 53159833,
+        invoiceNumber: '53159833',
         jobNumber: 61274,
         laborLines: [
           {
@@ -1607,7 +1607,7 @@ const mockData = {
         companyId: 1,
         branchId: 43,
         account: 'C00015',
-        invoiceNumber: 53158737,
+        invoiceNumber: '53158737',
         jobNumber: 59536,
         laborLines: [
           {
@@ -1677,7 +1677,7 @@ const mockData = {
         companyId: 1,
         branchId: 43,
         account: 'C00015',
-        invoiceNumber: 53157673,
+        invoiceNumber: '53157673',
         jobNumber: 57573,
         laborLines: [
           {
@@ -1905,7 +1905,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51456604,
+        invoiceNumber: '51456604',
         jobNumber: 13681,
         laborLines: [
           {
@@ -1963,7 +1963,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51447340,
+        invoiceNumber: '51447340',
         jobNumber: 52446,
         laborLines: [
           {
@@ -2015,7 +2015,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51441539,
+        invoiceNumber: '51441539',
         jobNumber: 41940,
         laborLines: [
           {
@@ -2067,7 +2067,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51431492,
+        invoiceNumber: '51431492',
         jobNumber: 22296,
         laborLines: [
           {
@@ -2203,7 +2203,7 @@ const mockData = {
       customerAccountNumber: 'R01954',
       customerID: '97120',
       invoiceDate: '2023-09-18',
-      invoiceNumber: 11160168,
+      invoiceNumber: '11160168',
       broker: {
         brokerId: 539,
         brokerName: 'Al-Burchman',
@@ -2232,7 +2232,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'W00001',
-        invoiceNumber: 54302844,
+        invoiceNumber: '54302844',
         jobNumber: 32325,
         laborLines: [
           {
@@ -2253,7 +2253,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54175880,
+        invoiceNumber: '54175880',
         jobNumber: 31762,
         laborLines: [
           {
@@ -2299,7 +2299,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'W00001',
-        invoiceNumber: 54302319,
+        invoiceNumber: '54302319',
         jobNumber: 23978,
         laborLines: [
           {
@@ -2320,7 +2320,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54170870,
+        invoiceNumber: '54170870',
         jobNumber: 23814,
         laborLines: [
           {
@@ -2378,7 +2378,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54162502,
+        invoiceNumber: '54162502',
         jobNumber: 64883,
         laborLines: [
           {
@@ -2430,7 +2430,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'W00001',
-        invoiceNumber: 54301537,
+        invoiceNumber: '54301537',
         jobNumber: 58888,
         laborLines: [
           {
@@ -2458,7 +2458,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'S00031',
-        invoiceNumber: 54158983,
+        invoiceNumber: '54158983',
         jobNumber: 58782,
         laborLines: [
           {
@@ -2498,7 +2498,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'Z00244',
-        invoiceNumber: 54156124,
+        invoiceNumber: '54156124',
         jobNumber: 54143,
         laborLines: [
           {
@@ -2858,7 +2858,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54175877,
+        invoiceNumber: '54175877',
         jobNumber: 32299,
         laborLines: [
           {
@@ -2905,7 +2905,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'W00016',
-        invoiceNumber: 54175876,
+        invoiceNumber: '54175876',
         jobNumber: 32299,
         laborLines: [
           {
@@ -2934,7 +2934,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54165039,
+        invoiceNumber: '54165039',
         jobNumber: 13946,
         laborLines: [
           {
@@ -3011,7 +3011,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54159267,
+        invoiceNumber: '54159267',
         jobNumber: 59455,
         laborLines: [
           {
@@ -3311,7 +3311,7 @@ const mockData = {
       customerAccountNumber: 'R01954',
       customerID: '97120',
       invoiceDate: '2023-09-18',
-      invoiceNumber: 11160168,
+      invoiceNumber: '11160168',
       broker: {
         brokerId: 539,
         brokerName: 'Al-Burchman',
@@ -3340,7 +3340,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'W00001',
-        invoiceNumber: 54302844,
+        invoiceNumber: '54302844',
         jobNumber: 32325,
         laborLines: [
           {
@@ -3361,7 +3361,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54175880,
+        invoiceNumber: '54175880',
         jobNumber: 31762,
         laborLines: [
           {
@@ -3407,7 +3407,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'W00001',
-        invoiceNumber: 54302319,
+        invoiceNumber: '54302319',
         jobNumber: 23978,
         laborLines: [
           {
@@ -3428,7 +3428,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54170870,
+        invoiceNumber: '54170870',
         jobNumber: 23814,
         laborLines: [
           {
@@ -3486,7 +3486,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54162502,
+        invoiceNumber: '54162502',
         jobNumber: 64883,
         laborLines: [
           {
@@ -3538,7 +3538,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'W00001',
-        invoiceNumber: 54301537,
+        invoiceNumber: '54301537',
         jobNumber: 58888,
         laborLines: [
           {
@@ -3566,7 +3566,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'S00031',
-        invoiceNumber: 54158983,
+        invoiceNumber: '54158983',
         jobNumber: 58782,
         laborLines: [
           {
@@ -3606,7 +3606,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'Z00244',
-        invoiceNumber: 54156124,
+        invoiceNumber: '54156124',
         jobNumber: 54143,
         laborLines: [
           {
@@ -3905,7 +3905,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'W00001',
-        invoiceNumber: 54302844,
+        invoiceNumber: '54302844',
         jobNumber: 32325,
         laborLines: [
           {
@@ -3926,7 +3926,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54175880,
+        invoiceNumber: '54175880',
         jobNumber: 31762,
         laborLines: [
           {
@@ -3972,7 +3972,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'W00001',
-        invoiceNumber: 54302319,
+        invoiceNumber: '54302319',
         jobNumber: 23978,
         laborLines: [
           {
@@ -3993,7 +3993,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54170870,
+        invoiceNumber: '54170870',
         jobNumber: 23814,
         laborLines: [
           {
@@ -4051,7 +4051,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54162502,
+        invoiceNumber: '54162502',
         jobNumber: 64883,
         laborLines: [
           {
@@ -4103,7 +4103,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'W00001',
-        invoiceNumber: 54301537,
+        invoiceNumber: '54301537',
         jobNumber: 58888,
         laborLines: [
           {
@@ -4131,7 +4131,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'S00031',
-        invoiceNumber: 54158983,
+        invoiceNumber: '54158983',
         jobNumber: 58782,
         laborLines: [
           {
@@ -4171,7 +4171,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'Z00244',
-        invoiceNumber: 54156124,
+        invoiceNumber: '54156124',
         jobNumber: 54143,
         laborLines: [
           {

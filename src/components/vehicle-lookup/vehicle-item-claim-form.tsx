@@ -479,8 +479,11 @@ export class VehicleItemClaimForm {
                     </div>
                     {this.item?.showDocumentUploader && this.selectedFile ? (
                       <div class="relative border-[#3071a9] w-[300px] border-[2px] h-[30px] overflow-hidden rounded-full flex items-center justify-center">
-                        {texts.processing} {this.uploadProgress}%
-                        <div style={{ width: `${this.uploadProgress}%` }} class="absolute left-0 top-0 h-full bg-blue-200/80 -z-10 transition-[width] duration-700 ease-out" />
+                        {texts.processing} {Math.min(this.uploadProgress + 3, 100)}%
+                        <div
+                          style={{ width: `${Math.min(this.uploadProgress + 3, 100)}%` }}
+                          class="absolute left-0 top-0 h-full bg-blue-200/80 -z-10 transition-[width] duration-700 ease-out"
+                        />
                       </div>
                     ) : (
                       <div class={cn('lds-ripple-loading', this.isLoading && 'active')}>{texts.processing}</div>
