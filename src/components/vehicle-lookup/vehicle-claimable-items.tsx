@@ -45,7 +45,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   @Prop() coreOnly: boolean = false;
   @Prop() language: LanguageKeys = 'en';
   @Prop() print?: (claimResponse: any) => void;
-  @Prop() maximumDocumentFileSizeInMb: number = 5;
+  @Prop() maximumDocumentFileSizeInMb: number = 30;
   @Prop() claimEndPoint: string = 'api/vehicle/swift-claim';
   @Prop() errorCallback: (errorMessage: ErrorKeys) => void;
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
@@ -364,7 +364,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   }
 
   private async handleClaiming() {
-    if (this.isDev) {
+    if (!this.isDev) {
       this.claimForm.handleClaiming = async ({ document }: ClaimPayload) => {
         if (document) {
           this.claimForm.uploadProgress = 0;
@@ -383,35 +383,58 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
         this.claimForm.handleClaiming = null;
       };
     } else {
-      this.claimForm.handleClaiming = async (payload: ClaimPayload) => {
+      this.claimForm.handleClaiming = async ({ document, ...payload }: ClaimPayload) => {
         try {
-          const response = await fetch(this.claimEndPoint, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              ...this.headers,
-            },
-            body: JSON.stringify({
+          const tempUrl = 'https://tca-services-staging.azurewebsites.net/api/ItemClaim/claim-form-data';
+
+          const formData = new FormData();
+          formData.append(
+            'payload',
+            JSON.stringify({
               ...payload,
               vin: this.vehicleInformation.vin,
               saleInformation: this.vehicleInformation.saleInformation,
               serviceItem: this.claimForm.item,
               cancelledServiceItems: this.claimForm.canceledItems,
             }),
+          );
+          if (document) formData.append('document', document);
+
+          await new Promise<void>((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', tempUrl || this.claimEndPoint);
+
+            Object.entries(this.headers || {}).forEach(([key, value]) => {
+              xhr.setRequestHeader(key, value as string);
+            });
+
+            xhr.upload.onprogress = e => {
+              if (e.lengthComputable) this.claimForm.setFileUploadProgression(Math.round((e.loaded / e.total) * 100));
+            };
+
+            xhr.onload = () => {
+              if (xhr.status === 200) {
+                this.claimForm.quite();
+                this.completeClaim({});
+                this.claimForm.handleClaiming = null;
+                resolve();
+              } else {
+                alert('Error');
+                this.claimForm.quite();
+                this.claimForm.handleClaiming = null;
+                reject(new Error(`Upload failed with status ${xhr.status}`));
+              }
+            };
+
+            xhr.onerror = () => {
+              alert('Error');
+              this.claimForm.quite();
+              this.claimForm.handleClaiming = null;
+              reject(new Error('Network error'));
+            };
+
+            xhr.send(formData);
           });
-
-          const data = await response.json();
-
-          if (!data.Success) {
-            alert(data.Message);
-            this.claimForm.quite();
-            this.claimForm.handleClaiming = null;
-            return;
-          }
-
-          this.claimForm.quite();
-          this.completeClaim(data);
-          this.claimForm.handleClaiming = null;
         } catch (error) {
           console.error(error);
           alert(this.sharedLocales.errors.requestFailedPleaseTryAgainLater);
