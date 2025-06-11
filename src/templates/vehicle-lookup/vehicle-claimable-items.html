@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Swift Claim</title>
+    <title>vehicle-claimable-items</title>
 
     <script src="./mock-data.js"></script>
 
@@ -34,8 +34,8 @@
   <body>
     <a href="#" onclick="history.back()" style="color: blue; display: block; margin-bottom: 16px">Back</a>
 
-    <h1>Swift Claim</h1>
-    <dynamic-claim language="en" is-dev="true" base-url="http://localhost:7174/api/secure-vehicle-lookup-test/" query-string="" id="dynamic-claim"></dynamic-claim>
+    <h1>Vehicle Claimable Items</h1>
+    <vehicle-claimable-items language="en" id="vehicle-claimable-items" is-dev="true" query-string="" base-url=""></vehicle-claimable-items>
 
     <div class="button-container">
       <button class="sample-button" onclick="updateLang('en')">En</button>
@@ -58,39 +58,19 @@
       <button class="sample-button" onclick="vinLookup('JTMABBBJ9P4099201')">Sample 10 (Realistic at TBP Stock)</button>
       <button class="sample-button" onclick="vinLookup('1G8ZY1275YZ188208')">Inactive Services</button>
     </div>
-    <h3>offline Loads</h3>
-    <div style="margin-top: 20px; border: 1px solid #e1e1e1; padding: 10px; display: flex; align-content: center; justify-content: center; gap: 10px">
-      <button class="sample-button" onclick="setData('')">empty (Reset)</button>
-      <button class="sample-button" onclick="setData('JTMHX01J8L4198293')">Sample 1 (Not Available Null)</button>
-      <button class="sample-button" onclick="setData('JTMHX01J8L4198294')">Sample 2 (Not Available Empty)</button>
-      <button class="sample-button" onclick="setData('JTMHX01J8L4198295')">Sample 3</button>
-      <button class="sample-button" onclick="setData('JTMHX01J8L4198296')">Sample 4</button>
-      <button class="sample-button" onclick="setData('MR0BX8CD3P2791075')">Sample 5</button>
-      <button class="sample-button" onclick="setData('JTMHX01J8L4198299')">Sample 6</button>
-      <button class="sample-button" onclick="setData('JTMABBBJ9P4099243')">Sample 7</button>
-      <button class="sample-button" onclick="setData('JTMHU09J6E4100543')">Sample 8</button>
-      <button class="sample-button" onclick="setData('JTMABBBJ9P4099200')">Sample 9 (Realistic)</button>
-      <button class="sample-button" onclick="setData('JTMABBBJ9P4099201')">Sample 10 (Realistic at TBP Stock)</button>
-      <button class="sample-button" onclick="setData('1G8ZY1275YZ188208')">Inactive Services</button>
-    </div>
-    <label
-      >render
-      <input onchange="toggleCheckbox(this)" type="checkbox" />
-    </label>
-    <div id="container"></div>
     <script>
-      let dynamicClaim;
+      let claimableItems;
 
       document.addEventListener('DOMContentLoaded', function () {
-        dynamicClaim = document.getElementById('dynamic-claim');
+        claimableItems = document.getElementById('vehicle-claimable-items');
 
-        dynamicClaim.setMockData(mockData);
+        claimableItems.setMockData(mockData);
 
-        dynamicClaim.loadingStateChange = isLoading => {
+        claimableItems.loadingStateChange = isLoading => {
           console.log('isLoading: ' + isLoading);
         };
 
-        dynamicClaim.loadedResponse = newResponse => {
+        claimableItems.loadedResponse = newResponse => {
           console.log(newResponse);
 
           const urlParams = new URLSearchParams(window.location.search);
@@ -100,7 +80,7 @@
           if (claimIndex) {
             var itemToClaim = newResponse['serviceItems'][claimIndex];
 
-            dynamicClaim.claim(itemToClaim);
+            claimableItems.claim(itemToClaim);
           }
         };
 
@@ -112,13 +92,13 @@
           vinLookup(vin);
         }
 
-        dynamicClaim.activate = vehicleInformation => {
+        claimableItems.activate = vehicleInformation => {
           console.log(vehicleInformation);
 
-          alert(JSON.stringify(vehicleInformation))
+          alert(JSON.stringify(vehicleInformation));
         };
 
-        //dynamicClaim.print = lastClaimResponse => {
+        //claimableItems.print = lastClaimResponse => {
         //  console.log(lastClaimResponse);
 
         //  alert(JSON.stringify(lastClaimResponse))
@@ -126,32 +106,15 @@
       });
 
       function updateLang(newLang) {
-        dynamicClaim.language = newLang;
+        claimableItems.language = newLang;
       }
 
       function vinLookup(vin) {
-        dynamicClaim.fetchData(vin);
+        claimableItems.fetchData(vin);
       }
 
       function setData(key) {
-        dynamicClaim.setData(mockData[key]);
-      }
-
-      function toggleCheckbox(e) {
-        const container = document.getElementById('container');
-        if (e.checked) {
-          const newElement = document.createElement('dynamic-claim');
-
-          newElement.id = 'toggle-item';
-          newElement.setAttribute('is-dev', 'true');
-          newElement.setAttribute('base-url', 'http://localhost:7174/api/secure-vehicle-lookup-test/');
-
-          newElement.setData(mockData['1G6KF5495VU292131']);
-          container.appendChild(newElement);
-        } else {
-          const element = document.getElementById('toggle-item');
-          element.parentNode.removeChild(element);
-        }
+        claimableItems.setData(mockData[key]);
       }
     </script>
   </body>

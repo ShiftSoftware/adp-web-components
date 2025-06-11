@@ -16,6 +16,13 @@ export type VehicleInformation = {
   sscLogId?: string;
 };
 
+export type ServiceItemGroup = {
+  name?: string;
+  tabOrder?: number;
+  isDefault?: boolean;
+  isSequential?: boolean;
+};
+
 export const dev = false;
 
 export type Vin = string;
@@ -37,12 +44,12 @@ export type SaleInformation = {
   countryName: string;
   branchID: string;
   branchName: string;
-  regionID: string,
+  regionID: string;
   customerAccountNumber: string;
   customerID: string;
   invoiceDate: string;
-  invoiceNumber: number;
-  warrantyActivationDate: string,
+  invoiceNumber?: string;
+  warrantyActivationDate: string;
   broker: Broker;
 };
 
@@ -50,7 +57,7 @@ export type Broker = {
   brokerId: number;
   brokerName: string;
   customerID: number;
-  invoiceNumber: number;
+  invoiceNumber?: number;
   invoiceDate: string;
 };
 
@@ -72,7 +79,7 @@ export type ServiceHistory = {
   companyId: number;
   branchId: number;
   account: string;
-  invoiceNumber: number;
+  invoiceNumber?: string;
   jobNumber: number;
   laborLines: LaborLine[];
   partLines: PartLine[];
@@ -163,6 +170,7 @@ export interface PaintPart {
 }
 
 export type ServiceItem = {
+  group?: ServiceItemGroup;
   activatedAt?: string;
   activeFor: number;
   activeForInterval: string;
@@ -182,6 +190,8 @@ export type ServiceItem = {
   claimDate?: string;
   serviceItemID?: string;
   skipZeroTrust?: string;
+  showDocumentUploader?: boolean;
+  documentUploaderIsRequired?: boolean;
   status: 'processed' | 'expired' | 'cancelled' | 'pending' | 'activationRequired';
   claimable: boolean;
   statusEnum?: string;
@@ -191,13 +201,13 @@ export type ServiceItem = {
   claimingMethodEnum?: number;
 };
 
-
 export type ClaimPayload = {
-  vin: string,
-  invoice?: string,
-  jobNumber?: string,
-  qrCode?: string,
-  saleInformation: SaleInformation,
-  serviceItem: ServiceItem,
-  cancelledServiceItems: ServiceItem[],
-}
+  vin: string;
+  invoice?: string;
+  jobNumber?: string;
+  qrCode?: string;
+  document?: File;
+  saleInformation: SaleInformation;
+  serviceItem: ServiceItem;
+  cancelledServiceItems: ServiceItem[];
+};

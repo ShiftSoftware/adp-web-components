@@ -101,14 +101,20 @@ function recursiveParser(parents: string, bluePrint: object, parsedResponseMappe
 async function requestLocaleFile(localeFile: string) {
   if (cachedLocales[localeFile]) return await cachedLocales[localeFile];
 
-  const fetchPromise = (Build.isDev ? fetch('../../' + localeFile) : fetch(`https://cdn.jsdelivr.net/npm/adp-web-components@${version}/dist/${localeFile}`)).then(res =>
-    res.json(),
-  );
+  try {
+    const fetchPromise = (Build.isDev ? fetch('../../' + localeFile) : fetch(`https://cdn.jsdelivr.net/npm/adp-web-components@${version}/dist/${localeFile}`)).then(res => {
+      if (!res.ok) delete cachedLocales[localeFile];
+      return res.json();
+    });
 
-  cachedLocales[localeFile] = fetchPromise;
+    cachedLocales[localeFile] = fetchPromise;
 
-  const result = await fetchPromise;
-  cachedLocales[localeFile] = result;
+    const result = await fetchPromise;
+    cachedLocales[localeFile] = result;
 
-  return result;
+    return result;
+  } catch (error) {
+    delete cachedLocales[localeFile];
+    return {};
+  }
 }

@@ -5,12 +5,14 @@ import { LanguageKeys } from '~types/locale';
 import { AppStates, MockJson } from '~types/components';
 import { VehicleInformation } from '~types/vehicle-information';
 
-import cn from '~lib/cn';
 import { ErrorKeys, getLocaleLanguage, getSharedLocal, SharedLocales, sharedLocalesSchema } from '~lib/get-local-language';
 
 import { getVehicleInformation, VehicleInformationInterface } from '~api/vehicleInformation';
 
 import specificationSchema from '~locales/vehicleLookup/specification/type';
+
+import { VehicleInfoLayout } from '../components/vehicle-info-layout';
+import { MaterialCard, MaterialCardChildren } from '../components/material-card';
 
 let mockData: MockJson<VehicleInformation> = {};
 
@@ -23,6 +25,7 @@ export class VehicleSpecification implements VehicleInformationInterface {
   @Prop() baseUrl: string = '';
   @Prop() isDev: boolean = false;
   @Prop() queryString: string = '';
+  @Prop() coreOnly: boolean = false;
   @Prop() language: LanguageKeys = 'en';
   @Prop() errorCallback: (errorMessage: ErrorKeys) => void;
   @Prop() loadingStateChange?: (isLoading: boolean) => void;
@@ -136,74 +139,51 @@ export class VehicleSpecification implements VehicleInformationInterface {
       productionDate = null;
     }
 
-    const getProductionDate = () => <div class="px-[10px] py-[20px] text-center whitespace-nowrap">{productionDate}</div>;
+    const isLoading = this.state.includes('loading');
+    const isError = this.state.includes('error');
 
     return (
       <Host>
-        <div dir={this.sharedLocales.direction} class="min-h-[100px] relative transition-all duration-300 overflow-hidden">
-          <div>
-            <loading-spinner isLoading={this.state.includes('loading')} />
-            <div class={cn('transition-all !duration-700', { 'scale-0': this.state.includes('loading') || this.state === 'idle', 'opacity-0': this.state.includes('loading') })}>
-              <div class={cn('text-center pt-[4px] text-[20px]', { 'text-red-600': !!this.errorMessage })}>{this.vehicleInformation?.vin}</div>
+        <VehicleInfoLayout
+          isError={isError}
+          isLoading={isLoading}
+          coreOnly={this.coreOnly}
+          vin={this.vehicleInformation?.vin}
+          direction={this.sharedLocales.direction}
+          errorMessage={this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
+        >
+          <flexible-container>
+            <div class="flex p-[16px] [&>div]:grow overflow-auto gap-[16px] items-stretch justify-center md:justify-between flex-wrap">
+              <MaterialCard class="grow" title={texts?.model} minWidth="300px">
+                <MaterialCardChildren
+                  class="text-center"
+                  hidden={!this?.vehicleInformation?.vehicleVariantInfo?.modelCode?.trim() && !this?.vehicleInformation?.vehicleSpecification?.modelDesc?.trim()}
+                >
+                  {this?.vehicleInformation?.vehicleVariantInfo?.modelCode?.trim() || '...'} <br class="my-2" />
+                  {this?.vehicleInformation?.vehicleSpecification?.modelDesc?.trim() || '...'}
+                </MaterialCardChildren>
+              </MaterialCard>
 
-              {['error', 'error-loading'].includes(this.state) && (
-                <div class="py-[16px] min-h-[100px] flex items-center">
-                  <div class="px-[16px] py-[8px] border reject-card text-[20px] rounded-[8px] w-fit mx-auto">
-                    {this.sharedLocales.errors[this.errorMessage] || this.sharedLocales.errors.wildCard}
-                  </div>
-                </div>
-              )}
+              <MaterialCard class="grow" title={texts?.variant} minWidth="300px">
+                <MaterialCardChildren
+                  class="text-center"
+                  hidden={!this?.vehicleInformation?.identifiers?.variant?.trim() && !this?.vehicleInformation?.vehicleSpecification?.variantDesc?.trim()}
+                >
+                  {this?.vehicleInformation?.identifiers?.variant?.trim() || '...'} <br />
+                  {this?.vehicleInformation?.vehicleSpecification?.variantDesc?.trim() || '...'}
+                </MaterialCardChildren>
+              </MaterialCard>
 
-              {['data', 'data-loading'].includes(this.state) && (
-                <div class="flex mt-[12px] max-h-[70dvh] overflow-hidden rounded-[4px] flex-col border border-[#d6d8dc]">
-                  <div class="w-full h-[40px] flex shrink-0 justify-center text-[18px] items-center text-[#383c43] text-center bg-[#e1e3e5]">{texts.vehicleSpecification}</div>
-                  <div class="h-0 overflow-auto flex-1">
-                    {!this.vehicleInformation?.vehicleSpecification && <div class="h-[80px] flex items-center justify-center text-[18px]">{texts.noData}</div>}
-                    {!!this.vehicleInformation?.vehicleSpecification && (
-                      <table class="w-full overflow-auto relative border-collapse">
-                        <thead class="top-0 font-bold sticky bg-white">
-                          <tr>
-                            {['model', 'variant', 'katashiki', 'modelYear', ...(!!productionDate ? ['productionDate'] : []), 'sfx'].map(title => (
-                              <th key={title} class="px-[10px] py-[20px] text-center whitespace-nowrap border-b border-[#d6d8dc]">
-                                {texts[title]}
-                              </th>
-                            ))}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td class="px-[10px] py-[20px] text-center whitespace-nowrap">
-                              {this?.vehicleInformation?.vehicleVariantInfo?.modelCode || '...'} <br class="my-2" />
-                              {this?.vehicleInformation?.vehicleSpecification?.modelDesc || '...'}
-                            </td>
+              <MaterialCard desc={this?.vehicleInformation?.identifiers?.katashiki?.trim() || '...'} title={texts?.katashiki} minWidth="250px" />
 
-                            <td class="px-[10px] py-[20px] text-center whitespace-nowrap">
-                              {this?.vehicleInformation?.identifiers?.variant || '...'} <br />
-                              {this?.vehicleInformation?.vehicleSpecification?.variantDesc || '...'}
-                            </td>
-                            {['identifiers.katashiki', 'vehicleVariantInfo.modelYear', ...(!!productionDate ? [getProductionDate] : []), 'vehicleVariantInfo.sfx'].map(infoPath => {
-                              if (typeof infoPath === 'function') return infoPath();
+              <MaterialCard desc={this?.vehicleInformation?.vehicleVariantInfo?.modelYear?.toString()?.trim() || '...'} title={texts?.modelYear} minWidth="250px" />
 
-                              const [place, field] = infoPath.split('.');
-                              const targetPlace = this?.vehicleInformation?.[place];
-                              const cellValue = targetPlace && targetPlace[field] ? targetPlace[field].toString() : '';
+              <MaterialCard desc={!!productionDate ? productionDate : '...'} title={texts?.productionDate} minWidth="250px" />
 
-                              return (
-                                <td key={infoPath} class={cn('px-[10px] py-[20px] text-center whitespace-nowrap')}>
-                                  {cellValue.trim() ? cellValue : '...'}
-                                </td>
-                              );
-                            })}
-                          </tr>
-                        </tbody>
-                      </table>
-                    )}
-                  </div>
-                </div>
-              )}
+              <MaterialCard desc={this?.vehicleInformation?.vehicleVariantInfo?.sfx?.trim() || '...'} title={texts?.sfx} minWidth="250px" />
             </div>
-          </div>
-        </div>
+          </flexible-container>
+        </VehicleInfoLayout>
       </Host>
     );
   }

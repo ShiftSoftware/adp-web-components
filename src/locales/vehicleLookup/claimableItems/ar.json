@@ -14,11 +14,14 @@
   "pending": "قيد الانتظار",
   "warning": "تحذير",
   "activateNow": "Activate Now",
-  "print": "Print",
-  "successFulClaimMessage": "Item was claimed successfully.",
+  "print": "مطبعة",
+  "successFulClaimMessage": "تم المطالبة بنجاح.",
   "activationRequired": "Activation Required",
   "warrantyAndServicesNotActivated": "Warranty & Services have not been activated for this vehicle.",
-  "dynamicRedeem": {
+  "claimForm": {
+    "documentLimitError": "لقد تجاوز المستند الحد الأقصى لحجم الملف: ",
+    "documentRequiredError": "من فضلك إملأ حقل المستند.",
+    "document": "وثيقة",
     "serviceType": "نوع الخدمة",
     "name": "اسم",
     "activationDate": "تاريخ التفعيل",
