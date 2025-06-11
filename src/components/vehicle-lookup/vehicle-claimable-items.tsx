@@ -364,7 +364,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   }
 
   private async handleClaiming() {
-    if (!this.isDev) {
+    if (this.isDev) {
       this.claimForm.handleClaiming = async ({ document }: ClaimPayload) => {
         if (document) {
           this.claimForm.uploadProgress = 0;
