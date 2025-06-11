@@ -277,9 +277,7 @@ export class VehicleItemClaimForm {
 
   render() {
     const texts = this.locale;
-    const disableInput = !this.confirmServiceCancellation || !this.confirmUnInvoicedTBPVehicles;
-
-    console.log('upload', this.uploadProgress);
+    const disableInput = !this.confirmServiceCancellation || !this.confirmUnInvoicedTBPVehicles || this.isLoading;
 
     return (
       <Host>
@@ -339,10 +337,11 @@ export class VehicleItemClaimForm {
                     ))}
                   </ul>
 
-                  <div class="cancel-confirmation-box">
+                  <div class={cn('cancel-confirmation-box transition duration-300', { 'pointer-events-none select-none opacity-50': this.isLoading })}>
                     <label>
                       <input
                         type="checkbox"
+                        disabled={this.isLoading}
                         class="confirm-cancellation-input m-[3px] ml-1"
                         onChange={() => {
                           this.confirmServiceCancellation = !this.confirmServiceCancellation;
@@ -364,10 +363,11 @@ export class VehicleItemClaimForm {
                     <strong>{this.unInvoicedByBrokerName}</strong>
                   </div>
 
-                  <div class="cancel-confirmation-box">
+                  <div class={cn('cancel-confirmation-box transition duration-300', { 'pointer-events-none select-none opacity-50': this.isLoading })}>
                     <label>
                       <input
                         type="checkbox"
+                        disabled={this.isLoading}
                         class="confirm-cancellation-input m-[3px] ml-1"
                         onChange={() => {
                           this.confirmUnInvoicedTBPVehicles = !this.confirmUnInvoicedTBPVehicles;
@@ -491,142 +491,144 @@ export class VehicleItemClaimForm {
                   </div>
                 </div>
 
-                {this.claimViaBarcodeScanner && (
-                  <div style={{ display: 'flex', flexDirection: 'row', gap: '50px', padding: '0 75px' }}>
-                    <input
-                      id="qr-input"
-                      dir="ltr"
-                      class="dynamic-redeem-input"
-                      spellcheck="false"
-                      onInput={e => {
-                        this.qrCode = (e.target as HTMLInputElement).value;
-                        this.updateReadyToClaim();
-                      }}
-                      onKeyDown={this.inputKeyDown}
-                      onBlur={() => {
-                        this.qrInput?.focus();
-                      }}
-                      autocomplete="off"
-                      disabled={disableInput}
-                      placeholder={texts.qrCode}
-                      autofocus
-                      style={{ marginTop: '20px', padding: '10px 0px', fontSize: '16px' }}
-                    />
-                  </div>
-                )}
-
-                {!this.claimViaBarcodeScanner && (
-                  <div>
+                <div class={cn('transition-opacity duration-300 ', { 'opacity-50': this.isLoading })}>
+                  {this.claimViaBarcodeScanner && (
                     <div style={{ display: 'flex', flexDirection: 'row', gap: '50px', padding: '0 75px' }}>
                       <input
-                        id="invoice-input"
+                        id="qr-input"
                         dir="ltr"
                         class="dynamic-redeem-input"
                         spellcheck="false"
                         onInput={e => {
-                          this.invoice = (e.target as HTMLInputElement).value;
+                          this.qrCode = (e.target as HTMLInputElement).value;
                           this.updateReadyToClaim();
                         }}
                         onKeyDown={this.inputKeyDown}
+                        onBlur={() => {
+                          this.qrInput?.focus();
+                        }}
                         autocomplete="off"
                         disabled={disableInput}
-                        placeholder={texts.invoice}
+                        placeholder={texts.qrCode}
                         autofocus
                         style={{ marginTop: '20px', padding: '10px 0px', fontSize: '16px' }}
                       />
-
-                      <input
-                        id="job-input"
-                        dir="ltr"
-                        class="dynamic-redeem-input"
-                        spellcheck="false"
-                        onInput={e => {
-                          this.job = (e.target as HTMLInputElement).value;
-                          this.updateReadyToClaim();
-                        }}
-                        onKeyDown={this.inputKeyDown}
-                        autocomplete="off"
-                        disabled={disableInput}
-                        placeholder={texts.jobNumber}
-                        style={{ marginTop: '20px', padding: '10px 0px', fontSize: '16px' }}
-                      />
                     </div>
+                  )}
 
-                    <div class="mt-[55px]">
-                      {this.item?.showDocumentUploader && (
-                        <div class="flex mb-[12px] flex-col">
-                          <input class="document-uploader" type="file" hidden />
-                          <div
-                            class={cn(
-                              'document-button overflow-hidden flex items-center w-fit mx-auto cursor-pointer gap-[16px] ps-[8px] h-[32px] transition duration-300 text-white bg-[#275e8f] active:bg-[#223f57] hover:bg-[#3071a9] rounded-[5px]',
-                              { 'pointer-events-none cursor-default': disableInput },
-                            )}
-                          >
-                            <div title={this.selectedFile?.name || texts.document} class="max-w-[200px] truncate whitespace-nowrap overflow-hidden text-ellipsis">
-                              {this.selectedFile?.name || texts.document}
-                              {this?.item?.documentUploaderIsRequired && !this.selectedFile && <span class="ps-[4px] text-red-500">*</span>}
-                            </div>
-                            <button
-                              onClick={this.clearFile}
-                              class={cn('overflow-hidden transition duration-300 hover:bg-red-600 relative cursor-pointer flex items-center justify-center size-[32px]', {
-                                'pointer-events-none cursor-default': !this.selectedFile,
-                              })}
+                  {!this.claimViaBarcodeScanner && (
+                    <div>
+                      <div style={{ display: 'flex', flexDirection: 'row', gap: '50px', padding: '0 75px' }}>
+                        <input
+                          id="invoice-input"
+                          dir="ltr"
+                          class="dynamic-redeem-input"
+                          spellcheck="false"
+                          onInput={e => {
+                            this.invoice = (e.target as HTMLInputElement).value;
+                            this.updateReadyToClaim();
+                          }}
+                          onKeyDown={this.inputKeyDown}
+                          autocomplete="off"
+                          disabled={disableInput}
+                          placeholder={texts.invoice}
+                          autofocus
+                          style={{ marginTop: '20px', padding: '10px 0px', fontSize: '16px' }}
+                        />
+
+                        <input
+                          id="job-input"
+                          dir="ltr"
+                          class="dynamic-redeem-input"
+                          spellcheck="false"
+                          onInput={e => {
+                            this.job = (e.target as HTMLInputElement).value;
+                            this.updateReadyToClaim();
+                          }}
+                          onKeyDown={this.inputKeyDown}
+                          autocomplete="off"
+                          disabled={disableInput}
+                          placeholder={texts.jobNumber}
+                          style={{ marginTop: '20px', padding: '10px 0px', fontSize: '16px' }}
+                        />
+                      </div>
+
+                      <div class="mt-[55px]">
+                        {this.item?.showDocumentUploader && (
+                          <div class="flex mb-[12px] flex-col">
+                            <input class="document-uploader" disabled={this.isLoading} type="file" accept="image/*,application/pdf" hidden />
+                            <div
+                              class={cn(
+                                'document-button overflow-hidden flex items-center w-fit mx-auto cursor-pointer gap-[16px] ps-[8px] h-[32px] transition duration-300 text-white bg-[#275e8f] active:bg-[#223f57] hover:bg-[#3071a9] rounded-[5px]',
+                                { 'pointer-events-none bg-[#d5d5d5] cursor-default': disableInput },
+                              )}
                             >
-                              <svg
-                                fill="none"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                xmlns="http://www.w3.org/2000/svg"
-                                class={cn('size-[24px] absolute transition duration-500', { '-translate-y-[32px]': !!this.selectedFile })}
+                              <div title={this.selectedFile?.name || texts.document} class="max-w-[200px] truncate whitespace-nowrap overflow-hidden text-ellipsis">
+                                {this.selectedFile?.name || texts.document}
+                                {this?.item?.documentUploaderIsRequired && !this.selectedFile && <span class={cn('ps-[4px] text-red-500', { 'text-white': disableInput })}>*</span>}
+                              </div>
+                              <button
+                                onClick={this.clearFile}
+                                class={cn('overflow-hidden transition duration-300 hover:bg-red-600 relative cursor-pointer flex items-center justify-center size-[32px]', {
+                                  'pointer-events-none cursor-default': !this.selectedFile,
+                                })}
                               >
-                                <path d="m16 6-8.414 8.586a2 2 0 0 0 2.829 2.829l8.414-8.586a4 4 0 1 0-5.657-5.657l-8.379 8.551a6 6 0 1 0 8.485 8.485l8.379-8.551" />
-                              </svg>
-                              <svg
-                                fill="none"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                xmlns="http://www.w3.org/2000/svg"
-                                class={cn('size-[24px] absolute transition translate-y-[32px] duration-500', { 'translate-y-0': !!this.selectedFile })}
-                              >
-                                <path d="M18 6 6 18" />
-                                <path d="m6 6 12 12" />
-                              </svg>
-                            </button>
-                          </div>
-                          <flexible-container isOpened={this.isDocumentError}>
-                            <div class="text-red-700 w-fit mx-auto pt-[8px]">
-                              {this.documentError === 'documentLimitError'
-                                ? texts.documentLimitError + `${this.maximumDocumentFileSizeInMb}Mb`
-                                : texts.documentRequiredError || this.sharedLocales.errors.wildCard}
+                                <svg
+                                  fill="none"
+                                  stroke-width="2"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  class={cn('size-[24px] absolute transition duration-500', { '-translate-y-[32px]': !!this.selectedFile })}
+                                >
+                                  <path d="m16 6-8.414 8.586a2 2 0 0 0 2.829 2.829l8.414-8.586a4 4 0 1 0-5.657-5.657l-8.379 8.551a6 6 0 1 0 8.485 8.485l8.379-8.551" />
+                                </svg>
+                                <svg
+                                  fill="none"
+                                  stroke-width="2"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  class={cn('size-[24px] absolute transition translate-y-[32px] duration-500', { 'translate-y-0': !!this.selectedFile })}
+                                >
+                                  <path d="M18 6 6 18" />
+                                  <path d="m6 6 12 12" />
+                                </svg>
+                              </button>
                             </div>
-                          </flexible-container>
-                        </div>
-                      )}
-                      <button
-                        onClick={() => {
-                          this.inputKeyDown(null);
-                        }}
-                        class={cn('claim-button', 'dynamic-claim-button', !this?.readyToClaim && 'disabled')}
-                      >
-                        <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g stroke-width="0"></g>
-                          <g stroke-linecap="round" stroke-linejoin="round"></g>
-                          <g>
-                            <circle cx="12" cy="12" r="8" fill-opacity="0.24"></circle>
-                            <path d="M8.5 11L11.3939 13.8939C11.4525 13.9525 11.5475 13.9525 11.6061 13.8939L19.5 6" stroke-width="1.2"></path>
-                          </g>
-                        </svg>
-                        <span>{texts.claim}</span>
-                      </button>
+                            <flexible-container isOpened={this.isDocumentError}>
+                              <div class="text-red-700 w-fit mx-auto pt-[8px]">
+                                {this.documentError === 'documentLimitError'
+                                  ? texts.documentLimitError + `${this.maximumDocumentFileSizeInMb}Mb`
+                                  : texts.documentRequiredError || this.sharedLocales.errors.wildCard}
+                              </div>
+                            </flexible-container>
+                          </div>
+                        )}
+                        <button
+                          onClick={() => {
+                            this.inputKeyDown(null);
+                          }}
+                          class={cn('claim-button', 'dynamic-claim-button', (!this?.readyToClaim || disableInput) && 'disabled')}
+                        >
+                          <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g stroke-width="0"></g>
+                            <g stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g>
+                              <circle cx="12" cy="12" r="8" fill-opacity="0.24"></circle>
+                              <path d="M8.5 11L11.3939 13.8939C11.4525 13.9525 11.5475 13.9525 11.6061 13.8939L19.5 6" stroke-width="1.2"></path>
+                            </g>
+                          </svg>
+                          <span>{texts.claim}</span>
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
           </div>

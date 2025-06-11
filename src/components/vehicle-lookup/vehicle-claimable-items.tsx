@@ -413,14 +413,25 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
             };
 
             xhr.onload = () => {
+              this.claimForm.quite();
+              this.claimForm.handleClaiming = null;
               if (xhr.status === 200) {
-                this.claimForm.quite();
-                this.completeClaim({});
-                this.claimForm.handleClaiming = null;
+                try {
+                  const responseData = JSON.parse(xhr.responseText);
+                  console.log('Upload successful', responseData);
+
+                  this.completeClaim(responseData);
+                  resolve();
+                } catch (parseError) {
+                  console.error('Response is not valid JSON', {
+                    rawResponse: xhr.responseText,
+                    error: parseError,
+                  });
+
+                  reject(new Error('Upload succeeded but response is not valid JSON'));
+                }
                 resolve();
               } else {
-                this.claimForm.quite();
-                this.claimForm.handleClaiming = null;
                 reject(new Error(`Upload failed with status ${xhr.status}`));
               }
             };
