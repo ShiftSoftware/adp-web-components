@@ -26,7 +26,7 @@ export default function CardsContainer({ isLoading, vehicleInformation, isAuthor
           <div class="shift-skeleton !rounded-[4px]">
             <div class="card warning-card">
               <p class="no-padding flex gap-2">
-                <span class="font-semibold">{warrantyLocale.dealer}:</span> {vehicleInformation?.saleInformation?.companyName || '...'}{' '}
+                <span class="font-semibold">{warrantyLocale.dealer}:</span> {vehicleInformation?.saleInformation?.companyName || ''}{' '}
                 {vehicleInformation?.saleInformation?.countryName && `(${vehicleInformation?.saleInformation?.countryName})`}
               </p>
             </div>
@@ -40,7 +40,7 @@ export default function CardsContainer({ isLoading, vehicleInformation, isAuthor
             <div class="card warning-card">
               <img src={RejectIcon} />
 
-              <p>{unInvoicedByBrokerName ? warrantyLocale.notInvoiced + unInvoicedByBrokerName : '...'}</p>
+              <p>{unInvoicedByBrokerName ? warrantyLocale.notInvoiced + unInvoicedByBrokerName : ''}</p>
             </div>
           </div>
         </div>
@@ -49,19 +49,19 @@ export default function CardsContainer({ isLoading, vehicleInformation, isAuthor
       <div class="warranty-tags">
         <StatusCard
           state={vehicleInformation ? (isAuthorized ? 'success' : 'reject') : 'idle'}
-          desc={vehicleInformation ? (isAuthorized ? warrantyLocale.authorized : warrantyLocale.unauthorized) : '...'}
+          desc={vehicleInformation ? (isAuthorized ? warrantyLocale.authorized : warrantyLocale.unauthorized) : ''}
         />
 
         <StatusCard
           state={vehicleInformation ? (vehicleInformation?.warranty?.hasActiveWarranty ? 'success' : 'reject') : 'idle'}
-          desc={vehicleInformation ? (vehicleInformation?.warranty?.hasActiveWarranty ? warrantyLocale.activeWarranty : warrantyLocale.notActiveWarranty) : '...'}
+          desc={vehicleInformation ? (vehicleInformation?.warranty?.hasActiveWarranty ? warrantyLocale.activeWarranty : warrantyLocale.notActiveWarranty) : ''}
         />
 
         <StatusCard
           from
           icon={false}
           fromDesc={warrantyLocale.from}
-          desc={vehicleInformation?.warranty?.warrantyStartDate || '...'}
+          desc={vehicleInformation?.warranty?.warrantyStartDate || ''}
           opened={!!vehicleInformation?.warranty?.warrantyStartDate || !vehicleInformation}
           state={!!vehicleInformation ? (vehicleInformation?.warranty?.hasActiveWarranty ? 'success' : 'reject') : 'idle'}
         />
@@ -70,7 +70,7 @@ export default function CardsContainer({ isLoading, vehicleInformation, isAuthor
           to
           icon={false}
           toDesc={warrantyLocale.to}
-          desc={vehicleInformation?.warranty?.warrantyEndDate || '...'}
+          desc={vehicleInformation?.warranty?.warrantyEndDate || ''}
           opened={!!vehicleInformation?.warranty?.warrantyEndDate || !vehicleInformation}
           state={!!vehicleInformation ? (vehicleInformation?.warranty?.hasActiveWarranty ? 'success' : 'reject') : 'idle'}
         />
