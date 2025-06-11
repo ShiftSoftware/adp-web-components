@@ -15,7 +15,7 @@ import { FormElementMapper, FormFieldParams, FormSelectFetcher, LocaleFormKeys, 
 import { InformationTableColumn } from "./components/components/information-table";
 import { ActiveElement } from "./components/part-lookup/part-lookup";
 import { AccordionItem } from "./components/components/shift-accordion";
-import { ClaimPayload, ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
+import { ClaimPayload, ServiceItem, ServiceItemGroup, VehicleInformation } from "./global/types/vehicle-information";
 import { ClaimFormType } from "./locales/vehicleLookup/claimableItems/type";
 import { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export { LanguageKeys } from "./global/types/locale";
@@ -28,7 +28,7 @@ export { FormElementMapper, FormFieldParams, FormSelectFetcher, LocaleFormKeys, 
 export { InformationTableColumn } from "./components/components/information-table";
 export { ActiveElement } from "./components/part-lookup/part-lookup";
 export { AccordionItem } from "./components/components/shift-accordion";
-export { ClaimPayload, ServiceItem, VehicleInformation } from "./global/types/vehicle-information";
+export { ClaimPayload, ServiceItem, ServiceItemGroup, VehicleInformation } from "./global/types/vehicle-information";
 export { ClaimFormType } from "./locales/vehicleLookup/claimableItems/type";
 export { ActiveElement as ActiveElement1 } from "./components/vehicle-lookup/vehicle-lookup";
 export namespace Components {

@@ -14,7 +14,13 @@ export type VehicleInformation = {
   serviceItems: ServiceItem[];
   basicModelCode: string;
   sscLogId?: string;
-  groups?: { label?: string; hasProgress?: boolean }[];
+};
+
+export type ServiceItemGroup = {
+  name?: string;
+  tabOrder?: number;
+  isDefault?: boolean;
+  isSequential?: boolean;
 };
 
 export const dev = false;
@@ -164,7 +170,7 @@ export interface PaintPart {
 }
 
 export type ServiceItem = {
-  group?: string;
+  group?: ServiceItemGroup;
   activatedAt?: string;
   activeFor: number;
   activeForInterval: string;

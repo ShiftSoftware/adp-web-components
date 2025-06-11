@@ -7,7 +7,7 @@ import { ErrorKeys, getLocaleLanguage, getSharedLocal, SharedLocales, sharedLoca
 
 import { LanguageKeys } from '~types/locale';
 import { MockJson } from '~types/components';
-import { ClaimPayload, ServiceItem, VehicleInformation } from '~types/vehicle-information';
+import { ClaimPayload, ServiceItem, ServiceItemGroup, VehicleInformation } from '~types/vehicle-information';
 
 import expiredIcon from './assets/expired.svg';
 import pendingIcon from './assets/pending.svg';
@@ -64,7 +64,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   @State() errorMessage?: ErrorKeys = null;
   @State() tabAnimationLoading: boolean = false;
   @State() activePopupIndex: null | number = null;
-  @State() tabs: VehicleInformation['groups'] = [];
+  @State() tabs: ServiceItemGroup[] = [];
   @State() lastSuccessfulClaimResponse: any = null;
   @State() vehicleInformation?: VehicleInformation;
 
@@ -142,14 +142,25 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
         if (!Array.isArray(vehicleResponse.serviceItems)) throw new Error('noServiceAvailable');
         this.vehicleInformation = vehicleResponse;
 
-        if (vehicleResponse?.groups?.length && vehicleResponse?.serviceItems?.length) {
-          const parsedGroups: VehicleInformation['groups'] = [];
+        if (vehicleResponse?.serviceItems?.length) {
+          let orderedGroups: ServiceItemGroup[] = [];
+          const unOrderedGroups: ServiceItemGroup[] = [];
 
-          Object.values(vehicleResponse.groups).forEach(group => vehicleResponse.serviceItems.some(item => item?.group === group.label) && parsedGroups.push(group));
+          vehicleResponse.serviceItems.forEach(({ group }) => {
+            if (!group?.name) return;
 
-          if (!!parsedGroups.length) {
-            this.tabs = parsedGroups;
-            this.activeTab = parsedGroups[0].label;
+            if ([...orderedGroups, ...unOrderedGroups].find(g => g?.name === group?.name)) return;
+
+            if (group?.isDefault) this.activeTab = group?.name;
+
+            if (typeof group?.tabOrder === 'number') orderedGroups.push(group);
+            else unOrderedGroups.push(group);
+          });
+
+          if (!!unOrderedGroups.length || !!orderedGroups.length) {
+            orderedGroups = orderedGroups.sort((a, b) => a.tabOrder - b.tabOrder);
+            this.tabs = [...orderedGroups, ...unOrderedGroups];
+            if (!this.activeTab) this.activeTab = this.tabs[0].name;
           } else {
             this.tabs = [];
             this.activeTab = '';
@@ -202,7 +213,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
   updateProgressBar() {
     const serviceItems = this.getServiceItems();
 
-    if (!!this.tabs?.length && this.tabs.find(tab => tab.label === this.activeTab) && !this.tabs.find(tab => tab.label === this.activeTab)?.hasProgress) {
+    if (!!this.tabs?.length && this.tabs.find(tab => tab.name === this.activeTab) && !this.tabs.find(tab => tab.name === this.activeTab)?.isSequential) {
       this.progressBar.style.width = '0%';
       this.progressBar.style.opacity = '0';
       return;
@@ -430,7 +441,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
 
     if (!this.tabs?.length) return this.vehicleInformation?.serviceItems;
 
-    return this.vehicleInformation?.serviceItems.filter(serviceItem => serviceItem?.group === this.activeTab);
+    return this.vehicleInformation?.serviceItems.filter(serviceItem => serviceItem?.group?.name === this.activeTab);
   };
 
   private onActiveTabChange = ({ label }: { label: string; idx: number }) => {
@@ -543,7 +554,7 @@ export class VehicleClaimableItems implements VehicleInformationInterface {
 
     const hideTabs = this.isLoading || this.isError || !this.tabs.length || !serviceItems.length;
 
-    const tabs = this.tabs.map(group => group.label);
+    const tabs = this.tabs.map(group => group.name);
 
     return (
       <Host>
