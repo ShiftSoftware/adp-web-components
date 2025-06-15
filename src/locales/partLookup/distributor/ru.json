@@ -1,6 +1,6 @@
 {
   "info": "Информация",
-  "distributorStock": "Сток Дистрибьютора",
+  "distributorStock": "Доступность у Дистрибьютора",
   "availability": "Наличие",
   "notAvailable": "Нет в наличии",
   "partiallyAvailable": "Частично в наличии",

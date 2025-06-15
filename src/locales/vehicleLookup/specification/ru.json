@@ -1,10 +1,10 @@
 {
-  "vehicleSpecification": "Комплектация",
+  "vehicleSpecification": "Параметры Автомобиля",
   "noData": "Данных нет.",
   "model": "Модель",
   "variant": "Вариант",
   "katashiki": "Katashiki",
-  "modelYear": "Год модели",
+  "modelYear": "Модельный год",
   "sfx": "SFX",
   "productionDate": "Год выпуска"
 }
