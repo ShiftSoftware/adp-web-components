@@ -36,37 +36,79 @@ export namespace Components {
         "baseUrl": string;
         "brandId": string;
         "errorCallback": (error: any) => void;
+        /**
+          * @default 'en'
+         */
         "language": LanguageKeys;
         "loadingChanges": (loading: boolean) => void;
+        /**
+          * @default ''
+         */
         "queryString": string;
+        /**
+          * @default '6Lehq6IpAAAAAETTDS2Zh60nHIT1a8oVkRtJ2WsA'
+         */
         "recaptchaKey": string;
+        /**
+          * @default '["submit.Submit"]'
+         */
         "structure": string;
         "successCallback": (values: any) => void;
         "theme": string;
     }
     interface DeadStockLookup {
+        /**
+          * @default ''
+         */
         "baseUrl": string;
         "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (partNumber?: string, headers?: any) => Promise<void>;
+        /**
+          * @default false
+         */
         "isDev": boolean;
+        /**
+          * @default 'en'
+         */
         "language": LanguageKeys;
         "loadedResponse"?: (response: PartInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        /**
+          * @default ''
+         */
         "queryString": string;
         "setData": (newData: PartInformation | string, headers?: any) => Promise<void>;
         "setErrorMessage": (message: ErrorKeys) => Promise<void>;
         "setMockData": (newMockData: MockJson<PartInformation>) => Promise<void>;
     }
     interface DistributorLookup {
+        /**
+          * @default ''
+         */
         "baseUrl": string;
         "errorCallback": (errorMessage: string) => void;
         "fetchData": (partNumber?: string, headers?: any) => Promise<void>;
+        /**
+          * @default ''
+         */
         "hiddenFields"?: string;
+        /**
+          * @default false
+         */
         "isDev": boolean;
+        /**
+          * @default 'en'
+         */
         "language": LanguageKeys;
         "loadedResponse"?: (response: PartInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        /**
+          * @default ''
+         */
         "localizationName"?: string;
+        /**
+          * @default ''
+         */
         "queryString": string;
         "setData": (newData: PartInformation | string, headers?: any) => Promise<void>;
         "setErrorMessage": (message: ErrorKeys) => Promise<void>;
@@ -77,15 +119,27 @@ export namespace Components {
         "alwaysStrict"?: boolean;
         "classes"?: string;
         "containerClasses"?: string;
+        /**
+          * @default 'auto'
+         */
         "height"?: number | 'auto';
+        /**
+          * @default true
+         */
         "isOpened"?: boolean;
         "removeChildrenAnimation": (child: FlexibleContainer) => Promise<void>;
+        /**
+          * @default false
+         */
         "stopAnimation"?: boolean;
         "subscribeAsParent": (parent: FlexibleContainer) => Promise<void>;
     }
     interface FormDialog {
         "dialogClosed": () => void;
         "errorMessage": string;
+        /**
+          * @default 'en'
+         */
         "language": LanguageKeys;
     }
     interface FormInput {
@@ -98,6 +152,9 @@ export namespace Components {
         "isError": boolean;
         "isRequired": boolean;
         "label": string;
+        /**
+          * @default 'en'
+         */
         "language": LanguageKeys;
         "numberDirection"?: boolean;
         "wrapperClass": string;
@@ -112,8 +169,14 @@ export namespace Components {
         "isError": boolean;
         "isRequired": boolean;
         "label": string;
+        /**
+          * @default 'en'
+         */
         "language": LanguageKeys;
         "name": string;
+        /**
+          * @default 'Select an option'
+         */
         "placeholder": string;
         "wrapperClass": string;
         "wrapperId": string;
@@ -128,18 +191,39 @@ export namespace Components {
         "form": FormHook<any>;
         "formElementMapper": FormElementMapper<any>;
         "isLoading": boolean;
+        /**
+          * @default 'en'
+         */
         "language": LanguageKeys;
+        /**
+          * @default {}
+         */
         "renderControl": {};
+        /**
+          * @default '["submit.Submit"]'
+         */
         "structure": string;
         "theme": string;
+        /**
+          * @default {}
+         */
         "themes": any;
     }
     interface FormStructureError {
+        /**
+          * @default 'en'
+         */
         "language": LanguageKeys;
     }
     interface FormSubmit {
         "isLoading": boolean;
+        /**
+          * @default 'en'
+         */
         "language": LanguageKeys;
+        /**
+          * @default {}
+         */
         "params": FormFieldParams;
         "structureElement": StructureObject;
     }
@@ -151,45 +235,96 @@ export namespace Components {
         "isError": boolean;
         "isRequired": boolean;
         "label": string;
+        /**
+          * @default 'en'
+         */
         "language": LanguageKeys;
         "wrapperClass": string;
         "wrapperId": string;
     }
     interface InformationTable {
         "headers": InformationTableColumn[];
+        /**
+          * @default false
+         */
         "isLoading": boolean;
+        /**
+          * @default []
+         */
         "rows": object[];
+        /**
+          * @default {}
+         */
         "templateRow": object;
     }
     interface LoadingSpinner {
         "isLoading": boolean;
     }
     interface ManufacturerLookup {
+        /**
+          * @default ''
+         */
         "baseUrl": string;
         "errorCallback": (errorMessage: string) => void;
         "fetchData": (partNumber?: string, headers?: any) => Promise<void>;
+        /**
+          * @default 'Manufacturer'
+         */
         "headerTitle": string;
+        /**
+          * @default ''
+         */
         "hiddenFields": string;
+        /**
+          * @default false
+         */
         "isDev": boolean;
+        /**
+          * @default 'en'
+         */
         "language": LanguageKeys;
         "loadedResponse"?: (response: PartInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        /**
+          * @default ''
+         */
         "localizationName"?: string;
+        /**
+          * @default ''
+         */
         "queryString": string;
         "setData": (newData: PartInformation | string, headers?: any) => Promise<void>;
         "setErrorMessage": (message: ErrorKeys) => Promise<void>;
         "setMockData": (newMockData: MockJson<PartInformation>) => Promise<void>;
     }
     interface PartLookup {
+        /**
+          * @default ''
+         */
         "activeElement"?: ActiveElement;
+        /**
+          * @default ''
+         */
         "baseUrl": string;
+        /**
+          * @default ''
+         */
         "blazorErrorStateListener": string;
+        /**
+          * @default ''
+         */
         "blazorOnLoadingStateChange": string;
         "childrenProps"?: string | Object;
         "errorStateListener"?: (newError: string) => void;
         "fetchPartNumber": (partNumber: string, quantity?: string, headers?: any) => Promise<string>;
+        /**
+          * @default 'en'
+         */
         "language": LanguageKeys;
         "loadingStateChanged"?: (isLoading: boolean) => void;
+        /**
+          * @default ''
+         */
         "queryString": string;
         "setBlazorRef": (newBlazorRef: DotNetObjectReference) => Promise<void>;
     }
@@ -197,10 +332,22 @@ export namespace Components {
         "baseUrl": string;
         "brandId": string;
         "errorCallback": (error: any) => void;
+        /**
+          * @default 'en'
+         */
         "language": LanguageKeys;
         "loadingChanges": (loading: boolean) => void;
+        /**
+          * @default ''
+         */
         "queryString": string;
+        /**
+          * @default '6Lehq6IpAAAAAETTDS2Zh60nHIT1a8oVkRtJ2WsA'
+         */
         "recaptchaKey": string;
+        /**
+          * @default '["submit.Submit"]'
+         */
         "structure": string;
         "successCallback": (values: any) => void;
         "theme": string;
@@ -227,14 +374,29 @@ export namespace Components {
         "tabs": string[];
     }
     interface VehicleAccessories {
+        /**
+          * @default ''
+         */
         "baseUrl": string;
+        /**
+          * @default false
+         */
         "coreOnly": boolean;
         "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
+        /**
+          * @default false
+         */
         "isDev": boolean;
+        /**
+          * @default 'en'
+         */
         "language": LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        /**
+          * @default ''
+         */
         "queryString": string;
         "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
         "setErrorMessage": (message: ErrorKeys) => Promise<void>;
@@ -244,130 +406,310 @@ export namespace Components {
         "activate"?: (vehicleInformation: VehicleInformation) => void;
         "baseUrl": string;
         "claim": (item: ServiceItem) => Promise<void>;
+        /**
+          * @default 'api/vehicle/swift-claim'
+         */
         "claimEndPoint": string;
         "completeClaim": (response: any) => Promise<void>;
+        /**
+          * @default false
+         */
         "coreOnly": boolean;
         "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
+        /**
+          * @default {}
+         */
         "headers": any;
+        /**
+          * @default false
+         */
         "isDev": boolean;
+        /**
+          * @default 'en'
+         */
         "language": LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        /**
+          * @default 30
+         */
         "maximumDocumentFileSizeInMb": number;
         "print"?: (claimResponse: any) => void;
+        /**
+          * @default ''
+         */
         "queryString": string;
         "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
         "setErrorMessage": (message: ErrorKeys) => Promise<void>;
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
     }
     interface VehicleItemClaimForm {
+        /**
+          * @default null
+         */
         "canceledItems"?: ServiceItem[];
         "getQrValue": () => Promise<string>;
         "handleClaiming"?: (payload: ClaimPayload) => void;
+        /**
+          * @default null
+         */
         "item"?: ServiceItem;
+        /**
+          * @default 'en'
+         */
         "language": LanguageKeys;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        /**
+          * @default claimFormSchema.getDefault()
+         */
         "locale": ClaimFormType;
         "maximumDocumentFileSizeInMb": number;
         "quite": () => Promise<void>;
         "setFileUploadProgression": (uploadPercentage: number) => Promise<void>;
+        /**
+          * @default null
+         */
         "unInvoicedByBrokerName"?: string;
+        /**
+          * @default ''
+         */
         "vin"?: string;
     }
     interface VehicleLookup {
+        /**
+          * @default ''
+         */
         "activeElement"?: ActiveElement1;
+        /**
+          * @default ''
+         */
         "baseUrl": string;
+        /**
+          * @default ''
+         */
         "blazorDynamicClaimActivate": string;
+        /**
+          * @default ''
+         */
         "blazorErrorStateListener": string;
+        /**
+          * @default ''
+         */
         "blazorOnLoadingStateChange": string;
         "childrenProps"?: string | Object;
         "dynamicClaimActivate"?: (vehicleInformation: VehicleInformation) => void;
         "errorStateListener"?: (newError: string) => void;
         "fetchVin": (vin: string, headers?: any) => Promise<string>;
         "handleLoadData": (newResponse: VehicleInformation, activeElement: any) => Promise<void>;
+        /**
+          * @default false
+         */
         "isDev": boolean;
+        /**
+          * @default 'en'
+         */
         "language": LanguageKeys;
         "loadingStateChanged"?: (isLoading: boolean) => void;
+        /**
+          * @default ''
+         */
         "queryString": string;
         "setBlazorRef": (newBlazorRef: DotNetObjectReference) => Promise<void>;
     }
     interface VehiclePaintThickness {
+        /**
+          * @default ''
+         */
         "baseUrl": string;
+        /**
+          * @default false
+         */
         "coreOnly": boolean;
         "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
+        /**
+          * @default false
+         */
         "isDev": boolean;
+        /**
+          * @default 'en'
+         */
         "language": LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        /**
+          * @default ''
+         */
         "queryString": string;
         "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
         "setErrorMessage": (message: ErrorKeys) => Promise<void>;
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
     }
     interface VehicleServiceHistory {
+        /**
+          * @default ''
+         */
         "baseUrl": string;
+        /**
+          * @default false
+         */
         "coreOnly": boolean;
         "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
+        /**
+          * @default false
+         */
         "isDev": boolean;
+        /**
+          * @default 'en'
+         */
         "language": LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        /**
+          * @default ''
+         */
         "queryString": string;
         "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
         "setErrorMessage": (message: ErrorKeys) => Promise<void>;
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
     }
     interface VehicleSpecification {
+        /**
+          * @default ''
+         */
         "baseUrl": string;
+        /**
+          * @default false
+         */
         "coreOnly": boolean;
         "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
+        /**
+          * @default false
+         */
         "isDev": boolean;
+        /**
+          * @default 'en'
+         */
         "language": LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        /**
+          * @default ''
+         */
         "queryString": string;
         "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
         "setErrorMessage": (message: ErrorKeys) => Promise<void>;
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
     }
     interface VehicleWarrantyDetails {
+        /**
+          * @default ''
+         */
         "baseUrl": string;
+        /**
+          * @default null
+         */
         "brandIntegrationId": string;
+        /**
+          * @default null
+         */
         "cityId"?: string;
+        /**
+          * @default null
+         */
         "cityIntegrationId"?: string;
+        /**
+          * @default null
+         */
         "companyBranchId"?: string;
+        /**
+          * @default null
+         */
         "companyBranchIntegrationId"?: string;
+        /**
+          * @default null
+         */
         "companyId"?: string;
+        /**
+          * @default null
+         */
         "companyIntegrationId"?: string;
+        /**
+          * @default false
+         */
         "coreOnly": boolean;
+        /**
+          * @default null
+         */
         "customerEmail"?: string;
+        /**
+          * @default null
+         */
         "customerName"?: string;
+        /**
+          * @default null
+         */
         "customerPhone"?: string;
         "errorCallback": (errorMessage: ErrorKeys) => void;
         "fetchData": (requestedVin?: string, headers?: any) => Promise<void>;
+        /**
+          * @default false
+         */
         "isDev": boolean;
+        /**
+          * @default 'en'
+         */
         "language": LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        /**
+          * @default ''
+         */
         "queryString": string;
+        /**
+          * @default ''
+         */
         "recaptchaKey": string;
         "setData": (newData: VehicleInformation | string, headers?: any) => Promise<void>;
         "setErrorMessage": (message: ErrorKeys) => Promise<void>;
         "setMockData": (newMockData: MockJson<VehicleInformation>) => Promise<void>;
+        /**
+          * @default false
+         */
         "showSsc": boolean;
+        /**
+          * @default false
+         */
         "showWarranty": boolean;
+        /**
+          * @default ''
+         */
         "unauthorizedSscLookupBaseUrl": string;
+        /**
+          * @default ''
+         */
         "unauthorizedSscLookupQueryString": string;
+        /**
+          * @default null
+         */
         "userId"?: string;
     }
     interface VinExtractor {
+        /**
+          * @default false
+         */
         "captureEnvironment": boolean;
+        /**
+          * @default CAPTURE_INTERVAL
+         */
         "captureInterval": number;
         "close": () => Promise<void>;
+        /**
+          * @default false
+         */
         "manualCapture": boolean;
         "ocrEndpoint": string;
         "onError"?: ((newError: Error) => void) | string;
@@ -375,12 +717,27 @@ export namespace Components {
         "onOpenChange"?: ((newError: boolean) => void) | string;
         "onProcessing"?: ((vin: string) => void) | string;
         "open": () => Promise<void>;
+        /**
+          * @default false
+         */
         "readSticker": boolean;
         "setBlazorRef": (newBlazorRef: DotNetObjectReference) => Promise<void>;
+        /**
+          * @default false
+         */
         "skipValidation": boolean;
+        /**
+          * @default ''
+         */
         "title": string;
         "uploaderButtonId": string;
+        /**
+          * @default false
+         */
         "useOcr": boolean;
+        /**
+          * @default false
+         */
         "verbose": boolean;
     }
 }
@@ -603,45 +960,99 @@ declare namespace LocalJSX {
         "baseUrl"?: string;
         "brandId"?: string;
         "errorCallback"?: (error: any) => void;
+        /**
+          * @default 'en'
+         */
         "language"?: LanguageKeys;
         "loadingChanges"?: (loading: boolean) => void;
+        /**
+          * @default ''
+         */
         "queryString"?: string;
+        /**
+          * @default '6Lehq6IpAAAAAETTDS2Zh60nHIT1a8oVkRtJ2WsA'
+         */
         "recaptchaKey"?: string;
+        /**
+          * @default '["submit.Submit"]'
+         */
         "structure"?: string;
         "successCallback"?: (values: any) => void;
         "theme"?: string;
     }
     interface DeadStockLookup {
+        /**
+          * @default ''
+         */
         "baseUrl"?: string;
         "errorCallback"?: (errorMessage: ErrorKeys) => void;
+        /**
+          * @default false
+         */
         "isDev"?: boolean;
+        /**
+          * @default 'en'
+         */
         "language"?: LanguageKeys;
         "loadedResponse"?: (response: PartInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        /**
+          * @default ''
+         */
         "queryString"?: string;
     }
     interface DistributorLookup {
+        /**
+          * @default ''
+         */
         "baseUrl"?: string;
         "errorCallback"?: (errorMessage: string) => void;
+        /**
+          * @default ''
+         */
         "hiddenFields"?: string;
+        /**
+          * @default false
+         */
         "isDev"?: boolean;
+        /**
+          * @default 'en'
+         */
         "language"?: LanguageKeys;
         "loadedResponse"?: (response: PartInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        /**
+          * @default ''
+         */
         "localizationName"?: string;
+        /**
+          * @default ''
+         */
         "queryString"?: string;
     }
     interface FlexibleContainer {
         "alwaysStrict"?: boolean;
         "classes"?: string;
         "containerClasses"?: string;
+        /**
+          * @default 'auto'
+         */
         "height"?: number | 'auto';
+        /**
+          * @default true
+         */
         "isOpened"?: boolean;
+        /**
+          * @default false
+         */
         "stopAnimation"?: boolean;
     }
     interface FormDialog {
         "dialogClosed"?: () => void;
         "errorMessage"?: string;
+        /**
+          * @default 'en'
+         */
         "language"?: LanguageKeys;
     }
     interface FormInput {
@@ -654,6 +1065,9 @@ declare namespace LocalJSX {
         "isError"?: boolean;
         "isRequired"?: boolean;
         "label"?: string;
+        /**
+          * @default 'en'
+         */
         "language"?: LanguageKeys;
         "numberDirection"?: boolean;
         "wrapperClass"?: string;
@@ -668,8 +1082,14 @@ declare namespace LocalJSX {
         "isError"?: boolean;
         "isRequired"?: boolean;
         "label"?: string;
+        /**
+          * @default 'en'
+         */
         "language"?: LanguageKeys;
         "name"?: string;
+        /**
+          * @default 'Select an option'
+         */
         "placeholder"?: string;
         "wrapperClass"?: string;
         "wrapperId"?: string;
@@ -684,18 +1104,39 @@ declare namespace LocalJSX {
         "form"?: FormHook<any>;
         "formElementMapper"?: FormElementMapper<any>;
         "isLoading"?: boolean;
+        /**
+          * @default 'en'
+         */
         "language"?: LanguageKeys;
+        /**
+          * @default {}
+         */
         "renderControl"?: {};
+        /**
+          * @default '["submit.Submit"]'
+         */
         "structure"?: string;
         "theme"?: string;
+        /**
+          * @default {}
+         */
         "themes"?: any;
     }
     interface FormStructureError {
+        /**
+          * @default 'en'
+         */
         "language"?: LanguageKeys;
     }
     interface FormSubmit {
         "isLoading"?: boolean;
+        /**
+          * @default 'en'
+         */
         "language"?: LanguageKeys;
+        /**
+          * @default {}
+         */
         "params"?: FormFieldParams;
         "structureElement"?: StructureObject;
     }
@@ -707,50 +1148,113 @@ declare namespace LocalJSX {
         "isError"?: boolean;
         "isRequired"?: boolean;
         "label"?: string;
+        /**
+          * @default 'en'
+         */
         "language"?: LanguageKeys;
         "wrapperClass"?: string;
         "wrapperId"?: string;
     }
     interface InformationTable {
         "headers"?: InformationTableColumn[];
+        /**
+          * @default false
+         */
         "isLoading"?: boolean;
+        /**
+          * @default []
+         */
         "rows"?: object[];
+        /**
+          * @default {}
+         */
         "templateRow"?: object;
     }
     interface LoadingSpinner {
         "isLoading"?: boolean;
     }
     interface ManufacturerLookup {
+        /**
+          * @default ''
+         */
         "baseUrl"?: string;
         "errorCallback"?: (errorMessage: string) => void;
+        /**
+          * @default 'Manufacturer'
+         */
         "headerTitle"?: string;
+        /**
+          * @default ''
+         */
         "hiddenFields"?: string;
+        /**
+          * @default false
+         */
         "isDev"?: boolean;
+        /**
+          * @default 'en'
+         */
         "language"?: LanguageKeys;
         "loadedResponse"?: (response: PartInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        /**
+          * @default ''
+         */
         "localizationName"?: string;
+        /**
+          * @default ''
+         */
         "queryString"?: string;
     }
     interface PartLookup {
+        /**
+          * @default ''
+         */
         "activeElement"?: ActiveElement;
+        /**
+          * @default ''
+         */
         "baseUrl"?: string;
+        /**
+          * @default ''
+         */
         "blazorErrorStateListener"?: string;
+        /**
+          * @default ''
+         */
         "blazorOnLoadingStateChange"?: string;
         "childrenProps"?: string | Object;
         "errorStateListener"?: (newError: string) => void;
+        /**
+          * @default 'en'
+         */
         "language"?: LanguageKeys;
         "loadingStateChanged"?: (isLoading: boolean) => void;
+        /**
+          * @default ''
+         */
         "queryString"?: string;
     }
     interface ServiceBookingForm {
         "baseUrl"?: string;
         "brandId"?: string;
         "errorCallback"?: (error: any) => void;
+        /**
+          * @default 'en'
+         */
         "language"?: LanguageKeys;
         "loadingChanges"?: (loading: boolean) => void;
+        /**
+          * @default ''
+         */
         "queryString"?: string;
+        /**
+          * @default '6Lehq6IpAAAAAETTDS2Zh60nHIT1a8oVkRtJ2WsA'
+         */
         "recaptchaKey"?: string;
+        /**
+          * @default '["submit.Submit"]'
+         */
         "structure"?: string;
         "successCallback"?: (values: any) => void;
         "theme"?: string;
@@ -777,125 +1281,335 @@ declare namespace LocalJSX {
         "tabs"?: string[];
     }
     interface VehicleAccessories {
+        /**
+          * @default ''
+         */
         "baseUrl"?: string;
+        /**
+          * @default false
+         */
         "coreOnly"?: boolean;
         "errorCallback"?: (errorMessage: ErrorKeys) => void;
+        /**
+          * @default false
+         */
         "isDev"?: boolean;
+        /**
+          * @default 'en'
+         */
         "language"?: LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        /**
+          * @default ''
+         */
         "queryString"?: string;
     }
     interface VehicleClaimableItems {
         "activate"?: (vehicleInformation: VehicleInformation) => void;
         "baseUrl"?: string;
+        /**
+          * @default 'api/vehicle/swift-claim'
+         */
         "claimEndPoint"?: string;
+        /**
+          * @default false
+         */
         "coreOnly"?: boolean;
         "errorCallback"?: (errorMessage: ErrorKeys) => void;
+        /**
+          * @default {}
+         */
         "headers"?: any;
+        /**
+          * @default false
+         */
         "isDev"?: boolean;
+        /**
+          * @default 'en'
+         */
         "language"?: LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        /**
+          * @default 30
+         */
         "maximumDocumentFileSizeInMb"?: number;
         "print"?: (claimResponse: any) => void;
+        /**
+          * @default ''
+         */
         "queryString"?: string;
     }
     interface VehicleItemClaimForm {
+        /**
+          * @default null
+         */
         "canceledItems"?: ServiceItem[];
         "handleClaiming"?: (payload: ClaimPayload) => void;
+        /**
+          * @default null
+         */
         "item"?: ServiceItem;
+        /**
+          * @default 'en'
+         */
         "language"?: LanguageKeys;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        /**
+          * @default claimFormSchema.getDefault()
+         */
         "locale"?: ClaimFormType;
         "maximumDocumentFileSizeInMb"?: number;
+        /**
+          * @default null
+         */
         "unInvoicedByBrokerName"?: string;
+        /**
+          * @default ''
+         */
         "vin"?: string;
     }
     interface VehicleLookup {
+        /**
+          * @default ''
+         */
         "activeElement"?: ActiveElement1;
+        /**
+          * @default ''
+         */
         "baseUrl"?: string;
+        /**
+          * @default ''
+         */
         "blazorDynamicClaimActivate"?: string;
+        /**
+          * @default ''
+         */
         "blazorErrorStateListener"?: string;
+        /**
+          * @default ''
+         */
         "blazorOnLoadingStateChange"?: string;
         "childrenProps"?: string | Object;
         "dynamicClaimActivate"?: (vehicleInformation: VehicleInformation) => void;
         "errorStateListener"?: (newError: string) => void;
+        /**
+          * @default false
+         */
         "isDev"?: boolean;
+        /**
+          * @default 'en'
+         */
         "language"?: LanguageKeys;
         "loadingStateChanged"?: (isLoading: boolean) => void;
+        /**
+          * @default ''
+         */
         "queryString"?: string;
     }
     interface VehiclePaintThickness {
+        /**
+          * @default ''
+         */
         "baseUrl"?: string;
+        /**
+          * @default false
+         */
         "coreOnly"?: boolean;
         "errorCallback"?: (errorMessage: ErrorKeys) => void;
+        /**
+          * @default false
+         */
         "isDev"?: boolean;
+        /**
+          * @default 'en'
+         */
         "language"?: LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        /**
+          * @default ''
+         */
         "queryString"?: string;
     }
     interface VehicleServiceHistory {
+        /**
+          * @default ''
+         */
         "baseUrl"?: string;
+        /**
+          * @default false
+         */
         "coreOnly"?: boolean;
         "errorCallback"?: (errorMessage: ErrorKeys) => void;
+        /**
+          * @default false
+         */
         "isDev"?: boolean;
+        /**
+          * @default 'en'
+         */
         "language"?: LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        /**
+          * @default ''
+         */
         "queryString"?: string;
     }
     interface VehicleSpecification {
+        /**
+          * @default ''
+         */
         "baseUrl"?: string;
+        /**
+          * @default false
+         */
         "coreOnly"?: boolean;
         "errorCallback"?: (errorMessage: ErrorKeys) => void;
+        /**
+          * @default false
+         */
         "isDev"?: boolean;
+        /**
+          * @default 'en'
+         */
         "language"?: LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        /**
+          * @default ''
+         */
         "queryString"?: string;
     }
     interface VehicleWarrantyDetails {
+        /**
+          * @default ''
+         */
         "baseUrl"?: string;
+        /**
+          * @default null
+         */
         "brandIntegrationId"?: string;
+        /**
+          * @default null
+         */
         "cityId"?: string;
+        /**
+          * @default null
+         */
         "cityIntegrationId"?: string;
+        /**
+          * @default null
+         */
         "companyBranchId"?: string;
+        /**
+          * @default null
+         */
         "companyBranchIntegrationId"?: string;
+        /**
+          * @default null
+         */
         "companyId"?: string;
+        /**
+          * @default null
+         */
         "companyIntegrationId"?: string;
+        /**
+          * @default false
+         */
         "coreOnly"?: boolean;
+        /**
+          * @default null
+         */
         "customerEmail"?: string;
+        /**
+          * @default null
+         */
         "customerName"?: string;
+        /**
+          * @default null
+         */
         "customerPhone"?: string;
         "errorCallback"?: (errorMessage: ErrorKeys) => void;
+        /**
+          * @default false
+         */
         "isDev"?: boolean;
+        /**
+          * @default 'en'
+         */
         "language"?: LanguageKeys;
         "loadedResponse"?: (response: VehicleInformation) => void;
         "loadingStateChange"?: (isLoading: boolean) => void;
+        /**
+          * @default ''
+         */
         "queryString"?: string;
+        /**
+          * @default ''
+         */
         "recaptchaKey"?: string;
+        /**
+          * @default false
+         */
         "showSsc"?: boolean;
+        /**
+          * @default false
+         */
         "showWarranty"?: boolean;
+        /**
+          * @default ''
+         */
         "unauthorizedSscLookupBaseUrl"?: string;
+        /**
+          * @default ''
+         */
         "unauthorizedSscLookupQueryString"?: string;
+        /**
+          * @default null
+         */
         "userId"?: string;
     }
     interface VinExtractor {
+        /**
+          * @default false
+         */
         "captureEnvironment"?: boolean;
+        /**
+          * @default CAPTURE_INTERVAL
+         */
         "captureInterval"?: number;
+        /**
+          * @default false
+         */
         "manualCapture"?: boolean;
         "ocrEndpoint"?: string;
         "onError"?: ((newError: Error) => void) | string;
         "onExtract"?: ((vin: string) => void) | string;
         "onOpenChange"?: ((newError: boolean) => void) | string;
         "onProcessing"?: ((vin: string) => void) | string;
+        /**
+          * @default false
+         */
         "readSticker"?: boolean;
+        /**
+          * @default false
+         */
         "skipValidation"?: boolean;
+        /**
+          * @default ''
+         */
         "title"?: string;
         "uploaderButtonId"?: string;
+        /**
+          * @default false
+         */
         "useOcr"?: boolean;
+        /**
+          * @default false
+         */
         "verbose"?: boolean;
     }
     interface IntrinsicElements {
