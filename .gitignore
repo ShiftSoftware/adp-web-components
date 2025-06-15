@@ -2,6 +2,10 @@ dist/
 www/
 loader/
 
+components.d.ts
+**/components.d.ts
+src/components.d.ts
+
 *~
 *.sw[mnpcod]
 *.log

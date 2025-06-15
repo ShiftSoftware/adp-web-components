@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -39,19 +39,6 @@
       <button class="sample-button" onclick="fetchData('SU00302474/11')">SU00302474/11</button>
     </div>
 
-    <h3>offline Loads</h3>
-    <div class="button-container">
-      <button class="sample-button" onclick="setData('')">Empty</button>
-      <button class="sample-button" onclick="setData('error')">Error</button>
-      <button class="sample-button" onclick="setData('T5245160030')">T5245160030</button>
-    </div>
-
-    <label>
-      render
-      <input onchange="toggleCheckbox(this)" type="checkbox" />
-    </label>
-    <div id="container"></div>
-
     <script>
       let distributorLookup;
 
@@ -76,23 +63,6 @@
 
       function setData(key) {
         distributorLookup.setData(mockData[key]);
-      }
-
-      function toggleCheckbox(e) {
-        const container = document.getElementById('container');
-        if (e.checked) {
-          const newElement = document.createElement('distributor-lookup');
-
-          newElement.id = 'toggle-item';
-          newElement.setAttribute('is-dev', 'true');
-          newElement.setAttribute('base-url', 'https://tiq-vehicles-functions.azurewebsites.net/api/secure-part-lookup/');
-
-          newElement.setData(mockData['T5245160030']);
-          container.appendChild(newElement);
-        } else {
-          const element = document.getElementById('toggle-item');
-          element.parentNode.removeChild(element);
-        }
       }
     </script>
 

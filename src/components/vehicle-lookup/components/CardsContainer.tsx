@@ -5,48 +5,76 @@ import { VehicleInformation } from '~types/vehicle-information';
 
 import StatusCard from './StatusCard';
 
+import RejectIcon from '../assets/x-mark.svg';
+
 import warrantySchema from '~locales/vehicleLookup/warranty/type';
+import cn from '~lib/cn';
 
 type Props = {
-  warrantyLocale: InferType<typeof warrantySchema>;
-  vehicleInformation: VehicleInformation;
+  isLoading: boolean;
   isAuthorized: boolean;
   unInvoicedByBrokerName?: string;
+  vehicleInformation: VehicleInformation;
+  warrantyLocale: InferType<typeof warrantySchema>;
 };
 
-export default function CardsContainer({ vehicleInformation, isAuthorized, unInvoicedByBrokerName, warrantyLocale }: Props) {
+export default function CardsContainer({ isLoading, vehicleInformation, isAuthorized, unInvoicedByBrokerName, warrantyLocale }: Props) {
   return (
-    <div class="warranty-tags mx-auto pt-3">
-      <div class="card warning-card span-entire-1st-row">
-        <p class="no-padding flex gap-2">
-          <span class="font-semibold">Dealer:</span> {vehicleInformation?.saleInformation?.companyName} ({vehicleInformation?.saleInformation?.countryName})
-        </p>
-      </div>
+    <div class="tags-container mx-auto">
+      <flexible-container isOpened={!vehicleInformation || !!vehicleInformation?.saleInformation?.companyName}>
+        <div class={!(!vehicleInformation || !!vehicleInformation?.saleInformation?.companyName) && 'loading'} style={{ paddingBottom: '12px' }}>
+          <div class="shift-skeleton !rounded-[4px]">
+            <div class="card warning-card">
+              <p class="no-padding flex gap-2">
+                <span class="font-semibold">{warrantyLocale.dealer}:</span> {vehicleInformation?.saleInformation?.companyName || ''}{' '}
+                {vehicleInformation?.saleInformation?.countryName && `(${vehicleInformation?.saleInformation?.countryName})`}
+              </p>
+            </div>
+          </div>
+        </div>
+      </flexible-container>
 
-      <StatusCard state={isAuthorized ? 'success' : 'reject'} desc={isAuthorized ? warrantyLocale.authorized : warrantyLocale.unauthorized} />
-      <StatusCard
-        state={vehicleInformation?.warranty.hasActiveWarranty ? 'success' : 'reject'}
-        desc={vehicleInformation?.warranty.hasActiveWarranty ? warrantyLocale.activeWarranty : warrantyLocale.notActiveWarranty}
-      />
-      {unInvoicedByBrokerName && <StatusCard className="span-entire-2nd-row" state="warning" icon={true} desc={warrantyLocale.notInvoiced + unInvoicedByBrokerName} />}
-      {vehicleInformation?.warranty.warrantyStartDate && (
+      <flexible-container classes={cn({ loading: isLoading || !unInvoicedByBrokerName })} isOpened={!!unInvoicedByBrokerName}>
+        <div style={{ paddingBottom: '12px' }}>
+          <div class="shift-skeleton">
+            <div class="card warning-card">
+              <img src={RejectIcon} />
+
+              <p>{unInvoicedByBrokerName ? warrantyLocale.notInvoiced + unInvoicedByBrokerName : ''}</p>
+            </div>
+          </div>
+        </div>
+      </flexible-container>
+
+      <div class="warranty-tags">
         <StatusCard
-          state={vehicleInformation?.warranty?.hasActiveWarranty ? 'success' : 'reject'}
-          icon={false}
+          state={vehicleInformation ? (isAuthorized ? 'success' : 'reject') : 'idle'}
+          desc={vehicleInformation ? (isAuthorized ? warrantyLocale.authorized : warrantyLocale.unauthorized) : ''}
+        />
+
+        <StatusCard
+          state={vehicleInformation ? (vehicleInformation?.warranty?.hasActiveWarranty ? 'success' : 'reject') : 'idle'}
+          desc={vehicleInformation ? (vehicleInformation?.warranty?.hasActiveWarranty ? warrantyLocale.activeWarranty : warrantyLocale.notActiveWarranty) : ''}
+        />
+
+        <StatusCard
           from
-          fromDesc={warrantyLocale.from}
-          desc={vehicleInformation?.warranty.warrantyStartDate}
-        />
-      )}
-      {vehicleInformation?.warranty.warrantyEndDate && (
-        <StatusCard
-          state={vehicleInformation?.warranty?.hasActiveWarranty ? 'success' : 'reject'}
           icon={false}
-          to
-          toDesc={warrantyLocale.to}
-          desc={vehicleInformation?.warranty.warrantyEndDate}
+          fromDesc={warrantyLocale.from}
+          desc={vehicleInformation?.warranty?.warrantyStartDate || ''}
+          opened={!!vehicleInformation?.warranty?.warrantyStartDate || !vehicleInformation}
+          state={!!vehicleInformation ? (vehicleInformation?.warranty?.hasActiveWarranty ? 'success' : 'reject') : 'idle'}
         />
-      )}
+
+        <StatusCard
+          to
+          icon={false}
+          toDesc={warrantyLocale.to}
+          desc={vehicleInformation?.warranty?.warrantyEndDate || ''}
+          opened={!!vehicleInformation?.warranty?.warrantyEndDate || !vehicleInformation}
+          state={!!vehicleInformation ? (vehicleInformation?.warranty?.hasActiveWarranty ? 'success' : 'reject') : 'idle'}
+        />
+      </div>
     </div>
   );
 }

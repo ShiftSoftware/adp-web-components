@@ -254,8 +254,8 @@ export class DistributorLookup implements PartInformationInterface {
                                       {stock.quantityLookUpResult === 'Available'
                                         ? texts.available
                                         : stock.quantityLookUpResult === 'PartiallyAvailable'
-                                        ? texts.partiallyAvailable
-                                        : texts.notAvailable}
+                                          ? texts.partiallyAvailable
+                                          : texts.notAvailable}
                                     </strong>
                                   </div>
                                 </td>

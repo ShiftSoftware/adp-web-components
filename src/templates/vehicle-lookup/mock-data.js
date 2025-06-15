@@ -1,5 +1,33 @@
+const groupOne = {
+  name: 'group-one',
+};
+
+const groupTwo = {
+  name: 'group-two',
+  isDefault: true,
+  isSequential: true,
+};
+
+const groupThree = {
+  name: 'group-three',
+  isDefault: false,
+  isSequential: true,
+  tabOrder: 1,
+};
+
+const groupFour = {
+  name: 'group-four',
+  isDefault: false,
+  isSequential: false,
+};
+
+const groupFive = {
+  name: 'group-five',
+  tabOrder: 3,
+};
+
 const mockData = {
-  JTMHX01J8L4198293: {
+  'JTMHX01J8L4198293': {
     accessories: [
       {
         image: '',
@@ -31,7 +59,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51456604,
+        invoiceNumber: '51456604',
         jobNumber: 13681,
         laborLines: [
           {
@@ -89,7 +117,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51447340,
+        invoiceNumber: '51447340',
         jobNumber: 52446,
         laborLines: [
           {
@@ -141,7 +169,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51441539,
+        invoiceNumber: '51441539',
         jobNumber: 41940,
         laborLines: [
           {
@@ -193,7 +221,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51431492,
+        invoiceNumber: '51431492',
         jobNumber: 22296,
         laborLines: [
           {
@@ -231,7 +259,7 @@ const mockData = {
     serviceItems: null,
     basicModelCode: null,
   },
-  JTMHX01J8L4198294: {
+  'JTMHX01J8L4198294': {
     accessories: [],
     paintThickness: {},
     vin: 'JTMHX01J8L4198294',
@@ -258,7 +286,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51456604,
+        invoiceNumber: '51456604',
         jobNumber: 13681,
         laborLines: [
           {
@@ -316,7 +344,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51447340,
+        invoiceNumber: '51447340',
         jobNumber: 52446,
         laborLines: [
           {
@@ -368,7 +396,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51441539,
+        invoiceNumber: '51441539',
         jobNumber: 41940,
         laborLines: [
           {
@@ -420,7 +448,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51431492,
+        invoiceNumber: '51431492',
         jobNumber: 22296,
         laborLines: [
           {
@@ -458,7 +486,7 @@ const mockData = {
     serviceItems: [],
     basicModelCode: null,
   },
-  JTMHX01J8L4198295: {
+  'JTMHX01J8L4198295': {
     accessories: null,
     paintThickness: {
       parts: [],
@@ -487,7 +515,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51456604,
+        invoiceNumber: '51456604',
         jobNumber: 13681,
         laborLines: [
           {
@@ -545,7 +573,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51447340,
+        invoiceNumber: '51447340',
         jobNumber: 52446,
         laborLines: [
           {
@@ -597,7 +625,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51441539,
+        invoiceNumber: '51441539',
         jobNumber: 41940,
         laborLines: [
           {
@@ -649,7 +677,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51431492,
+        invoiceNumber: '51431492',
         jobNumber: 22296,
         laborLines: [
           {
@@ -725,7 +753,7 @@ const mockData = {
         activatedAt: '2023-10-08',
         expiresAt: '2024-01-08',
         status: 'pending',
-        menuCode: 'SER1384KJ'
+        menuCode: 'SER1384KJ',
       },
       {
         name: '20,000 KM Free Service',
@@ -739,7 +767,7 @@ const mockData = {
     ],
     basicModelCode: null,
   },
-  JTMHX01J8L4198296: {
+  'JTMHX01J8L4198296': {
     accessories: [
       {
         partNumber: 'yakam',
@@ -782,7 +810,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51456604,
+        invoiceNumber: '51456604',
         jobNumber: 13681,
         laborLines: [
           {
@@ -840,7 +868,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51447340,
+        invoiceNumber: '51447340',
         jobNumber: 52446,
         laborLines: [
           {
@@ -892,7 +920,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51441539,
+        invoiceNumber: '51441539',
         jobNumber: 41940,
         laborLines: [
           {
@@ -944,7 +972,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51431492,
+        invoiceNumber: '51431492',
         jobNumber: 22296,
         laborLines: [
           {
@@ -1029,7 +1057,7 @@ const mockData = {
     ],
     basicModelCode: null,
   },
-  MR0BX8CD3P2791075: {
+  'MR0BX8CD3P2791075': {
     accessories: [
       {
         partNumber: 'yakam',
@@ -1132,7 +1160,7 @@ const mockData = {
       customerAccountNumber: 'R01447',
       customerID: '89437',
       invoiceDate: '2023-05-11',
-      invoiceNumber: 11155049,
+      invoiceNumber: '11155049',
       broker: {
         brokerId: 628,
         brokerName: 'Modren Cars',
@@ -1161,7 +1189,7 @@ const mockData = {
         companyId: 1,
         branchId: 43,
         account: 'C00015',
-        invoiceNumber: 53166219,
+        invoiceNumber: '53166219',
         jobNumber: 16416,
         laborLines: [
           {
@@ -1219,7 +1247,7 @@ const mockData = {
         companyId: 1,
         branchId: 43,
         account: 'C00015',
-        invoiceNumber: 53165038,
+        invoiceNumber: '53165038',
         jobNumber: 14587,
         laborLines: [
           {
@@ -1271,7 +1299,7 @@ const mockData = {
         companyId: 1,
         branchId: 43,
         account: 'C00015',
-        invoiceNumber: 53163666,
+        invoiceNumber: '53163666',
         jobNumber: 12359,
         laborLines: [
           {
@@ -1329,7 +1357,7 @@ const mockData = {
         companyId: 1,
         branchId: 43,
         account: 'C00015',
-        invoiceNumber: 53162583,
+        invoiceNumber: '53162583',
         jobNumber: 10672,
         laborLines: [
           {
@@ -1381,7 +1409,7 @@ const mockData = {
         companyId: 1,
         branchId: 43,
         account: 'S00058',
-        invoiceNumber: 53161736,
+        invoiceNumber: '53161736',
         jobNumber: 64345,
         laborLines: [
           {
@@ -1445,7 +1473,7 @@ const mockData = {
         companyId: 1,
         branchId: 43,
         account: 'C00015',
-        invoiceNumber: 53160685,
+        invoiceNumber: '53160685',
         jobNumber: 62792,
         laborLines: [
           {
@@ -1521,7 +1549,7 @@ const mockData = {
         companyId: 1,
         branchId: 43,
         account: 'C00015',
-        invoiceNumber: 53159833,
+        invoiceNumber: '53159833',
         jobNumber: 61274,
         laborLines: [
           {
@@ -1579,7 +1607,7 @@ const mockData = {
         companyId: 1,
         branchId: 43,
         account: 'C00015',
-        invoiceNumber: 53158737,
+        invoiceNumber: '53158737',
         jobNumber: 59536,
         laborLines: [
           {
@@ -1649,7 +1677,7 @@ const mockData = {
         companyId: 1,
         branchId: 43,
         account: 'C00015',
-        invoiceNumber: 53157673,
+        invoiceNumber: '53157673',
         jobNumber: 57573,
         laborLines: [
           {
@@ -1771,7 +1799,7 @@ const mockData = {
     ],
     basicModelCode: 'TGN126',
   },
-  JTMHX01J8L4198299: {
+  'JTMHX01J8L4198299': {
     accessories: [
       {
         partNumber: 'yakam2',
@@ -1877,7 +1905,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51456604,
+        invoiceNumber: '51456604',
         jobNumber: 13681,
         laborLines: [
           {
@@ -1935,7 +1963,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51447340,
+        invoiceNumber: '51447340',
         jobNumber: 52446,
         laborLines: [
           {
@@ -1987,7 +2015,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51441539,
+        invoiceNumber: '51441539',
         jobNumber: 41940,
         laborLines: [
           {
@@ -2039,7 +2067,7 @@ const mockData = {
         companyId: 2,
         branchId: 14,
         account: 'CS00022',
-        invoiceNumber: 51431492,
+        invoiceNumber: '51431492',
         jobNumber: 22296,
         laborLines: [
           {
@@ -2097,7 +2125,7 @@ const mockData = {
     ],
     basicModelCode: null,
   },
-  JTMABBBJ9P4099243: {
+  'JTMABBBJ9P4099243': {
     accessories: [
       {
         partNumber: 'yakam',
@@ -2175,7 +2203,7 @@ const mockData = {
       customerAccountNumber: 'R01954',
       customerID: '97120',
       invoiceDate: '2023-09-18',
-      invoiceNumber: 11160168,
+      invoiceNumber: '11160168',
       broker: {
         brokerId: 539,
         brokerName: 'Al-Burchman',
@@ -2204,7 +2232,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'W00001',
-        invoiceNumber: 54302844,
+        invoiceNumber: '54302844',
         jobNumber: 32325,
         laborLines: [
           {
@@ -2225,7 +2253,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54175880,
+        invoiceNumber: '54175880',
         jobNumber: 31762,
         laborLines: [
           {
@@ -2271,7 +2299,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'W00001',
-        invoiceNumber: 54302319,
+        invoiceNumber: '54302319',
         jobNumber: 23978,
         laborLines: [
           {
@@ -2292,7 +2320,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54170870,
+        invoiceNumber: '54170870',
         jobNumber: 23814,
         laborLines: [
           {
@@ -2350,7 +2378,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54162502,
+        invoiceNumber: '54162502',
         jobNumber: 64883,
         laborLines: [
           {
@@ -2402,7 +2430,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'W00001',
-        invoiceNumber: 54301537,
+        invoiceNumber: '54301537',
         jobNumber: 58888,
         laborLines: [
           {
@@ -2430,7 +2458,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'S00031',
-        invoiceNumber: 54158983,
+        invoiceNumber: '54158983',
         jobNumber: 58782,
         laborLines: [
           {
@@ -2470,7 +2498,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'Z00244',
-        invoiceNumber: 54156124,
+        invoiceNumber: '54156124',
         jobNumber: 54143,
         laborLines: [
           {
@@ -2715,6 +2743,8 @@ const mockData = {
         name: '85,000 KM Free Service',
         type: 'free',
         claimable: true,
+        showDocumentUploader: true,
+        documentUploaderIsRequired: true,
         claimingMethodEnum: 2,
         activatedAt: '2024-01-08',
         expiresAt: '2024-03-08',
@@ -2750,7 +2780,7 @@ const mockData = {
     ],
     basicModelCode: 'VJA300',
   },
-  JTMHU09J6E4100543: {
+  'JTMHU09J6E4100543': {
     paintThickness: {
       parts: [
         {
@@ -2819,6 +2849,7 @@ const mockData = {
     nextServiceDate: '2025-02-19',
     serviceHistory: [
       {
+        group: groupOne,
         serviceType: 'PM SL (5K, 15K,25K...95K)',
         serviceDate: '2024-11-19',
         mileage: 55005,
@@ -2827,7 +2858,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54175877,
+        invoiceNumber: '54175877',
         jobNumber: 32299,
         laborLines: [
           {
@@ -2865,6 +2896,7 @@ const mockData = {
         ],
       },
       {
+        group: groupTwo,
         serviceType: 'Value Added Services',
         serviceDate: '2024-11-19',
         mileage: 55005,
@@ -2873,7 +2905,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'W00016',
-        invoiceNumber: 54175876,
+        invoiceNumber: '54175876',
         jobNumber: 32299,
         laborLines: [
           {
@@ -2893,6 +2925,7 @@ const mockData = {
         ],
       },
       {
+        group: groupThree,
         serviceType: 'PM SL (5K, 15K,25K...95K)',
         serviceDate: '2024-06-02',
         mileage: 49380,
@@ -2901,7 +2934,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54165039,
+        invoiceNumber: '54165039',
         jobNumber: 13946,
         laborLines: [
           {
@@ -2969,6 +3002,7 @@ const mockData = {
         ],
       },
       {
+        group: groupFour,
         serviceType: 'PM SL (5K, 15K,25K...95K)',
         serviceDate: '2024-02-07',
         mileage: 46366,
@@ -2977,7 +3011,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54159267,
+        invoiceNumber: '54159267',
         jobNumber: 59455,
         laborLines: [
           {
@@ -3020,6 +3054,7 @@ const mockData = {
     vehicleSpecification: null,
     serviceItems: [
       {
+        group: groupFive,
         name: '1,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3030,6 +3065,7 @@ const mockData = {
         claimDate: '2023-01-19',
       },
       {
+        group: groupOne,
         name: '5,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3039,6 +3075,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: groupTwo,
         name: '10,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3048,6 +3085,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: groupThree,
         name: '15,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3057,6 +3095,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: groupFour,
         name: '20,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3066,6 +3105,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: groupFive,
         name: '25,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3075,6 +3115,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: groupOne,
         name: '30,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3084,6 +3125,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: groupTwo,
         name: '35,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3093,6 +3135,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: groupThree,
         name: '40,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3102,6 +3145,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: groupFour,
         name: '45,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3111,6 +3155,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: groupFive,
         name: '50,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3120,6 +3165,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: groupOne,
         name: '55,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3129,6 +3175,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: groupTwo,
         name: '60,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3138,6 +3185,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: groupThree,
         name: '65,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3147,6 +3195,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: groupFour,
         name: '70,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3156,6 +3205,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: groupFive,
         name: '75,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3165,6 +3215,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: groupOne,
         name: '80,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3174,6 +3225,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: groupTwo,
         name: '85,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3183,6 +3235,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: groupThree,
         name: '90,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3192,6 +3245,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: groupFour,
         name: '95,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3201,6 +3255,7 @@ const mockData = {
         status: 'processed',
       },
       {
+        group: groupFive,
         name: '100,000 KM Free Service',
         type: 'free',
         claimable: false,
@@ -3212,7 +3267,7 @@ const mockData = {
     ],
     basicModelCode: null,
   },
-  JTMABBBJ9P4099200: {
+  'JTMABBBJ9P4099200': {
     paintThickness: {
       parts: [
         {
@@ -3236,34 +3291,7 @@ const mockData = {
           right: 90,
         },
       ],
-      imageGroups: [
-        {
-          name: 'zero',
-          images: ['https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Hood_1.jpg'],
-        },
-        {
-          name: 'second',
-          images: [
-            'https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Left_Front_Door_1.jpg',
-            'https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Left_Front_Door_2.jpg',
-          ],
-        },
-        {
-          name: 'second',
-          images: [
-            'https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Left_Front_Door_1.jpg',
-            'https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Left_Front_Door_2.jpg',
-          ],
-        },
-        {
-          name: 'third',
-          images: [
-            'https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Right_Front_Fender_3.jpg',
-            'https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Right_Rear_Door_1.jpg',
-            'https://tiqappstorage.blob.core.windows.net/paint-app/Uploads/paintThickness/5TDLB3CH1NS095585%232022-10-06%2303-33-17/Right_Rear_Door_2.jpg',
-          ],
-        },
-      ],
+      imageGroups: [],
     },
     vin: 'JTMABBBJ9P4099200',
     identifiers: {
@@ -3283,7 +3311,7 @@ const mockData = {
       customerAccountNumber: 'R01954',
       customerID: '97120',
       invoiceDate: '2023-09-18',
-      invoiceNumber: 11160168,
+      invoiceNumber: '11160168',
       broker: {
         brokerId: 539,
         brokerName: 'Al-Burchman',
@@ -3312,7 +3340,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'W00001',
-        invoiceNumber: 54302844,
+        invoiceNumber: '54302844',
         jobNumber: 32325,
         laborLines: [
           {
@@ -3333,7 +3361,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54175880,
+        invoiceNumber: '54175880',
         jobNumber: 31762,
         laborLines: [
           {
@@ -3379,7 +3407,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'W00001',
-        invoiceNumber: 54302319,
+        invoiceNumber: '54302319',
         jobNumber: 23978,
         laborLines: [
           {
@@ -3400,7 +3428,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54170870,
+        invoiceNumber: '54170870',
         jobNumber: 23814,
         laborLines: [
           {
@@ -3458,7 +3486,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54162502,
+        invoiceNumber: '54162502',
         jobNumber: 64883,
         laborLines: [
           {
@@ -3510,7 +3538,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'W00001',
-        invoiceNumber: 54301537,
+        invoiceNumber: '54301537',
         jobNumber: 58888,
         laborLines: [
           {
@@ -3538,7 +3566,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'S00031',
-        invoiceNumber: 54158983,
+        invoiceNumber: '54158983',
         jobNumber: 58782,
         laborLines: [
           {
@@ -3578,7 +3606,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'Z00244',
-        invoiceNumber: 54156124,
+        invoiceNumber: '54156124',
         jobNumber: 54143,
         laborLines: [
           {
@@ -3692,7 +3720,9 @@ const mockData = {
         name: '15,000 KM Free Service Package',
         type: 'free',
         claimable: true,
-        claimingMethodEnum: 2,
+        showDocumentUploader: true,
+        documentUploaderIsRequired: true,
+        claimingMethodEnum: 1,
         activatedAt: '2024-08-01',
         expiresAt: '2024-11-01',
         status: 'pending',
@@ -3702,6 +3732,8 @@ const mockData = {
         name: '20,000 KM Free Service Package',
         type: 'free',
         claimable: true,
+        showDocumentUploader: true,
+        documentUploaderIsRequired: false,
         claimingMethodEnum: 2,
         activatedAt: '2024-11-01',
         expiresAt: '2025-02-01',
@@ -3751,7 +3783,7 @@ const mockData = {
     ],
     basicModelCode: 'VJA300',
   },
-  JTMABBBJ9P4099201: {
+  'JTMABBBJ9P4099201': {
     accessories: [
       {
         partNumber: 'yakam',
@@ -3873,7 +3905,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'W00001',
-        invoiceNumber: 54302844,
+        invoiceNumber: '54302844',
         jobNumber: 32325,
         laborLines: [
           {
@@ -3894,7 +3926,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54175880,
+        invoiceNumber: '54175880',
         jobNumber: 31762,
         laborLines: [
           {
@@ -3940,7 +3972,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'W00001',
-        invoiceNumber: 54302319,
+        invoiceNumber: '54302319',
         jobNumber: 23978,
         laborLines: [
           {
@@ -3961,7 +3993,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54170870,
+        invoiceNumber: '54170870',
         jobNumber: 23814,
         laborLines: [
           {
@@ -4019,7 +4051,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'C00017',
-        invoiceNumber: 54162502,
+        invoiceNumber: '54162502',
         jobNumber: 64883,
         laborLines: [
           {
@@ -4071,7 +4103,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'W00001',
-        invoiceNumber: 54301537,
+        invoiceNumber: '54301537',
         jobNumber: 58888,
         laborLines: [
           {
@@ -4099,7 +4131,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'S00031',
-        invoiceNumber: 54158983,
+        invoiceNumber: '54158983',
         jobNumber: 58782,
         laborLines: [
           {
@@ -4139,7 +4171,7 @@ const mockData = {
         companyId: 1,
         branchId: 44,
         account: 'Z00244',
-        invoiceNumber: 54156124,
+        invoiceNumber: '54156124',
         jobNumber: 54143,
         laborLines: [
           {
@@ -4331,9 +4363,7 @@ const mockData = {
     isAuthorized: false,
     warranty: null,
     nextServiceDate: '2023-12-12',
-    serviceHistory: [
-
-    ],
+    serviceHistory: [],
     ssc: null,
     vehicleVariantInfo: null,
     vehicleSpecification: null,
@@ -4343,6 +4373,7 @@ const mockData = {
         type: 'free',
         claimable: false,
         claimingMethodEnum: 2,
+        group: groupOne,
         activatedAt: '',
         expiresAt: '',
         status: 'activationRequired',
@@ -4352,6 +4383,7 @@ const mockData = {
         type: 'free',
         claimable: false,
         claimingMethodEnum: 2,
+        group: groupTwo,
         activatedAt: '',
         expiresAt: '',
         status: 'activationRequired',
@@ -4360,6 +4392,7 @@ const mockData = {
         name: '10,000 KM Free Service',
         type: 'free',
         claimable: false,
+        group: groupThree,
         claimingMethodEnum: 2,
         activatedAt: '',
         expiresAt: '',
@@ -4368,16 +4401,18 @@ const mockData = {
       {
         name: '15,000 KM Free Service',
         type: 'free',
+        group: 'One',
         claimable: false,
         claimingMethodEnum: 2,
         activatedAt: '',
         expiresAt: '',
-        status: 'activationRequired'
+        status: 'activationRequired',
       },
       {
         name: '20,000 KM Free Service',
         type: 'free',
         claimable: false,
+        group: 'One',
         claimingMethodEnum: 2,
         activatedAt: '',
         expiresAt: '',
